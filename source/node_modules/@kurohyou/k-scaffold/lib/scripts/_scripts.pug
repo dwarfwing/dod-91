@@ -1,0 +1,151 @@
+//- Action button for the k-scaffold sheet communication to function
++action({name:'k network call',hidden:'',trigger:{
+  triggeredFuncs:['kReceive']
+}})
+
+//- Functions
+//- @pugdoc
+  name: script
+  memberof: Scripts
+  description: Creates a generic [Roll20 script block](https://wiki.roll20.net/Building_Character_Sheets#JavaScript_2) for use with the sheetworker system.
+  arguments:
+  attributes:
+  example: |
+    include ../_k.pug
+    +script
+mixin script(scriptName)
+  script(type='text/worker')
+    if scriptName
+      |//# sourceURL=#{scriptName}.js
+      |
+      |
+    block
+//-End Mixin
+
+//- @pugdoc
+  name: kscript
+  memberof: Scripts
+  description: Similar to {@link script}, but includes the K-scaffold\'s javascript function library.
+  arguments:
+    - {string} scriptName - Name to use for the sourceURL comment of the script tag.
+  attributes:
+  example: |
+    include ../_k.pug
+    +kscript
+mixin kscript(scriptName)
+  - scriptUsed = true;
+  +script
+    if scriptName
+      |//# sourceURL=#{scriptName}.js
+      |
+      |
+    |const k = (function(){
+    |const kFuncs = {};
+    //- The below declarations import variables from the pug file and mixins into the sheetworker code
+    - const propArray = ['cascades','repeatingSectionDetails','persistentTabs'];
+    each prop in propArray
+      |
+      |const !{prop} = !{JSON.stringify(varObjects[prop])};
+      |
+      |kFuncs.!{prop} = !{prop};
+      - delete varObjects[prop];
+    |
+    |
+    include kvariables.js
+    include utility.js
+    include attribute_proxy.js
+    include accessSheet.js
+    include parse_cascade.js
+    include sheetworker_aliases.js
+    include listeners.js
+    include ../tabs/tabs.js
+    |
+    |return kFuncs;
+    |}());
+    |
+    each content,prop in varObjects
+      |
+      if prop !== 'styles'
+        if typeof content === 'object'
+          |const !{prop} = !{JSON.stringify(content)};
+        else
+          |let !{prop} = !{content};
+      |
+    |
+    block
+    each jsBlock in k.scriptBlocks
+      |
+      |
+      - jsBlock();
+  each obj,scope in k.styles
+    scf.scf-styles(id=`scf-${scope}`)
+      each style in obj
+        - style();
+        |
+        |
+//- End Mixin
+
+
+//-
+  name: scss
+  memberof: Scripts
+  description: Stores SCSS (or CSS) for later addition to your general scss file. Useful for creating true Single File Components or Single Directory Components. Can be accessed in your scss via the `sfc` import. Accessible via `@use 'sfc'` and usable in your scss via `@include sfc.all`.
+  arguments:
+    - {block} block - The scss content to be added.
+  attributes:
+
+//- @pugdoc
+  name: scss
+  memberof: Scripts
+  description: Stores SCSS (or CSS) for later addition to your general scss file. Useful for creating true Single File Components or Single Directory Components. Can be accessed in your scss via the `sfc` import. Accessible via `@use 'sfc'` and usable in your scss via `@include sfc.all`.
+  arguments:
+    - {block} block - The scss content to be added.
+  attributes:
+  example: |
+    include ../_k.pug
+    +scss
+      |// include local scss file here or write scss here
+    +kscript
+      |// local js file will be put here
+mixin scss(scope='sheet,roll')
+  - const scopes = scope?.split(/\s*,\s*/) || [];
+  each s in scopes  
+    if block
+      - k.styles = k.styles || {};
+      - k.styles[s] = k.styles[s] || [];
+      - k.styles[s].push(block);
+//- End Mixin
+
+//- @pugdoc
+  name: module
+  memberof: Scripts
+  description: A mixin that works with {@link kscript}. It allows you to link your js directly in the pug file that the js is related to. The K-scaffold will then put the js in the final script tag.
+  arguments:
+  attributes:
+  example: |
+    include ../_k.pug
+    +module
+      |// include local js file here
+    +kscript
+      |// local js file will be put here
+mixin module
+  if block
+    - k.scriptBlocks.push(block)
+//- End Mixin
+
+//- @pugdoc
+  name: googleFont
+  memberof: Scripts
+  description: A mixin for adding google fonts to the K-scaffold generated font import. Note in the examples below that any additional information for the font (such as weight) should be included in the content passed to googleFont. The Google Material Icons and Material Symbols fonts are imported by default.
+  arguments:
+  attributes:
+  example: |
+    include ../_k.pug
+    //- As single string
+    +googleFont('Agbalumo')
+
+    //- Multiple fonts and a font with details (e.g. weight)
+    +googleFont('Roboto:wght@100','Agbalumo')
+mixin googleFont(...fontArray)
+  - k.fonts.push(...fontArray);
+  |<!-- Inserted fonts:"#{fontArray.join('|')}" -->

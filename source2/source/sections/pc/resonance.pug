@@ -1,0 +1,89 @@
+mixin resonance
+   +input({name:'resonance_toggle',type:'checkbox',value:'1',class:'resonance-toggle hidden'})
+   .section-resonance
+      +box({})
+         .label-input.column-resonance.input-count-4   
+            +checkbox({name:'resonance_edit',class:'resonance-edit-toggle hidden',value:1})         
+            .label-input-roller
+               +roller({name:'resonance',class:'resonance-button',trigger:{triggeredFuncs:['rollResonance']}})
+                  span(data-i18n='resonance') Resonans
+            +input({name:'resonance', type:'number',value: 0, class:'label-input-input input-resonance'})
+            +span({name:'resonance', type:'number', class:'label-input-span span-resonance'})
+            +checkbox({name:'resonance_edit',class:'resonance-edit',value:1})            
+            +action({name:'reset_resonance',class:'',trigger:{triggeredFuncs:['resetResonance']},'data-i18n-title':'resonance-clear'})
++scss.   
+   .section-resonance {
+      display: none;
+      & + p { display: none; }
+      input.resonance-toggle:checked + .section-resonance,
+      input.resonance-toggle:checked + .section-resonance + p {
+         display: block;
+      }
+      .label-input.column-resonance {
+         display: grid;
+         grid-template-columns: auto 4rem 2rem 2rem;
+         .label-input-roller {
+            width: 100%; 
+            button {
+               width: 100%; 
+            }
+         }
+         .input-resonance, .span-resonance {
+            border-right: 1px solid var(--border-color);
+            padding: 0; 
+            margin: 0; 
+            box-sizing: border-box;
+         }
+         input.resonance-edit-toggle:checked ~ input.input-resonance, 
+         input.resonance-edit-toggle:not(:checked) ~ span.span-resonance {
+            display: flex;
+            justify-content: center;
+            width: 100%; 
+         }
+         input.resonance-edit-toggle ~ input.input-resonance {
+            animation-name: var(--anim-pulse);
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate-reverse;
+            animation-timing-function: ease;
+         }
+         input.resonance-edit-toggle:not(:checked) ~ input.input-resonance, 
+         input.resonance-edit-toggle:checked ~ span.span-resonance {
+            display: none;
+         }
+         input.resonance-edit {
+            position: relative;
+            appearance: unset;
+            border: 0;
+            place-content: center; 
+            place-self: center;
+            &:before {
+               font-family: 'Material Symbols Outlined';
+               inset: 0; 
+               font-weight: normal;
+               font-size: 95%;
+            }
+            &:checked:before { content: 'edit_off'; }
+            &:not(:checked):before { content: 'edit'; }
+            
+         }
+         span.span-resonance {
+            //padding-top: 0.375rem;
+         }
+         button[type=action] {
+            justify-self: center;
+            place-self: center;
+            justify-content: center;
+            & + button[type=action] { display: none;}
+            &:before {
+               font-family: 'Material Symbols Outlined';
+               content: 'x_circle';
+               font-size: 1.25rem;
+               line-height: 0.5rem; 
+               justify-self: center;
+            }
+         }
+         button[type=roll] + button[type=action] { display: none;}
+      }
+      
+   }

@@ -1,0 +1,21 @@
+@use 'k-scaffold' as k;
+
+@mixin all {
+  @include k.variables;
+  // Customize your variables here
+  --logo-img: url(https://andreasdrougge.github.io/img/dod_91_logo.svg);
+  --logo-img: url(https://files.d20.io/images/494820402/dm4zZx9TJPVO-wI0Qoe_0Q/original.webp);
+
+  --font-color: #222;
+  --canvas-color: #fff;
+  --canvas-color: #fd5232;
+  --background-color: #fd5232;
+  --border-color: #222;
+
+
+}
+
+@mixin dark {
+  @include k.darkMode;
+  // Customize your darkmode variable states and styling here.
+}

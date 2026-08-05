@@ -1,0 +1,36 @@
+//- @pugdoc
+  name: checkbox-label
+  memberof: Premade Layouts
+  description: 
+  arguments:
+    - {string} label - The translation key to use for the span. If not passed, then the spanObj must be passed with a translation key
+    - {object} inputObj - An object describing the checkbox input to be paired with the button. This is the same object that you would pass to {@link input}.
+    - {object} [divObj] - An object describing the container label. Similar to the inputObj, but will most likely only have a `class` property if it is passed at all.
+    - {object} [spanObj] - An object describing the span to be paired with the input. This is the same object that you would pass to {@link span}.
+  attributes:
+  example: |
+    include ../_k.pug
+    +checkbox-label({
+      label:'strength',
+      inputObj:{name:'strength',type:'number'},
+      divObj:{class:'div-class'},
+      spanObj:{class:'span-class'}
+    })
+mixin checkbox-label({label,inputObj,divObj,spanObj})
+   if divObj
+      - divObj.class = divObj.class ? replaceProblems(divObj.class) : undefined;
+   if inputObj
+      - inputObj.class = inputObj.class ? replaceProblems(inputObj.class) : undefined;
+   if spanObj
+      - spanObj.class = spanObj.class ? replaceProblems(spanObj.class) : undefined;
+   label.input-label&attributes(divObj)&attributes(attributes)
+      - inputObj.name = inputObj.name.replace(/\s+/g,'_');
+      - inputObj.class = inputObj.class ? `${inputObj.class} input-label__input checkbox-label__checkbox` : 'input-label__input checkbox-label__checkbox';
+      - inputObj.type = 'checkbox';
+      if spanObj
+         - spanObj.class = spanObj.class ? `${spanObj.class} input-label__text checkbox-label__text` : 'input-label__text checkbox-label__text';
+      +input(inputObj)
+      span()&attributes(spanObj)= label
+
+   
+//-End Mixin

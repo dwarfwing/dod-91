@@ -1,0 +1,31 @@
+mixin encumbrance
+   .section-encumbrance
+      +box({})
+         //-+label-inputs({
+            label: 'Bärförmåga',
+            divObj: {class:'column-encumbrance w60-40pc currMax inout-count-2'},
+            labelObj: {class: 'label-input-label',name: 'bärförmåga', attr: 'encumbrance'},
+            inputObj: [
+               {type: 'number', name: 'encumbrance', class:'label-input-input input-encumbrance',formula:'@{gear_encumbrance}+@{weapon_encumbrance}+@{armor_encumbrance}'},
+               {type: 'number', name: 'encumbrance_max', class:'label-input-input input-encumbrance-max'}
+            ]
+         .label-input.column-encumbrance.w60-40pc.currMax.input-count-2 
+            label.label-input-label(data-i18n='encumbrance') Bärförmåga
+            +input({ name: 'encumbrance', type: 'number',class:'label-input-input input-encumbrance hidden',trigger:{formula:'@{gear_encumbrance}+@{weapon_encumbrance}+@{armor_encumbrance}+@{shield_encumbrance}'}})
+            +span({name:'encumbrance',class:''})
+            +span({type: 'number', name: 'encumbrance_max', class:'label-input-input input-encumbrance-max'})
++module.
+   const calcEncumbrance = function({trigger,attributes,sections,casc}) {
+      return parseFloat(attributes['weapon_encumbrance'])+parseFloat(attributes[gear_encumbrance])+parseFloat(attributes['armor_encumbrance'])+parseFloat(attributes['shield_encumbrance']);
+   }
++scss.
+   .section-encumbrance {
+      .currMax {
+         span {
+            text-align: center;
+         }
+         input {
+            width: 2.5rem;
+         }
+      }
+   }

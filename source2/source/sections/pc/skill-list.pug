@@ -1,0 +1,120 @@
+mixin skillList(skillCatName,skillCatAttr,skillCatTransl,skillHeaderFields,skillList) 
+   - headerFields = skillHeaderFields ? skillHeaderFields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+   - skillCatAttr = skillCatAttr ? skillCatAttr : 'skills';
+   - skills = skillList == 'primaryskills' ? spine.skills : false; 
+   .section-skill 
+      +box({headerObj:{name:skillCatName,attr:skillCatAttr,'data-i18n':skillCatTransl},fields:headerFields})
+         if skills
+            each skill in skills
+               +label-inputs({
+                  label: skill.name,
+                  divObj: {class:'column-'+skill.name},
+                  labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr,rollType:'skill'},
+                  inputObj: [
+                     {type: 'number', name: skill.attr, class:'label-input-input input-'+skill.name},
+                     {type: 'number', name: skill.attr+'_mod', class:'label-input-input input-mod-'+skill.name},
+                     {type: 'number', name: skill.attr+'_exp', class:'label-input-input input-exp-'+skill.name}
+                  ]
+                  })
+               //- i18n = skill.attr.replace(/_/,'-');
+               //-div(class=`label-input input-count-3 column-${skill.attr}`)
+                  +roller({name:skill.name,'data-i18n':skill.name, trigger:{triggeredFuncs:[`rollSkill`]}})
+                  span.input-span.input-0
+                     //-+checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                     //-+checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                     +number({name:skill.attr,class:`.label-input-input.input-${skill.name}`})
+                  span.input-span.input-1
+                     +number({name:skill.attr+'_mod',class:`.label-input-input.input-mod-${skill.name}`})
+                  span.input-span.input-2
+                     +number({name:skill.attr+'_exp',class:`.label-input-input.input-exp-${skill.name}`})
+         +fieldset({name:skillCatAttr})
+            +collapse
+            //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
+            //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
+            .collapsed
+               .label-input.input-count-3
+                  //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                  label.select-input.collapsed 
+                     +action({name:'roll',trigger:{triggeredFuncs:['rollSkill']}})
+                        +span({name:'skill_name'})
+                  //- label.text-input
+                     +text({name:'name',class:'text-input'})
+                  //-+span({name:'skill',type:'number'}).input-span.input-0                  
+                  span.input-span.input-0
+                     +input({type: 'number', name: 'skill', class:'label-input-input'})
+                     //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                     //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  +input({name:'skill_mod',type:'number'}).input-span.input-1
+                  +input({name:'skill_exp',type:'number'}).input-span.input-2
+            .expanded
+               .label-input.input-count-2 
+                  //-label.text-input 
+                     +text({name:'name'}).caps-input
+                  label.select-input.expanded
+                     +text({name:'skill_name',id:'custom-skill-input'})
+                  span.input-span.input-0
+                     +input({type: 'number', name: 'skill', class:'label-input-input'})
+                  span.input-span
+                     +input({type: 'number', name: 'skill_mod', class:'label-input-input'})
+                  span.input-span
+                     +input({type: 'number', name: 'skill_exp', class:'label-input-input'})
+      p
+
++scss.
+   .section-skill {
+      .label-input.input-count-2 {
+         grid-template-columns: 1fr 0 3rem 3rem;
+         span.input-span.input-0 {
+            position: relative; 
+            input[type=checkbox] {
+               display: none;
+               position: absolute;
+               top: 0.2rem;
+               right: 0;
+               max-width: 0.2rem;
+               max-height: 0.2rem;
+               height: 0.2rem;
+               width: 0.2rem;
+               padding: 0;
+               min-width: 0.6rem;
+               min-height: 0.6rem;
+               transform: rotate(45deg);
+               &.improve-mark-perfect {
+                  top: 50%;
+                  //corner-shape: scoop;
+                  //border-radius: 50%;
+                  //width: 1rem;
+                  //min-width: 1rem;
+                  //min-height: 1rem;
+                  //transform: unset;
+                  //right: -0.2rem;
+               }
+               &:checked { 
+                  display: flex;
+                  background-color: var(--fill-color);
+                  &:before {
+                     content: '';
+                  }
+               }
+            }
+            &:hover input[type=checkbox] { display: flex; }
+         }
+         
+         button[type=action] {
+            display: hidden;
+         }
+      }
+      input.exp-toggle {
+         display: none; 
+      }
+      .repitem:hover {
+         position: relative;
+         input.exp-toggle {
+           display: flex;
+           position: absolute;
+           left: -1rem;
+           width: 1rem;
+         }  
+      }
+      
+   }

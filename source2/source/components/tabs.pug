@@ -1,0 +1,29 @@
+include k-scaffold
+mixin tabs 
+   +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap
+      +tab({name:'pc',container:'article'})
+         include ./views/pc/_index.pug
+      +tab({name:'npc',container:'article'})
+         include ./views/npc/_index.pug
+      +tab({name:'monster',container:'article'})
+         include ./views/monster/_index.pug
+      +tab({name:'settings',container:'article'})
+         include ./views/settings/_index.pug
+      //- Add additional tabs as needed
++scss.
+   .tabs {
+      display: flex;
+      width: 100%;
+      font-family: var(--font-family);
+      font-size: var(font-size);
+      .tabs__header {
+         width: 100%;
+         justify-content: flex-end;         
+         ul {
+            margin-inline: 0.25rem;
+         }
+      }
+      .tabs__body {
+         min-width: 565px;
+      }
+   }

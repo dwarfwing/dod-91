@@ -1,0 +1,4 @@
+@use './pc/pc';
+@mixin all {
+   @include pc.all;
+}

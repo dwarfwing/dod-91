@@ -1,0 +1,20 @@
+mixin skills-tab 
+   .tab-skills 
+      .tab-skills__primary
+         +skills
+         +customroll
+         //-+skillList(skillCatName='Primära färdigheter',skillCatAttr='primaryskills',skillCatTransl='primary-skills',skillList="primaryskills")
+      .tab-skills__profession
+         +professionskills
+         +languages
+      .tab-skills__secondary-abilities
+         +abilities
+         +secondaryskills
++scss.
+   .tab-skills {
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr; 
+      & > div {
+         border: 2px solid var(--border-color);
+      }
+   }

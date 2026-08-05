@@ -1,0 +1,76 @@
+- 
+   spine.abilityfields = [
+      {
+         name: 'namn',
+         attr: 'skill_name',
+         type: 'text',
+         classes: 'wide-text-input',
+      },
+      {
+         name: 'aktivering',
+         attr: 'activation',
+         type: 'text',
+         classes: 'w50pc',
+         trigger: 'abilityDisplay',
+      },
+      {
+         name: 'resonans',
+         attr: 'ability_resonance',
+         type: 'checkbox',
+         classes: 'w50pc',
+         trigger: 'resonanceToggle',
+         title: 'resonance-desc',
+      },
+      {
+         name: 'räckvidd',
+         attr: 'range',
+         type: 'text',
+         classes: 'w50pc',
+         trigger: 'abilityDisplay',
+      },
+      {
+         name: 'varaktighet',
+         attr: 'duration',
+         type: 'text',
+         classes: 'w50pc',
+         trigger: 'abilityDisplay',
+      },
+      {
+         name: 'effekt',
+         attr: 'effect',
+         type: 'text',
+         classes: 'wide-text-input',
+         trigger: 'abilityDisplay',
+      },
+      {
+         name: 'Färdighetsvärde',
+         attr: 'skill',
+         type: 'number',
+         roll: 'skill',
+         classes: 'wide-text-input',
+         trigger: 'abilityDisplay',
+      },
+      {
+         name: 'Tärningsslag',
+         attr: 'roll',
+         type: 'text',
+         roll: 'dice',
+         classes: 'wide-text-input',
+         trigger: 'abilityDisplay',
+         placeholder: 'ability-roll-placeholder'
+      },
+      {
+         name: 'Skada',
+         attr: 'damage',
+         type: 'text',
+         roll: 'damage',
+         classes: 'wide-text-input',
+         trigger: 'abilityDisplay',
+      },
+      {
+         name: 'Beskrivning',
+         attr: 'ability-description',
+         type: 'textarea',
+         classes: 'wide-text-input',
+      },
+   ]

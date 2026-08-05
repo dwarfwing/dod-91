@@ -1,0 +1,117 @@
+mixin languages 
+   .section-languages
+      +box({headerObj:{name:'språk',attr:'languages','data-i18n':'languages'},classes:'box-languages field-count-4',fields:[{name:'B',attr:'bskill_level'},{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+         +fieldset({name:'languages',class:'collapse-container'})
+            +collapse
+            .collapsed.label-input.input-count-4
+               label.select-input 
+                  +action({name:'roll',trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                     +span({name:'text'})
+               +number({name:'b', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+               +number({name:'fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+               +number({name:'mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
+               +number({name:'erf',type:'number'}).input-span.input-3
+            .expanded.label-input.input-count-4 
+               +input({type: 'text', name: 'text', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+               +number({name: 'b', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+               +number({name: 'fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
+               +number({name: 'mod', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-3
+               +number({name: 'erf', class:'label-input-input'}).input-span.input-3
++scss.
+   .section-languages {
+            border-bottom: 1px solid var(--border-color);
+      :is(.expanded,.collapsed) {
+         & > .label-input {
+            //grid-template-columns: 1fr 3rem 3rem;
+            grid-template-columns: 1fr 3rem 3rem 3rem;
+         }
+         button span {
+            padding-left: 0.25rem;
+         }
+      } 
+      .collapse {
+         z-index: 1000; 
+         top: -0.25rem; 
+         right: 12rem; 
+      }
+      .repitem {
+         border-bottom: 1px solid var(--border-color);
+         min-width: 100%;
+         height: 2.1rem; 
+         & > :is(.expanded,.collapsed) {
+            min-width: 100%; 
+         }
+         label, button {
+            border-right: 0;
+         }
+         input[type=number] {
+            border-left: 1px solid var(--border-color);
+         }
+         button[type=action] {
+            min-width: 100%;
+            border-right: 0;
+            span {
+               min-width: 100%; 
+               border-right: 0; 
+            }
+         }
+      }
+      .collapse {
+      }
+      .expanded {           
+         option {
+            text-align: left;
+            width: 100%;
+         }
+         select {
+            width: 100%;
+            height: unset;
+            &:open {
+               max-height: 6rem;
+            }
+            & + input[type="checkbox"] + input[type="text"] { 
+               display: none;
+               height: auto;
+               width: 100%; 
+               border-bottom: 1px dashed black;
+               margin-bottom: 2px;
+            }
+            & + input[type="checkbox"]:checked + input[type="text"] { display: block; }
+         }
+      }
+      span.input-span.input-0 {
+         position: relative; 
+         input[type=checkbox] {
+            display: none;
+            position: absolute;
+            top: 0.2rem;
+            right: 0;
+            max-width: 0.2rem;
+            max-height: 0.2rem;
+            height: 0.2rem;
+            width: 0.2rem;
+            padding: 0;
+            min-width: 0.6rem;
+            min-height: 0.6rem;
+            transform: rotate(45deg);
+            &.improve-mark-perfect {
+               top: 50%;
+               //corner-shape: scoop;
+               //border-radius: 50%;
+               //width: 1rem;
+               //min-width: 1rem;
+               //min-height: 1rem;
+               //transform: unset;
+               //right: -0.2rem;
+            }
+            &:checked { 
+               display: flex;
+               background-color: var(--fill-color);
+               &:before {
+                  content: '';
+               }
+            }
+         }
+         &:hover input[type=checkbox] { display: flex; }
+      }
+   }

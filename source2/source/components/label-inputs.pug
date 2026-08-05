@@ -1,0 +1,257 @@
+
+mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
+  if divObj
+    - divObj.class = divObj.class ? replaceProblems(divObj.class) : undefined;
+  if inputObj
+    - inputObj = inputObj.isArray ? inputObj : [...inputObj];
+    - inputCount = inputObj.length;
+    -divObj.class += ' input-count-'+inputCount;
+    //- inputObj.class = inputObj.class ? replaceProblems(inputObj.class) : undefined;
+  .label-input&attributes(divObj)
+    if labelObj
+      - labelObj.name = labelObj.name ? replaceProblems(labelObj.name) : label ? label : undefined;
+      - labelObj.class = labelObj.class ? replaceProblems(labelObj.class) : undefined;
+      - labelObj.class = labelObj.class ? `${labelObj.class} label-input__text` : 'label-input__text';
+      - labelObj.type = labelObj.type ? replaceProblems(labelObj.type) : 'label'; 
+      - labelObj.title = labelObj.abbr ? replaceProblems(labelObj.abbr4) : '';
+      - labelObj['data-i18n-title'] = labelObj['data-i18n-title'] ? labelObj['data-i18n-title'] : '';
+    if labelObj && labelObj.type && labelObj.type == 'roller'
+      if labelObj.rollType
+      - 
+        var rollDice = labelObj.rollType == 'skill' ? 
+                      'rollSkill' : labelObj.rollType == 'attribute' ? 
+                      'rollAttribute' : labelObj.rollType == 'init' ?
+                      'rollInit' : labelObj.rollType == 'initset' ?
+                      'setInit' : labelObj.rollType == 'improve' ?
+                      'rollImprovements' : 'rollDice'; 
+      +roller({name:labelObj.attr, trigger:{triggeredFuncs:[`${rollDice}`]}})&attributes(labelObj)
+        +span({'data-i18n':labelObj.attr.replace(/_/g, '-')}) 
+          = label
+    else if labelObj && labelObj.type && labelObj.type == 'action'
+      .label-input 
+        //-+action({name:labelObj.attr,'data-i18n':labelObj.attr.replace(/_/g, '-'), trigger:{triggeredFuncs:['rollDice']}})&attributes(labelObj)
+        +action({name:'roll','data-i18n':labelObj.attr.replace(/_/g, '-'), trigger:{triggeredFuncs:['rollDice']}})&attributes(labelObj)
+          +span({'data-i18n':labelObj.attr.replace(/_/g, '-')}) 
+            = label
+    else if labelObj.type == 'text'
+      +text({name:'attr_'+labelObj.name,'data-i18n':labelObj.attr.replace(/_/g, '-')})&attributes(labelObj)
+    else if labelObj && inputObj[0].type != 'textarea'
+      #{labelObj.type}('data-i18n'=labelObj.attr.replace(/_/g, '-'))&attributes(labelObj)
+        = label
+    if infoObj
+      span(title=infoObj.title,data-i18n-title=infoObj.i18n).info
+        |?
+    each input,index in inputObj
+      - input.name = input.name.replace(/\s+/g, '_').replace(/-/g, '_'); // 
+      - input.class = input.class ? replaceProblems(input.class) : '';
+      if labelObj.type == 'text'
+        - input.class += ' text-input'
+      if input.type == 'textarea'
+        - input.placeholder = label.charAt(0).toUpperCase()+label.slice(1);
+      - const textareaclass = input.type == 'textarea' ? 'input-span-textarea' : ''
+      span.input-span&attributes(spanObj)(class=textareaclass+' input-'+index)
+        if input.type == 'textarea'
+          //-+adaptiveTextarea({name: input.name})&attributes(inputObj) 
+          +adaptiveTextarea(input).input-span-adaptive
+        else if input.type == 'button'
+          +action(input)
+        else  
+          +input(input)
++scss('sheet').
+    .label-input {
+      width: 100%;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      border-bottom: 1px solid var(--border-color);
+      align-content: stretch;
+      position: relative; 
+      background-color: #EEE; 
+      &.text-field {         
+         label {
+            width: auto;
+            position: absolute;
+            font-size: 75%;
+            top: 0;
+            left: 0.25rem; 
+            border-right: 0;
+            height: 50%;
+            padding: 0;
+            line-height: 1rem; 
+         }
+         span.input-span {
+            width: auto; 
+         }
+         input[type=text] {
+            
+            width: 100%; 
+            text-align: center; 
+         }
+      }
+      label,
+      label.text-input,
+      button.roller {
+        border-right: 1px solid var(--border-color);
+        align-content: center; 
+        width: auto; 
+        padding: 0;
+      }
+      * {
+        height: 100%;
+        padding-block: 0;
+        margin-block: 0;
+        align-self: center;
+        align-content: center;
+      } 
+      input[type='number'],
+      span.input-span { 
+        width: 3rem; 
+        box-sizing: content-box; 
+        border-radius: 0; 
+        text-align: center;
+        //padding-block: 2px;
+        align-content: center; 
+        input {
+          width: 100%; 
+          box-sizing: border-box;
+        }
+      }
+      button.roller:hover {
+        backdrop-filter: brightness(90%);
+      }
+      button.roller:before {
+        content: '0';
+        font-family: dicefontd10;
+        font-size: 1.375rem;
+      }
+      label.right-align {
+        display: flex;
+        justify-content: right; 
+        //margin-right: 1rem;
+      }
+      label.comma,span.comma {
+        padding-right: 0.5rem;
+        box-sizing: border-box;
+        &:after {
+          content: ': ';
+        }
+      }
+      span.info {
+        font-family: Pictos;
+
+      }
+      span.input-last {
+        border-right: 0; 
+      }
+      &.input-count-1 {
+         label, 
+         label.text-input,
+        button[type='action'],
+         button.roller { 
+          //width: calc(100% - 3rem); 
+        }
+      }
+      &.input-count-2 {
+        display: grid;
+        grid-template-columns: 1fr 3rem 3rem;
+        label,
+        button.roller,
+        button[type='action'],
+        label.text-input { 
+          //width: calc(100% - 8rem); 
+        }
+        span.input-0 {     
+          border: 0;
+          border-right: 1px solid var(--border-color);
+        }
+        &.checkboxed {          
+          grid-template-columns: 2rem 1fr 3rem 3rem;
+        }
+      }
+      &.input-count-3 {
+        display: grid;
+        grid-template-columns: 1fr 3rem 3rem 3rem;
+        label,
+        button.roller,
+        button[type='action'],
+        label.text-input { 
+          //width: calc(100% - 8rem); 
+          border-right: 1px solid var(--border-color);
+        }
+        span {
+          
+          border-right: 1px solid var(--border-color);
+        }
+        span.input-last {     
+          border: 0;
+          //border-right: 1px solid var(--border-color);
+          border: 0;
+        }
+        &.checkboxed {          
+          grid-template-columns: 2rem 1fr 3rem 3rem 3rem;
+        }
+      }
+      &.input-count-4 {
+        display: grid;
+        grid-template-columns: 1fr 3rem 3rem 3rem 3rem;
+      }
+      &.wide-text-input {
+        label {
+          //min-width: 10em;
+          width: 30%; 
+        }
+        span:not(.input-span-textarea,.adaptive--text__span) {
+          max-width: calc(100% - 10rem);
+          width: 70%;
+          input[type='text'] { text-align: center; }
+          input[type='text'], textarea {
+            width: 100%;
+          }
+        }
+      }
+      & span.input-span-textarea {
+        width: 100%;
+        height: auto; 
+      }
+      & .adaptive.input-span-adaptive {
+        //height: unset;
+        * {
+          align-content: unset;
+          min-height: 5rem;
+        }
+      }
+      &.w50pc {
+        box-sizing: border-box;
+        width: 50%; 
+        //border-right: 1px solid var(--border-color);
+        &:nth-child(2 of .w50pc),&:nth-child(4 of .w50pc) {
+          border-right: 0; 
+        }
+      }
+      &.w33pc {
+        box-sizing: border-box;
+        width: 33%; 
+      }
+      &.w34pc {
+        box-sizing: border-box;
+        width: 34%; 
+      }
+      input[type="text"].text-input {
+        font-family: var(--font-family);
+        text-transform: var(--text-transform);
+      } 
+      &.currMax {
+        span:first-of-type {
+          border-right: 0;
+          position: relative; 
+          &:after {
+            content: '/';
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+        }
+      }
+
+
+   }

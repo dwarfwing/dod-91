@@ -1,0 +1,89 @@
+mixin vehicle-weapons 
+   .section-vehicle-weapons
+      - 
+         var headerFields = [...spine.vehicle_weaponfields].filter( (n) => !n.hidden); 
+         const drop = headerFields.shift();          
+      +box({headerObj:{name:'Vapen',attr:'vehicleweapons','data-i18n':'weapons'},fields:headerFields,classes:'coverall'})
+         +fieldset({name:'vehicleweapons'})
+            +collapse
+            //-input(type='checkbox',name='attr_shotguntoggle',class='shotgun-toggle')
+            .collapsed
+               each field in spine.vehicle_weaponfields 
+                  if field.attackRoll 
+                     +action({name:'attack_roll',trigger:{triggeredFuncs:['rollWeaponAttack']}})
+                        +span({name:'name'})
+                  else if field.hidden                                     
+                     .label-input.hidden 
+                        +span({name:field.attr})
+                  else if field.input                                     
+                     .label-input 
+                        +input({name:field.attr,type:field.type})
+                  else if field.initRoll 
+                     +action({name:'weapon_init_roll',trigger:{triggeredFuncs:['rollInit']}}).init-button.cut-corner
+                        +span({name:'init'}).input-span
+                  else if field.damageRoll 
+                     +action({name:'damage_roll',trigger:{triggeredFuncs:['rollDamage']}}).damage-button.cut-corner
+                        +span({name:'damage'}).text-span
+                  else                  
+                     .label-input 
+                        +span({name:field.attr})
+            .expanded 
+               each field in spine.vehicle_weaponfields
+                  if field.hidden                                     
+                     +input({name:field.attr,type:field.type,hidden:true,value:field.value}).hidden
+                  else
+                     .label-input 
+                        +input({name:field.attr,type:field.type})
+               
++scss.
+   .section-vehicle-weapons {
+      .box {
+         background-color: transparent; 
+      }
+      .box-header, .repitem .expanded, .repitem .collapsed {
+         display: grid; 
+         grid-template-columns: auto 5% 5% 5% 5% 5% 5% 5% 10% 8% 6% 5% 5% 5%;
+         column-gap: 0.25rem;
+      }
+      .box-header {
+         background-color: var(--border-color);
+         h1,h2 {
+            color: var(--font-color-inverse);
+         }
+      }
+      .repitem {
+         margin-top: 0.25rem; 
+         button {
+            border: 1px solid var(--border-color);
+            &.init-button, 
+            &.damage-button {
+               justify-content: center;
+            } 
+         }
+         div.label-input {
+            display: flex;
+            width: 100%;
+            border: 0; 
+            span {
+               width: 100%; 
+               background-color: transparent;
+               color: var(--font-color);
+               height: 2rem;
+               box-sizing: border-box;
+               border: 1px solid var(--border-color);
+               border-bottom-left-radius: 0;
+               border-top-left-radius: 0;
+               border-top-right-radius: 0;
+               border-bottom-right-radius: 0.75rem;
+               corner-bottom-right-shape: bevel;
+               text-align: center;
+            }
+            input {
+               width: 100%;
+            }
+            span[name='attr_range'] {
+               font-size: 80%;
+            }
+         }
+      }
+   }

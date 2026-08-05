@@ -1,0 +1,80 @@
+@mixin all {
+   .tabs {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-width: 100%; 
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      //margin-top: -2rem;
+      .tabs__header {
+         display: flex;
+         width: 100%;
+         justify-content: flex-end;         
+         ul li {
+            margin-inline: 0.25rem;
+            button {
+               color: #ccc;;
+            }
+         }
+         button.tab-button {
+            font-family: 'Material Symbols Outlined';
+            color: var(--font-color-medium);
+            font-size: 1.5rem;
+            }
+         }
+      }
+      .tabs__body {
+         min-width: 100%; 
+         & > article {
+            display: flex; 
+            flex-wrap: wrap; 
+            min-width: 100%; 
+            padding: 0; 
+         }
+         .tabs--dod91__container--pc {
+            width: 100%; 
+            display: flex; 
+            gap: 0;
+                        .box.coverall {
+               height: -webkit-fill-available;
+               align-content: flex-start;
+            }
+            .tabs--pctabs {
+               width: 100%; 
+               justify-content: space-evenly;
+               .tabs__header {
+                  width: 100%;
+                  height: unset; 
+                  border-block: var(--border-size) solid var(--border-color);
+                  border-inline: var(--border-size-2x) solid var(--border-color); 
+                  .tabs__nav-list {
+                     width: 100%; 
+                     margin: 0; 
+                     justify-content: space-evenly;
+                     li {
+                        width: 100%; 
+                        margin: 0;
+                     }
+                     button {
+                        font-family: unset;
+                        color: unset;
+                        font-size: 1rem;
+                        width: 100%; 
+                        display: grid; 
+                        justify-self: center;
+                        text-align: center; 
+                        background-color: var(--bg-color2);
+                        &.k-active-button {
+                           background: var(--bg-color);
+                        }
+                     }
+                  }
+               }
+               .tabs__body {
+                  width: 100%; 
+               }
+            }
+         }
+      }
+   }

@@ -1,0 +1,117 @@
+//- If your project has multiple roll templates, include them here along with any generic styling using the scss mixin.
+//- include ./example-include.js
+//- If your project has only one roll template, simply write it here.
+rolltemplate.sheet-rolltemplate-dod91
+   .sheet-template
+      .sheet-container
+         .sheet-header 
+            h2 {{roll-name}}
+         .sheet-roll-title 
+            +characterLink().sheet-header-title
+         .sheet-roll-result 
+            +templateConditionalDisplay('roll1')
+               .sheet-roll-total
+                  label(data-i18n='result') Resultat 
+                  span {{roll1}}
+            +templateConditionalDisplay('target')
+               .sheet-roll-target
+                  label(data-i18n='target') FV
+                  span {{target}}
+            +templateConditionalDisplay('damage')
+               +rollTotal({values:'computed::calcdamage 0'})
+                  .sheet-roll-damage
+                     label(data-i18n='damage') Skada
+                     span {{damage}}
+               +rollTotal({values:'computed::calcdamage 1'})
+                  .sheet-roll-damage
+                     label(data-i18n='damage') Skada
+                     span {{computed::calcdamage}} ({{damage}}) 
+            +templateConditionalDisplay('hitarea')
+               +templateConditionalDisplay('damage')
+                  .sheet-roll-damage.sheet-roll-hitarea
+                     label(data-i18n='damage') Skada
+                     span {{damage}} 
+            //-+templateConditionalDisplay('computed::improvement')   
+            +rollTotal({values:'computed::improvementsuccess 1'})              
+               .sheet-roll-damage.sheet-roll-skill-improvement
+                  label(data-i18n='improvement') Förbättring
+                  span {{rollImprov}} 
+            +rollTotal({values:'computed::improvementsuccess 0'}) 
+               .sheet-roll-damage.sheet-roll-skill-improvement
+                  label(data-i18n='improvement') Förbättring
+                  span 1 
+            //-+templateConditionalDisplay('computed::resonanceeffect')
+               .sheet-roll-damage.sheet-roll-resonanceeffect
+                  label(data-i18n='resonance-effect')
+                   span {{computed::resonanceeffect}}           
+            //-+templateConditionalDisplay('target-area')
+               .sheet-roll-damage
+                  label(data-i18n='target-area') Träffområde
+                  span {{target-area}}            
+            +templateConditionalDisplay('computed::damageRoll')
+               .sheet-roll-damage.sheet-roll-damage-button
+                  span.damage-roll-button [{{button-label}}](~{{character_name}}|rolldamage||{{computed::damageRoll}})
+            +rollGreater({values:'computed::shotgun 0'})
+               .sheet-roll-damage.sheet-roll-damage-button.hit-area-buttons
+                  label(data-i18n='damage') Skada
+                  +rollGreater({values:'computed::shotgun 0'})
+                     span.damage-roll-button [<span data-i18n='range-melee'>Närstrid</span>](~{{character_name}}|rolldamage-{{computed::damage1}})
+                  +rollGreater({values:'computed::shotgun 1'})
+                     span.damage-roll-button [<span data-i18n='range-near'>Nära</span>](~{{character_name}}|rolldamage-{{computed::damage2}})
+                  +rollGreater({values:'computed::shotgun 2'})
+                     span.damage-roll-button [<span data-i18n='range-short'>Kort</span>](~{{character_name}}|rolldamage-{{computed::damage3}})
+                  +rollGreater({values:'computed::shotgun 3'})
+                     span.damage-roll-button [<span data-i18n='range-medium'>Medel</span>](~{{character_name}}|rolldamage-{{computed::damage4}})
+                  +rollGreater({values:'computed::shotgun 4'})
+                     span.damage-roll-button [<span data-i18n='range-long'>Långt</span>](~{{character_name}}|rolldamage-{{computed::damage5}})
+                  +rollGreater({values:'computed::shotgun 5'})
+                     span.damage-roll-button [<span data-i18n='range-extreme'>Extremt</span>](~{{character_name}}|rolldamage-{{computed::damage6}})
+            +rollTotal({values:'computed::abilityfail 1'})
+               .sheet-roll-resonance.sheet-roll-resonance-button
+                  span.resonance-roll-button [{{resonance-label}}](~{{character_name}}|rollResonance)
+            +rollTotal({values:'computed::abilityfail 2'})
+               .sheet-roll-resonance.sheet-roll-resonance-button.sheet-roll-resonance-button-crit
+                  span.resonance-roll-button [{{resonance-label}}](~{{character_name}}|rollResonanceCrit)
+            +templateConditionalDisplay('hitareas')
+               .sheet-roll-damage.sheet-roll-damage-button.hit-area-buttons
+                  label(data-i18n='target-area') Träffområde
+                  span.damage-roll-button [<span data-i18n='d2'>d2</span>](~{{character_name}}|hitarea-2||{{computed::damageTotal}})
+                  span.damage-roll-button [<span data-i18n='d4'>d4</span>](~{{character_name}}|hitarea-4||{{computed::damageTotal}})
+                  span.damage-roll-button [<span data-i18n='d6'>d6</span>](~{{character_name}}|hitarea-6||{{computed::damageTotal}})
+                  span.damage-roll-button [<span data-i18n='d8'>d8</span>](~{{character_name}}|hitarea-8||{{computed::damageTotal}})
+                  span.damage-roll-button [<span data-i18n='d10'>d10</span>](~{{character_name}}|hitarea-10||{{computed::damageTotal}})
+                  span.damage-roll-button [<span data-i18n='d12'>d12</span>](~{{character_name}}|hitarea-12||{{computed::damageTotal}})
+            +templateConditionalDisplay('hitarearoll')
+               .sheet-roll-hitarea               
+                  label(data-i18n='hitarea') träffområde
+                  span.align-center {{hitarearoll}} 
+               //-+templateConditionalDisplay('computed::hitarea')
+               +rollTotal({values:'computed::hitareadetails 1'})
+                  .sheet-roll-result 
+                     |{{computed::hitarea}}
+            +templateConditionalDisplay('easy')
+               .sheet-roll-difficulty   
+                  +rollLess({values:'roll1 easy'})
+                     span(data-i18n='easy').success EASY 
+                  +rollTotal({values:'roll1 easy'})
+                     span(data-i18n='easy').success EASY  
+                  +rollGreater({values:'roll1 easy'})
+                     span(data-i18n='easy').fail EASY  
+                  +rollLess({values:'roll1 normal'})
+                     span(data-i18n='normal').success NORMAL  
+                  +rollTotal({values:'roll1 normal'})
+                     span(data-i18n='normal').success NORMAL  
+                  +rollGreater({values:'roll1 normal'})
+                     span(data-i18n='normal').fail NORMAL  
+                  +rollLess({values:'roll1 difficult'})
+                     span(data-i18n='difficult').success DIFFICULT  
+                  +rollTotal({values:'roll1 difficult'})
+                     span(data-i18n='difficult').success DIFFICULT  
+                  +rollGreater({values:'roll1 difficult'})
+                     span(data-i18n='difficult').fail DIFFICULT  
+                  +rollLess({values:'roll1 absurd'})
+                     span(data-i18n='absurd').success ABSURD  
+                  +rollTotal({values:'roll1 absurd'})
+                     span(data-i18n='absurd').success ABSURD  
+                  +rollGreater({values:'roll1 absurd'})
+                     span(data-i18n='absurd').fail ABSURD

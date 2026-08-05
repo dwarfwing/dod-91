@@ -1,0 +1,89 @@
+@use 'k-scaffold' as k;
+@import url('https://fonts.googleapis.com/css?family=Arimo|PT+Serif|Adgasima|Martel+Sans|Material+Symbols+Outlined|Material+Icons|Material+Icons+Outlined|&display=swap');
+
+@mixin all {
+  @include k.variables;
+  
+  font-family: 'PT Serif';
+  font-size: 16px;
+  text-transform: capitalize;
+  line-height: 2rem; 
+
+  //--bg-image: url(https://files.d20.io/images/473614827/QuVlaMbU9zMiKO6-BxzBkg/original.png); 
+  --logo-image: url(https://files.d20.io/images/494820402/dm4zZx9TJPVO-wI0Qoe_0Q/original.webp);
+
+  --bg-color: #fd5232;
+  --bg-color2: #e3e3e3;
+  --font-family: Helvetica, "Arimo", Sans-serif;
+  --font-color: #111;
+  --font-color2: #222;
+  --font-color-inverse: #fff;
+  --success-color: #319131;
+  --success-bg-color: #acdcbc;
+  --fail-color: #913131;
+  --fail-bg-color: #dcacac;
+  //--text-transform: uppercase;
+  --text-transform: capitalize;
+  --border-color: #222;
+  --border-size: 3px; 
+  --border-size-2x: 6px; 
+  --fill-color: #505050;
+  --fill-color-none: transparent;
+  --background-color: transparent;
+  --background-color-inv: var(--dark-surface1);
+  --background-color-box: rgb(0,0,0,0.1); 
+  --dm-collapseExpandedColor: #e3e3e3;
+  --rt-bg-color: #fff;
+  --invert-bg: invert(0);
+  --anim-pulse: bgpulse;
+  --collapseHoverOpacity: 1;
+
+
+  // Customize your variables here
+}
+
+@mixin roll { 
+  font-family: 'PT Serif';
+  font-size: 14px;
+  text-transform: uppercase;
+
+  --font-family: "PT Serif", Serif;
+  --font-color: #000;
+  --font-color2: #3e3e3e;
+  --font-color-inv: #c3c3c3;
+  --font-color-inverse: #a1a1a1;
+  --success-color: #319131;
+  --success-bg-color: #acdcbc;
+  --fail-color: #913131;
+  --fail-bg-color: #dcacac;
+  --text-transform: uppercase;
+  --border-color: #000;
+  --fill-collor: transparent;
+  --background-color: transparent;
+  --background-color2: #e3e3e3;
+  --background-color-inv: var(--dark-surface1);
+  --rt-bg-color: #fff;
+  --invert-bg: invert(0);
+
+}
+
+@mixin dark {
+  @include k.darkMode;
+  // Customize your darkmode variable states and styling here.
+  --font-color: #e3e3e3;
+  --font-color2: #a3a3a3;
+  --font-color-inverse: #3e3e3e;
+  --border-color: #e3e3e3;
+  --fill-color: #000;
+  --fill-color: #e3e3e3;
+  --checkColor: var(--fontColor);
+  --background-color: #000;
+  --background-color: var(--dark-surface1);
+  --background-color2: #3e3e3e;
+  --background-color-inv: #5e5e5e;
+  --background-color-box: rgb(255,255,255,0.1); 
+  --collapseExpandedColor: var(--dm-collapseExpandedColor);
+  --rt-bg-color: #000;
+  --invert-bg: invert(100%);
+  --anim-pulse: bgpulse-dark;
+}

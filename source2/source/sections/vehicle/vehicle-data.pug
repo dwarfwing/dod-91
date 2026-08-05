@@ -1,0 +1,50 @@
+mixin vehicle-data 
+   .section-vehicle-data   
+      +box({headerObj:{},classes:'topless bottomless'})
+         each field in spine.vehicle_attributes 
+            if !field.type
+               - field.type = 'number'      
+            - transl = field.attr.replace(/_/,'-');
+            - short = field.abbr ? ' ('+field.abbr.toUpperCase()+')' : '';
+            - const iObj = { name: field.attr,type: field.type };
+            if field.step 
+               - iObj.step = field.step; 
+            if field.attr == ''
+               span 
+            else 
+               +input-label({
+                  label: field.name,
+                  inputObj:iObj,
+                  spanObj:{'data-i18n': transl,value: short},
+                  divObj:{class:'w50pc label-input input-label-number input-count-1'}}
+                  )
++scss.
+   .section-vehicle-data {
+      //columns: 3;
+      .box { 
+         display: grid; 
+         grid-auto-flow: column;
+         grid-template-rows: repeat(6, 1fr);
+         grid-template-columns: 1fr 1fr 1fr;
+         column-gap: 0.5rem;
+         background-color: transparent; 
+         & > * {
+            width: 100%; 
+            margin-bottom: 0.5rem; 
+         }
+         label.input-label {
+            span {
+               text-indent: 0.5rem; 
+               padding-right: 0.75rem;
+               text-transform: capitalize;
+               &:after {
+                  content: attr(value);
+               }
+            }
+            input[type=text] {
+               width: 4rem;
+            }
+         }
+
+      }
+   }

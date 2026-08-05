@@ -1,0 +1,149 @@
+-
+   spine.vehicle_info = [
+      {
+         name: 'Kampanj',
+         attr: 'campaign'
+      },
+      {
+         name: 'Fordonstyp',
+         attr: 'vehicle_type'
+      },
+      {
+         name: 'Fordonsnamn',
+         attr: 'character_name'
+      },
+      {
+         name: 'Fordonsbeskrivning',
+         attr: 'vehicle_descriotion'
+      },
+   ];
+   spine.vehicle_attributes = [ //['styrka','fysik','storlek','smidighet','intelligens','vilja','personlighet']
+      {
+         name: 'Manöverförmåga',
+         abbr: 'man',
+         attr: 'maneuverability',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'acceleration',
+         abbr: 'acc',
+         attr: 'acceleration',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'hastighet, TRYGG',
+         attr: 'speed_safe',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'hastighet, MAX',
+         attr: 'speed_max',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'hastighet, EKO',
+         attr: 'speed_eco',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: '',
+         abbr: '',
+         attr: '',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'besättning',
+         abbr: 'best',
+         attr: 'crew',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'lastkapacitet',
+         abbr: 'last',
+         attr: 'loadcapacity',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Förbrukning',
+         abbr: 'för',
+         attr: 'consumption',
+         step: '0.1',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Bränsle',
+         abbr: 'tank',
+         attr: 'fuelcap',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Destillator',
+         attr: 'still',
+         type: 'text',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Destillation',
+         attr: 'destillation',
+         type: 'text',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Pansar',
+         abbr: 'abs',
+         attr: 'plating',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Stryktålighet',
+         abbr: 'str',
+         attr: 'durability',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Utslagen',
+         abbr: 'uts',
+         attr: 'eliminated',
+         value: '',
+         trigger: ``,
+      },
+      {
+         name: 'Rammningsvärde',
+         abbr: 'ram',
+         attr: 'ramming',
+         type: 'text',
+         value: '',
+         trigger: ``,
+      },
+   ];
+   spine.vehicle_weaponfields = [      
+      {name:'Vapen',type:'text',attr:'name','transl':'',attackRoll:true},
+      {name:'FV',type:'number',attr:'skill_manual','transl':'skill-level-abbr'},
+      {name:'färdighet',type:'number',attr:'skill','transl':'skill-level-abbr',hidden:true,value:'vehicle'},
+      {name:'Mod.',type:'number',attr:'weapon_mod','transl':'modifier-abbr',input:true},
+      {name:'Eldh',type:'number',attr:'firerate','transl':'firerate-abbr'},
+      {name:'Init',type:'number',attr:'init','transl':'init',initRoll:true},
+      {name:'Ammo',type:'number',attr:'ammo','transl':'ammo-max-abbr'},
+      {name:'Pen',type:'number',attr:'penetration','transl':'penetration-abbr'},
+      {name:'Pål.',type:'number',attr:'reliability','transl':'reliability-abbr'},
+      {name:'Räckv.',type:'text',attr:'range','transl':'range-abbr'},
+      {name:'Skada',type:'text',attr:'damage','transl':'damage',damageRoll:true},
+      {name:'Tål',type:'number',attr:'durability','transl':'durability-abbr'},
+      {name:'Vikt',type:'number',attr:'weight','transl':'weight'},
+      {name:'Värde',type:'number',attr:'value','transl':'value'},
+      {name:'Plats',type:'number',attr:'location','transl':'location'},
+   ]

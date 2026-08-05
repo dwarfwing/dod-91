@@ -1,0 +1,292 @@
+mixin weapons 
+   .section-weapons
+      +input({name:'weapon_encumbrance',type:'number',value:0,class:'hidden',trigger:{affects:['encumbrance']}})
+      -   let fields = spine.weaponskills; 
+      +box({headerObj:{attr:'weapons','data-i18n':'weapons'},fields:spine.weaponfields,classes:'coverall'})
+         +fieldset({name:'weapons',class:'collapse-container'})
+            +collapse
+            +checkbox({name:'shotguntoggle',value:1,class:'hidden shotgun-toggle',checked:false})
+            //-input(type='checkbox',name='attr_shotguntoggle',class='shotgun-toggle')
+            .collapsed
+               .label-input
+                  +checkbox({name:'equipped',value:1,class:'weapon-equipped',checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
+                  +action({name:'attack_roll',trigger:{triggeredFuncs:['rollWeaponAttack']}})
+                     +span({name:'name'})
+                  span.input-span
+                     +input({type: 'number', name: 'weapon_mod', class:'label-input'})
+                  //- label.text-input
+                     +text({name:'name',class:'text-input'})
+                  +checkbox({name:'skill_manual_toggle',value:1,class:'hidden manual-skillname-toggle'})
+                  +span({name:'skill_name'}).text-span.smaller-text
+                  +input({name:'skill_manual',type:'number'}).text-span.smaller-text.skill-manual
+                  +checkbox({name:'damagebonus',value:1}).input-span
+                  +span({name:'grip'}).input-span
+                  +action({name:'weapon_init_roll',trigger:{triggeredFuncs:['rollInit']}}).init-button
+                     +span({name:'init'}).input-span
+                  +action({name:'damage_roll',trigger:{triggeredFuncs:['rollDamage']}}).damage-button.not-shotgun
+                     +span({name:'damage'}).text-span
+                  span.damage-button.shotgun
+                     +action({name:'damage_roll',trigger:{triggeredFuncs:['rollDamage']}}).damage-button
+                     //-span(data-i18n='special-abbr').text-span.shotgun Spec.
+                     //-+span({name:'shotgundamage_display'})
+                     //-+checkbox({name:'olden',value:1,class:'','data-i18n-title':'olden'})
+                     //-+label({'data-i18n':'olden'}) 
+                     +checkbox-label({
+                        label: '',
+                        inputObj:{name:'sawedoff',type:'checkbox',value:1,class:'','data-i18n-title':'sawed-off'},
+                        divObj:{'data-i18n-title':'normal-or-sawedoff'}
+                        })
+                        //-spanObj:{'data-i18n':'sawed-off'},
+                     +checkbox-label({
+                        label: '',
+                        inputObj:{name:'slug',type:'checkbox',value:1,class:'','data-i18n-title':'slug'},
+                        divObj:{'data-i18n-title':'buck-or-slug'}
+                        })
+                        //-spanObj:{'data-i18n':'slug'},
+                     +checkbox-label({
+                        label: '',
+                        inputObj:{name:'olden',type:'checkbox',value:1,class:''},
+                        divObj:{'data-i18n-title':'blackpowder-or-olden'}
+                        })
+                        //-spanObj:{'data-i18n':'olden'},
+                     //-+checkbox({name:'slug',value:1,class:'','data-i18n-title':'slug'})
+                     //-+label({'data-i18n':'slug'})
+                     //-+checkbox({name:'sawedoff',value:1,class:'','data-i18n-title':'sawed-off'})
+                     //-+label({'data-i18n':'sawed-off'})
+                  +span({name:'pen'}).input-span
+                  +span({name:'range'}).input-span.smaller-text
+                  span.currMax
+                     +span({name:'durability'}).input-span
+                     span.slash /
+                     +span({name:'durability_max'}).input-span
+                  span.currMax
+                     +span({name:'reliability'}).text-span
+                     span.slash /
+                     +span({name:'reliability_max'}).text-span
+                  +span({name:'weight'}).input-span
+                  span.currMax
+                     //-+span({name:'ammo'}).input-span
+                     +input({type: 'number', name: 'ammo', class:'label-input currMax'})
+                     span.slash /
+                     +span({name:'ammo_max'}).input-span
+            .expanded
+               .label-input.input-count-16
+                  each field in spine.weaponfields    
+                     if field.type == 'checkbox'
+                        if field.trigger 
+                           +checkbox({name:field.attr,value:1,class:field.class,checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
+                        else 
+                           +checkbox({name:field.attr,value:1,class:field.class,checked:true})
+                     if field.type == 'select' && field.attr == 'skill'
+                        +select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
+                           +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
+                              | --- Välj ---
+                           each skill in spine.weapontypes 
+                              +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
+                           +option({'data-i18n':'manual',value:'manual'})
+                              | Manuellt
+                     else 
+                        +input({name:field.name,type:field.type})
+                  //- rmoved
+                     +checkbox({name:'equipped',value:1,class:'weapon-equipped',checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
+                     label.text-input 
+                        +text({name:'name'}).caps-input
+                     span.input-span
+                        +input({type: 'number', name: 'weapon_mod', class:'label-input'})
+                     span.select 
+                        +select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
+                           +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
+                              | --- Välj ---
+                           each skill in spine.weapontypes 
+                              +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
+                           +option({'data-i18n':'manual',value:'manual'})
+                              | Manuellt
+                     span.input-span 
+                        +input({name:'damagebonus',type:'checkbox',value:1})
+                     span.text-input
+                        +input({type: 'text', name: 'grip', class:'label-input'})
+                     span.input-span
+                        +input({type: 'number', name: 'init', class:'label-input'})
+                     span.text-input.damage.not-shotgun
+                        +input({type: 'text', name: 'damage', class:'label-input'})
+                     span.text-input.damage.shotgun
+                        +checkbox-label({
+                           label: '',
+                           inputObj:{name:'sawedoff',type:'checkbox',value:1,class:'','data-i18n-title':'sawed-off'},
+                           divObj:{'data-i18n-title':'normal-or-sawedoff',class:'shotgun'}
+                           })
+                        +checkbox-label({
+                           label: '',
+                           inputObj:{name:'slug',type:'checkbox',value:1,class:'','data-i18n-title':'slug'},
+                           divObj:{'data-i18n-title':'buck-or-slug',class:'shotgun'}
+                           })
+                           //-spanObj:{'data-i18n':'slug'},
+                        +checkbox-label({
+                           label: '',
+                           inputObj:{name:'olden',type:'checkbox',value:1,class:''},
+                           divObj:{'data-i18n-title':'blackpowder-or-olden',class:'shotgun'}
+                           })
+                           //-spanObj:{'data-i18n':'olden'},
+                     span.input-span
+                        +input({type: 'number', name: 'pen', class:'label-input'})
+                     span.text-input
+                        +input({type: 'text', name: 'range', class:'label-input'}).smaller-text
+                     //-span.select-input 
+                        +select({name:'range_option',trigger:{triggeredFuncs:['rangeDisplay']}})
+                           each item in ranges
+                              +option({value:item.value,'data-i18n':'range-'+item.value})= item.name
+                     span.input-span.currMax
+                        +input({type: 'number', name: 'durability', class:'label-input'})
+                        span.slash /
+                        +input({type: 'number', name: 'durability_max', class:'label-input'})
+                     span.input-span.currMax
+                        +input({type: 'number', name: 'reliability', class:'label-input currMax'})
+                        span.slash /
+                        +input({type: 'number', name: 'reliability_max', class:'label-input currMax'})
+                     span.input-span
+                        +input({type: 'number', name: 'weight', class:'label-input',trigger:{triggeredFuncs:['weaponEncumbrance']}})
+                     span.input-span.currMax
+                        +input({type: 'number', name: 'ammo', class:'label-input currMax'})
+                        span.slash /
+                        +input({type: 'number', name: 'ammo_max', class:'label-input currMax'})
++scss.
+   .section-weapons {
+      width: 100%;
+      grid-column: 1 / -1;
+      .box-header, .repitem .collapsed div, .repitem .expanded div {
+         display: grid; 
+         grid-template-columns: 1.5rem auto 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+         & * {
+            border: 0;
+            width: 100%;
+            border-radius: 0; 
+         }
+         & > * {
+            border-right: 1px solid var(--border-color);
+         }
+         & > h1 { border-right: 0; }
+         & > h2:last-of-type, & > span:last-of-type {
+            border: 0;
+         }
+      }
+      .repitem {
+         input[type="text"]:not(.caps-input), span.text-span {
+            text-align: center;
+         }
+         button {
+            display: flex;
+            justify-content: center;
+            &.init-button span {
+               width: 1.25rem;
+            }
+         }
+         input[type=checkbox] { 
+            height: 100%; 
+            &:first-of-type {
+               border-right: 0; 
+            }
+         }
+         input[type=checkbox].weapon-equipped:not(:checked) ~ button,
+         input[type=checkbox].weapon-equipped:not(:checked) ~ span button {
+            pointer-events: none; 
+            &:before {
+               content: '';
+               width: 1.675rem;
+            }
+         }
+         .collapsed input[type=checkbox]:not(:first-of-type) { 
+             pointer-events: none; 
+         }
+         input.manual-skillname-toggle + span + input,
+         input.manual-skillname-toggle:checked + span {
+            display: none; 
+         }
+         input.manual-skillname-toggle:checked + span + input {
+            display: flex; 
+            box-sizing: border-box;
+            font-size: 100%;
+            width: calc(100% + 1px);
+         }
+         span[name='attr_skill_name'], 
+         span[name='attr_range'],
+         select[name='attr_skill'],
+         select[name='attr_skill'] option,
+         input[name='attr_range'] {
+            overflow-x: hidden;
+            text-indent: 0.25rem;
+            white-space: nowrap;
+            font0size: 85%; 
+         }
+         span[name=attr_damage].text-span {
+            width: auto; 
+         }
+         span.currMax {
+            display: flex; 
+            flex-direction: row;
+            justify-content: space-around;
+         }
+         span.slash {
+            width: 1rem;
+         }
+         .smaller-text {
+            font-size: 80%;
+         }
+         span.damage, span.damage-button {
+            display: flex;
+            flex-direction: row; 
+            justify-content: space-around; 
+            input[type=checkbox] {
+               border: 1px solid var(--border-color);
+               margin-inline: 0.125rem;
+            }
+            label.input-label {
+               display: flex;
+               flex-direction: column-reverse;
+               align-content: center;
+               height: auto;
+               cursor: pointer; 
+               input[type=checkbox] {
+                  border: 1px solid var(--border-color);
+                  margin-inline: 0.125rem;
+                  display: none;
+               }
+               span {
+                  font-family: 'Material Symbols Outlined';
+                  text-align: center;
+                  &:after {
+                     font-family: 'Material Symbols Outlined';
+                     font-size: 1.375rem;
+                     text-align: center;
+                     padding-top: 0.25rem;
+                  }
+               }
+               &:first-of-type span:after { content: 'toggle_on'; transform: rotate(-45deg);} 
+               &:nth-of-type(2) span:after { content: 'nest_secure_alarm'; }
+               &:last-of-type span:after { content: 'stat_1'; }
+                 
+               &:first-of-type input:checked + span:after { content: 'carpenter'; }
+               &:nth-of-type(2) input:checked + span:after { content: 'nest_heat_link_e'; }
+               &:last-of-type input:checked + span:after { content: 'stat_3'; }
+            }
+         }
+      }
+   }              
++module.
+   const weaponEncumbrance = function() {
+      repeatingSum("weapon_encumbrance","weapons",["weight","equipped"]);
+   }
+   k.registerFuncs({weaponEncumbrance});
+
+   const initializeWeapons = function() {
+      const weapons = k.getSections(
+         {section:'repeating_weapons',fields:['name']},
+         (attributes,sections) => {
+            k.log(`Section weapons attributes: ${attributes}`);
+            k.log(`Section weapons section: ${sections}`);
+         }
+      );
+   }
+   k.registerFuncs({initializeWeapons},{type:['opener']});
+
+
+

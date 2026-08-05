@@ -1,0 +1,211 @@
+mixin abilities 
+   .section-abilities
+      +box({headerObj:{name:'förmågor',attr:'abilities','data-i18n':'abilities'},classes:'box-ability'})
+         +fieldset({name:'abilities',class:'collapse-container'})
+            +collapse 
+            .collapsed
+               .label-title
+                  //-+action({name:'roll',trigger:{triggeredFuncs:['rollAbility']}})
+                  +span({name:'skill_name'})
+               +checkbox({name:'effect_display',value:1,class:'hidden display-toggle'})
+               .ability-details
+                  +span({name:'effect'})
+               .ability-details
+                  each field in spine.abilityfields   
+                     if field.trigger && field.attr != 'effect'
+                        +checkbox({name:field.attr+'_display',value:1,class:'hidden display-toggle'})
+                        .detail 
+                           if !field.roll
+                              +span({'data-i18n':field.attr}).colon= field.name 
+                              +span({name:field.attr})
+                           if field.roll && field.roll == 'skill'                                 
+                              +action({name:'abilityskill',trigger:{triggeredFuncs:['rollAbilitySkill']}})                                 
+                                 +span({'data-i18n':field.attr+'-level-abbr'}).colon= field.name 
+                              span.skill-level
+                                 +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                                 +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                                 +number({name:field.attr}).skill
+                              +span({'data-i18n':'skill-mod'}).colon Mod
+                              span.skill-level-mod 
+                                 +number({name:field.attr+'_mod'}).skill-mod                                                                                          
+                           if field.roll && field.roll == 'dice'                                 
+                              +action({name:'abilityroll',trigger:{triggeredFuncs:['rollAbility']}})                                 
+                                 +span({'data-i18n':field.attr+'-abbr'}).colon= field.name 
+                                 +span({name:field.attr})
+                           if field.roll && field.roll == 'damage'                                 
+                              +action({name:'abilitydamage',trigger:{triggeredFuncs:['rollDamage']}})                                 
+                                 +span({'data-i18n':field.attr}).colon= field.name 
+                                 +span({name:field.attr})
+         
+                     //-.detail 
+                        +span({'data-i18n':'activation'}).colon Aktivering 
+                        +span({name:'activation'})
+                     //-.detail
+                        +span({'data-i18n':'range'}).colon Räckvidd
+                        +span({name:'range'})
+                     //-.detail 
+                        +span({'data-i18n':'duration'}).colon Varaktighet 
+                        +span({name:'duration'})
+            .expanded
+               .label-title
+                  +span({name:'skill_name',class:'label-title'})
+               each field in spine.abilityfields
+                  - const iObj = [{type: field.type, name: field.attr, class:'label-input-input input-'+field.attr,trigger:{triggeredFuncs:[field.trigger]}}];
+                  +label-inputs({
+                     label: field.name,
+                     divObj: {class:'column-'+field.attr+' '+field.classes},
+                     labelObj: {class: 'label-input-label right-align comma',attr:field.attr, 'data-i18n-title': field.title},
+                     inputObj: iObj
+                  })
+                  //-{type: field.type, name: field.attr, class:'label-input-input input-'+field.attr,trigger:{triggeredFuncs:[field.trigger]}}
++scss.
+   .section-abilities {
+      .box-ability {
+         .repcontainer {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column; 
+            gap: 0; 
+            .repitem {
+               margin: 0.5rem;
+               padding-bottom: 0.5rem;
+               border-bottom: 1px solid var(--border-color);
+               .collapse {
+                  right: -1.25rem;
+               }
+               .collapsed {
+                  display: flex; 
+                  flex-direction: column; 
+                  .label-title {
+                     width: 100%; 
+                     display: flex; 
+                     justify-content: center; 
+                     button {
+                        width: auto; 
+                        justify-content: center; 
+                     }
+                  }
+                  input[type=checkbox].display-toggle + div {
+                     display: none; 
+                  }
+                  input[type=checkbox].display-toggle:checked + div {
+                     display: flex; 
+                  }
+                  .ability-details {
+                     justify-content: center; 
+                     display: flex;
+                     flex-direction: row;
+                     flex-wrap: wrap;
+                     span {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                        text-transform: none;
+                        margin-inline: 0.25rem;
+                        text-align: center; 
+                        align-self: center;
+                        &[name='attr_effect'] {
+                        }
+                     }
+                     input.skill-mod {
+                        margin: 0;
+                        padding: 0;
+                        border-bottom: 1px solid var(--border-color);
+                        width: 2.5rem;
+                        line-height: 1rem;
+                        height: 1.5rem;
+                        border-radius: 0.5rem;
+                     }
+                     span:after, input:after {
+                        content: ', ';
+                     }
+                     .detail span:first-of-type {
+                        //font-weight: bold; 
+                        text-transform: uppercase;
+                     }
+                     div:last-of-type span:last-of-type:after {
+                        content: '';
+                     }
+                     span.colon {
+                        &:after {
+                           content: ':';
+                        }
+                     }
+                     
+                     .detail span.skill-level  {
+                        position: relative;
+                        input[type=number] {
+                           text-align: left; 
+                           pointer-events: none;
+                           padding-left: 0;
+                        }
+                        input[type=checkbox] {
+                           display: none;
+                           position: absolute;
+                           top: 0.3rem;
+                           right: 0.8rem;
+                           max-width: 0.4rem;
+                           max-height: 0.4rem;
+                           height: 0.4rem;
+                           width: 0.4rem;
+                           padding: 0;
+                           min-width: 0.4rem;
+                           min-height: 0.4rem;
+                           transform: rotate(45deg);
+                           &:after { content: ''; }
+                           &.improve-mark-perfect {
+                              top: 45%;
+                              //corner-shape: scoop;
+                              //border-radius: 50%;
+                              //width: 0.8rem;
+                              //height: 0.8rem;
+                              //min-width: 0.8rem;
+                              //min-height: 0.8rem;
+                              //transform: unset;
+                              //right: 0.6rem;
+                           }
+                           &:checked { 
+                              display: flex;
+                              background-color: var(--fill-color);
+                              &:before {
+                                 content: '';
+                              }
+                           }
+                        }
+                        &:hover input[type=checkbox] { display: flex; }
+                     }
+                  }
+               }
+               .expanded {
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: wrap;
+                  .label-title {
+                     width: 100%; 
+                     display: flex; 
+                     justify-content: center; 
+                     button {
+                        justify-content: center; 
+                     }
+                  }
+                  span:not(.label-title),label {
+                     font-size: 85%;
+                  }
+                  .w50pc {
+                     display: grid;
+                     grid-template-columns: 60% 40%;
+                     label { width: 100%; }
+                     span { width: unset; }
+                  }
+                  .label-input.wide-text-input {
+                     label { width: 68%; }
+                  }
+                  input[type=checkbox] {
+                     width: 1.5rem;
+                     justify-self: center;
+                  }
+               }               
+            }
+         }
+      }
+   }

@@ -1,0 +1,15 @@
+mixin eliminated  
+   .section-vehicle-eliminated
+      +box({headerObj:{name:'Utslagna komponenter',attr:'eliminated','data-i18n':'eliminated-components'}})
+         +adaptiveTextarea({name:'eliminated_components','data-i18n-placeholder':'eliminated-comp-placeh'})
++scss.
+   .section-vehicle-eliminated {
+      margin-top: 1rem; 
+      .box {
+         background-color: transparent; 
+
+      }
+      .adaptive {
+         width: 100%; 
+      }
+   }

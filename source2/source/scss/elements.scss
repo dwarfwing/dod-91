@@ -1,0 +1,95 @@
+@mixin all {
+   .collapse-container > .collapse:not(:checked),
+   .repitem > .collapse:not(:checked) {
+      opacity: var(--collapseHoverOpacity);
+   }
+   .collapse-container {
+      position: relative; 
+      .collapse {
+         position: absolute; 
+      }
+   }
+   .label-input {
+      display: flex; 
+      justify-content: stretch; 
+      position: relative; 
+      background-color: #EEE; 
+      justify-content: space-between;
+      
+   }
+   label.label-input-label, 
+   h2.header-field {
+      white-space: nowrap;
+      overflow-x: hidden;
+      justify-content: left;
+   }
+   button[type="action"],button[type="roll"] {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding-bottom: 0.125rem;
+      span {
+         white-space: nowrap;
+         overflow-x: hidden;
+      }
+      &:hover {               
+         background-color: rgb(0,0,0,0.2);
+      }
+   }
+   .label-input button[type=action]:before, 
+   button[type=action]:before, 
+   button[type=roll].btn.roller:before {
+      content: "";
+      font-family: dicefontd20;
+      font-size: 1.75rem;
+      text-transform: none;
+      align-self: center;
+      padding: 0;
+      margin: 0;
+   }
+   .tabs__header button[type=action]:before,
+   button[type=roll] + button[type=action]:before,
+   button[type=action].hidden:before {
+      content: "";
+   }
+   .tabs__body button[type=roll] + button[type=action] {
+      display: none; 
+   }
+   input[type=number], input[type=text] {
+      &.underline {
+         border-bottom: 1px solid var(--border-color);
+      }
+   }
+   input[type=checkbox]:not(.collapse):not(.fill-left__radio) {
+      align-self: center;
+      border: 1px solid var(--font-color2);
+      //border-radius: 4px;
+      //corner-shape: scoop;
+      &:before {
+         color: var(--font-color);
+         //content: '✗';
+         place-self: center center;
+         grid-area: content;
+         font-weight: var(--checkWeight);
+         place-self: start center;
+         color: var(--checkColor);
+         font-size: var(--checkSize);
+         line-height: var(--checkLineHeight);
+      }
+   }
+   input[type=checkbox]:not(.collapse):not(.fill-left__radio):checked:before {
+      color: var(--font-color);
+      //content: '✗';
+      place-self: center center;
+   }
+   .fill-left {
+      input[type=radio],input[type=checkbox] {
+         aspect-ratio: 1 / 1;
+         display: none;  
+      }
+      label {
+         width: 0.5rem; 
+         aspect-ratio: 1 / 1; 
+      }
+   }
+}

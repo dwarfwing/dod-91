@@ -1,0 +1,138 @@
+mixin info
+   .section-info 
+      +checkbox({name:'kroppspoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
+      +checkbox({name:'psipoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
+      +box({classes:'box-info'})
+         each info in spine.info            
+            +label-inputs({
+               label: info.name,
+               divObj: {class:'column-'+info.attr+' '+info.classes},
+               labelObj: {class: 'label-input-label',attr:info.attr},
+               inputObj: [
+                  {type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-placeholder':info.placeholder}
+               ]
+            })
+      +box({classes:'box-tertiary'})
+         each info in spine.tertiary
+            - var inputObjs = [{type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
+            if info.classes.includes("currMax") 
+               - inputObjs.push({type: info.type, name: info.attr+'_max', class:'label-input-input input-'+info.attr+'-max', 'data-i18n-title':'max-value',title:'Max-värdet'}); 
+            +label-inputs({
+               label: info.name,
+               divObj: {class:'column-'+info.attr+' '+info.classes},
+               labelObj: {class: 'label-input-label',attr:info.attr},
+               inputObj: inputObjs,
+            })
+      +box({classes:'hp-points points'})
+         +input-label({
+               label: 'Kropppoäng',
+               divObj: {class:'hitpoints-grid'},
+               spanObj: {class: 'label-input-label'},
+               inputObj: {type: number,name: 'kroppspoang_max',type:'number'},
+            })
+         +fillLeft-label({
+            radioObj:{name:'kroppspoang',type:'radio',class:'counter'},
+            divObj:{class:''},
+            valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+            noCLear: true,
+            capAttr: 'kroppspoang_max'
+         })
+      +box({classes:'sp-points points'})
+         +input-label({
+               label: 'Smärtpoäng',
+               divObj: {class:'painpoints-grid'},
+               spanObj: {class: 'label-input-label'},
+               inputObj: {type: number,name: 'smartpoang_max',type:'number',trigger:{formula:'@{fys_fv} + @{fys_fv}'}},
+            })
+         +fillLeft-label({
+            radioObj:{name:'smartpoang',type:'radio',class:'counter'},
+            divObj:{class:''},
+            valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],
+            noCLear: true,
+            capAttr: 'smartpoang_max'
+         })
+      +box({classes:'psy-points points'})
+         +input-label({
+               label: 'PSY-poäng',
+               divObj: {class:'psypoints-grid'},
+               spanObj: {class: 'label-input-label'},
+               inputObj: {type: number,name: 'psypoang_max',type:'number'},
+            })
+         +fillLeft-label({
+            radioObj:{name:'psypoang',type:'radio',class:'counter'},
+            divObj:{class:''},
+            valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29],
+            noCLear: true,
+            capAttr: 'psypoang_max'
+         })
++scss.
+   .section-info {
+      display: grid; 
+      grid-template-columns: 3fr 4fr 4fr 4fr;
+      grid-template-areas: "info info info info"
+                           "stats hp sp psy";
+      .box-info { 
+         grid-area: info;
+         border-top: 6px solid var(--border-color);
+         border-right: 6px solid var(--border-color);
+         input[type=text] {
+            vertical-align: text-top; 
+         }
+      }
+      .box-tertiary { 
+         grid-area: stats; 
+         label { width: stretch; }
+      }
+      .hp-points { grid-area: hp; }
+      .sp-points { grid-area: sp; }
+      .psy-points { grid-area: psy; }
+      .points {
+         .input-label {
+            width: 100%;
+            height: 2.125rem;
+            display: grid; 
+            grid-template-columns: auto 3rem;  
+            border-bottom: 1px solid var(--border-color);
+            span { width: stretch; }
+            input { 
+               width: 3rem;
+               height: calc(2.125rem - 1px); 
+               background-color: var(--bg-color2); 
+               border-radius: 0; 
+               text-align: center; 
+               }
+         }
+         .fill-left {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            align-self: flex-start; 
+            width: 100%;
+            row-gap: 0.5rem;
+            margin-left: 0.25rem;
+            label {
+               border: 1px solid var(--border-color);
+               background-color: var(--bg-color2);
+               width: 75%;
+               cursor: pointer; 
+            }
+            input.counter:checked + input + label {
+               position: relative; 
+               &:after {
+                  position: absolute; 
+                  inset: 0; 
+                  content: attr(title);
+                  text-align: center;
+                  padding-top: 0.125rem;
+                  line-height: 100%;
+                  vertical-align: middle;
+               }
+               & ~ label {
+                  background-color: transparent;                  
+               }
+            }
+            input.cap:checked + label ~ :is(input,label) {
+               display: none; 
+            }
+         }
+      }
+   }

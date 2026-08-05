@@ -1,0 +1,89 @@
+include k-scaffold
+include ./components/_index.pug
+include ./spines/_index.pug
+include ./sections/_index.pug
+include ./views/_index.pug
+- const templateName = 'dod91';
+//- Stores the sheet version number for use with version control functions
++hidden({name:'sheet version',value:1.21})
++hidden({name:'version',value:0})
++action({ name:'rolldamage', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'hitarea-2', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'hitarea-4', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'hitarea-6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'hitarea-8', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'hitarea-10', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'hitarea-12', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'rollResonance', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollResonance']} })
++action({ name:'rollResonanceCrit', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollResonanceCrit']} })
++action({ name:'rolldamage-7D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'rolldamage-6D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'rolldamage-5D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'rolldamage-4D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'rolldamage-3D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'rolldamage-2D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
++action({ name:'rolldamage-1D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
+
++input({name:'target_area_die',type:'1D6',class:'hidden'})
+//- Now, for our actual sheet. We'll wrap this in a main element and give it an ID of main.
+main#main
+  .logo
+  //-.roll
+    +number({name:'dice count',value:1})
+    //-span T 
+    +select({name:'die size'})
+      +option({value:'3'})
+        | T3
+      +option({value:'4'})
+        | T4
+      +option({value:'6',selected:'selected'})
+        | T6
+      +option({value:'8'})
+        | T8
+      +option({value:'10'})
+        | T10
+      +option({value:'10'})
+        | T12
+      +option({value:'20'})
+        | T20
+      +option({value:'100'})
+        | T100
+    +roller({name:'custom dice roll',class:'custom-roller',trigger:{triggeredFuncs:['customDiceRoll']}})
+
+  +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap
+    +tab({name:'pc',container:'article',button:{content:'Person_4',class:'tab-button',title:'PC','data-i18n-title':'pc-caps'}})
+      +topframe 
+      +tabs({name:'pctabs',defaultActiveTab:'skills'})
+        +tab({name:'skills',container:'div',button:{content:'Färdigheter',class:'tab-button',title:'PC','data-i18n-title':'skills'}})
+          +skills-tab
+        +tab({name:'combat',container:'div',button:{content:'Strid',class:'tab-button',title:'combat','data-i18n-title':'combat'}})
+          +combat-tab
+        +tab({name:'magic',container:'div',button:{content:'Magi',class:'tab-button',title:'magic','data-i18n-title':'magic'}})
+          +magic-tab
+        +tab({name:'gear',container:'div',button:{content:'Utrustning',class:'tab-button',title:'gear','data-i18n-title':'gear'}})
+          +gear-tab
+        +tab({name:'notes',container:'div',button:{content:'Anteckningar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
+          +notes-tab
+    //-+tab({name:'npc',container:'article',button:{content:'Person_2',class:'tab-button',title:'NPC','data-i18n-title':'npc-caps'}})
+      include ./views/npc/_index.pug
+    //-+tab({name:'monster',container:'article',button:{content:'Pets',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})
+      include ./views/monster/_index.pug
+    //-+tab({name:'vehicle',container:'article',button:{content:'directions_car',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})
+      include ./views/vehicle/_index.pug
+    //-+tab({name:'settings',container:'article',button:{content:'Settings',class:'tab-button',title:'Settings','data-i18n-title':'settings'}})
+      include ./views/settings/_index.pug
+    //- Add additional tabs as needed
+  //-.tabs.tabs--dod91.flex-box.tiny-gap
+    .tabs__body.tabs--dod91__body
+      article.tabs__container.tabs--dod91__container.tabs--dod91__container--pc.k-active-tab
+        include ./views/pc/_index.pug
+//- An input to contain template fields that should always be output with a roll.
++hidden({name:'templatestart',value:`@{whisper}&{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
++hidden({name:'templatestartwhisper',value:`/w gm &{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
++hidden({name:'whisper',value:``})
+include rolltemplate/rolltemplate.pug
+
+//+template-dod91
++kscript('dod91')
+  //- All additional javascript files should be included in the index file
+  include ./javascript/_index.pug

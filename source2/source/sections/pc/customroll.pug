@@ -1,0 +1,103 @@
+mixin customroll
+   .section-customroll
+      +box({classes:''})
+         //-+label-inputs({
+            label: 'Bärförmåga',
+            divObj: {class:'column-encumbrance w60-40pc currMax inout-count-2'},
+            labelObj: {class: 'label-input-label',name: 'bärförmåga', attr: 'encumbrance'},
+            inputObj: [
+               {type: 'number', name: 'encumbrance', class:'label-input-input input-encumbrance',formula:'@{gear_encumbrance}+@{weapon_encumbrance}+@{armor_encumbrance}'},
+               {type: 'number', name: 'encumbrance_max', class:'label-input-input input-encumbrance-max'}
+            ]
+         .label-input.customroll
+            label.label-input-label(data-i18n='custom-roll') Tärningsslag
+            +input({ name: 'custom dice name', type: 'text', placeholder: 'Namn på slag?','data-i18n-placeholder': 'custom-roll-placeholder', class:''})
+            +number({name:'custom dice count',value:1,class:'right-aligned'})
+               +option({value:'1',selected:true})
+                  | 1
+               +option({value:'2'})
+                  | 2
+               +option({value:'3'})
+                  | 3
+               +option({value:'4'})
+                  | 4
+               +option({value:'5'})
+                  | 5
+               +option({value:'6'})
+                  | 6
+               +option({value:'7'})
+                  | 7
+               +option({value:'8'})
+                  | 8
+            //-span T 
+            +select({name:'custom dice size',class:'left-aligned'})
+               +option({value:'3'})
+                  | T3
+               +option({value:'4'})
+                  | T4
+               +option({value:'6',selected:'selected'})
+                  | T6
+               +option({value:'8'})
+                  | T8
+               +option({value:'10'})
+                  | T10
+               +option({value:'10'})
+                  | T12
+               +option({value:'20'})
+                  | T20
+               +option({value:'100'})
+                  | T100
+            span + 
+            +number({name:'custom dice modifier',placeholder:'mod.'})
+            +roller({name:'custom dice roll',class:'custom-roller',trigger:{triggeredFuncs:['rollCustomDice']}})
+                     //-+span({name:'encumbrance',class:''})
++scss.
+   .section-customroll {
+      .customroll {
+         justify-content: flex-end; 
+         label {
+            min-width: 9rem;
+            max-width: 11rem;
+         }
+         input[type=text] {
+            text-align: center; 
+            width: 40%; 
+         }
+         input[type=number],select {
+            border: 0;
+            padding: 0; 
+            margin: 0;
+            align-self: center;
+            text-align: center;  
+            text-decoration: underline; 
+            text-decoration-style: dashed; 
+            &.right-aligned {               
+               align-items: right;               
+               text-align: right;
+            }
+            &.left-aligned {               
+               align-items: left;               
+               text-align: left;
+            }
+         }
+         select {
+            display: flex; 
+            //appearance: auto; 
+            //--webkit-appearance: auto; 
+            align-items: center;
+            &:first-of-type {
+               width: fit-content; 
+            }
+         } 
+         input[type=number] {
+            width: 2.5rem;  
+         }
+         button[type=action] {
+            display: none; 
+         }
+         button.roller {
+            border: 0; 
+            margin-left: 0.5rem; 
+         }
+      }
+   }

@@ -1,0 +1,17 @@
+mixin experience
+   .section-experience
+      +box({})
+         +label-inputs({
+            label: 'erfarenhet',
+            divObj: {class:'column-experience'},
+            labelObj: {class: 'label-input-label',name: 'erfarenhet', attr: 'experience',type:'roller',rollType:'improve','data-i18n-title':'skill-improvment-desc'},
+            inputObj: [
+               {type: 'number', name: 'experience', class:'label-input-input input-experience'}
+            ]
+         })
++scss.
+   .section-experience {
+      .label-input.input-count-1 {
+         button[type=action] { display: none;}
+      }
+   }

@@ -1,0 +1,146 @@
+mixin attributes 
+   .section-attributes 
+      +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'}})
+         each attribute in spine.attributes
+            //- Removed abbreviation: label: attribute.name+' ('+attribute.abbr+')',
+            //-+label-inputs({               
+               label: attribute.name,
+               divObj: {class:'column-'+attribute.name},
+               labelObj: {class: 'label-input-label',attr:attribute.attr},  
+               inputObj: [
+                  {type: 'number', name: attribute.attr, class:'label-input-input input-'+attribute.attr}
+               ]
+               })
+            div(class='column-'+attribute.attr).label-input.input-count-1.attribute-row
+               //-label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
+               +action({
+                  name:'roll_'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']}
+               })
+                  label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
+               //-+action({name:'attr-'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']},'data-i18n-title':'attribute-roll'}).attribute-roll
+               //-+action({name:'attr-contest-'+attribute.attr,trigger:{triggeredFuncs:['rollAttributeContest']},'data-i18n-title':'attribute-roll-contest'}).attribute-roll.ge-roll-geRollContest
+               +input({type: 'number', name: attribute.attr+'_fv', class:'label-input-input input-'+attribute.attr+'',})
+               +input({type: 'number', name: attribute.attr+'_bc', class:'hidden label-input-input input-'+attribute.attr+'',hidden:true})
+      //-+box({classes:''})
+         //-each attribute in [{name:'skadebonus',type:'text'},{name:'initiativbonus',type:'number'},{name:'bärförmåga',type:'number'},{name:'reaktionsvärde',type:'number'}]
+         each attribute in spine.secondary
+            - const labelObj = {class:'label-input-label',attr:attribute.attr,name: attribute.name,type: attribute.roll,rollType: attribute.rolltype};  // type:'roller',name: skill.name, attr: skill.attr,rollType:'skill'
+            //-if attribute.roll
+               - labelObj.type = attribute.roll;
+               - labelObj.name = 
+               - labelObj.attr = attribute.attr;
+            - const modStr = attribute.placeholder ? attribute.placeholder : 'modification-abbr'; 
+            if attribute.attr == 'initiative'
+               +label-inputs({
+                  label: attribute.name,
+                  divObj: {class:'secondary-row column-'+attribute.attr},
+                  labelObj,
+                  inputObj: [
+                     {type: 'button',name:'initiative reset',class:'initiative-reset',trigger:{triggeredFuncs:['resetInitiative']}},                     
+                     {type: attribute.type, name: attribute.attr, class:'label-input-input input-'+attribute.name,trigger:{triggeredFuncs:[attribute.trigger]}},
+                     {type: attribute.type, name: attribute.attr+'_mod', class:'label-input-input input-'+attribute.name+'-mod','data-i18n-placeholder':modStr,trigger:{triggeredFuncs:[attribute.trigger]}}
+                  ]
+               })
+            else
+               +label-inputs({
+                  label: attribute.name,
+                  divObj: {class:'secondary-row column-'+attribute.attr},
+                  labelObj,
+                  inputObj: [
+                     {type: attribute.type, name: attribute.attr, class:'label-input-input input-'+attribute.name,trigger:{triggeredFuncs:[attribute.trigger]}},
+                     {type: attribute.type, name: attribute.attr+'_mod', class:'label-input-input input-'+attribute.name+'-mod','data-i18n-placeholder':modStr,trigger:{triggeredFuncs:[attribute.trigger]}}
+                  ]
+               })
++scss.
+   .section-attributes {
+      display: inline-grid;
+      row-gap: 1rem;
+      .box {
+         
+         border-top: var(--border-size-2x) solid var(--border-color);
+         border-left: var(--border-size-2x) solid var(--border-color);
+      }
+      button.roller {
+         & + button {
+            display: none;
+         }
+      }
+      input {
+         width: 100%;
+         text-align: center; 
+      }
+      .attribute-row {
+         display: grid;
+         grid-template-columns: 1fr 4rem;
+         label {
+            border: 0; 
+         }
+         input {
+            border-left: 1px solid var(--border-color);
+         }
+         button[type=action].attribute-roll {
+            display: none;
+            width: 2rem;
+            justify-self: center; 
+            justify-content: center;
+            margin-inline: 0.5rem; 
+            &:before {
+               content: 't';
+               font-size: 2.25rem;
+            }
+            &:last-of-type {
+               &:before {
+                  content: 'k'; 
+               }
+            }
+         }
+         /*&:hover {            
+            grid-template-columns: 1fr 2.25rem 2.25rem 3rem;
+            button[type=action].attribute-roll {
+               display: flex; 
+            }
+         }*/
+      }
+      .secondary-row {
+         &.column-initiative.input-count-3 {
+            grid-template-columns: 1fr 1.5rem 3rem 3rem;
+            button.roller {
+               border: 0; 
+            }
+            .input-0 {
+               width: 1.45rem;
+            }
+            .input-2 {
+               border-right: 0; 
+            }
+         }         
+         button { 
+            span { 
+               width: 100%; 
+               border: 0;
+            }
+         }
+         button[type=action].initiative-reset {
+            justify-self: center;
+            place-self: center;
+            justify-content: center;
+            border: 0;
+            & + button[type=action] { display: none;}
+            &:before {
+               font-family: 'Material Symbols Outlined';
+               content: 'x_circle';
+               font-size: 1.25rem;
+               line-height: 0.5rem; 
+               justify-self: center;
+            }
+         }
+      }
+   }
++module.
+   const resetInitiative = function({trigger,attributes,sections,casc}) {
+      attributes.initiative = '';
+      attributes.set();
+   }
+   k.registerFuncs({resetInitiative});
+
+

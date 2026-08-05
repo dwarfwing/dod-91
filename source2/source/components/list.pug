@@ -1,0 +1,23 @@
+mixin list({content:[]})
+   each row in content
+      if row.name 
+         - rowName = row.name ? row.name : '';
+         - rowClass = row.name ? "list-row list-row-"+row.name : "list-row" 
+      .list-row(class=rowClass) 
+         if row.columns
+            each col in row.columns
+               if col.name 
+                  - colName = col.name ? col.name : "";
+               if col.value 
+                  - colValue = col.value ? col.value : "";
+               if col.type
+                  - colType = col.type ? col.type : "span";
+               if colType == "span" 
+                  +span({'data-i18n':colName,class:'list-column column-'+colName}) 
+                     = col.value
+               if colType != "span"
+                  +input({class:'list-column column-'+colName})&attributes(col)
++scss('sheet').
+   .list {
+
+   }

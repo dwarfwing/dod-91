@@ -1,0 +1,48 @@
+include ./topframe.pug
+include ./attributes
+include ./info
+include ./skills
+include ./skill-list
+include ./professionskills
+include ./languages
+include ./secondaryskills
+include ./customroll
+include ./experience
+include ./encumbrance
+include ./weapons
+include ./armor
+include ./shield
+include ./gear
+include ./resonance
+include ./abilities
+include ./money
+include ./notes
+
+mixin pc-view
+   +attributes
+   +info
+   +skills
+   +professionskills
+   +experience 
+   +encumbrance
+   +weapons
+   .gear-col
+      +armor
+      +shield
+      p
+      +money
+      p
+      +gear
+   .abilities-notes-col
+      +resonance
+      p
+      +abilities
+      p
+      +notes
++scss.
+   .abilities-notes-col {
+      input.resonance-toggle:checked + .section-resonance,
+      input.resonance-toggle:checked + .section-resonance + p {
+         display: block;
+      }
+   }

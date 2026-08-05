@@ -1,0 +1,106 @@
+@use './variables';
+@use './tabs';
+@use './content';
+@use './elements';
+
+@mixin variables{
+  @include variables.all;
+}
+@mixin darkVariables {
+  @include variables.dark;
+}
+@mixin generic{
+  // Put generic styling that will be used in both the sheet and the roll template here
+  #main {
+    //background-image: var(--bg-image);
+    //background-repeat: repeat-y;
+    //background-size: cover;
+    //background-color: var(--dark-surface1);
+    background-color: var(--bg-color);
+    padding: 1rem;
+    backdrop-filter: var(--invert-bg);
+    box-sizing: border-box; 
+
+    * {
+      box-sizing: border-box; 
+    }
+
+    .logo { 
+      width: 100%;
+      height: 5rem;
+      background-image: var(--logo-image);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 30rem 4rem;
+      border-block: 2px solid black;
+    }
+    .roll {
+      display: block; 
+      height: 2rem;
+      display: flex;
+      justify-self: left; 
+      place-content: center; 
+      place-items: center; 
+      width: 50%;
+      z-index: 100;
+      position: relative;
+      input { 
+        text-align: right;
+        align-self: flex-end; 
+      }
+      input, select,span, button {
+        color: var(--font-color-inverse);
+        //border: 1px solid white; 
+        border-radius: 0.25rem;
+        padding: 0;
+        margin-inline: 0;
+        border: 0;
+        align-self: center; 
+      }
+      select {
+        appearance: auto;
+        -webkit-appearance: auto;
+        text-align: left;
+      }
+      button {
+        width: auto;
+        margin-left: 0.5rem;  
+        &[type=action] {
+          display: none;
+        }
+      }
+    }
+
+    
+  }
+
+  h1, h2, span, label, li, button, input[type="text"].caps-input, select, option {
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    color: var(--font-color);
+    text-transform: var(--text-transform);
+    line-height: 2rem;
+    //font-weight: bold;
+    letter-spacing: 0.1em;
+  }
+  option {
+    background: var(--background-color2);
+  }
+
+  h1, h2 {
+    line-height: 2rem;
+
+  }
+
+}
+@mixin sheet {
+  @include generic;
+  @include tabs.all;
+  @include content.all; 
+  @include elements.all; 
+  // Put your generic sheet styling here
+}
+@mixin roll{
+  @include generic;
+  // Put any generic roll template styling you have here
+}

@@ -1,0 +1,94 @@
+
+include ./vehicle-data
+include ./vehicle-header
+include ./vehicle-weapons
+include ./eliminated-components
+include ./vehicle-gear
+include ./vehicle-hitareas
+include ../pc/notes
+mixin vehicle
+   .vehicle-body 
+      +vehicle-header 
+      +vehicle-data
+      +vehicle-weapons
+      .bottom
+         .col-1 
+            +vehicle-gear
+            +eliminated 
+            +notes
+         .col-2
+            +vehicle-hitareas
++scss. 
+   .vehicle-body {
+      .cut-corner {         
+         box-sizing: border-box;
+         border: 1px solid var(--border-color);
+         border-bottom-left-radius: 0;
+         border-top-left-radius: 0;
+         border-top-right-radius: 0;
+         border-bottom-right-radius: 0.75rem;
+         corner-bottom-right-shape: bevel;
+      }
+      .box-header {
+         background-color: var(--border-color);
+         color: var(--font-color-inverse);
+         h1, h2 {
+            color: var(--font-color-inverse);
+         }
+      }
+      .bottom {
+         display: grid;
+         grid-template-columns: 4fr 6fr;
+         column-gap: 0.75rem;
+      }
+      .col-1 {
+         width: 100%;
+      }
+      .col-2 {
+         width: 100%;
+      }
+      label.input-label, .label-input {
+         //display: grid;
+         //grid-template-columns: auto 4rem;
+         width: 100%;
+         column-gap: 0.5rem; 
+         row-gap: 0.375rem;
+         border: 0; 
+         border-right: 0; 
+         &:input-label-text {
+            grid-template-columns: auto 10rem;
+         }
+         &.input-count-1:not(.input-label-text) {
+            display: grid;
+            grid-template-columns: auto 4rem; 
+         }
+         span {
+            border: 1px solid var(--border-color);
+            padding: 0;
+            background-color: var(--border-color);
+            color: var(--font-color-inverse);
+            height: 2rem;
+            box-sizing: border-box;
+            //padding-right: 0.5rem; 
+         }
+         input {
+            //margin-inline: 0.5rem;
+            height: 2rem;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0.75rem;
+            corner-bottom-right-shape: bevel;
+            text-align: center;
+            &[type=number] {
+               width: 4rem;
+            }
+            &[type=text] {
+               width: 10rem; 
+            }
+         }
+      }
+   }
+

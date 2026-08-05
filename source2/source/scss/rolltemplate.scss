@@ -1,0 +1,172 @@
+@use './variables';
+@mixin dod91 {
+   .sheet-rolltemplate-dod91 {
+      @include variables.roll;
+      background: var(--rt-bg-color);
+      color: var(--font-color);
+      font-family: 'PT Serif', Serif;
+      border-radius: 0.25rem;
+      box-shadow: 1px 1px #5e5e5e;
+      border: 2px solid var(--border-color);
+
+      h1, h2, h3, h4, span, label, li, button, div, span, a, input[type="text"].caps-input {
+         font-family: var(--font-family);
+         font-size: var(--font-size);
+         text-transform: var(--text-transform);
+         line-height: 1.75rem;
+         font-weight: bolder;
+         letter-spacing: 0.1em;
+         background: transparent;
+         color: var(--font-color);
+         &.align-center { align-self: center; align-content: center; align-items: center; }
+      }
+      a span {
+         color: var(--font-color-inverse);
+      }
+      .sheet-template {
+         width: 100%;
+         .sheet-container {
+            width: 100%;
+            display: flex; 
+            flex-direction: column; 
+            flex-wrap: wrap;
+            .sheet-header {
+               width: 100%;
+               border-bottom: 2px solid var(--border-color);
+               display: flex; 
+               justify-content: center;
+               backdrop-filter: invert(100%);
+               h2{
+                  color: var(--font-color-inverse);
+                  text-align: center;
+               }               
+            }
+            .sheet-roll-title {
+               width: 100%;
+               border-bottom: 1px solid var(--border-color);
+               background-color: var(--background-color2);
+               display: flex; 
+               justify-content: center;
+               h4 a {
+                  color: var(--font-color);
+                  text-decoration: underline;
+                  text-transform: capitalize;
+               }
+            }
+            .sheet-roll-result {
+               width: 100%;
+               .sheet-roll-total,
+               .sheet-roll-target,
+               .sheet-roll-damage,
+               .sheet-roll-hitarea,
+               .sheet-roll-difficulty,
+               .sheet-roll-resonance {
+                  width: 100%;
+                  display: flex; 
+                  flex-direction: row;
+                  display: grid;
+                  grid-template-columns: 60% 40%; 
+                  :is(label,span) {
+                     //max-width: 50%;
+                     //width: 50%;
+                     line-height: 1.25rem;
+                     display: flex;
+                     align-self: center;
+                     //padding: 0;
+                     margin: 0;
+                     color: var(--font-color);
+
+                  }
+                  label {
+                     justify-content: flex-end;
+                     padding-right: 0.5rem;
+                     &:after {
+                        content:':'
+                     }
+                  }
+                  span {
+                     justify-self: flex-start;
+                     background-color: transparent;
+                     border: 0;
+                     outline: 0;
+                  }
+                  &.sheet-roll-damage-button,
+                  &.sheet-roll-resonance-button {
+                     border-top: 1px solid var(--border-color); 
+                     display: flex;
+                     justify-content: flex-end; 
+                     &.sheet-hit-area-buttons {
+                        flex-wrap: wrap;
+                     }                   
+                     a[href^="~"] {
+                        color: var(--font-color-inverse);
+                        background-color: var(--border-color);
+                        margin: 0.25rem;
+                        line-height: 1rem;
+                        display: flex;
+                        flex-wrap: nowrap;
+                        corner-shape: superellipse(0);
+                        border-radius: 0.25rem;
+                        span {
+                           line-height: 0.8rem;
+                        }
+                     }
+                  }                  
+                  &.sheet-roll-skill-improvement {
+                     border-top: 1px solid var(--border-color); 
+                  }
+               }
+               .sheet-roll-difficulty {
+                  display: grid;
+                  grid-template-columns: repeat(4, 1fr);
+                  border-top: 1px solid var(--border-color);
+                  span {
+                     width: 100%; 
+                     font-size: 67.5%;
+                     box-sizing: border-box;
+                     text-align: center; 
+                     &.sheet-success {
+                        background-color: var(--success-bg-color);
+                      }
+                     &.sheet-fail { 
+                        background-color: var(--fail-bg-color);
+                     }
+                  }
+               }
+               .sheet-roll-total {
+                  span.fullcrit, span.sheet-fullcrit,.inlinerollresult.fullcrit {
+                     color: green;
+                  }
+                  span.fullfail, span.sheet-fullfail, .inlinerollresult.fullfail {
+                     color: #b31515;
+                  }
+               }
+               .sheet-roll-hitarea {
+                  display: flex;
+                  justify-content: center;
+                  display: grid;
+                  grid-template-columns: 60% 40%; 
+                  .align-center {
+                     font-size: 85%; 
+                  }
+                  & + .sheet-roll-result {
+                     display: flex;
+                     justify-content: center;  
+                     width: 100%; 
+                     font-size: 80%;
+                     span {
+                        background-color: unset; 
+                        border: unset; 
+                        &::before { content: '('; }
+                        &::after { content: ')'; }
+                     }
+                  }
+               } 
+            }
+         }
+      }
+   }
+   .sheet-rolltemplate-darkmode {
+      @include variables.dark;
+   }
+}

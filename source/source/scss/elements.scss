@@ -1,0 +1,27 @@
+@mixin all {
+   .input-label {
+      display: flex; 
+      justify-content: stretch; 
+      position: relative; 
+      background-color: #EEE; 
+      justify-content: space-between;
+      &.text-field {         
+         span {
+            width: auto;
+            position: absolute;
+            font-size: 75%;
+            top: 0;
+            left: 0.25rem; 
+         }
+         input[type=text] {
+            
+            width: 100%; 
+            text-align: center; 
+         }
+      }
+      textarea {
+         width: 100%; 
+      }
+
+   }
+}

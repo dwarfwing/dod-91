@@ -1,0 +1,15 @@
+mixin money
+   .section-money
+      +box({headerObj:{name:'pengar',attr:'money','data-i18n':'money'},fields:[{name:'buret',attr:'carried'},{name:'förvar',attr:'storage'}]})
+         //each attribute in ['akrobatics','bows','first aid','rifles','perception','throwing','bartering','melee','pistol','sneak/hide']
+         each credit in [{name:'kronkredit',attr:'crowncredits'},{name:'kredit',attr:'credits'},{name:'jycke',attr:'cents'},]
+            +label-inputs({
+               label: credit.name,
+               divObj: {class:'column-'+credit.name},
+               labelObj: {class: 'label-input-label',name: credit.name, attr: credit.attr},
+               inputObj: [
+                  {type: 'number', name: credit.attr, class:'label-input-input input-'+credit.name},
+                  {type: 'number', name: credit.attr+'_mod', class:'label-input-input input-'+credit.name}
+               ]
+            })
++scss.
