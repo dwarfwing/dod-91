@@ -1,5 +1,20 @@
 mixin gear-tab 
    .tab-gear 
       +encumbrance 
-      +gear 
+      +gear()
+      +gear('Riddjur','mount') 
+      +gear('Förvar','storage')
       +money
++scss.
+   .tab-gear {
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-areas: "encumb encumb encumb"
+                           "gear mount money"
+                           "gear mount stash";
+      .section-encumbrance { grid-area: encumb; }
+      .section-gear__gear { grid-area: gear; }
+      .section-gear__mount { grid-area: mount; }
+      .section-gear__stash { grid-area: stash; }
+      .section-money { grid-area: money; }
+   }

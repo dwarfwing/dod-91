@@ -5,9 +5,9 @@ rolltemplate.sheet-rolltemplate-dod91
    .sheet-template
       .sheet-container
          .sheet-header 
-            h2 {{roll-name}}
-         .sheet-roll-title 
             +characterLink().sheet-header-title
+         .sheet-roll-title 
+            h2 {{roll-name}}
          .sheet-roll-result 
             +templateConditionalDisplay('roll1')
                .sheet-roll-total
@@ -15,7 +15,7 @@ rolltemplate.sheet-rolltemplate-dod91
                   span {{roll1}}
             +templateConditionalDisplay('target')
                .sheet-roll-target
-                  label(data-i18n='target') FV
+                  label(data-i18n='target') CL
                   span {{target}}
             +templateConditionalDisplay('damage')
                +rollTotal({values:'computed::calcdamage 0'})
@@ -26,6 +26,15 @@ rolltemplate.sheet-rolltemplate-dod91
                   .sheet-roll-damage
                      label(data-i18n='damage') Skada
                      span {{computed::calcdamage}} ({{damage}}) 
+            //-+templateConditionalDisplay('pain')
+            +rollTotal({values:'computed::calcpain 0'})
+               .sheet-roll-damage.sheet-roll-pain
+                  label(data-i18n='pain') Smärta
+                  span {{pain}}
+            +rollTotal({values:'computed::calcpain 1'})
+               .sheet-roll-damage.sheet-roll-pain
+                  label(data-i18n='pain') Smärta
+                  span {{computed::calcpain}} ({{pain}}) 
             +templateConditionalDisplay('hitarea')
                +templateConditionalDisplay('damage')
                   .sheet-roll-damage.sheet-roll-hitarea
@@ -51,21 +60,6 @@ rolltemplate.sheet-rolltemplate-dod91
             +templateConditionalDisplay('computed::damageRoll')
                .sheet-roll-damage.sheet-roll-damage-button
                   span.damage-roll-button [{{button-label}}](~{{character_name}}|rolldamage||{{computed::damageRoll}})
-            +rollGreater({values:'computed::shotgun 0'})
-               .sheet-roll-damage.sheet-roll-damage-button.hit-area-buttons
-                  label(data-i18n='damage') Skada
-                  +rollGreater({values:'computed::shotgun 0'})
-                     span.damage-roll-button [<span data-i18n='range-melee'>Närstrid</span>](~{{character_name}}|rolldamage-{{computed::damage1}})
-                  +rollGreater({values:'computed::shotgun 1'})
-                     span.damage-roll-button [<span data-i18n='range-near'>Nära</span>](~{{character_name}}|rolldamage-{{computed::damage2}})
-                  +rollGreater({values:'computed::shotgun 2'})
-                     span.damage-roll-button [<span data-i18n='range-short'>Kort</span>](~{{character_name}}|rolldamage-{{computed::damage3}})
-                  +rollGreater({values:'computed::shotgun 3'})
-                     span.damage-roll-button [<span data-i18n='range-medium'>Medel</span>](~{{character_name}}|rolldamage-{{computed::damage4}})
-                  +rollGreater({values:'computed::shotgun 4'})
-                     span.damage-roll-button [<span data-i18n='range-long'>Långt</span>](~{{character_name}}|rolldamage-{{computed::damage5}})
-                  +rollGreater({values:'computed::shotgun 5'})
-                     span.damage-roll-button [<span data-i18n='range-extreme'>Extremt</span>](~{{character_name}}|rolldamage-{{computed::damage6}})
             +rollTotal({values:'computed::abilityfail 1'})
                .sheet-roll-resonance.sheet-roll-resonance-button
                   span.resonance-roll-button [{{resonance-label}}](~{{character_name}}|rollResonance)
@@ -75,12 +69,13 @@ rolltemplate.sheet-rolltemplate-dod91
             +templateConditionalDisplay('hitareas')
                .sheet-roll-damage.sheet-roll-damage-button.hit-area-buttons
                   label(data-i18n='target-area') Träffområde
-                  span.damage-roll-button [<span data-i18n='d2'>d2</span>](~{{character_name}}|hitarea-2||{{computed::damageTotal}})
-                  span.damage-roll-button [<span data-i18n='d4'>d4</span>](~{{character_name}}|hitarea-4||{{computed::damageTotal}})
-                  span.damage-roll-button [<span data-i18n='d6'>d6</span>](~{{character_name}}|hitarea-6||{{computed::damageTotal}})
-                  span.damage-roll-button [<span data-i18n='d8'>d8</span>](~{{character_name}}|hitarea-8||{{computed::damageTotal}})
-                  span.damage-roll-button [<span data-i18n='d10'>d10</span>](~{{character_name}}|hitarea-10||{{computed::damageTotal}})
-                  span.damage-roll-button [<span data-i18n='d12'>d12</span>](~{{character_name}}|hitarea-12||{{computed::damageTotal}})
+                  //-span.damage-roll-button [<span data-i18n='d2'>d2</span>](~{{character_name}}|hitarea-2||{{computed::damageTotal}})
+                  //-span.damage-roll-button [<span data-i18n='d4'>d4</span>](~{{character_name}}|hitarea-4||{{computed::damageTotal}})
+                  //-span.damage-roll-button [<span data-i18n='d6'>d6</span>](~{{character_name}}|hitarea-6||{{computed::damageTotal}})
+                  //-span.damage-roll-button [<span data-i18n='d8'>d8</span>](~{{character_name}}|hitarea-8||{{computed::damageTotal}})
+                  //-span.damage-roll-button [<span data-i18n='d10'>d10</span>](~{{character_name}}|hitarea-10||{{computed::damageTotal}})
+                  //-span.damage-roll-button [<span data-i18n='d12'>d12</span>](~{{character_name}}|hitarea-12||{{computed::damageTotal}})
+                  span.damage-roll-button [<span data-i18n='d20'>d20</span>](~{{character_name}}|hitarea-20||{{computed::totals}})
             +templateConditionalDisplay('hitarearoll')
                .sheet-roll-hitarea               
                   label(data-i18n='hitarea') träffområde
@@ -115,3 +110,8 @@ rolltemplate.sheet-rolltemplate-dod91
                      span(data-i18n='absurd').success ABSURD  
                   +rollGreater({values:'roll1 absurd'})
                      span(data-i18n='absurd').fail ABSURD
+            //-+allProps({values:''})
+               .sheet-roll-result 
+                  .sheet-roll-total
+                     label {{key}}
+                     span {{value}}

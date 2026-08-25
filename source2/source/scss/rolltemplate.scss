@@ -32,12 +32,13 @@
             flex-wrap: wrap;
             .sheet-header {
                width: 100%;
-               border-bottom: 2px solid var(--border-color);
+               background-color: var(--bg-color);
+               border-bottom: 1px solid var(--border-color);
                display: flex; 
                justify-content: center;
-               backdrop-filter: invert(100%);
+               //backdrop-filter: invert(100%);
                h2{
-                  color: var(--font-color-inverse);
+                  color: var(--font-color);
                   text-align: center;
                }               
             }

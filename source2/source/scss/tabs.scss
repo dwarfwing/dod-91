@@ -43,11 +43,13 @@
             .tabs--pctabs {
                width: 100%; 
                justify-content: space-evenly;
+               border: 3px solid var(--border-color);
                .tabs__header {
                   width: 100%;
                   height: unset; 
-                  border-block: var(--border-size) solid var(--border-color);
-                  border-inline: var(--border-size-2x) solid var(--border-color); 
+                  //border-block: var(--border-size) solid var(--border-color);
+                  //border-inline: var(--border-size-2x) solid var(--border-color); 
+                  border: var(--border-size) solid var(--border-color);
                   .tabs__nav-list {
                      width: 100%; 
                      margin: 0; 
@@ -60,6 +62,7 @@
                         font-family: unset;
                         color: unset;
                         font-size: 1rem;
+                        font-weight: bold; 
                         width: 100%; 
                         display: grid; 
                         justify-self: center;

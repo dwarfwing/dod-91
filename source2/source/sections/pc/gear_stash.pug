@@ -1,0 +1,36 @@
+mixin gear-stash 
+   .section-gear.section-gear__stash
+      +input({name:'stored_encumbrance',type:'number',class:'hidden'})
+
+      +box({headerObj:{name:'forvaring',attr:'storage','data-i18n':'storage'},fields:[{name:'antal',attr:'amount'},{name:'vikt',attr:'weight'}],classes:'coverall'})
+         +fieldset({name:'storedgear'})
+            //-+collapse
+            //-.collapsed
+               .label-input.input-count-2.checkboxed
+                  //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                  +checkbox({name:'equipped',value:1,checked:true,title:'Utrustning buren på kroppen, annars förvarad annorstädes.','data-i18n-title':'equipped-gear-desc'})
+                  label.select-input 
+                     +span({name:'name'})
+                  //- label.text-input
+                     +text({name:'name',class:'text-input'})
+                  +span({name:'amount',type:'number'}).input-span.input-0
+                  +span({name:'weight',type:'number'}).input-span.input-last
+            .expanded
+               .label-input.input-count-2.checkboxed 
+                  //-label.text-input 
+                     +text({name:'name'}).caps-input
+                  label.text-input                     
+                     +input({type: 'text', name: 'name', class:'label-input-text'})
+                  span.input-span.input-0
+                     +input({type: 'number', name: 'amount', class:'label-input-input'})
+                  span.input-span.input-last
+                     +input({type: 'number', name: 'weight', class:'label-input-input'})
++scss.
+   .section-gear {
+      .expanded {
+         background-color: transparent;
+         input {
+            text-transform: capitalize;
+         }
+      }
+   }

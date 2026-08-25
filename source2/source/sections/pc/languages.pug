@@ -17,6 +17,11 @@ mixin languages
                +number({name: 'fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
                +number({name: 'mod', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-3
                +number({name: 'erf', class:'label-input-input'}).input-span.input-3
+   .hidden-languages.for-upgrades.hidden    
+      each lang in [1,2,3,4,5,6]
+         +text({name:`sprak_`+lang+`_text`})
+         +number({name:`sprak_`+lang+`_fv`})
+         +number({name:`sprak_`+lang+`_erf`})
 +scss.
    .section-languages {
             border-bottom: 1px solid var(--border-color);

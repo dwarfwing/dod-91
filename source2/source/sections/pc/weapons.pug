@@ -8,7 +8,28 @@ mixin weapons
             +checkbox({name:'shotguntoggle',value:1,class:'hidden shotgun-toggle',checked:false})
             //-input(type='checkbox',name='attr_shotguntoggle',class='shotgun-toggle')
             .collapsed
-               .label-input
+               .label-input 
+                  each field in spine.weaponfields    
+                     if field.type == 'checkbox'
+                        if field.trigger 
+                           +checkbox({name:field.attr,value:1,class:field.class,checked:true,trigger:{triggeredFuncs:[field.trigger]}})
+                        else 
+                           +checkbox({name:field.attr,value:1,class:field.class,checked:true})
+                     else if field.type == 'select' && field.attr == 'skill'
+                        +span({name:'skill'})
+                        //-+select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
+                           +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
+                              | --- Välj ---
+                           each skill in spine.weapontypes 
+                              +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
+                           +option({'data-i18n':'manual',value:'manual'})
+                              | Manuellt
+                     else if field.roller
+                        +action({name:'roll',trigger:{triggeredFuncs:[field.trigger]}})
+                              +span({name:field.attr})
+                     else 
+                        +span({name:field.attr})
+               //-.label-input
                   +checkbox({name:'equipped',value:1,class:'weapon-equipped',checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
                   +action({name:'attack_roll',trigger:{triggeredFuncs:['rollWeaponAttack']}})
                      +span({name:'name'})
@@ -74,10 +95,10 @@ mixin weapons
                   each field in spine.weaponfields    
                      if field.type == 'checkbox'
                         if field.trigger 
-                           +checkbox({name:field.attr,value:1,class:field.class,checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
+                           +checkbox({name:field.attr,value:1,class:field.class,checked:true,trigger:{triggeredFuncs:[field.trigger]}})
                         else 
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
-                     if field.type == 'select' && field.attr == 'skill'
+                     else if field.type == 'select' && field.attr == 'skill'
                         +select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
                            +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                               | --- Välj ---
@@ -86,7 +107,10 @@ mixin weapons
                            +option({'data-i18n':'manual',value:'manual'})
                               | Manuellt
                      else 
-                        +input({name:field.name,type:field.type})
+                        if field.trigger
+                           +input({name:field.attr,type:field.type,trigger:{triggeredFuncs:[field.trigger]}})
+                        else 
+                           +input({name:field.attr,type:field.type})
                   //- rmoved
                      +checkbox({name:'equipped',value:1,class:'weapon-equipped',checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
                      label.text-input 
@@ -149,13 +173,24 @@ mixin weapons
                         +input({type: 'number', name: 'ammo', class:'label-input currMax'})
                         span.slash /
                         +input({type: 'number', name: 'ammo_max', class:'label-input currMax'})
+   .hidden-weapons.for-upgrades.hidden 
+      each weapon in [1,2,3,4,5,6,7]
+         +text({name:'vapen_'+weapon+'_text'})
+         +number({name:'vapen_'+weapon+'_fv'})
+         +number({name:'vapen_'+weapon+'_erf'})
+         +number({name:'vapen_'+weapon+'_bv'})
+         +text({name:'vapen_'+weapon+'_skada'})
+         +text({name:'vapen_'+weapon+'_rakvd'})
+         +number({name:'vapen_'+weapon+'_langd'})
+         +number({name:'vapen_'+weapon+'_vikt'})
 +scss.
    .section-weapons {
       width: 100%;
       grid-column: 1 / -1;
+      //border-inline: 4px solid var(--border-color);
       .box-header, .repitem .collapsed div, .repitem .expanded div {
          display: grid; 
-         grid-template-columns: 1.5rem auto 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+         grid-template-columns: 2rem calc(22% - 1rem) 10% 4% 4% 4% 3% 6% 6% 4% 6% 6% 4% 7% 4% 5% 4%;
          & * {
             border: 0;
             width: 100%;
@@ -164,18 +199,22 @@ mixin weapons
          & > * {
             border-right: 1px solid var(--border-color);
          }
+         & > h2:first-of-type { border-right: 0; overflow: visible; }
          & > h1 { border-right: 0; }
          & > h2:last-of-type, & > span:last-of-type {
             border: 0;
          }
       }
       .repitem {
-         input[type="text"]:not(.caps-input), span.text-span {
+         input[type="text"]:not(.caps-input), span {
             text-align: center;
          }
          button {
             display: flex;
             justify-content: center;
+            span {
+               text-align: center; 
+            }
             &.init-button span {
                width: 1.25rem;
             }

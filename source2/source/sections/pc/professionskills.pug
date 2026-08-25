@@ -1,13 +1,14 @@
 mixin professionskills 
    .section-professionskills
-      +box({headerObj:{name:'yrkesfärdigheter',attr:'yrkesfardigheter','data-i18n':'profession-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})         
+      //-each skill in spine.secondaryskills
+      +box({headerObj:{name:'yrkesfärdigheter',attr:'yrkesfardigheter','data-i18n':'profession-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})      
          each skill in [1,2,3,4,5,6,7,8,9,10,11,12]
             .skill-row.collapse-container
                +checkbox({name: 'collapse-profskill-'+skill,class:'collapse',value:1})
                .collapsed.label-input.input-count-3
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input 
-                     +action({name:'roll_profskill_'+skill,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                     +action({name:'yrkes_'+skill,trigger:{triggeredFuncs:['rollTrainedSkill']}})
                         +span({name:'yrkes_'+skill+'_text'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
@@ -15,31 +16,31 @@ mixin professionskills
                   //-span.input-span.input-0
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                  +input({type: 'number', name: 'yrkes_'+skill+'_fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+                  +input({name:'yrkes_'+skill+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
                   +input({name:'yrkes_'+skill+'_mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
                   +input({name:'yrkes_'+skill+'_erf',type:'number'}).input-span.input-2
                .expanded.label-input.input-count-3 
                   //-label.text-input 
                      +text({name:'name'}).caps-input
                   //-label.select-input
-                     +select({name:'name',trigger:{triggeredFuncs:['setSkill']}})                        
+                     +select({name:'yrkes_'+skill+'_text',trigger:{triggeredFuncs:['setSkill']}})                        
                         +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                            | --- Välj ---
-                        each skill in spine.secondaryskills
-                           +option({value: skill.attr, 'data-i18n': skill.attr.replace(/_/,'-')})
                         +option({value:'custom-skill','data-i18n':'custom-skill'})
                            | Lägg till manuellt
+                        each skill in spine.secondaryskills
+                           +option({value: skill.name, 'data-i18n': skill.attr.replace(/_/,'-')})
                      +input({name:'custom name display',type:'checkbox',value:1,class:'hidden toggle-custom-skill'})
-                     +text({name:'custom name',id:'custom-skill-input',trigger:{triggeredFuncs:['setSkill']}})
+                     +text({name:'custom name',id:'custom-skill-input',class:'hidden',trigger:{triggeredFuncs:['setSkill']}})
                   //-span.input-span.input-0
                      //-+checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                  +input({type: 'text', name: 'yrkes_'+skill+'_text', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
-                  +input({type: 'number', name: 'yrkes_'+skill+'_fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+                  +input({name: 'yrkes_'+skill+'_text', type: 'text', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+                  +input({name: 'yrkes_'+skill+'_fv', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
                   //-span.input-span.input-1
-                  +input({type: 'number', name: 'yrkes_'+skill+'_mod', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
+                  +input({name: 'yrkes_'+skill+'_mod', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
                   //-span.input-span.input-2
-                  +input({type: 'number', name: 'yrkes_'+skill+'erf', class:'label-input-input'}).input-span.input-3
+                  +input({name: 'yrkes_'+skill+'_erf', type: 'number', class:'label-input-input'}).input-span.input-3
          //-   +box({headerObj:{name:'Yrkesfärdigheter',attr:'professionskills','data-i18n':'trained-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Exp.',attr:'experience_abbr'}],classes:'coverall'})
                each skill in spine.secondaryskills 
                   +input({name: skill.attr, type:'number', value: 0}).hidden
@@ -86,7 +87,7 @@ mixin professionskills
                         //-span.input-span.input-2
                         +input({type: 'number', name: 'skill_exp', class:'label-input-input'}).input-span.input-2
 +scss.
-   .section-professionskills {
+   .section-professionskills, .section-secondaryskills {
       border-bottom: 1px solid var(--border-color);
       :is(.expanded,.collapsed) {
          & > .label-input {
@@ -105,9 +106,12 @@ mixin professionskills
       .skill-row {
          border-bottom: 1px solid var(--border-color);
          min-width: 100%;
-         height: 2.1rem; 
+         //height: 2.1rem; 
+         line-height: var(--line-height);
          & > :is(.expanded,.collapsed) {
+            height: var(--line-height);
             min-width: 100%; 
+            border-bottom: 0; 
          }
          label, button {
             border-right: 0;

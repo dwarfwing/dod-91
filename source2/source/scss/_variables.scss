@@ -7,13 +7,18 @@
   font-family: 'PT Serif';
   font-size: 16px;
   text-transform: capitalize;
-  line-height: 2rem; 
+  line-height: 2rem;
+  --line-height: 2rem;
+  --row-height: 2.125rem;   
 
   //--bg-image: url(https://files.d20.io/images/473614827/QuVlaMbU9zMiKO6-BxzBkg/original.png); 
   --logo-image: url(https://files.d20.io/images/494820402/dm4zZx9TJPVO-wI0Qoe_0Q/original.webp);
 
   --bg-color: #fd5232;
+  --bg-color: #fc562c;
   --bg-color2: #e3e3e3;
+  --bg-color9: rgb(31, 31, 31);
+  --bg-color0: rgb(255, 255, 255); 
   --font-family: Helvetica, "Arimo", Sans-serif;
   --font-color: #111;
   --font-color2: #222;
@@ -29,9 +34,9 @@
   --border-size-2x: 6px; 
   --fill-color: #505050;
   --fill-color-none: transparent;
-  --background-color: transparent;
-  --background-color-inv: var(--dark-surface1);
-  --background-color-box: rgb(0,0,0,0.1); 
+  --background-color: #fc562c;
+  --background-color-inv: var(--dark-surface1); 
+  --background-color-box: #fc562c;
   --dm-collapseExpandedColor: #e3e3e3;
   --rt-bg-color: #fff;
   --invert-bg: invert(0);
@@ -45,18 +50,19 @@
 @mixin roll { 
   font-family: 'PT Serif';
   font-size: 14px;
-  text-transform: uppercase;
+  text-transform: capitalize;
 
   --font-family: "PT Serif", Serif;
   --font-color: #000;
   --font-color2: #3e3e3e;
   --font-color-inv: #c3c3c3;
   --font-color-inverse: #a1a1a1;
+  --bg-color: #fc562c;
   --success-color: #319131;
   --success-bg-color: #acdcbc;
   --fail-color: #913131;
   --fail-bg-color: #dcacac;
-  --text-transform: uppercase;
+  --text-transform: capitalize;
   --border-color: #000;
   --fill-collor: transparent;
   --background-color: transparent;
@@ -81,7 +87,8 @@
   --background-color: var(--dark-surface1);
   --background-color2: #3e3e3e;
   --background-color-inv: #5e5e5e;
-  --background-color-box: rgb(255,255,255,0.1); 
+  --background-color-box: rgb(255,255,255,0.1);
+  --bg-color: rgb(255,255,255,0.1); 
   --collapseExpandedColor: var(--dm-collapseExpandedColor);
   --rt-bg-color: #000;
   --invert-bg: invert(100%);

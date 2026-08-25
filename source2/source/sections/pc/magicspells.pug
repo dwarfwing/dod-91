@@ -1,0 +1,213 @@
+mixin spells 
+   //-mixin spell
+      .spell.collapse-container
+         +collapse
+         //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
+         //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
+         .collapsed
+            .label-input.input-count-3
+               //- labelObj: {class: 'label-input-label',type:'roller',name: spell.name, attr: spell.attr },
+               label.select-input.collapsed 
+                  +action({name:'roll',trigger:{triggeredFuncs:['rollSkill']}})
+                     +span({name:'name'})
+               //- label.text-input
+                  +text({name:'name',class:'text-input'})
+               //-+span({name:'spell',type:'number'}).input-span.input-0                  
+               span.input-span.input-0
+                  +input({type: 'number', name: 'spell_s', class:'label-input-input'})
+                  //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                  //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+               +input({name:'mod',type:'number'}).input-span.input-1
+               +input({name:'erf',type:'number'}).input-span.input-2
+         .expanded
+            .label-input.input-count-3 
+               //-label.text-input 
+                  +text({name:'name'}).caps-input
+               label.select-input.expanded
+                  +text({name:'name',id:'custom-spell-input'})
+               span.input-span.input-0
+                  +input({type: 'number', name: 's', class:'label-input-input'})
+               span.input-span.input-1
+                  +input({type: 'number', name: 'mod', class:'label-input-input'})
+               span.input-span.input-2
+                  +input({type: 'number', name: 'erf', class:'label-input-input'})
+   //-mixin spelllist() 
+      .spell-list 
+         +box({headerObj:{name:'Test'},fields:[]})
+            +fieldset({name: name})
+               +spell
+   .section-magicspells 
+      - fields = [{name:'Mem.',attr:'memorized-abbr'},{name:'SV',attr:'spell_school_level'},{name:'',attr:''},{name:'S',attr:'spell_skill_level'},{name:'E',attr:'effektgrad_abbr'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]
+      +box({headerObj:{name:'Besvärjelser',attr:'spells','data-i18n':'spells'},classes:'spells coverall'})
+         //-each header in [1,2]
+         .box-header.input-count-5
+            each field in fields
+               h2(class='header-field',data-i18n=field.attr)= field.name
+               //-h2 class="header-field" data-i18n="spell-skill-level">S</h2>
+         +fieldset({name:'spells',class:'content'})
+            .spell-row.collapse-container
+               //-+collapse({name:'besvarjelse_'+spell+'_collapse'})
+               //-+checkbox({name:'collapse',value:1,class:'collapse'})
+               +collapse
+               //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
+               //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
+               .collapsed
+                  .label-input.input-count-5
+                     //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                     +checkbox({name:'mem',class:'memorized',value:1,checked:false})               
+                     +span({name: 'sv', class:'label-input-input'})
+                     label.select-input.collapsed 
+                        +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSpell']}})
+                           +span({name:'name',class:'button-text'})
+                     //- label.text-input
+                        +text({name:'name',class:'text-input'})
+                     //-+span({name:'skill',type:'number'}).input-span.input-0                  
+                     +span({name: 's', class:'label-input-input'})
+                     +input({name: 'e', type: 'number', class:'label-input-input'})
+                        //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                        //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                     +input({name:'mod',type:'number'}).input-span.input-1
+                     +input({name:'erf',type:'number'}).input-span.input-2
+               .expanded
+                  .label-input.input-count-5 
+                     //-label.text-input 
+                        +text({name:'name'}).caps-input
+                     +checkbox({name:'mem',class:'memorized',value:1,checked:false})
+                     +input({name: 'sv', type: 'number', class:'label-input-input'})
+                     +text({name:'name',id:'custom-skill-input'})
+                     +input({name: 's', type: 'number', class:'label-input-input'})
+                     +input({name: 'e', type: 'number', value: 1, class:'label-input-input'})
+                     +input({name: 'mod', type: 'number', class:'label-input-input'})
+                     +input({name: 'erf', type: 'number', class:'label-input-input'})
+         //-each spell in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+            .spell-row.collapse-container
+               //-+collapse({name:'besvarjelse_'+spell+'_collapse'})
+               +checkbox({name:'besvarjelse_'+spell+'_collapse',value:1,class:'collapse'})
+               //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
+               //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
+               .collapsed
+                  .label-input.input-count-3
+                     //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                     +checkbox({name:'besvarjelse_'+spell+'_mem',class:'memorized',value:1,checked:false})
+                     label.select-input.collapsed 
+                        +action({name:'besvarjelse_'+spell+'_roll',trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                           +span({name:'besvarjelse_'+spell+'_text',class:'button-text'})
+                     //- label.text-input
+                        +text({name:'name',class:'text-input'})
+                     //-+span({name:'skill',type:'number'}).input-span.input-0                  
+                     +span({name: 'besvarjelse_'+spell+'_s', class:'label-input-input'})
+                        //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                        //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                     +input({name:'besvarjelse_'+spell+'_mod',type:'number'}).input-span.input-1
+                     +input({name:'besvarjelse_'+spell+'_erf',type:'number'}).input-span.input-2
+               .expanded
+                  .label-input.input-count-3 
+                     //-label.text-input 
+                        +text({name:'name'}).caps-input
+                     +checkbox({name:'besvarjelse_'+spell+'_mem',class:'memorized',value:1,checked:false})
+                     +text({name:'besvarjelse_'+spell+'_text',id:'custom-skill-input'})
+                     +input({name: 'besvarjelse_'+spell+'_s', type: 'number', class:'label-input-input'})
+                     +input({name: 'besvarjelse_'+spell+'_mod', type: 'number', class:'label-input-input'})
+                     +input({name: 'besvarjelse_'+spell+'_erf', type: 'number', class:'label-input-input'})
+   .hidden-besvarjelser.for-upgrades.hidden 
+      each spell in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+         +text({name:'besvarjelse_'+spell+'_text'})
+         +number({name:'besvarjelse_'+spell+'_s'})
+         +number({name:'besvarjelse_'+spell+'_erf'})
++scss.
+   .section-magicspells {
+      .box.box-spells  {
+         padding-bottom: var(--line-height);
+         .repcontrol {
+            background-color: var(--background-color);
+            position: absolute;
+            bottom: 0;
+            height: var(--line-height);
+            border-top: 1px solid var(--border-color);
+         }
+         .itemcontrol {
+            z-index: 1000; 
+         }
+         & > .repcontainer {
+            //display: grid; 
+            //grid-template-columns: 50% 50%; 
+            width: 100%;
+            //column-count: 2;
+            column-gap: 0; 
+            & > * { 
+               width: 100%;
+               //display: inline-block; 
+            }
+         }
+         //column-count: 2; 
+         //column-rule: 3px solid var(--border-color);
+         //column-gap: 3px;
+         width: 100%;
+         background-color: var(--bg-color2);
+         justify-items: center; 
+         .repcontainer {
+            min-height: 4rem; 
+            //display: grid; 
+            //grid-template-columns: 50% 50%;
+            width: 100%; 
+         } 
+         .input-count-3 {
+            display: grid; 
+            grid-template-columns: 2rem 1fr 3rem 3rem 3rem;
+         }
+         .input-count-4 {
+            display: grid; 
+            grid-template-columns: 2rem 1fr 3rem 3rem 3rem 3rem;
+         }
+         .input-count-5 {
+            display: grid; 
+            grid-template-columns: 2rem 3rem 1fr 3rem 3rem 3rem 3rem;
+         }
+         .box-header {
+            column-span: all; 
+            background-color: var(--bg-color); 
+            h2 {
+               overflow: visible; 
+            }
+         }
+         .spell-row {
+            //width: calc(50% - 3px); 
+            width: 100%; 
+            //height: var(--row-height);
+            .collapsed, .expanded {
+               height: var(--row-height);
+               line-height: var(--row-height);
+            }
+            .label-input {
+               height: stretch;
+            }
+            label, input[type=number], input[type=text], span:not(.button-text) {
+               border-right: 1px solid var(--border-color); 
+               border-left: 0; 
+               border-radius: 0; 
+               width: 100%; 
+            }
+            span.button-text, button[type=action], {
+               border-right: 0; 
+               justify-content: center;
+            }
+            input[type=text] {
+               width: 100%;
+               text-align: center;
+            }
+         }
+         .collapse {
+            right: 12rem; 
+            top: -0.25rem;
+            z-index: 1000; 
+         }
+         .memorized {
+            height: 100%;
+            width: 100%;
+            border: 0;
+            border-right: 1px solid var(--border-color);
+         }
+      }
+       
+   }
+      

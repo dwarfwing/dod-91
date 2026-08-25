@@ -1,15 +1,21 @@
 mixin money
    .section-money
-      +box({headerObj:{name:'pengar',attr:'money','data-i18n':'money'},fields:[{name:'buret',attr:'carried'},{name:'förvar',attr:'storage'}]})
+      +box({headerObj:{name:'pengar',attr:'money','data-i18n':'money'},fields:[{name:'börs',attr:'carried'},{name:'juveler',attr:'juveler'},{name:'bank',attr:'bank'}]})
          //each attribute in ['akrobatics','bows','first aid','rifles','perception','throwing','bartering','melee','pistol','sneak/hide']
-         each credit in [{name:'kronkredit',attr:'crowncredits'},{name:'kredit',attr:'credits'},{name:'jycke',attr:'cents'},]
+         each mynt in [{name:'gm',attr:'gm'},{name:'sm',attr:'sm'},{name:'km',attr:'km'},]
+            - bors = 'pengar_bors_'+mynt.attr;
+            - bank = 'pengar_bank_'+mynt.attr;
+            - juvel = 'pengar_juveler_'+mynt.attr;
+            if mynt.name == sm 
+               juvel = 'juveler'
             +label-inputs({
-               label: credit.name,
-               divObj: {class:'column-'+credit.name},
-               labelObj: {class: 'label-input-label',name: credit.name, attr: credit.attr},
+               label: mynt.name,
+               divObj: {class:'column-'+mynt.name},
+               labelObj: {class: 'label-input-label',name: mynt.name, attr: mynt.attr},
                inputObj: [
-                  {type: 'number', name: credit.attr, class:'label-input-input input-'+credit.name},
-                  {type: 'number', name: credit.attr+'_mod', class:'label-input-input input-'+credit.name}
+                  {type: 'number', name: bors, class:'label-input-input input-'+mynt.name},
+                  {type: 'number', name: juvel, class:'label-input-input input-'+mynt.name},
+                  {type: 'number', name: bank, class:'label-input-input input-'+mynt.name}
                ]
             })
 +scss.

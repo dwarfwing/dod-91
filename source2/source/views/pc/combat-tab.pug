@@ -1,5 +1,18 @@
 mixin combat-tab  
    .tab-combat 
       +weapons 
-      +armor 
-      +shield
+      //-+armor 
+      //-+shield
+      +hitareas
+      +weaponskills
++scss.
+   .tab-combat {
+      display: grid; 
+      grid-template-columns: 65% 35%;
+      grid-template-areas: "weapons weapons"
+                           "areas skills";
+      & > div:nth-of-type(1) { grid-area: "weapons"; }
+      & > div:nth-of-type(2) { grid-area: "areas"; }
+      & > div:nth-of-type(3) { grid-area: "skills"; }
+
+   }

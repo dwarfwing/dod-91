@@ -5,8 +5,9 @@ include ./sections/_index.pug
 include ./views/_index.pug
 - const templateName = 'dod91';
 //- Stores the sheet version number for use with version control functions
-+hidden({name:'sheet version',value:1.21})
++hidden({name:'sheet_version',value:2.0})
 +hidden({name:'version',value:0})
++toggle({name:'use-sp',checked:true})
 +action({ name:'rolldamage', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
 +action({ name:'hitarea-2', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
 +action({ name:'hitarea-4', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
@@ -14,6 +15,7 @@ include ./views/_index.pug
 +action({ name:'hitarea-8', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
 +action({ name:'hitarea-10', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
 +action({ name:'hitarea-12', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
++action({ name:'hitarea-20', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })
 +action({ name:'rollResonance', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollResonance']} })
 +action({ name:'rollResonanceCrit', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollResonanceCrit']} })
 +action({ name:'rolldamage-7D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
@@ -50,9 +52,11 @@ main#main
         | T100
     +roller({name:'custom dice roll',class:'custom-roller',trigger:{triggeredFuncs:['customDiceRoll']}})
 
+
   +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap
     +tab({name:'pc',container:'article',button:{content:'Person_4',class:'tab-button',title:'PC','data-i18n-title':'pc-caps'}})
-      +topframe 
+      +topframe   
+      p(style="width:100%;")
       +tabs({name:'pctabs',defaultActiveTab:'skills'})
         +tab({name:'skills',container:'div',button:{content:'Färdigheter',class:'tab-button',title:'PC','data-i18n-title':'skills'}})
           +skills-tab
@@ -62,6 +66,8 @@ main#main
           +magic-tab
         +tab({name:'gear',container:'div',button:{content:'Utrustning',class:'tab-button',title:'gear','data-i18n-title':'gear'}})
           +gear-tab
+        +tab({name:'animal',container:'div',button:{content:'Djur',class:'tab-button',title:'animal','data-i18n-title':'animal'}})
+          +animal-tab
         +tab({name:'notes',container:'div',button:{content:'Anteckningar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
           +notes-tab
     //-+tab({name:'npc',container:'article',button:{content:'Person_2',class:'tab-button',title:'NPC','data-i18n-title':'npc-caps'}})

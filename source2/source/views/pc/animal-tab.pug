@@ -1,0 +1,120 @@
+mixin animal-tab 
+   .tab-animal
+      .section-attributes 
+         +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'}})
+            each attribute in spine.animal_attributes
+               div(class='column-'+attribute.attr).label-input.input-count-1.attribute-row
+                  //-label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
+                  +action({
+                     name:'roll_'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']}
+                  })
+                     label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
+                  //-+action({name:'attr-'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']},'data-i18n-title':'attribute-roll'}).attribute-roll
+                  //-+action({name:'attr-contest-'+attribute.attr,trigger:{triggeredFuncs:['rollAttributeContest']},'data-i18n-title':'attribute-roll-contest'}).attribute-roll.ge-roll-geRollContest
+                  +input({type: 'number', name: 'animal_'+attribute.attr+'_fv', class:'label-input-input input-'+attribute.attr+'',})
+                  +input({type: 'number', name: 'animal_'+attribute.attr+'_bc', class:'hidden label-input-input input-'+attribute.attr+'',hidden:true})
+      .section-info
+         - animalInfo = [{ name: 'namn', attr: 'namn', type: 'text', classes: '', placeholder: ''},{ name: 'typ', attr: 'typ', type: 'text', classes: '', placeholder: ''},{ name: 'art', attr: 'art', type: 'text', classes: '', placeholder: ''},{ name: 'beskrivning', attr: 'beskrivning', type: 'text', classes: '', placeholder: ''}]
+         - animialTertiary= [{ name: 'skadebonus', attr: 'sb', type: 'text', classes: '', placeholder: ''},{ name: 'naturligt skydd', attr: 'armor', type: 'text', classes: '', placeholder: ''},{ name: 'förflyttning', attr: 'movement', type: 'text', classes: '', placeholder: ''}]
+         +checkbox({name:'animal_kroppspoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
+         +box({classes:'box-info'})
+            each info in animalInfo            
+               +label-inputs({
+                  label: info.name,
+                  divObj: {class:'column-'+info.attr+' text-field '+info.classes},
+                  labelObj: {class: 'label-input-label',attr:info.attr},
+                  inputObj: [
+                     {type: info.type, name: 'animal_'+info.attr, class:'label-input-input input-'+info.attr,'data-i18n-placeholder':info.placeholder}
+                  ]
+               })
+         +box({classes:'box-tertiary'})
+            each info in animialTertiary
+               - var inputObjs = [{type: info.type, name: 'animal_'+info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
+               if info.classes.includes("currMax") 
+                  - inputObjs.push({type: info.type, name: 'animal_'+info.attr+'_max', class:'label-input-input input-'+info.attr+'-max', 'data-i18n-title':'max-value',title:'Max-värdet'}); 
+               +label-inputs({
+                  label: info.name,
+                  divObj: {class:'column-'+info.attr+' '+info.classes},
+                  labelObj: {class: 'label-input-label',attr:info.attr},
+                  inputObj: inputObjs,
+               })
+         +box({classes:'hp-points points'})
+            +input-label({
+                  label: 'Kroppspoäng',
+                  divObj: {class:'hitpoints-grid'},
+                  spanObj: {class: 'label-input-label'},
+                  inputObj: {type: number,name: 'animal_kroppspoang_max',type:'number'},
+               })
+            +fillLeft-label({
+               radioObj:{name:'animal_kroppspoang',type:'radio',class:'counter'},
+               divObj:{class:''},
+               valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],
+               noCLear: true,
+               capAttr: 'animal_kroppspoang_max'
+            })
+         +box({classes:'sp-points points'})
+            +input-label({
+                  label: 'Smärtpoäng',
+                  divObj: {class:'painpoints-grid'},
+                  spanObj: {class: 'label-input-label'},
+                  inputObj: {type: number,name: 'animal_smartpoang_max',type:'number',trigger:{formula:'@{animal_fys_fv} + @{animal_fys_fv}'}},
+               })
+            +fillLeft-label({
+               radioObj:{name:'animal_smartpoang',type:'radio',class:'counter'},
+               divObj:{class:''},
+               valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],
+               noCLear: true,
+               capAttr: 'animal_smartpoang_max'
+            })
+      +gear('Utrustning','mount',i18n='gear-mount') 
+      .section-weapons.section-animal-attacks 
+         //- Modify weapons mixin to be more declarative ? 
+         -   let attackfields = spine.attackfields
+         +box({headerObj:{attr:'attacker','data-i18n':'attacks'},fields:attackfields,classes:'coverall'})
+            +fieldset({name:'attacks',class:'collapse-container'})
+               +collapse
+               .collapsed
+                  .label-input 
+                     each field in attackfields    
+                        +span({name:field.attr})
+               .expanded
+                  .label-input.input-count-16
+                     each field in attackfields   
+                        if field.trigger
+                           +input({name:field.attr,type:field.type,trigger:{triggeredFuncs:[field.trigger]}})
+                        else 
+                           +input({name:field.attr,type:field.type})
+      +skillList()      
++scss.
+   .tab-animal {
+      display: grid;
+      grid-template-columns: 35% 65%; 
+      grid-template-areas: "ge info"
+                           "gear attacks"
+                           "gear skills"
+                           "gear abilities";
+      .section-attributes { grid-area: ge; }
+      .section-gear { grid-area: gear; }
+      .section-weapons.section-animal-attacks { 
+         grid-area: attacks;
+         .box {
+            .box-header, 
+            .expanded .label-input,
+            .collapsed .label-input {
+               grid-template-columns: 1fr 3rem 3rem 2rem 3rem 3rem; 
+            } 
+         }
+      }
+      .section-animal-abilities { grid-area: abilities; }
+      .section-info {
+         grid-area: info; 
+         display: grid;
+         grid-template-columns: 1fr 1fr 1fr;
+         grid-template-areas: "info info info" 
+                              "stats hp sp";
+         .box-info {
+            .label-input { width: 50%; box-sizing: border-box; }
+         }
+      }
+   }
+      

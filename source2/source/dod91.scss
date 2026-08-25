@@ -21,7 +21,7 @@ body{
   @include scss.variables;
   // While these SHOULD be inherited from the html, we need to override some Roll20 styling
   color: var(--font-color);
-  background-color: var(--background-color-inv);
+  background-color: var(--background-color);
   font-size: 1rem;
   line-height: 2.5rem;
   .ui-dialog{
@@ -48,7 +48,7 @@ body{
           height: 0;
         }
         //background-image: var(--bg-image);
-        background-color: var(--background-color-inv);
+        background-color: var(--background-color);
         background-repeat: repeat-y;
         background-size: cover;
         padding: 0; 

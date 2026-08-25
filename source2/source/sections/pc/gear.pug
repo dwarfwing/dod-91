@@ -1,8 +1,12 @@
-mixin gear 
-   .section-gear
-      +input({name:'gear_encumbrance',type:'number',class:'hidden',trigger:{affects:['encumbrance']}})
-      +box({headerObj:{name:'utrustning',attr:'armor','data-i18n':'gear'},fields:[{name:'antal',attr:'amount'},{name:'vikt',attr:'weight'}],classes:'coverall'})
-         +fieldset({name:'gear'})
+mixin gear(name='Utrustning',attr='gear',i18n) 
+   .section-gear(class='section-gear__'+attr)
+      if attr == 'gear'
+         +input({name:attr+'_encumbrance',type:'number',class:'hidden',trigger:{affects:['encumbrance']}})
+      else 
+         +input({name:attr+'_encumbrance',type:'number',class:'hidden'})
+      - transl = i18n ? i18n : attr; 
+      +box({headerObj:{name:name,attr:attr,'data-i18n':transl},fields:[{name:'antal',attr:'amount'},{name:'vikt',attr:'weight'}],classes:'coverall'})
+         +fieldset({name:attr})
             //-+collapse
             //-.collapsed
                .label-input.input-count-2.checkboxed
@@ -18,21 +22,22 @@ mixin gear
                .label-input.input-count-2.checkboxed 
                   //-label.text-input 
                      +text({name:'name'}).caps-input
-                  +checkbox({name:'equipped',value:1,checked:true,trigger:{triggeredFuncs:['gearEncumbrance']}})
+                  +checkbox({name:'equipped',value:1,checked:true,trigger:{triggeredFuncs:[attr+'Encumbrance']}})
                   label.text-input                     
                      +input({type: 'text', name: 'name', class:'label-input-text'})
                   span.input-span.input-0
-                     +input({type: 'number', name: 'amount', class:'label-input-input',trigger:{triggeredFuncs:['gearEncumbrance']}})
+                     +input({type: 'number', name: 'amount', class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
                   span.input-span.input-last
-                     +input({type: 'number', name: 'weight', class:'label-input-input',trigger:{triggeredFuncs:['gearEncumbrance']}})
+                     +input({type: 'number', name: 'weight', class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
 +scss.
-   .section-gear  
+   .section-gear {
       .expanded {
          background-color: transparent;
          input {
-            text-transform: uppercase;
+            text-transform: capitalize;
          }
       }
+   }
 +module.
    const gearEncumbrance = function() {
       //k.log("updating gear encumbrance");

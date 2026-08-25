@@ -1,0 +1,3 @@
+mixin toggle({name,value=1,checked})
+   - attr = name.toString().replace(/-/,"_");
+   +checkbox({name:attr,value:value,class:'hidden toggle-'+name,hidden:true,checked:checked})

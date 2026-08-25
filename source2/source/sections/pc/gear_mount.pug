@@ -1,0 +1,41 @@
+mixin gear-mount() 
+   .section-gear.section-gear__mount
+      +input({name:'mount_encumbrance',type:'number',class:'hidden'})
+      +box({headerObj:{name:'Riddjur',attr:'mount_gear','data-i18n':'mount-gear'},fields:[{name:'antal',attr:'amount'},{name:'vikt',attr:'weight'}],classes:'coverall'})
+         +fieldset({name:'mountgear'})
+            //-+collapse
+            //-.collapsed
+               .label-input.input-count-2.checkboxed
+                  //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                  +checkbox({name:'equipped',value:1,checked:true,title:'Utrustning buren på kroppen, annars förvarad annorstädes.','data-i18n-title':'equipped-gear-desc'})
+                  label.select-input 
+                     +span({name:'name'})
+                  //- label.text-input
+                     +text({name:'name',class:'text-input'})
+                  +span({name:'amount',type:'number'}).input-span.input-0
+                  +span({name:'weight',type:'number'}).input-span.input-last
+            .expanded
+               .label-input.input-count-2.checkboxed 
+                  //-label.text-input 
+                     +text({name:'name'}).caps-input
+                  label.text-input                     
+                     +input({type: 'text', name: 'name', class:'label-input-text'})
+                  span.input-span.input-0
+                     +input({type: 'number', name: 'amount', class:'label-input-input',trigger:{triggeredFuncs:['mountEncumbrance']}})
+                  span.input-span.input-last
+                     +input({type: 'number', name: 'weight', class:'label-input-input',trigger:{triggeredFuncs:['mountEncumbrance']}})      
++scss.
+   .section-gear {
+      .expanded {
+         background-color: transparent;
+         input {
+            text-transform: capitalize;
+         }
+      }
+   }
++module.
+   const mountEncumbrance = function() {
+      //k.log("updating gear encumbrance");
+      repeatingSum("mount_encumbrance","mountgear",["weight","amount","equipped"]);
+   }
+   k.registerFuncs({mountEncumbrance})

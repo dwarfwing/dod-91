@@ -47,4 +47,37 @@ mixin fillLeft-label({radioObj,divObj,valueArray,noClear,displayValues,capAttr})
         - capIndex = noClear ? index+1 : index
         +checkbox({name:capAttr,type:'checkbox',value:capIndex,class:'hidden cap',hidden:true})
       label(for= usedObj.id,name= usedObj.name,title= value,class= 'fill-left__label')
++scss.  
+  .fill-left {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-self: flex-start; 
+    width: 100%;
+    row-gap: 0.5rem;
+    margin-left: 0.25rem;
+    label {
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-color2);
+        width: 75%;
+        cursor: pointer; 
+    }
+    input.counter:checked + input + label {
+        position: relative; 
+        &:after {
+          position: absolute; 
+          inset: 0; 
+          content: attr(title);
+          text-align: center;
+          padding-top: 0.125rem;
+          line-height: 100%;
+          vertical-align: middle;
+        }
+        & ~ label {
+          background-color: transparent;                  
+        }
+    }
+    input.cap:checked + label ~ :is(input,label) {
+        display: none; 
+    }
+  }
 //- End Mixin

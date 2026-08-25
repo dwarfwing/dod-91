@@ -1,9 +1,11 @@
 mixin skills 
    .section-skill 
       +box({headerObj:{name:'primära färdigheter',attr:'skills','data-i18n':'basic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
-         each skill in spine.skills
+         each skill in spine.primaryskills
+            - geAbbr = skill.base.slice(0,3).toUpperCase();
+            +text({name: skill.attr+'_name',value: skill.name,class:'hidden'})
             +label-inputs({
-               label: skill.name,
+               label: skill.name + ' (' + geAbbr + ')',
                divObj: {class:'column-'+skill.name},
                labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr,rollType:'skill'},
                inputObj: [
@@ -37,11 +39,11 @@ mixin skills
                      +text({name:'name',class:'text-input'})
                   //-+span({name:'skill',type:'number'}).input-span.input-0                  
                   span.input-span.input-0
-                     +input({type: 'number', name: 'skill', class:'label-input-input'})
+                     +input({type: 'number', name: 'skill_fv', class:'label-input-input'})
                      //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                   +input({name:'skill_mod',type:'number'}).input-span.input-1
-                  +input({name:'skill_exp',type:'number'}).input-span.input-2
+                  +input({name:'skill_erf',type:'number'}).input-span.input-2
             .expanded
                .label-input.input-count-3 
                   //-label.text-input 
@@ -49,11 +51,11 @@ mixin skills
                   label.select-input.expanded
                      +text({name:'skill_name',id:'custom-skill-input'})
                   span.input-span.input-0
-                     +input({type: 'number', name: 'skill', class:'label-input-input'})
+                     +input({type: 'number', name: 'skill_fv', class:'label-input-input'})
                   span.input-span.input-1
                      +input({type: 'number', name: 'skill_mod', class:'label-input-input'})
                   span.input-span.input-2
-                     +input({type: 'number', name: 'skill_exp', class:'label-input-input'})
+                     +input({type: 'number', name: 'skill_erf', class:'label-input-input'})
 +scss.
    .section-skill {
       .label-input {
@@ -78,6 +80,7 @@ mixin skills
            position: absolute;
            left: -1rem;
            width: 1rem;
-         }  
+         } 
+         border-bottom: 1px solid var(--border-color); 
       }
    }

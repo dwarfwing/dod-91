@@ -15,6 +15,7 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
       - labelObj.type = labelObj.type ? replaceProblems(labelObj.type) : 'label'; 
       - labelObj.title = labelObj.abbr ? replaceProblems(labelObj.abbr4) : '';
       - labelObj['data-i18n-title'] = labelObj['data-i18n-title'] ? labelObj['data-i18n-title'] : '';
+      - labelObj.attr = labelObj.attr ? labelObj.attr : labelObj.name; 
     if labelObj && labelObj.type && labelObj.type == 'roller'
       if labelObj.rollType
       - 
@@ -55,6 +56,8 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
           +adaptiveTextarea(input).input-span-adaptive
         else if input.type == 'button'
           +action(input)
+        else if input.type == 'number'
+          +number(input)
         else  
           +input(input)
 +scss('sheet').
@@ -78,6 +81,7 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
             height: 50%;
             padding: 0;
             line-height: 1rem; 
+            width: auto; 
          }
          span.input-span {
             width: auto; 

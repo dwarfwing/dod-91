@@ -12,7 +12,7 @@ mixin secondaryskills
                .label-input.input-count-3
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input 
-                     +action({name:'roll',trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                     +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
                         +span({name:'skill_name'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
@@ -20,14 +20,15 @@ mixin secondaryskills
                   //-span.input-span.input-0
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                  +input({type: 'number', name: 'skill', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
-                  +input({name:'skill_mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
-                  +input({name:'skill_exp',type:'number'}).input-span.input-2
+                  +input({name: 'fv', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+                  +input({name:'mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+                  +input({name:'exp',type:'number'}).input-span.input-2
             .expanded
                .label-input.input-count-3 
                   //-label.text-input 
                      +text({name:'name'}).caps-input
-                  label.select-input
+                  +text({name:'skill_name'}).caps-input
+                  //-label.select-input
                      +select({name:'name',trigger:{triggeredFuncs:['setSkill']}})                        
                         +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                            | --- Välj ---
@@ -40,11 +41,16 @@ mixin secondaryskills
                   //-span.input-span.input-0
                      //-+checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                  +input({type: 'number', name: 'skill', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+                  +input({name: 'fv', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
                   //-span.input-span.input-1
-                  +input({type: 'number', name: 'skill_mod', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+                  +input({name: 'mod', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
                   //-span.input-span.input-2
-                  +input({type: 'number', name: 'skill_exp', class:'label-input-input'}).input-span.input-2
+                  +input({name: 'exp', type: 'number', class:'label-input-input'}).input-span.input-2
+   .hidden-secondaryskills.for-upgrades.hidden    
+      each skill in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+         +text({name:`sek_fard_`+skill+`_text`})
+         +number({name:`sek_fard_`+skill+`_fv`})
+         +number({name:`sek_fard_`+skill+`_erf`})
 +scss.
    .section-secondaryskills {
       border-bottom: 1px solid var(--border-color);
@@ -77,6 +83,12 @@ mixin secondaryskills
             }
             & + input[type="checkbox"]:checked + input[type="text"] { display: block; }
          }
+      }
+      .label-input.input-count-3 span {
+         border-right: 0; 
+      }
+      .input-0, .input-1 {
+         border-right: 1px solid var(--border-color);
       }
       span.input-span.input-0 {
          position: relative; 

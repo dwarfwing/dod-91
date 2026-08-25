@@ -3,6 +3,10 @@
    .repitem > .collapse:not(:checked) {
       opacity: var(--collapseHoverOpacity);
    }
+   label, input, span {
+      line-height: var(--line-height); 
+      letter-spacing: 0.1em;
+   }
    .collapse-container {
       position: relative; 
       .collapse {
@@ -15,7 +19,12 @@
       position: relative; 
       background-color: #EEE; 
       justify-content: space-between;
-      
+      label {
+         text-indent: var(--half-gap);
+      }
+      &.text-field label {
+         text-indent: 0; 
+      }
    }
    label.label-input-label, 
    h2.header-field {
@@ -23,11 +32,16 @@
       overflow-x: hidden;
       justify-content: left;
    }
+   span.label-input-input {
+      width: 100%; 
+      text-align: center; 
+   }
    button[type="action"],button[type="roll"] {
       width: 100%;
       display: flex;
       align-items: center;
       padding-bottom: 0.125rem;
+      gap: var(--half-gap);
       span {
          white-space: nowrap;
          overflow-x: hidden;

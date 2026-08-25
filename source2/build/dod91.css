@@ -162,9 +162,14 @@ body {
   font-size: 16px;
   text-transform: capitalize;
   line-height: 2rem;
+  --line-height: 2rem;
+  --row-height: 2.125rem;
   --logo-image: url(https://files.d20.io/images/494820402/dm4zZx9TJPVO-wI0Qoe_0Q/original.webp);
   --bg-color: #fd5232;
+  --bg-color: #fc562c;
   --bg-color2: #e3e3e3;
+  --bg-color9: rgb(31, 31, 31);
+  --bg-color0: rgb(255, 255, 255);
   --font-family: Helvetica, "Arimo", Sans-serif;
   --font-color: #111;
   --font-color2: #222;
@@ -179,16 +184,16 @@ body {
   --border-size-2x: 6px;
   --fill-color: #505050;
   --fill-color-none: transparent;
-  --background-color: transparent;
+  --background-color: #fc562c;
   --background-color-inv: var(--dark-surface1);
-  --background-color-box: rgb(0,0,0,0.1);
+  --background-color-box: #fc562c;
   --dm-collapseExpandedColor: #e3e3e3;
   --rt-bg-color: #fff;
   --invert-bg: invert(0);
   --anim-pulse: bgpulse;
   --collapseHoverOpacity: 1;
   color: var(--font-color);
-  background-color: var(--background-color-inv);
+  background-color: var(--background-color);
   font-size: 1rem;
   line-height: 2.5rem;
 }
@@ -209,7 +214,7 @@ body .ui-dialog .tab-content .charsheet button[type=action][name=act_k-network-c
   height: 0;
 }
 body .ui-dialog .tab-content .charsheet {
-  background-color: var(--background-color-inv);
+  background-color: var(--background-color);
   background-repeat: repeat-y;
   background-size: cover;
   padding: 0;
@@ -1311,12 +1316,12 @@ body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc 
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs {
   width: 100%;
   justify-content: space-evenly;
+  border: 3px solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header {
   width: 100%;
   height: unset;
-  border-block: var(--border-size) solid var(--border-color);
-  border-inline: var(--border-size-2x) solid var(--border-color);
+  border: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list {
   width: 100%;
@@ -1331,6 +1336,7 @@ body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc 
   font-family: unset;
   color: unset;
   font-size: 1rem;
+  font-weight: bold;
   width: 100%;
   display: grid;
   justify-self: center;
@@ -1347,6 +1353,10 @@ body .ui-dialog .tab-content .charsheet .collapse-container > .collapse:not(:che
 body .ui-dialog .tab-content .charsheet .repitem > .collapse:not(:checked) {
   opacity: var(--collapseHoverOpacity);
 }
+body .ui-dialog .tab-content .charsheet label, body .ui-dialog .tab-content .charsheet input, body .ui-dialog .tab-content .charsheet span {
+  line-height: var(--line-height);
+  letter-spacing: 0.1em;
+}
 body .ui-dialog .tab-content .charsheet .collapse-container {
   position: relative;
 }
@@ -1360,6 +1370,12 @@ body .ui-dialog .tab-content .charsheet .label-input {
   background-color: #EEE;
   justify-content: space-between;
 }
+body .ui-dialog .tab-content .charsheet .label-input label {
+  text-indent: var(--half-gap);
+}
+body .ui-dialog .tab-content .charsheet .label-input.text-field label {
+  text-indent: 0;
+}
 body .ui-dialog .tab-content .charsheet label.label-input-label,
 body .ui-dialog .tab-content .charsheet h2.header-field,
 body .ui-dialog .tab-content .charsheet .input-label:not(.stacked).large > .header-field[name] {
@@ -1367,11 +1383,16 @@ body .ui-dialog .tab-content .charsheet .input-label:not(.stacked).large > .head
   overflow-x: hidden;
   justify-content: left;
 }
+body .ui-dialog .tab-content .charsheet span.label-input-input {
+  width: 100%;
+  text-align: center;
+}
 body .ui-dialog .tab-content .charsheet button[type=action], body .ui-dialog .tab-content .charsheet button[type=roll] {
   width: 100%;
   display: flex;
   align-items: center;
   padding-bottom: 0.125rem;
+  gap: var(--half-gap);
 }
 body .ui-dialog .tab-content .charsheet button[type=action] span, body .ui-dialog .tab-content .charsheet button[type=roll] span {
   white-space: nowrap;
@@ -1450,11 +1471,14 @@ body .ui-dialog .tab-content .charsheet .box .box-header {
   display: flex;
   flex-direction: row;
 }
+body .ui-dialog .tab-content .charsheet .box .box-header h1 {
+  font-weight: bold;
+}
 body .ui-dialog .tab-content .charsheet .box .box-header h2, body .ui-dialog .tab-content .charsheet .box .box-header .input-label:not(.stacked).large > [name] {
   font-size: 85%;
 }
 body .ui-dialog .tab-content .charsheet .box .box-header.field-count-0 {
-  display: flex;
+  display: grid;
   justify-content: center;
 }
 body .ui-dialog .tab-content .charsheet .box .box-header.field-count-1 {
@@ -1472,6 +1496,9 @@ body .ui-dialog .tab-content .charsheet .box .box-header.field-count-3 {
 body .ui-dialog .tab-content .charsheet .box .box-header.field-count-4 {
   display: grid;
   grid-template-columns: 1fr 3rem 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .box.headless .box-header {
+  display: none;
 }
 body .ui-dialog .tab-content .charsheet .box .repcontainer {
   width: 100%;
@@ -1549,6 +1576,7 @@ body .ui-dialog .tab-content .charsheet .label-input.text-field label {
   height: 50%;
   padding: 0;
   line-height: 1rem;
+  width: auto;
 }
 body .ui-dialog .tab-content .charsheet .label-input.text-field span.input-span {
   width: auto;
@@ -1695,19 +1723,51 @@ body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type:
   right: 0;
   top: 0;
 }
+body .ui-dialog .tab-content .charsheet .fill-left {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-self: flex-start;
+  width: 100%;
+  row-gap: 0.5rem;
+  margin-left: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .fill-left label {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color2);
+  width: 75%;
+  cursor: pointer;
+}
+body .ui-dialog .tab-content .charsheet .fill-left input.counter:checked + input + label {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .fill-left input.counter:checked + input + label:after {
+  position: absolute;
+  inset: 0;
+  content: attr(title);
+  text-align: center;
+  padding-top: 0.125rem;
+  line-height: 100%;
+  vertical-align: middle;
+}
+body .ui-dialog .tab-content .charsheet .fill-left input.counter:checked + input + label ~ label {
+  background-color: transparent;
+}
+body .ui-dialog .tab-content .charsheet .fill-left input.cap:checked + label ~ :is(input, label) {
+  display: none;
+}
 body .ui-dialog .tab-content .charsheet .section-topframe {
   width: 100%;
   align-content: top;
   display: grid;
   grid-template-columns: 1fr 3fr;
+  border: 3px solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-attributes {
-  display: inline-grid;
-  row-gap: 1rem;
+body .ui-dialog .tab-content .charsheet .section-attributes .size-attributes .attribute-row {
+  grid-template-columns: 1fr 5rem;
 }
-body .ui-dialog .tab-content .charsheet .section-attributes .box {
-  border-top: var(--border-size-2x) solid var(--border-color);
-  border-left: var(--border-size-2x) solid var(--border-color);
+body .ui-dialog .tab-content .charsheet .section-attributes .size-attributes .attribute-row input {
+  border-radius: 0;
+  width: 100%;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes button.roller + button {
   display: none;
@@ -1718,7 +1778,7 @@ body .ui-dialog .tab-content .charsheet .section-attributes input {
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row {
   display: grid;
-  grid-template-columns: 1fr 4rem;
+  grid-template-columns: 1fr 3rem;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row label {
   border: 0;
@@ -1782,22 +1842,45 @@ body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row butto
 }
 body .ui-dialog .tab-content .charsheet .section-info {
   display: grid;
-  grid-template-columns: 3fr 4fr 4fr 4fr;
-  grid-template-areas: "info info info info" "stats hp sp psy";
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "info info info info" "stats app app app" "stats hp sp psy";
+  align-content: stretch;
+  align-items: stretch;
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-info {
   grid-area: info;
-  border-top: 6px solid var(--border-color);
-  border-right: 6px solid var(--border-color);
+  align-content: stretch;
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-info input[type=text] {
   vertical-align: text-top;
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-tertiary {
   grid-area: stats;
+  align-content: flex-start;
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-tertiary label {
   width: stretch;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary span.input-span {
+  width: 4rem;
+}
+body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character_name span, body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character-name span {
+  height: var(--line-height);
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character_name span input, body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character-name span input {
+  font-weight: bold;
+  font-size: 120%;
+  line-height: var(--line-height);
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-info .appearance {
+  grid-area: app;
+}
+body .ui-dialog .tab-content .charsheet .section-info .appearance .input-span-textarea {
+  width: 100% !important;
+  max-height: calc(var(--line-height) * 2);
+  overflow: hidden;
 }
 body .ui-dialog .tab-content .charsheet .section-info .hp-points {
   grid-area: hp;
@@ -1827,17 +1910,22 @@ body .ui-dialog .tab-content .charsheet .section-info .points .input-label input
 }
 body .ui-dialog .tab-content .charsheet .section-info .points .fill-left {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   align-self: flex-start;
   width: 100%;
-  row-gap: 0.5rem;
+  row-gap: 0.25rem;
   margin-left: 0.25rem;
 }
 body .ui-dialog .tab-content .charsheet .section-info .points .fill-left label {
   border: 1px solid var(--border-color);
   background-color: var(--bg-color2);
-  width: 75%;
+  width: 9%;
   cursor: pointer;
+}
+body .ui-dialog .tab-content .charsheet .section-info .points .fill-left label:nth-of-type(5n) {
+  margin-right: 0.5rem;
 }
 body .ui-dialog .tab-content .charsheet .section-info .points .fill-left input.counter:checked + input + label {
   position: relative;
@@ -1877,6 +1965,9 @@ body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover input.exp-
   position: absolute;
   left: -1rem;
   width: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover {
+  border-bottom: 1px solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-skill .label-input.input-count-2 {
   grid-template-columns: 1fr 0 3rem 3rem;
@@ -1926,67 +2017,69 @@ body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover input.exp-
   left: -1rem;
   width: 1rem;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills {
+body .ui-dialog .tab-content .charsheet .section-professionskills, body .ui-dialog .tab-content .charsheet .section-secondaryskills {
   border-bottom: 1px solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills :is(.expanded, .collapsed) > .label-input {
+body .ui-dialog .tab-content .charsheet .section-professionskills :is(.expanded, .collapsed) > .label-input, body .ui-dialog .tab-content .charsheet .section-secondaryskills :is(.expanded, .collapsed) > .label-input {
   grid-template-columns: 1fr 3rem 3rem 3rem;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills :is(.expanded, .collapsed) button span {
+body .ui-dialog .tab-content .charsheet .section-professionskills :is(.expanded, .collapsed) button span, body .ui-dialog .tab-content .charsheet .section-secondaryskills :is(.expanded, .collapsed) button span {
   padding-left: 0.25rem;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .collapse {
+body .ui-dialog .tab-content .charsheet .section-professionskills .collapse, body .ui-dialog .tab-content .charsheet .section-secondaryskills .collapse {
   z-index: 1000;
   top: -0.25rem;
   right: 9rem;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row {
+body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row {
   border-bottom: 1px solid var(--border-color);
   min-width: 100%;
-  height: 2.1rem;
+  line-height: var(--line-height);
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row > :is(.expanded, .collapsed) {
+body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row > :is(.expanded, .collapsed) {
+  height: var(--line-height);
   min-width: 100%;
+  border-bottom: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row label, body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button {
+body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row label, body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row label, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row button {
   border-right: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row input[type=number] {
+body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row input[type=number], body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row input[type=number] {
   border-left: 1px solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button[type=action] {
+body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button[type=action], body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row button[type=action] {
   min-width: 100%;
   border-right: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button[type=action] span {
+body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button[type=action] span, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row button[type=action] span {
   min-width: 100%;
   border-right: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded option {
+body .ui-dialog .tab-content .charsheet .section-professionskills .expanded option, body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded option {
   text-align: left;
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select {
+body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select, body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select {
   width: 100%;
   height: unset;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select:open {
+body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select:open, body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select:open {
   max-height: 6rem;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select + input[type=checkbox] + input[type=text] {
+body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select + input[type=checkbox] + input[type=text], body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox] + input[type=text] {
   display: none;
   height: auto;
   width: 100%;
   border-bottom: 1px dashed black;
   margin-bottom: 2px;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select + input[type=checkbox]:checked + input[type=text] {
+body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select + input[type=checkbox]:checked + input[type=text], body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox]:checked + input[type=text] {
   display: block;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 {
+body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 {
   position: relative;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox] {
+body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox], body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox] {
   display: none;
   position: absolute;
   top: 0.2rem;
@@ -2000,17 +2093,17 @@ body .ui-dialog .tab-content .charsheet .section-professionskills span.input-spa
   min-height: 0.6rem;
   transform: rotate(45deg);
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox].improve-mark-perfect {
+body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox].improve-mark-perfect, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox].improve-mark-perfect {
   top: 50%;
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox]:checked {
+body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox]:checked, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox]:checked {
   display: flex;
   background-color: var(--fill-color);
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox]:checked:before {
+body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox]:checked:before, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox]:checked:before {
   content: "";
 }
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0:hover input[type=checkbox] {
+body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0:hover input[type=checkbox], body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0:hover input[type=checkbox] {
   display: flex;
 }
 body .ui-dialog .tab-content .charsheet .section-languages {
@@ -2130,6 +2223,12 @@ body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded selec
 body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox]:checked + input[type=text] {
   display: block;
 }
+body .ui-dialog .tab-content .charsheet .section-secondaryskills .label-input.input-count-3 span {
+  border-right: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-secondaryskills .input-0, body .ui-dialog .tab-content .charsheet .section-secondaryskills .input-1 {
+  border-right: 1px solid var(--border-color);
+}
 body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 {
   position: relative;
 }
@@ -2220,7 +2319,7 @@ body .ui-dialog .tab-content .charsheet .section-weapons {
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div {
   display: grid;
-  grid-template-columns: 1.5rem auto 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+  grid-template-columns: 2rem calc(22% - 1rem) 10% 4% 4% 4% 3% 6% 6% 4% 6% 6% 4% 7% 4% 5% 4%;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header *, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div *, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div * {
   border: 0;
@@ -2230,18 +2329,25 @@ body .ui-dialog .tab-content .charsheet .section-weapons .box-header *, body .ui
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header > *, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div > *, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div > * {
   border-right: 1px solid var(--border-color);
 }
+body .ui-dialog .tab-content .charsheet .section-weapons .box-header > h2:first-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .box-header.input-label.large:not(.stacked) > [name]:first-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div > h2:first-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div.input-label.large:not(.stacked) > [name]:first-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div > h2:first-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div.input-label.large:not(.stacked) > [name]:first-of-type {
+  border-right: 0;
+  overflow: visible;
+}
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header > h1, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div > h1, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div > h1 {
   border-right: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header > h2:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .box-header.input-label.large:not(.stacked) > [name]:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .box-header > span:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div > h2:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div.input-label.large:not(.stacked) > [name]:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div > span:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div > h2:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div.input-label.large:not(.stacked) > [name]:last-of-type, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div > span:last-of-type {
   border: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=text]:not(.caps-input), body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.text-span {
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=text]:not(.caps-input), body .ui-dialog .tab-content .charsheet .section-weapons .repitem span {
   text-align: center;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem button {
   display: flex;
   justify-content: center;
+}
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem button span {
+  text-align: center;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem button.init-button span {
   width: 1.25rem;
@@ -2348,6 +2454,163 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage la
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage label.input-label:last-of-type input:checked + span:after, body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage-button label.input-label:last-of-type input:checked + span:after {
   content: "stat_3";
 }
+body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input {
+  grid-template-columns: 1fr 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input button {
+  min-width: calc(100% - 9rem);
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input button span {
+  border: 0;
+  overflow: hidden;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input button[type=action] {
+  display: hidden;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.exp-toggle {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .repitem:hover {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .repitem:hover input.exp-toggle {
+  display: flex;
+  position: absolute;
+  left: -1rem;
+  width: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .repitem:hover {
+  border-bottom: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  row-gap: 1rem;
+  column-gap: 2rem;
+  background-color: var(--bg-color2);
+  padding: 1rem;
+  border: 3px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(1) {
+  grid-row-start: 1;
+  grid-column: 4/12;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(2) {
+  grid-row-start: 2;
+  grid-column: 1/8;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(3) {
+  grid-row-start: 2;
+  grid-column: 8/15;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(4) {
+  grid-row-start: 3;
+  grid-column: 4/12;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(5) {
+  grid-row-start: 4;
+  grid-column: 4/12;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(6) {
+  grid-row-start: 5;
+  grid-column: 1/8;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(7) {
+  grid-row-start: 5;
+  grid-column: 8/15;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall {
+  box-shadow: #777 3px 3px;
+  background-color: var(--bg-color0);
+  display: grid;
+  grid-template-columns: 60% 20% 20%;
+  height: fit-content;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall h2, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .input-label:not(.stacked).large > [name] {
+  width: 100%;
+  background-color: var(--background-color-box);
+  grid-column: 1/-1;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header {
+  grid-template-columns: 60% 20% 20%;
+  grid-column: 1/-1;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header h1 {
+  background-color: var(--background-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header h2, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header .input-label:not(.stacked).large > [name] {
+  grid-column: unset;
+  display: grid;
+  grid-template-columns: 1fr 2rem;
+  border-left: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header h2 input, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header .input-label:not(.stacked).large > [name] input {
+  width: 2rem;
+  height: var(--line-height);
+  border-radius: 0;
+  font-size: 1.25rem;
+  background-color: var(--bg-color2);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-areas: "armor armor armor weight" "kp kp sp sp";
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .armor {
+  grid-area: armor;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .weight {
+  grid-area: weight;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .abs-kp {
+  grid-area: kp;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .abs-sp {
+  grid-area: sp;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field {
+  min-height: calc(var(--line-height) * 1.25);
+  height: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field span {
+  width: auto;
+  position: absolute;
+  font-size: 75%;
+  top: 0;
+  left: 0.25rem;
+  border-right: 0;
+  height: 50%;
+  padding: 0;
+  line-height: 1rem;
+  width: auto;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field input {
+  height: calc(var(--line-height) * 0.75);
+  align-self: flex-end;
+  padding-bottom: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-kp, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-sp {
+  border-left: 3px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  margin-left: 0;
+  padding-block: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left label {
+  width: 70%;
+  border: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left label:after {
+  font-size: 90%;
+  padding-top: 0;
+}
 body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 span {
   border-right: 0;
 }
@@ -2438,87 +2701,137 @@ body .ui-dialog .tab-content .charsheet .section-gear .expanded {
   background-color: transparent;
 }
 body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance {
-  display: none;
+body .ui-dialog .tab-content .charsheet .section-gear .expanded {
+  background-color: transparent;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance + p {
-  display: none;
+body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
+  text-transform: capitalize;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance input.resonance-toggle:checked + .section-resonance,
-body .ui-dialog .tab-content .charsheet .section-resonance input.resonance-toggle:checked + .section-resonance + p {
-  display: block;
+body .ui-dialog .tab-content .charsheet .section-gear .expanded {
+  background-color: transparent;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance {
+body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
+  text-transform: capitalize;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells {
+  padding-bottom: var(--line-height);
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .repcontrol {
+  background-color: var(--background-color);
+  position: absolute;
+  bottom: 0;
+  height: var(--line-height);
+  border-top: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .itemcontrol {
+  z-index: 1000;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells > .repcontainer {
+  width: 100%;
+  column-gap: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells > .repcontainer > * {
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells {
+  width: 100%;
+  background-color: var(--bg-color2);
+  justify-items: center;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .repcontainer {
+  min-height: 4rem;
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-3 {
   display: grid;
-  grid-template-columns: auto 4rem 2rem 2rem;
+  grid-template-columns: 2rem 1fr 3rem 3rem 3rem;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance .label-input-roller {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-4 {
+  display: grid;
+  grid-template-columns: 2rem 1fr 3rem 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-5 {
+  display: grid;
+  grid-template-columns: 2rem 3rem 1fr 3rem 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header {
+  column-span: all;
+  background-color: var(--bg-color);
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header h2, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header .input-label:not(.stacked).large > [name] {
+  overflow: visible;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row {
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance .label-input-roller button {
-  width: 100%;
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .collapsed, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded {
+  height: var(--row-height);
+  line-height: var(--row-height);
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance .input-resonance, body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance .span-resonance {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .label-input {
+  height: stretch;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row label, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=number], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span:not(.button-text) {
   border-right: 1px solid var(--border-color);
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit-toggle:checked ~ input.input-resonance,
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit-toggle:not(:checked) ~ span.span-resonance {
-  display: flex;
-  justify-content: center;
+  border-left: 0;
+  border-radius: 0;
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit-toggle ~ input.input-resonance {
-  animation-name: var(--anim-pulse);
-  animation-duration: 1.5s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate-reverse;
-  animation-timing-function: ease;
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit-toggle:not(:checked) ~ input.input-resonance,
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit-toggle:checked ~ span.span-resonance {
-  display: none;
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit {
-  position: relative;
-  appearance: unset;
-  border: 0;
-  place-content: center;
-  place-self: center;
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit:before {
-  font-family: "Material Symbols Outlined";
-  inset: 0;
-  font-weight: normal;
-  font-size: 95%;
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit:checked:before {
-  content: "edit_off";
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance input.resonance-edit:not(:checked):before {
-  content: "edit";
-}
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance button[type=action] {
-  justify-self: center;
-  place-self: center;
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.button-text, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button[type=action] {
+  border-right: 0;
   justify-content: center;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance button[type=action] + button[type=action] {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text] {
+  width: 100%;
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse {
+  right: 12rem;
+  top: -0.25rem;
+  z-index: 1000;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .memorized {
+  height: 100%;
+  width: 100%;
+  border: 0;
+  border-right: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .label-input {
+  grid-template-columns: 1fr 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .label-input button {
+  min-width: calc(100% - 9rem);
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .label-input button span {
+  border: 0;
+  overflow: hidden;
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .label-input button[type=action] {
+  display: hidden;
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills input.exp-toggle {
   display: none;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance button[type=action]:before {
-  font-family: "Material Symbols Outlined";
-  content: "x_circle";
-  font-size: 1.25rem;
-  line-height: 0.5rem;
-  justify-self: center;
+body .ui-dialog .tab-content .charsheet .section-magicskills .repitem:hover {
+  position: relative;
 }
-body .ui-dialog .tab-content .charsheet .section-resonance .label-input.column-resonance button[type=roll] + button[type=action] {
-  display: none;
+body .ui-dialog .tab-content .charsheet .section-magicskills .repitem:hover input.exp-toggle {
+  display: flex;
+  position: absolute;
+  left: -1rem;
+  width: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .repitem:hover {
+  border-bottom: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .repcontrol-button--add:before {
+  font-family: inherit;
+  content: "+Add";
+}
+body .ui-dialog .tab-content .charsheet .section-magicskills .repcontainer .repitem .itemcontrol .repcontrol_del {
+  transform: translateX(1.25rem);
 }
 body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer {
   display: flex;
@@ -2581,7 +2894,7 @@ body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcont
   content: ", ";
 }
 body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer .repitem .collapsed .ability-details .detail span:first-of-type {
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer .repitem .collapsed .ability-details div:last-of-type span:last-of-type:after {
   content: "";
@@ -2662,6 +2975,7 @@ body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcont
 }
 body .ui-dialog .tab-content .charsheet .section-notes .adaptive {
   width: 100%;
+  background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .abilities-notes-col input.resonance-toggle:checked + .section-resonance,
 body .ui-dialog .tab-content .charsheet .abilities-notes-col input.resonance-toggle:checked + .section-resonance + p {
@@ -2880,7 +3194,7 @@ body .ui-dialog .tab-content .charsheet .section-vehicle-hitareas__content span.
 body .ui-dialog .tab-content .charsheet .section-vehicle-hitareas__content span.hitarea-name input {
   min-width: 5rem;
   border: 0;
-  text-transform: uppercase;
+  text-transform: capitalize;
   field-sizing: content;
 }
 body .ui-dialog .tab-content .charsheet .section-vehicle-hitareas__content span.hitarea-name:before {
@@ -2945,6 +3259,7 @@ body .ui-dialog .tab-content .charsheet .section-vehicle-hitareas__extra-plating
 }
 body .ui-dialog .tab-content .charsheet .section-notes .adaptive {
   width: 100%;
+  background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .vehicle-body .cut-corner {
   box-sizing: border-box;
@@ -3014,10 +3329,80 @@ body .ui-dialog .tab-content .charsheet .vehicle-body label.input-label input[ty
 }
 body .ui-dialog .tab-content .charsheet .tab-skills {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 33% 34% 33%;
 }
 body .ui-dialog .tab-content .charsheet .tab-skills > div {
   border: 2px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .tab-combat {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  grid-template-areas: "weapons weapons" "areas skills";
+}
+body .ui-dialog .tab-content .charsheet .tab-combat > div:nth-of-type(1) {
+  grid-area: "weapons";
+}
+body .ui-dialog .tab-content .charsheet .tab-combat > div:nth-of-type(2) {
+  grid-area: "areas";
+}
+body .ui-dialog .tab-content .charsheet .tab-combat > div:nth-of-type(3) {
+  grid-area: "skills";
+}
+body .ui-dialog .tab-content .charsheet .tab-magic {
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "encumb encumb encumb" "gear mount money" "gear mount stash";
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .section-encumbrance {
+  grid-area: encumb;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__gear {
+  grid-area: gear;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__mount {
+  grid-area: mount;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__stash {
+  grid-area: stash;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .section-money {
+  grid-area: money;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-areas: "ge info" "gear attacks" "gear skills" "gear abilities";
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-attributes {
+  grid-area: ge;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-gear {
+  grid-area: gear;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks {
+  grid-area: attacks;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .box-header,
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .expanded .label-input,
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .collapsed .label-input {
+  grid-template-columns: 1fr 3rem 3rem 2rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-animal-abilities {
+  grid-area: abilities;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-info {
+  grid-area: info;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "info info info" "stats hp sp";
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-info .box-info .label-input {
+  width: 50%;
+  box-sizing: border-box;
 }
 body.sheet-darkmode {
   --backColor:var(--dm-backColor);
@@ -3041,6 +3426,7 @@ body.sheet-darkmode {
   --background-color2: #3e3e3e;
   --background-color-inv: #5e5e5e;
   --background-color-box: rgb(255,255,255,0.1);
+  --bg-color: rgb(255,255,255,0.1);
   --collapseExpandedColor: var(--dm-collapseExpandedColor);
   --rt-bg-color: #000;
   --invert-bg: invert(100%);
@@ -3053,17 +3439,18 @@ body.sheet-darkmode .charactersheet {
 .sheet-rolltemplate-dod91 {
   font-family: "PT Serif";
   font-size: 14px;
-  text-transform: uppercase;
+  text-transform: capitalize;
   --font-family: "PT Serif", Serif;
   --font-color: #000;
   --font-color2: #3e3e3e;
   --font-color-inv: #c3c3c3;
   --font-color-inverse: #a1a1a1;
+  --bg-color: #fc562c;
   --success-color: #319131;
   --success-bg-color: #acdcbc;
   --fail-color: #913131;
   --fail-bg-color: #dcacac;
-  --text-transform: uppercase;
+  --text-transform: capitalize;
   --border-color: #000;
   --fill-collor: transparent;
   --background-color: transparent;
@@ -3107,13 +3494,13 @@ body.sheet-darkmode .charactersheet {
 }
 .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-header {
   width: 100%;
-  border-bottom: 2px solid var(--border-color);
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: center;
-  backdrop-filter: invert(100%);
 }
 .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-header h2, .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-header body .ui-dialog .tab-content .charsheet .input-label:not(.stacked).large > [name], body .ui-dialog .tab-content .charsheet .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-header .input-label:not(.stacked).large > [name] {
-  color: var(--font-color-inverse);
+  color: var(--font-color);
   text-align: center;
 }
 .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-roll-title {
@@ -3323,6 +3710,7 @@ body.sheet-darkmode .charactersheet {
   --background-color2: #3e3e3e;
   --background-color-inv: #5e5e5e;
   --background-color-box: rgb(255,255,255,0.1);
+  --bg-color: rgb(255,255,255,0.1);
   --collapseExpandedColor: var(--dm-collapseExpandedColor);
   --rt-bg-color: #000;
   --invert-bg: invert(100%);

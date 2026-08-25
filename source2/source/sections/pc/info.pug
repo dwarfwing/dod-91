@@ -2,7 +2,7 @@ mixin info
    .section-info 
       +checkbox({name:'kroppspoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
       +checkbox({name:'psipoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
-      +box({classes:'box-info'})
+      +box({classes:'box-info headless'})
          each info in spine.info            
             +label-inputs({
                label: info.name,
@@ -12,7 +12,7 @@ mixin info
                   {type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-placeholder':info.placeholder}
                ]
             })
-      +box({classes:'box-tertiary'})
+      +box({classes:'box-tertiary headless'})
          each info in spine.tertiary
             - var inputObjs = [{type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
             if info.classes.includes("currMax") 
@@ -23,9 +23,25 @@ mixin info
                labelObj: {class: 'label-input-label',attr:info.attr},
                inputObj: inputObjs,
             })
-      +box({classes:'hp-points points'})
+         +action({name:'sleep'})
+            +span({'data-i18n':'sleep'}) 
+               | Sova 7h
+         +action({name:'rest'})
+            +span({'data-i18n':'rnr'}) 
+               | Vila 7d
+      +box({classes:'appearance headless'})
+         +label-inputs({
+               label: 'Utseende',
+               divObj: {class:'column-appearance text-field'},
+               labelObj: {class: 'label-input-label',attr:'appearance'},
+               inputObj: [{name:'appearance',type:'textarea',rows:2,class:'multirow-2',placeholder:'Utseende','data-i18n-placeholder':'appearance'}],
+            })
+      .hidden-appearance.for-upgrades.hidden 
+         +text({name:'utseende1'}) 
+         +text({name:'utseende2'})
+      +box({classes:'hp-points points headless'})
          +input-label({
-               label: 'Kropppoäng',
+               label: 'Kroppspoäng',
                divObj: {class:'hitpoints-grid'},
                spanObj: {class: 'label-input-label'},
                inputObj: {type: number,name: 'kroppspoang_max',type:'number'},
@@ -37,7 +53,7 @@ mixin info
             noCLear: true,
             capAttr: 'kroppspoang_max'
          })
-      +box({classes:'sp-points points'})
+      +box({classes:'sp-points points headless'})
          +input-label({
                label: 'Smärtpoäng',
                divObj: {class:'painpoints-grid'},
@@ -51,7 +67,7 @@ mixin info
             noCLear: true,
             capAttr: 'smartpoang_max'
          })
-      +box({classes:'psy-points points'})
+      +box({classes:'psy-points points headless'})
          +input-label({
                label: 'PSY-poäng',
                divObj: {class:'psypoints-grid'},
@@ -68,20 +84,50 @@ mixin info
 +scss.
    .section-info {
       display: grid; 
-      grid-template-columns: 3fr 4fr 4fr 4fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-template-areas: "info info info info"
+                           "stats app app app"
                            "stats hp sp psy";
+      align-content: stretch;
+      align-items: stretch;
       .box-info { 
          grid-area: info;
-         border-top: 6px solid var(--border-color);
-         border-right: 6px solid var(--border-color);
+         align-content: stretch; 
+         //border-top: 6px solid var(--border-color);
+         //border-right: 6px solid var(--border-color);
          input[type=text] {
             vertical-align: text-top; 
          }
       }
       .box-tertiary { 
          grid-area: stats; 
+         align-content: flex-start; 
          label { width: stretch; }
+         span.input-span {
+            width: 4rem; 
+         }
+      }
+      .label-input.text-field.column-character_name, .label-input.text-field.column-character-name {
+         span {
+            height: var(--line-height);
+            width: 100%; 
+            input {
+               font-weight: bold; 
+               font-size: 120%; 
+               line-height: var(--line-height);
+               width: 100%; 
+            }
+         }
+         
+      }
+      .appearance { 
+         grid-area: app; 
+         .input-span-textarea {
+            width: 100% !important;
+            max-height: calc(var(--line-height)*2);
+            overflow: hidden;
+            
+         }
       }
       .hp-points { grid-area: hp; }
       .sp-points { grid-area: sp; }
@@ -100,20 +146,26 @@ mixin info
                background-color: var(--bg-color2); 
                border-radius: 0; 
                text-align: center; 
-               }
+            }
          }
          .fill-left {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            display: flex; 
+            flex-wrap: wrap; 
             align-self: flex-start; 
             width: 100%;
-            row-gap: 0.5rem;
+            row-gap: 0.25rem;
             margin-left: 0.25rem;
             label {
                border: 1px solid var(--border-color);
                background-color: var(--bg-color2);
-               width: 75%;
-               cursor: pointer; 
+               //width: 75%; // when using grid
+               width: 9%; 
+               cursor: pointer;
+               &:nth-of-type(5n) {
+                  margin-right: 0.5rem;
+               }
             }
             input.counter:checked + input + label {
                position: relative; 

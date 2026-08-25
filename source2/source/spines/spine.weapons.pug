@@ -1,19 +1,21 @@
 -
    spine.weaponfields = [
       {
-         name: '',
+         name: 'Buret',
          attr:'equipped',
          type:'checkbox',
          class:'weapon-equipped',
          trigger:'weaponEncumbrance'
       },
       {
-         name:'Vapen',
+         name:'Vapen / Sköldar',
          attr:'name',
          type:'text',
+         roller:true,
          class:'',
          placeholder:'namn på vapen',
          placeholder_transl:'name-of-weapon',
+         trigger:'rollWeaponAttack'
       },
       {
          name:'Typ',
@@ -47,8 +49,8 @@
       {
          name:'SB',
          attr:'damagebonus',
-         type:'text',
-         class:'input-text-small',
+         type:'checkbox',
+         class:'',
          transl:'damage-bous-abbr',
          title_transl:'damage-bonus-title',
          title:'Skadebonus',
@@ -112,6 +114,7 @@
          type:'number',
          class:'',
          transl:'weight',
+         trigger:'weaponEncumbrance'
       },
       {
          name:'Värde',
@@ -119,6 +122,13 @@
          type:'text',
          class:'',
          transl:'value',
+      },
+      {
+         name:'Erf',
+         attr:'erf',
+         type:'number',
+         class:'',
+         transl:'experience-abbr',
       },
    ]
    spine.weapontypes = [
@@ -191,3 +201,140 @@
          attr: 'Twohandedweapons',
       },
    ];
+   spine.hitareas = [
+      {
+         name: 'Huvud',
+         attr:'head',
+         kp_tot: 'kp_huvud_tot',
+         kp: 'kp_huvud',
+         sp_tot: 'sp_huvud_tot',
+         sp: 'sp_huvud',
+         armor: 'rustning_huvud',
+         armorweight: 'rustning_huvud_vikt',
+         abs: 'rustning_huvud_abs',
+         spabs: 'rustning_huvud_spabs'
+      },
+      {
+         name: 'H. Arm',
+         attr:'right-arm',
+         kp_tot: 'kp_harm_tot',
+         sp_tot: 'sp_harm_tot',
+         kp: 'kp_harm',
+         sp: 'sp_harm',
+         armor: 'rustning_harm',
+         armorweight: 'rustning_harm_vikt',
+         abs: 'rustning_harm_abs',
+         spabs: 'rustning_harm_spabs'
+      },
+      {
+         name: 'V. Arm',
+         attr:'left-arm',
+         kp_tot: 'kp_varm_tot',
+         sp_tot: 'sp_varm_tot',
+         kp: 'kp_varm',
+         sp: 'sp_varm',
+         armor: 'rustning_varm',
+         armorweight: 'rustning_varm_vikt',
+         abs: 'rustning_varm_abs',
+         spabs: 'rustning_varm_spabs'
+      },
+      {
+         name: 'Bröstkorg',
+         attr:'chest',
+         kp_tot: 'kp_brostkorg_tot',
+         sp_tot: 'sp_brostkorg_tot',
+         kp: 'kp_brostkorg',
+         sp: 'sp_brostkorg',
+         armor: 'rustning_brostkorg',
+         armorweight: 'rustning_brostkorg_vikt',
+         abs: 'rustning_brostkorg_abs',
+         spabs: 'rustning_brostkorg_spabs'
+      },
+      {
+         name: 'Mage',
+         attr:'stomach',
+         kp_tot: 'kp_mage_tot',
+         sp_tot: 'sp_mage_tot',
+         kp: 'kp_mage',
+         sp: 'sp_mage',
+         armor: 'rustning_mage',
+         armorweight: 'rustning_mage_vikt',
+         abs: 'rustning_mage_abs',
+         spabs: 'rustning_mage_spabs'
+      },
+      {
+         name: 'V. Ben',
+         attr:'left-leg',
+         kp_tot: 'kp_vben_tot',
+         sp_tot: 'sp_vben_tot',
+         kp: 'kp_vben',
+         sp: 'sp_vben',
+         armor: 'rustning_vben',
+         armorweight: 'rustning_vben_vikt',
+         abs: 'rustning_vben_abs',
+         spabs: 'rustning_vben_spabs'
+      },
+      {
+         name: 'H. Ben',
+         attr:'right-alegrm',
+         kp_tot: 'kp_hben_tot',
+         sp_tot: 'sp_hben_tot',
+         kp: 'kp_hben',
+         sp: 'sp_hben',
+         armor: 'rustning_hben',
+         armorweight: 'rustning_vben_vikt',
+         abs: 'rustning_hben_abs',
+         spabs: 'rustning_hben_spabs'
+      },
+   ]
+   spine.attackfields = [      
+      {
+         name:'Attacker',
+         attr:'name',
+         type:'text',
+         class:'',
+         placeholder:'namn på attack',
+         placeholder_transl:'name-of-attack',
+      },
+      {
+         name:'FV',
+         attr:'skill_level',
+         type:'number',
+         class:'',
+         transl:'skill-level-abbr',
+      },
+      {
+         name:'Mod.',
+         attr:'weapon_mod',
+         type:'number',
+         class:'',
+         transl:'modifier-abbr',
+      },
+      {
+         name:'SB',
+         attr:'damagebonus',
+         type:'checkbox',
+         class:'',
+         transl:'damage-bous-abbr',
+         title_transl:'damage-bonus-title',
+         title:'Skadebonus',
+      },
+      {
+         name:'KP',
+         attr:'damage',
+         type:'text',
+         class:'input-text-small',
+         transl:'hitpoints-abbr',
+         title_transl:'damage-hp',
+         title:'Skada på KP',
+      },
+      {
+         name:'SP',
+         attr:'pain',
+         type:'text',
+         class:'input-text-small',
+         transl:'painpoints-abbr',
+         title_transl:'damage-sp',
+         title:'Skada på SP',
+      },
+   ] 

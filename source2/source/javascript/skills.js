@@ -1,3 +1,13 @@
+const magicSchoolAdd = function({trigger,attributes,sections,casc}) {
+   k.log(`Adding a magic school!`);
+}
+k.registerFuncs({magicSchoolAdd})
+
+const magicSchoolRemove = function({trigger,attributes,sections,casc}) {
+   k.log(`REmoving a magic school!`);
+}
+k.registerFuncs({magicSchoolRemove})
+
 const setSkill = function ({trigger,attributes,sections,casc}) {
    ////k.log(`Skill name trigger: ${JSON.stringify(trigger)}`);
    const [section,rowID] = k.parseTriggerName(trigger.name);

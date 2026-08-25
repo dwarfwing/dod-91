@@ -7,20 +7,20 @@ mixin box({headerObj={},fields=[],classes=""})
       //- fields = fields.isArray ? fields : [...fields];  
       - fieldCount = fields.length;
       //- boxClass += ' field-count-'+fieldCount;
-   .box(class=boxClass) 
-      if headerObj && headerObj.name     
-         .box-header(class='field-count-'+fieldCount) 
+   .box(class=boxClass)     
+      .box-header(class='field-count-'+fieldCount) 
+         if headerObj && headerObj.name 
             h1(data-i18n=headerObj['data-i18n']) 
                = headerName
-            each field in fields
-               - let transl = ''; 
-               if field.transl 
-                  - transl = field.transl;
-               else if field.attr 
-                  - transl = field.attr.replace(/_/g,'-');
-               h2(data-i18n=transl,class='header-field')
-                  = field.name 
-            //-+list({content})      
+         each field in fields
+            - let transl = ''; 
+            if field.transl 
+               - transl = field.transl;
+            else if field.attr 
+               - transl = field.attr.replace(/_/g,'-');
+            h2(data-i18n=transl,class='header-field')
+               = field.name 
+         //-+list({content})      
       block
 +module.
 +scss('sheet').
@@ -42,11 +42,14 @@ mixin box({headerObj={},fields=[],classes=""})
          border-bottom: 3px solid var(--border-color);
          display: flex;
          flex-direction: row;
+         h1 {
+            font-weight: bold; 
+         }
          h2 {
             font-size: 85%;
          }
          &.field-count-0 {
-            display: flex;
+            display: grid;
             justify-content: center; 
          }
          &.field-count-1 {
@@ -65,6 +68,11 @@ mixin box({headerObj={},fields=[],classes=""})
             display: grid; 
             grid-template-columns: 1fr 3rem 3rem 3rem 3rem;
          }        
+      }
+      &.headless { 
+         .box-header {
+            display: none; 
+         }
       }
       .repcontainer {
          width: 100%;

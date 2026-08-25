@@ -1,302 +1,579 @@
 -
-   spine.skills = [
+   spine.primaryskills = [
       {
-         name: 'Bluffa',
-         attr: 'prim_bluffa',
-         i18n: 'bluffing',
-         base: 'kar_fv'
+         name: "Bluffa",
+         attr: "prim_bluffa",
+         i18n: "bluffing",
+         base: "kar_fv"
       },
       {
-         name: 'Finna Dolda Ting',
-         attr: 'prim_finna_dolda_ting',
-         i18n: 'searching',
-         base: 'int_fv'
+         name: "Finna Dolda Ting",
+         attr: "prim_finna_dolda_ting",
+         i18n: "searching",
+         base: "int_fv"
       },
       {
-         name: 'Första hjälpen',
-         attr: 'prim_forsta_hjalpen',
-         i18n: 'firstaid',
-         base: 'inf_fv'
+         name: "Första hjälpen",
+         attr: "prim_forsta_hjalpen",
+         i18n: "firstaid",
+         base: "inf_fv"
       },
       {
-         name: 'Gömma sig',
-         attr: 'prim_gomma_sig',
-         i18n: 'hiding',
-         base: 'smi_fv'
+         name: "Gömma sig",
+         attr: "prim_gomma_sig",
+         i18n: "hiding",
+         base: "smi_fv"
       },
       {
-         name: 'Hoppa',
-         attr: 'prim_hoppa',
-         i18n: 'jumping',
-         base: 'smi_fv'
+         name: "Hoppa",
+         attr: "prim_hoppa",
+         i18n: "jumping",
+         base: "smi_fv"
       },
       {
-         name: 'Klättra',
-         attr: 'prim_klattra',
-         i18n: 'climbing',
-         base: 'smi_fv'
+         name: "Klättra",
+         attr: "prim_klattra",
+         i18n: "climbing",
+         base: "smi_fv"
       },
       {
-         name: 'köpslå',
-         attr: 'prim_kopsla',
-         i18n: 'bartering',
-         base: 'kar_fv'
+         name: "köpslå",
+         attr: "prim_kopsla",
+         i18n: "bartering",
+         base: "kar_fv"
       },
       {
-         name: 'Lyssna',
-         attr: 'prim_lyssna',
-         i18n: 'listening',
-         base: 'intelligence'
+         name: "Lyssna",
+         attr: "prim_lyssna",
+         i18n: "listening",
+         base: "int_fv"
       },
       {
-         name: 'Rida',
-         attr: 'prim_rida',
-         i18n: 'ride',
-         base: 'agility'
+         name: "Rida",
+         attr: "prim_rida",
+         i18n: "ride",
+         base: "smi_fv"
       },
       {
-         name: 'Sjunga',
-         attr: 'prim_sjunga',
-         i18n: 'singing',
-         base: 'charisma'
+         name: "Sjunga",
+         attr: "prim_sjunga",
+         i18n: "singing",
+         base: "kar_fv"
       },
       {
-         name: 'Slagsmål',
-         attr: 'prim_slagsmal',
-         i18n: 'brawling',
-         base: 'strength'
+         name: "Slagsmål",
+         attr: "prim_slagsmal",
+         i18n: "brawling",
+         base: "sty_fv"
       },
       {
-         name: 'Smyga',
-         attr: 'prim_smyga',
-         i18n: 'sneaking',
-         base: 'agility'
+         name: "Smyga",
+         attr: "prim_smyga",
+         i18n: "sneaking",
+         base: "smi_fv"
       },
       {
-         name: 'Spåra',
-         attr: 'prim_spara',
-         i18n: 'tracking',
-         base: 'intelligence'
+         name: "Spåra",
+         attr: "prim_spara",
+         i18n: "tracking",
+         base: "int_fv"
       },
       {
-         name: 'Stjäla föremål',
-         attr: 'prim_stjala_foremal',
-         i18n: 'stealing',
-         base: 'agility'
+         name: "Stjäla föremål",
+         attr: "prim_stjala_foremal",
+         i18n: "stealing",
+         base: "smi_fv"
       },
       {
-         name: 'Upptäcka Fara',
-         attr: 'prim_upptacka_fara',
-         i18n: 'awareness',
-         base: 'psyche'
+         name: "Upptäcka Fara",
+         attr: "prim_upptacka_fara",
+         i18n: "awareness",
+         base: "psy_fv"
       },
       {
-         name: 'Värdera',
-         attr: 'prim_vardera',
-         i18n: 'appraisal',
-         base: 'intelligence'
+         name: "Värdera",
+         attr: "prim_vardera",
+         i18n: "appraisal",
+         base: "int_fv"
       },
       {
-         name: 'Övertala',
-         attr: 'prim_overtala',
-         i18n: 'persuasion',
-         base: 'charisma'
+         name: "Övertala",
+         attr: "prim_overtala",
+         i18n: "persuasion",
+         base: "kar_fv"
       },
    ]
    spine.secondaryskills = [
       {
-         name: 'Administration',
-         attr: 'administration',
-         base: 'intelligence',
-         source: 'core'
+         name: "Administration",
+         attr: "administration",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: 'Akrobatik',
-         attr: 'acrobatics',
-         base: 'agility',
-         source: 'core'
+         name: "Akrobatik",
+         attr: "acrobatics",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Alkemi',
-         attr: 'alchemy',
-         base: 'intelligence',
-         source: 'core'
+         name: "Alkemi",
+         attr: "alchemy",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: 'Astrology',
-         attr: 'energy_weapons',
-         base: 'intelligence',
-         source: 'core'
+         name: "Astrology",
+         attr: "energy_weapons",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: 'Avväpna',
-         attr: 'disarm',
-         base: 'agility',
-         source: 'core'
+         name: "Avväpna",
+         attr: "disarm",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Buktala',
-         attr: 'ventriloquism',
-         base: 'intelligence'
+         name: "Buktala",
+         attr: "ventriloquism",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: 'Bärsärkagång',
-         attr: 'berserking',
-         base: 'psyche'
+         name: "Bärsärkagång",
+         attr: "berserking",
+         base: "psy_fv",
+         source: "core"
       },
       {
-         name: 'Dans',
-         attr: 'dancing',
-         base: 'agility'
+         name: "Dans",
+         attr: "dancing",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Djurhenling',
-         attr: 'veterinaring',
-         base: 'intelligence'
+         name: "Djurhenling",
+         attr: "veterinaring",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: 'Djurträning',
-         attr: 'animaltraining',
-         base: 'psyche'
+         name: "Djurträning",
+         attr: "animaltraining",
+         base: "psy_fv",
+         source: "core"
       },
       {
-         name: 'Dolk',
-         attr: 'daggers',
-         base: 'agility'
+         name: "Dolk",
+         attr: "daggers",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Dra vapen',
-         attr: 'drawweapons',
-         base: 'agility'
+         name: "Dra vapen",
+         attr: "drawweapons",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Drogkunskap",
+         attr: "drug_knowledge",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Förfalskning",
+         attr: "counterfeiting",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'intelligence'
+         name: "Geografi",
+         attr: "geography",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'intelligence'
+         name: "Giftkunskap",
+         attr: "posion_knowledge",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Hantera Fällor",
+         attr: "traps",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'intelligence'
+         name: "Hantverk",
+         type: "B",
+         spec: "custom",
+         attr: "crafting",
+         base: "variable",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Hasardspel",
+         attr: "gambling",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'intelligence'
+         name: "Heraldik",
+         attr: "heraldry",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Historia",
+         attr: "history",
+         base: "int_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Hypnotisera",
+         attr: "hypnotizing",
+         base: "psy_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'intelligence'
+         name: "Gyckelkonster",
+         attr: "gleemaning",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: '',
-         attr: '',
-         base: 'agility'
+         name: "Knopar",
+         attr: "knots",
+         base: "smi_fv",
+         source: "core"
       },
+      {
+         name: "Kulturkännedom",
+         attr: "culture_knowledge",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Kunskap om Demoner",
+         type: "B",
+         attr: "demon_knowledge",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Kunskap om Magi",
+         type: "B",
+         attr: "magic_knowledge",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Kunskap om Odöda",
+         type: "B",
+         attr: "undead_knowledge",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Känna magi",
+         attr: "sense_magic",
+         base: "psy_fv",
+         source: "core"
+      },
+      {
+         name: "Låsdyrkning",
+         attr: "lockpicking",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Läkekonst",
+         attr: "healing",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Läppläsning",
+         attr: "lipreading",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Magisk Kanalisering",
+         attr: "channel_magic",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Magiskola",
+         spec: "magicschools",
+         attr: "magicschools",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Massage",
+         attr: "massage",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Muta",
+         attr: "bribing",
+         base: "kar_fv",
+         source: "core"
+      },
+      {
+         name: "Målning",
+         attr: "painting",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Navigation",
+         attr: "navigation",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Orientering",
+         attr: "orienteering",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Räkning",
+         attr: "calculus",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Schack & Brädspel",
+         attr: "boardgames",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Simma",
+         attr: "swimming",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Sjökunnighet",
+         attr: "seafaring",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Skådespeleri",
+         attr: "acting",
+         base: "kar_fv",
+         source: "core"
+      },
+      {
+         name: "Spela instrument",
+         spec: "custom",
+         attr: "play_instrument",
+         base: "variable",
+         source: "core"
+      },
+      {
+         name: "Språkkunskap",
+         attr: "linguistics",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Spå väder",
+         attr: "predict_weather",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Stavhopp",
+         attr: "polevaulting",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Stridskonster",
+         spec: "martialarts",
+         attr: "martialarts",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Teckenspråk",
+         attr: "signlanguage",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Trästav",
+         attr: "staves",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Två Vapen",
+         spec: "custom",
+         attr: "dualwielding",
+         base: "variable",
+         source: "core"
+      },
+      {
+         name: "Undre världen",
+         attr: "underworld",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Zoologi",
+         attr: "zoology",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Änterhake",
+         attr: "grapplehooks",
+         base: "smi_fv",
+         source: "core"
+      },
+      {
+         name: "Örtkunskap",
+         attr: "herb_knowledge",
+         base: "int_fv",
+         source: "core"
+      },
+      {
+         name: "Överlevnad",
+         attr: "survival",
+         base: "int_fv",
+         source: "core"
+      }
    ] 
    spine.weaponskills = [
       {
-         name: 'Armborst',
-         attr: 'crossbows',
+         name: "Armborst",
+         attr: "crossbows",
+         i18n: "crossbows",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Blåsrör',
-         attr: 'blowpipes',
+         name: "Blåsrör",
+         attr: "blowpipes",
+         i18n: "blowpipes",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Bågar',
-         attr: 'bows',
+         name: "Bågar",
+         attr: "bows",
+         i18n: "bows",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Dolkar',
-         attr: 'daggers',
+         name: "Dolkar",
+         attr: "daggers",
+         i18n: "daggers",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Enhandssvärd',
-         attr: 'onehandedswords',
+         name: "Enhandssvärd",
+         attr: "onehandedswords",
+         i18n: "onehandedswords",
+         base: "sty_fv",
+         source: "core"
       },
       {
-         name: 'Enhands krossvapen',
-         attr: 'onehandedbashing',
+         name: "Enhands krossvapen",
+         attr: "onehandedbashing",
+         i18n: "onehandedbashing",
+         base: "sty_fv",
+         source: "core"
       },
       {
-         name: 'Enhandsyxor',
-         attr: 'onehandedaxes',
+         name: "Enhandsyxor",
+         attr: "onehandedaxes",
+         i18n: "onehandedaxes",
+         base: "sty_fv",
+         source: "core"
       },
       {
-         name: 'Kastvapen',
-         attr: 'thrownweapons',
+         name: "Kastvapen",
+         attr: "thrownweapons",
+         i18n: "thrownweapons",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Kättingvapen',
-         attr: 'linkedweapons',
+         name: "Kättingvapen",
+         attr: "linkedweapons",
+         i18n: "linkedweapons",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Obeväpnat',
-         attr: 'melee',
+         name: "Piska",
+         attr: "whips",
+         i18n: "whips",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Piska',
-         attr: 'whips',
+         name: "Sköldar",
+         attr: "shields",
+         i18n: "shields",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Sköldar',
-         attr: 'shields',
+         name: "Slagsmål",
+         attr: "melee",
+         i18n: "melee",
+         base: "sty_fv",
+         source: "core"
       },
       {
-         name: 'Slunga',
-         attr: 'slings',
+         name: "Slunga",
+         attr: "slings",
+         i18n: "slings",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Stickvapen',
-         attr: 'piercingweapons',
+         name: "Stickvapen",
+         attr: "piercingweapons",
+         i18n: "piercingweapons",
+         base: "sty_fv",
+         source: "core"
       },
       {
-         name: 'Stridskonst',
-         attr: 'martialarts',
+         name: "Stridskonst",
+         attr: "martialarts",
+         i18n: "martialarts",
+         base: "smi_fv",
+         source: "core"
       },
       {
-         name: 'Stångvapen',
-         attr: 'spears',
+         name: "Stångvapen",
+         attr: "spears",
+         i18n: "spears",
+         base: "sty_fv",
+         source: "core"
       },
       {
-         name: 'Tvåhandsvapen',
-         attr: 'Twohandedweapons',
+         name: "Tvåhandsvapen",
+         attr: "twohandedweapons",
+         i18n: "twohandedweapons",
+         base: "sty_fv",
+         source: "core"
       },
    ]
