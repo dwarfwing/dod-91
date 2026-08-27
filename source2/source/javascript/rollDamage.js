@@ -40,10 +40,10 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
                damageBonusMod = attributes[`damagebonus_mod`],
                bonus = damageBonusMod == '' || damageBonusMod == undefined ? damageBonus : damageBonusMod;
          //k.log(`Damage bonus ? ${damageBonusMod == '' || damageBonusMod == undefined}`)
-         rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.replaceAll(/[Tt]/g,'D') : bonus;
+         rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.toString().replaceAll(/[Tt]/g,'D') : bonus;
          //rollObj.damageBonus = rollObj.damageBonus.test(/Tt/g) ? rollObj.damageBonus.replace(/[Tt]/g,'D') : rollObj.damageBonus;
       }
-      rollObj.damageDice = rollObj.damageDice.replaceAll(/[Tt]/g,'D');
+      rollObj.damageDice = rollObj.damageDice.toString().replaceAll(/[Tt]/g,'D');
 
       rollObj.painDice = section && attributes['use_sp'].toString() == "1" ?
          attributes[`${row}pain`] :
@@ -61,7 +61,7 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
          rollObj.painBonus = /[Tt]/g.test(bonus) ? bonus.replaceAll(/[Tt]/g,'D') : bonus;
          //rollObj.painBonus = rollObj.painBonus.test(/Tt/g) ? rollObj.painBonus.replace(/[Tt]/g,'D') : rollObj.painBonus;
       } */
-      rollObj.painDice = rollObj.painDice.replaceAll(/[Tt]/g,'D');
+      rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
 
       k.log(`Damage dice ${rollObj.damageDice} and pain dice ${rollObj.painDice}`);
 

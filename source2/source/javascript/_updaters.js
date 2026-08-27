@@ -3,6 +3,9 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
    k.log(`Identified upgrade to 2.0 version`);
    //k.log(attributes);
 
+   attributes.whisper = '/w gm';
+   attributes.set();
+
    // KP MAX, etc
 
    hp_fv = attributes.hjaltepoang_fv;
@@ -46,6 +49,23 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
       }
    });
    attributes.set();
+   // LANGUAGES sprak_7_text
+   [1,2,3,4,5,6].forEach( lang => {
+      
+      const langName = attributes[`sprak_${lang}_text`]; 
+      k.log(`Testing language ${lang} with name ${langName} `+ attributes[`sprak_${lang}_text`]);
+      if ( langName != undefined && langName != '') {
+         k.log(`Found language to upgrade: ${langName}`);
+         const rowID = k.generateRowID('repeating_languages',sections);
+         //-k.log(`Row ID = ${rowID}`);
+         k.setAttrs({
+            [`${rowID}_text`]: langName,
+            [`${rowID}_fv`]: attributes[`sprak_${lang}_fv`]||0,
+            [`${rowID}_erf`]: attributes[`sprak_${lang}_erf`]||0,
+            [`${rowID}_collapse`]: 1, 
+         })
+      }
+   });
 
    // SPELLS besvarjelse_1_text
    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19].forEach( spell => {
@@ -65,15 +85,13 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          })
       }
    });
-   
-   attributes.set();
 
    // WEAPONS vapen_7_text
    [1,2,3,4,5,6,7].forEach( weapon => {
       
       const weaponName = attributes[`vapen_${weapon}_text`]; 
       k.log(`Testing weapon ${weapon} with name ${weaponName} `+ attributes[`vapen_${weapon}_text`]);
-      if ( weaponName != undefined && weaponName != '') {
+      if ( weaponName != undefined || weaponName != '') {
          k.log(`Found weapon to upgrade: ${weaponName}`);
          const rowID = k.generateRowID('repeating_weapons',sections);
          k.log(`Row ID = ${rowID}`);
@@ -91,30 +109,55 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          })
       }
    });
-   
-   attributes.set();
 
-   // LANGUAGES vapen_7_text
-   [1,2,3,4,5,6].forEach( lang => {
-      
-      const langName = attributes[`sprak_${lang}_text`]; 
-      k.log(`Testing language ${lang} with name ${langName} `+ attributes[`sprak_${lang}_text`]);
-      if ( langName != undefined && langName != '') {
-         k.log(`Found language to upgrade: ${langName}`);
-         const rowID = k.generateRowID('repeating_languages',sections);
-         //-k.log(`Row ID = ${rowID}`);
+   // UTRUSTNING
+   [11,12,13,21,22,23,31,32,33,41,42,43,51,52,53,61,62,63,71,72,73].forEach( id => {
+      const gearName = attributes[`utrustning_${id}_text`];
+      if ( gearName != '' ) {
+         const rowID = k.generateRowID('repeating_gear',sections);
+         k.log(`Found gear ${gearName} to upgrade ro row ${rowID}`);
          k.setAttrs({
-            [`${rowID}_text`]: langName,
-            [`${rowID}_fv`]: attributes[`sprak_${lang}_fv`]||0,
-            [`${rowID}_erf`]: attributes[`sprak_${lang}_erf`]||0,
+            [`${rowID}_equipped`] : 1,
+            [`${rowID}_name`] : gearName,
+            [`${rowID}_amount`] : 1,
+            [`${rowID}_weight`] : attributes[`utrustning_${id}`],
          })
       }
    });
 
+   // BODY AREA HITPOINTS
+   ['head','chest','rarm','varm','mage','vben','hben'].forEach( part => {
+      const area = part == 'head' ? 'huvud' :
+                     part == 'chest' ? 'brostkorg' :
+                     part == 'rarm' ? 'harm' :
+                     part;
+      var ticks = 0; 
+      [1,2,3,4,5,6,7,8,9].forEach ( id => {
+         ticks += attributes[`${part}${id}`] == 'on' ? 1 : 0; 
+      });
+      k.log(`KP för ${area} är ${ticks}`);
+      attributes[`kp_${area}`] = ticks; 
+   });
 
+   // KROPPSPOÄNG & PSYPOÄNG
+   attributes.kroppspoang_max = attributes.total_kp;
+   attributes.psypoang_max = attributes.total_psy;
+   attributes.smartpoang_max = attributes.smartpoang = 2 * attributes.fys_fv;
 
+   var kp = 0, psy = 0; 
+   [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30].forEach( id => {
+      kp += attributes[`tot_kp${id}`] == 'on' ? 1 : 0;
+      psy += attributes[`tot_psy${id}`] == 'on' ? 1 : 0; 
+   });
+   k.log(`Found ${kp} KP och ${psy} PSY poäng.`);
+   attributes.kroppspoang = kp; 
+   attributes.psypoang = psy; 
 
+   attributes.set(); 
 
+   calcSmartpoang({attributes}); 
+
+   attributes.whisper = '';
    attributes.version = 2.0; 
    attributes.set();
 

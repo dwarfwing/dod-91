@@ -43,7 +43,7 @@ mixin animal-tab
                   label: 'Kroppspoäng',
                   divObj: {class:'hitpoints-grid'},
                   spanObj: {class: 'label-input-label'},
-                  inputObj: {type: number,name: 'animal_kroppspoang_max',type:'number'},
+                  inputObj: {type: number,name: 'animal_kroppspoang_max',type:'number',trigger:{formula:'(@{animal_fys_fv} + @{animal_sto_fv}) / 2'}},
                })
             +fillLeft-label({
                radioObj:{name:'animal_kroppspoang',type:'radio',class:'counter'},

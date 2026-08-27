@@ -24,19 +24,19 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    rollObj.damageDice = section ?
       attributes[`${row}damage`] :
       attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_damage`];
-   rollObj.damageDice = rollObj.damageDice.replaceAll(/[Tt]/g,'D');
+   rollObj.damageDice = rollObj.damageDice.toString().replaceAll(/[Tt]/g,'D');
    if ( attributes['use_sp'] == 1) {
       rollObj.painDice = section ?
          attributes[`${row}pain`] :
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_pain`];
-      rollObj.painDice = rollObj.painDice.replaceAll(/[Tt]/g,'D');
+      rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
    }
    if (attributes[`${row}damagebonus`] == '1') {
       const damageBonus = attributes[`sakdebonus`],
             damageBonusMod = attributes[`skadebonus_mod`],
             bonus = damageBonusMod == '' || damageBonusMod == undefined ? damageBonus : damageBonusMod;
       //k.log(`Damage bonus ? ${damageBonusMod == '' || damageBonusMod == undefined}`)
-      rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.replaceAll(/[Tt]/g,'D') : bonus;
+      rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.toString().replaceAll(/[Tt]/g,'D') : bonus;
       //rollObj.damageBonus = rollObj.damageBonus.test(/Tt/g) ? rollObj.damageBonus.replace(/[Tt]/g,'D') : rollObj.damageBonus;
    }
 
@@ -310,12 +310,12 @@ const rollAbility = function ({trigger,attributes,sections,casc}) {
    //k.log('Name is '+ attributes[`${row}skill_name`]);
    if ( attributes[`${row}roll`] == '' && attributes[`${row}damage`] == '' ) { return; }
    rollObj.name = attributes[`${row}skill_name`];
-   rollObj.abilityDice = attributes[`${row}roll`].replaceAll(/[Tt]/g,'D');
+   rollObj.abilityDice = attributes[`${row}roll`].toString().replaceAll(/[Tt]/g,'D');
 
    //k.log(`Skill attribute is `+attributes[`${row}skill`]);
    if ( attributes[`${row}damage`] && attributes[`${row}damage`] != '' ) {
       rollObj.damageButton = true;
-      rollObj.damageDice = attributes[`${row}damage`].replaceAll(/[Tt]/g,'D');
+      rollObj.damageDice = attributes[`${row}damage`].toString().replaceAll(/[Tt]/g,'D');
    }
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
@@ -344,7 +344,7 @@ const rollAbilitySkill = async function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill attribute is `+attributes[`${row}skill`]);
    if ( attributes[`${row}damage`] && attributes[`${row}damage`] != '' ) {
       rollObj.damageButton = true;
-      rollObj.damageDice = attributes[`${row}damage`].replaceAll(/[Tt]/g,'D');
+      rollObj.damageDice = attributes[`${row}damage`].toString().replaceAll(/[Tt]/g,'D');
       rollObj.rollStr += ' {{damageRoll=[[0]]}} {{button-label=^{damage}}} {{damageTotal=[[0]]';
    }
    if ( attributes[`${row}ability_resonance`] == '1' || attributes[`${row}ability_resonance`] == 'on' ) {

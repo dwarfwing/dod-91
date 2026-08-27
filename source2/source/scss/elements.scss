@@ -26,6 +26,11 @@
          text-indent: 0; 
       }
    }
+   label.input-label {
+      span {
+         text-indent: 0.5rem;
+      }
+   }
    label.label-input-label, 
    h2.header-field {
       white-space: nowrap;

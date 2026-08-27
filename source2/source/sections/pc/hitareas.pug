@@ -1,7 +1,6 @@
 mixin hitareas 
    .section-hitareas
-      each area in spine.hitareas 
-         
+      each area in spine.hitareas          
          //-+box({headerObj:{name:area.name,attr:area.attr,'data-i18n':area.attr},fields:[{name:'KP',attr:'healthpoints_abbr'},{name:'SP',attr:'painpoints_abbr'}],classes:'coverall section-hitareas--hitarea hitarea'})    
          .box.section-hitareas--hitarea.hitarea.coverall.box-head
             .box-header.field-count-2 
@@ -61,6 +60,10 @@ mixin hitareas
                   noCLear: true,
                   capAttr: area.sp_tot
                })
+   .hidden-hitareas.for-upgrades.hidden   
+      each area in ['head','chest','rarm','varm','mage','vben','hben']
+         each id in [1,2,3,4,5,6,7,8,9]
+            +checkbox({name:area+id,value:1})
 +scss.
    .section-hitareas {
       max-width: 100%;
@@ -154,7 +157,7 @@ mixin hitareas
             margin-left: 0; 
             padding-block: 0.25rem;
             label {
-               width: 70%; 
+               width: 85%; 
                border: 1px solid var(--border-color);
                &:after {
                   font-size: 90%;

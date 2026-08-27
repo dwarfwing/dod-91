@@ -24,11 +24,15 @@ mixin gear(name='Utrustning',attr='gear',i18n)
                      +text({name:'name'}).caps-input
                   +checkbox({name:'equipped',value:1,checked:true,trigger:{triggeredFuncs:[attr+'Encumbrance']}})
                   label.text-input                     
-                     +input({type: 'text', name: 'name', class:'label-input-text'})
+                     +input({type: 'text', name: 'name', placeholder:'Namn',class:'label-input-text'})
                   span.input-span.input-0
-                     +input({type: 'number', name: 'amount', class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+                     +input({type: 'number', name: 'amount', value: 1, class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
                   span.input-span.input-last
-                     +input({type: 'number', name: 'weight', class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+                     +input({type: 'number', name: 'weight', value: 1, class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+   .hidden-gear.for-upgrades.hidden 
+      each id in [11,12,13,21,22,23,31,32,33,41,42,43,51,52,53,61,62,63,71,72,73]
+         +text({name:'utrustning_'+id+'_text'})
+         +number({name:'utrustning_'+id})
 +scss.
    .section-gear {
       .expanded {
