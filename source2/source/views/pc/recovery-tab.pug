@@ -1,0 +1,112 @@
+mixin recovery-tab 
+   .tab-recovery
+      // KP Status: KP 2 = halverad CL p[ alla f'rdiogheter, KP = 1, inga f'rdigheter
+      // KP träffområde = -1 totala KP varje SR. Ben och arm blir obrukbara, bröst eller mage så oförmögen att göra någiot, huvud medvetslös
+      // Dubbel skada i kroppsdel så kritiskt skadad
+      .section-rest 
+         .section-rest-sleep
+            +box({headerObj:{name:'Sömn 6 timmar',attr:'sleep','data-i18n':'sleep-6h'}}) 
+               .box-content
+                  p(data-i18n='sleep-6h-decription')  
+                     | Sovperiod på 6 timmar, 2 för alver, som återställer förbättringskryssen på färdigheter. Detta gör att ny erfarenhet kan samlas från lyckade och perfekta slag. 
+                  +action({name:'sleep6h','data-i18n':'sleep',trigger:{triggeredFuncs:['resetExperience']}})
+                     | Sov
+         .section-rest-week
+            +box({headerObj:{name:'Vila 7 dagar',attr:'rest','data-i18n':'rest-7d'}})  
+               .box-content
+                  p(data-i18n='rest-7d-decription')  
+                     |  En period på 7 dagar sammanhängande vila utan pågående äventyr. Erfarenhet omvandlas till förbättringar av färdigheter. 
+                  +action({name:'sleep6h','data-i18n':'rest',trigger:{triggeredFuncs:['resetExperience','useExperience']}})
+                     | Vila
+      .section-injuries
+         +box({headerObj:{name:'Skador och Tillstånd',attr:'afflictions','data-i18n':'injuries-conditions'}})
+            +fieldset({name:'afflictions',})
+               .affliction-row.collapse-container 
+                  //-+collapse 
+                  .expanded 
+                     //-+input-label({
+                        label:'namn',
+                        divObj: {class:''},
+                        inputObj: {name: 'name', type: 'text'}
+                        })
+                     +text({name:'name',class:'header',placeholder:'Summering','data-i18n-placeholder':'summary'})
+                     +adaptiveTextarea({name:'description',placeholder:'Beskrivning'}) 
+                     +input-label({
+                        label:'Effekt',
+                        divObj: {class:''},
+                        inputObj: {name: 'effect', type: 'text'}
+                        })
+                     +input-label({
+                        label:'Läktid',
+                        divObj: {class:''},
+                        inputObj: {name: 'healingtime', type: 'text'}
+                        })
+                  //-.collapsed
+                     +span({name:'name',class:'header'})
+                     +span({name:'description'})
+                     .effect
+                        span Effekt: 
+                        +span({name:'effect'})
+                     .healingtime
+                        span Tid: 
+                        +span({name:'healingtime'})
+
++scss.
+   .tab-recovery {
+      display: grid;
+      grid-template-columns: 50% 50%; 
+      p { text-transform: none; }
+      .box {
+         height: 100%; 
+         align-content: flex-start;
+      }
+      .box-content {
+         background-color: var(--bg-color2);
+         padding: 1rem; 
+         button {
+            justify-content: center; 
+            backdrop-filter: brightness(0.75);
+         }
+      }
+      .affliction-row {
+         border-bottom: 1px solid var(--border-color);
+         background-color: var(--bg-color3);
+         .expanded, .collapsed {
+            padding: 0; 
+            //span[name=attr_name], label:first-of-type { background-color: var(--background-color); }
+            display: grid; 
+            grid-template-columns: 100%;
+            * {
+               font-family: var(--font-family);
+            }
+            .header {
+               text-align: center; 
+               justify-content: center; 
+               background-color: var(--bg-color2);
+            }
+            .input-label {
+               span {
+                  &:after {
+                     content: ': ';
+                  }
+               }
+            }
+            & > * {
+               width: 100%; 
+               border-bottom: 1px solid var(--border-color); 
+               text-transform: none;
+               border-radius: 0; 
+            }
+            .adaptive > * {
+               line-height: 1.5rem;
+            }
+         }          
+      }
+      .repcontainer {
+         margin-bottom: 1.75rem; 
+      }
+      .repcontrol {
+         bottom: 0;
+         position: absolute;
+      }
+   }

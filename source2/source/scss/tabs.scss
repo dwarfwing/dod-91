@@ -43,7 +43,7 @@
             .tabs--pctabs {
                width: 100%; 
                justify-content: space-evenly;
-               border: 3px solid var(--border-color);
+               border: var(--border-size) solid var(--border-color);
                .tabs__header {
                   width: 100%;
                   height: unset; 
@@ -57,6 +57,7 @@
                      li {
                         width: 100%; 
                         margin: 0;
+                        height: 2.75rem;
                      }
                      button {
                         font-family: unset;
@@ -68,6 +69,9 @@
                         justify-self: center;
                         text-align: center; 
                         background-color: var(--bg-color2);
+                        line-height: 1.25rem;
+                        height: 100%;
+                        align-content: center;
                         &.k-active-button {
                            background: var(--bg-color);
                         }

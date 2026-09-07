@@ -1,7 +1,8 @@
 mixin secondaryskills 
-   .section-secondaryskills
-      +box({headerObj:{name:'Sekundära färdigheter',attr:'secondaryskills','data-i18n':'trained-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Exp.',attr:'experience_abbr'}],classes:'coverall'})
-         each skill in spine.secondaryskills 
+   .section-skills__secondary.section-secondaryskills
+      +repeatingSkills({name:'Sekundära färdigheter',attr:'secondaryskills',transl:'trained-skill'}) 
+      //-   +box({headerObj:{name:'Sekundära färdigheter',attr:'secondaryskills','data-i18n':'trained-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Exp.',attr:'experience_abbr'}],classes:'coverall'})
+         //-each skill in spine.secondaryskills 
             +input({name: skill.attr, type:'number', value: 0}).hidden
             +input({name: skill.attr+'_mod', type:'number', value: 0}).hidden
             +input({name: skill.attr+'_improve', type:'checkbox', value: 1,trigger:{triggeredFuncs:['setTrainedImprove']}}).hidden
@@ -51,7 +52,7 @@ mixin secondaryskills
          +text({name:`sek_fard_`+skill+`_text`})
          +number({name:`sek_fard_`+skill+`_fv`})
          +number({name:`sek_fard_`+skill+`_erf`})
-+scss.
+//-+scss.
    .section-secondaryskills {
       border-bottom: 1px solid var(--border-color);
       :is(.expanded,.collapsed) {

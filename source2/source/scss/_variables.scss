@@ -1,5 +1,5 @@
 @use 'k-scaffold' as k;
-@import url('https://fonts.googleapis.com/css?family=Arimo|PT+Serif|Adgasima|Martel+Sans|Material+Symbols+Outlined|Material+Icons|Material+Icons+Outlined|&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Arimo|PT+Serif|Adgasima|Martel+Sans|Material+Symbols+Outlined|Material+Symbols+Rounded|Material+Icons|Material+Icons+Outlined|&display=swap');
 
 @mixin all {
   @include k.variables;
@@ -17,6 +17,7 @@
   --bg-color: #fd5232;
   --bg-color: #fc562c;
   --bg-color2: #e3e3e3;
+  --bg-color3: #fefefe; 
   --bg-color9: rgb(31, 31, 31);
   --bg-color0: rgb(255, 255, 255); 
   --font-family: Helvetica, "Arimo", Sans-serif;
@@ -30,7 +31,7 @@
   //--text-transform: uppercase;
   --text-transform: capitalize;
   --border-color: #222;
-  --border-size: 3px; 
+  --border-size: 2px; 
   --border-size-2x: 6px; 
   --fill-color: #505050;
   --fill-color-none: transparent;

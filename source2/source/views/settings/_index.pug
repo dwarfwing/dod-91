@@ -1,0 +1,25 @@
+.section-settings
+   +box({headerObj:{name:'Generella Inställningar'}})
+      +input-label({
+         label: 'Visa alternativ för tärningsslag',
+         spanObj:{'data-i18n':'roll-alternatives'},
+         divObj:{class:''},
+         inputObj:{name:'tarningsslag alternativ',type:'checkbox',value:1,checked:true}
+         })
+      //-+input-label({
+         label: 'Använd smärtpoäng',
+         spanObj:{'data-i18n':'show-painpoints'},
+         divObj:{class:''},
+         inputObj:{name:'visa smartpoang',type:'checkbox',value:1,checked:true}
+         })
+   //-+box({headerObj:{name:'RPC Inställningar'}})
++scss.
+   .section-settings {
+      .box {
+         & > * {
+            width: 100%;
+            padding-inline: 0.5rem;
+            justify-content: space-between; 
+         }
+      }
+   }

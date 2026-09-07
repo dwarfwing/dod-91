@@ -29,17 +29,18 @@ mixin box({headerObj={},fields=[],classes=""})
       flex-direction: row;
       flex-wrap: wrap;
       border: 0;
-      border: 3px solid var(--border-color);
+      border: var(--border-size) solid var(--border-color);
       box-sizing: border-box; 
       //min-width: 50%;
       //margin: 1rem;
       position: relative;
-      background-color: var(--background-color-box);
+      background-color:  var(--bg-color2);
       &.topless, &.no-top-border { border-top: 0; }
       &.bottomless { border-bottom: 0; }
       .box-header {
          width: 100%;
-         border-bottom: 3px solid var(--border-color);
+         border-bottom: var(--border-size) solid var(--border-color);
+         background-color: var(--background-color-box);
          display: flex;
          flex-direction: row;
          h1 {

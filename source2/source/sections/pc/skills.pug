@@ -1,6 +1,7 @@
 mixin skills 
-   .section-skill 
-      +box({headerObj:{name:'primära färdigheter',attr:'skills','data-i18n':'basic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+   .section-skills__primary.section-skill 
+      +listSkills({namn:'primära färdigheter',attr:'skills',transl:'basic-skills',array:spine.primaryskills})
+      //-+box({headerObj:{name:'primära färdigheter',attr:'skills','data-i18n':'basic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          each skill in spine.primaryskills
             - geAbbr = skill.base.slice(0,3).toUpperCase();
             +text({name: skill.attr+'_name',value: skill.name,class:'hidden'})
@@ -11,7 +12,9 @@ mixin skills
                inputObj: [
                   {type: 'number', name: skill.attr+'_fv', class:'label-input-input input-'+skill.name},
                   {type: 'number', name: skill.attr+'_mod', class:'label-input-input input-mod-'+skill.name},
-                  {type: 'number', name: skill.attr+'_erf', class:'label-input-input input-exp-'+skill.name}
+                  {type: 'number', name: skill.attr+'_erf', class:'label-input-input input-exp-'+skill.name},
+                  {type: 'checkbox', name: skill.attr+'_improve', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-normal input-impr-'+skill.name},
+                  {type: 'checkbox', name: skill.attr+'_improve_perfect', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-perfect input-impr-perf-'+skill.name},
                ]
                })
             //- i18n = skill.attr.replace(/_/,'-');
@@ -25,7 +28,7 @@ mixin skills
                   +number({name:skill.attr+'_mod',class:`.label-input-input.input-mod-${skill.name}`})
                span.input-span.input-2
                   +number({name:skill.attr+'_exp',class:`.label-input-input.input-exp-${skill.name}`})
-         +fieldset({name:'primaryskills'})
+         //-+fieldset({name:'primaryskills'})
             +collapse
             //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
             //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
@@ -44,6 +47,8 @@ mixin skills
                      //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                   +input({name:'skill_mod',type:'number'}).input-span.input-1
                   +input({name:'skill_erf',type:'number'}).input-span.input-2
+                  +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                  -+checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
             .expanded
                .label-input.input-count-3 
                   //-label.text-input 
@@ -56,9 +61,10 @@ mixin skills
                      +input({type: 'number', name: 'skill_mod', class:'label-input-input'})
                   span.input-span.input-2
                      +input({type: 'number', name: 'skill_erf', class:'label-input-input'})
-+scss.
+//-+scss.
    .section-skill {
       .label-input {
+         display: grid; 
          grid-template-columns: 1fr 3rem 3rem 3rem;
          button {
             span {
@@ -69,7 +75,49 @@ mixin skills
          button[type=action] {
             display: hidden;
          }
+         
+      &.input-count-5 {
+         position: relative; 
+         grid-template-columns: 1fr 3rem 3rem 3rem;
+         input[type=checkbox].improve-mark {
+            display: none;
+            position: absolute;
+            top: 0.2rem;
+            right: 0;
+            max-width: 0.2rem;
+            max-height: 0.2rem;
+            height: 0.2rem;
+            width: 0.2rem;
+            padding: 0;
+            min-width: 0.6rem;
+            min-height: 0.6rem;
+            transform: rotate(45deg);
+            &.improve-mark-perfect {
+               top: 50%;
+               //corner-shape: scoop;
+               //border-radius: 50%;
+               //width: 1rem;
+               //min-width: 1rem;
+               //min-height: 1rem;
+               //transform: unset;
+               //right: -0.2rem;
+            }
+            &:checked { 
+               display: flex;
+               background-color: var(--fill-color);
+               &:before {
+                  content: '';
+               }
+            }
+         }
+         &:hover input[type=checkbox] { display: flex; }
       }
+         
+         button[type=action] {
+            display: hidden;
+         }
+      }
+
       input.exp-toggle {
          display: none; 
       }

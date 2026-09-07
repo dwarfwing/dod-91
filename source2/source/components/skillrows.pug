@@ -1,0 +1,293 @@
++mixin skillrow(name,attr,base,expandable,bskill) 
+   - 
+      geAbbr = base ? '{'+base.slice(0,3).toUpperCase()+')' : "" ;
+      divClass = expandable ? 'collapse-container' : '';
+      attrPrefix = attr != '' ? attr + '_' : '';
+      divClass += bskill ? ' bskill' : '';
+   .skill-row(class=divClass)
+      if expandable
+         +collapse
+         .collapsed
+            .label-input.input-count-5
+               //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+               label.select-input.collapsed 
+                  +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
+                     +span({name:attr})
+               //- label.text-input
+                  +text({name:'name',class:'text-input'})
+               //-+span({name:'skill',type:'number'}).input-span.input-0                  
+               span.input-span.input-0
+                  +input({name: 'fv', type: 'number', class:'label-input-input'})
+               +input({name:'mod',type:'number'}).input-span.input-1
+               +input({name:'erf',type:'number'}).input-span.input-2
+               +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+               +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+         .expanded
+            .label-input.input-count-5 
+               //-label.text-input 
+                  +text({name:'name'}).caps-input
+               label.select-input.expanded
+                  +text({name:'skill_name',id:'custom-skill-input'})
+               span.input-span.input-0
+                  +input({name: 'fv', type: 'number', class:'label-input-input'})
+               span.input-span.input-1
+                  +input({name: 'mod', type: 'number', class:'label-input-input'})
+               span.input-span.input-2
+                  +input({name: 'erf', type: 'number', class:'label-input-input'})
+               +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+               +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+      else 
+         .label-input.input-count-5
+            //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+            label.select-input.collapsed 
+               +action({name:attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                  +span({name:name})
+            //- label.text-input
+               +text({name:'name',class:'text-input'})
+            //-+span({name:'skill',type:'number'}).input-span.input-0                  
+            span.input-span.input-0
+               +input({name: 'fv', type: 'number', class:'label-input-input'})
+            +input({name:'mod',type:'number'}).input-span.input-1
+            +input({name:'erf',type:'number'}).input-span.input-2
+            +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+            +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+   //-.skill-row
+      +text({name: skill.attr+'_name',value: skill.name,class:'hidden'})
+      +label-inputs({
+         label: skill.name + geAbbr,
+         divObj: {class:'column-'+skill.name},
+         labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr,rollType:'skill'},
+         inputObj: [
+            {type: 'number', name: skill.attr+'_fv', class:'label-input-input input-'+skill.name},
+            {type: 'number', name: skill.attr+'_mod', class:'label-input-input input-mod-'+skill.name},
+            {type: 'number', name: skill.attr+'_erf', class:'label-input-input input-exp-'+skill.name},
+            {type: 'checkbox', name: skill.attr+'_improve', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-normal input-impr-'+skill.name},
+            {type: 'checkbox', name: skill.attr+'_improve_perfect', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-perfect input-impr-perf-'+skill.name},
+         ]
+         })
+mixin listSkills({name,attr,transl,fields,rows})
+   - 
+      i18n = transl ? transl : attr; 
+      fields = fields ? fields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+      rowArr = spine[`${rows}`];
+   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
+      //-each skill in rows
+         - geAbbr = skill.base.slice(0,3).toUpperCase();
+         +text({name: attr+'_name',value: skill.name,class:'hidden'})
+         +label-inputs({
+            label: name + geAbbr,
+            divObj: {class:'column-'+attr},
+            labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr,rollType:'skill'},
+            inputObj: [
+               {type: 'number', name: skill.attr+'_fv', class:'label-input-input input-'+skill.name},
+               {type: 'number', name: skill.attr+'_mod', class:'label-input-input input-mod-'+skill.name},
+               {type: 'number', name: skill.attr+'_erf', class:'label-input-input input-exp-'+skill.name},
+               {type: 'checkbox', name: skill.attr+'_improve', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-normal input-impr-'+skill.name},
+               {type: 'checkbox', name: skill.attr+'_improve_perfect', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-perfect input-impr-perf-'+skill.name},
+            ]
+            })
+      each skill in rowArr
+         - geAbbr = skill.base ? ' {'+base.slice(0,3).toUpperCase()+')' : "" ;
+         .skill-row 
+            label.select-input.input-count-5
+               +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                  +span({name:skill.name+geAbbr,'data-18n':skill.i18n})
+            //- label.text-input
+               +text({name:'name',class:'text-input'})
+            //-+span({name:'skill',type:'number'}).input-span.input-0
+            //-span.input-span.input-0
+               +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+               //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+            +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+            +input({name:skill.attr+'_mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+            +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
+            +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+            +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+
+
+mixin numberedSkills({name,attr,transl,fields,max})
+   - 
+      indices = Array.from({length: max}, (_, i) => i + 1);
+      i18n = transl ? transl : attr; 
+      fields = fields ? fields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr}) 
+      each skill in indices
+         .skill-row.collapse-container
+            +checkbox({name: 'collapse-'+skill,class:'collapse',value:1})
+            .collapsed.label-input.input-count-5
+               //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+               label.select-input 
+                  +action({name:attr+'_'+skill,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                     +span({name:attr+'_'+skill+'_text'})
+               //- label.text-input
+                  +text({name:'name',class:'text-input'})
+               //-+span({name:'skill',type:'number'}).input-span.input-0
+               //-span.input-span.input-0
+                  +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                  //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+               +input({name:attr+'_'+skill+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+               +input({name:attr+'_'+skill+'_mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+               +input({name:attr+'_'+skill+'_erf',type:'number'}).input-span.input-2
+               +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+               +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+
+               .collapsed.label-input.input-count-3
+                  //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                  label.select-input 
+                     +action({name:'yrkes_'+skill,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                        +span({name:'yrkes_'+skill+'_text'})
+                  //- label.text-input
+                     +text({name:'name',class:'text-input'})
+                  //-+span({name:'skill',type:'number'}).input-span.input-0
+                  //-span.input-span.input-0
+                     +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                     //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  +input({name:'yrkes_'+skill+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+                  +input({name:'yrkes_'+skill+'_mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+                  +input({name:'yrkes_'+skill+'_erf',type:'number'}).input-span.input-2
+
+            .expanded.label-input.input-count-5
+               //-label.text-input 
+                  +text({name:'name'}).caps-input
+               //-label.select-input
+                  +select({name:'yrkes_'+skill+'_text',trigger:{triggeredFuncs:['setSkill']}})                        
+                     +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
+                        | --- Välj ---
+                     +option({value:'custom-skill','data-i18n':'custom-skill'})
+                        | Lägg till manuellt
+                     each skill in spine.secondaryskills
+                        +option({value: skill.name, 'data-i18n': skill.attr.replace(/_/,'-')})
+                  +input({name:'custom name display',type:'checkbox',value:1,class:'hidden toggle-custom-skill'})
+                  +text({name:'custom name',id:'custom-skill-input',class:'hidden',trigger:{triggeredFuncs:['setSkill']}})
+               //-span.input-span.input-0
+                  //-+checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                  //-+checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+               +input({name: attr+'_'+skill+'_text', type: 'text', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
+               +input({name: attr+'_'+skill+'_fv', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
+               //-span.input-span.input-1
+               +input({name: attr+'_'+skill+'_mod', type: 'number', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
+               //-span.input-span.input-2
+               +input({name: attr+'_'+skill+'_erf', type: 'number', class:'label-input-input'}).input-span.input-3
+               +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+               +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+
+
+mixin repeatingSkills({name,attr,transl,fields})
+   - 
+      i18n = transl ? transl : attr; 
+      fields = fields ? fields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
+      +fieldset({name:attr})
+         .skill-row.collapse-container
+            +collapse
+            //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
+            //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
+            .collapsed
+               .label-input.input-count-5
+                  //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                  label.select-input.collapsed 
+                     +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
+                        +span({name:'skill_name'})
+                  //- label.text-input
+                     +text({name:'name',class:'text-input'})
+                  //-+span({name:'skill',type:'number'}).input-span.input-0                  
+                  span.input-span.input-0
+                     +input({type: 'number', name: 'fv', class:'label-input-input'})
+                  +input({name:'mod',type:'number'}).input-span.input-1
+                  +input({name:'erf',type:'number'}).input-span.input-2
+                  +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                  +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+            .expanded
+               .label-input.input-count-5 
+                  //-label.text-input 
+                     +text({name:'name'}).caps-input
+                  label.select-input.expanded
+                     +text({name:'skill_name',id:'custom-skill-input'})
+                  span.input-span.input-0
+                     +input({type: 'number', name: 'fv', class:'label-input-input'})
+                  span.input-span.input-1
+                     +input({type: 'number', name: 'mod', class:'label-input-input'})
+                  span.input-span.input-2
+                     +input({type: 'number', name: 'erf', class:'label-input-input'})
+                  +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                  +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
++scss.
+   .box-skills {
+      .label-input {
+         display: grid; 
+         grid-template-columns: calc(100% - 9rem) 3rem 3rem 3rem;
+         button {
+            span {
+               border: 0; 
+            }
+         }
+         
+         button[type=action] {
+            display: hidden;
+         }
+      .expanded {
+         input[type=text] }
+         width: 100%; 
+      }   
+      &.input-count-5 {
+         position: relative; 
+         grid-template-columns: calc(100% - 9rem) 3rem 3rem 3rem;
+         .collapse {
+            right: 9rem;
+            z-index: 90000;
+            top: -0.25rem;
+         }
+         input[type=checkbox].improve-mark {
+            display: none;
+            position: absolute;
+            top: 0.2rem;
+            right: 0;
+            max-width: 0.2rem;
+            max-height: 0.2rem;
+            height: 0.2rem;
+            width: 0.2rem;
+            padding: 0;
+            min-width: 0.6rem;
+            min-height: 0.6rem;
+            transform: rotate(45deg);
+            &.improve-mark-perfect {
+               top: 50%;
+               //corner-shape: scoop;
+               //border-radius: 50%;
+               //width: 1rem;
+               //min-width: 1rem;
+               //min-height: 1rem;
+               //transform: unset;
+               //right: -0.2rem;
+            }
+            &:checked { 
+               display: flex;
+               background-color: var(--fill-color);
+               &:before {
+                  content: '';
+               }
+            }
+         }
+         &:hover input[type=checkbox] { display: flex; }
+      }
+         
+         button[type=action] {
+            display: hidden;
+         }
+      }
+
+      input.exp-toggle {
+         display: none; 
+      }
+      .repitem:hover {
+         position: relative;
+         input.exp-toggle {
+           display: flex;
+           position: absolute;
+           left: -1rem;
+           width: 1rem;
+         } 
+         border-bottom: 1px solid var(--border-color); 
+      }
+   }         
+

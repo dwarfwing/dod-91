@@ -32,3 +32,8 @@ const repeatingSum = (destinations, section, fields) => {
     }); 
 };
 
+const initNumberedArray = function(max) {
+    return Array.from({length: max}, (_, i) => i + 1);
+}
+
+

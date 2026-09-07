@@ -1,6 +1,7 @@
 mixin weaponskills 
-   .section-weaponskills
-      +box({headerObj:{name:'vapenfärdigheter',attr:'weaponskills','data-i18n':'weapon-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+   .section-skills__weapon.section-weaponskills
+      +repeatingSkills({name:'Vapenfärdigheter',attr:'weaponskills',transl:'weapon-skill'}) 
+      //-+box({headerObj:{name:'vapenfärdigheter',attr:'weaponskills','data-i18n':'weapon-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          +fieldset({name:'weaponskills'})
             +collapse
             //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
@@ -32,7 +33,8 @@ mixin weaponskills
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
                   span.input-span.input-2
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
-      +box({headerObj:{name:'Stridsfärdigheter',attr:'combatskills','data-i18n':'combat-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+      +repeatingSkills({name:'Stridsfärdigheter',attr:'combatskills',transl:'combat-skill'}) 
+      //-+box({headerObj:{name:'Stridsfärdigheter',attr:'combatskills','data-i18n':'combat-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          +fieldset({name:'combatskills'})
             +collapse
             //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
@@ -64,7 +66,8 @@ mixin weaponskills
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
                   span.input-span.input-2
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
-      +box({headerObj:{name:'vapengrupper',attr:'weapontypes','data-i18n':'weapon-types'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+      +listSkills({namn:'vapengrupper',attr:'weapontypes',transl:'weapon-types',array:spine.weaponskills})
+      //-+box({headerObj:{name:'vapengrupper',attr:'weapontypes','data-i18n':'weapon-types'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          each skill in spine.weaponskills
             - geAbbr = skill.base.slice(0,3).toUpperCase();
             - name =  skill.name + ' (' + geAbbr + ')';

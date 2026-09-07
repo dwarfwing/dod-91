@@ -1,7 +1,8 @@
 mixin professionskills 
-   .section-professionskills
+   .section-skills__profession.section-professionskills
       //-each skill in spine.secondaryskills
-      +box({headerObj:{name:'yrkesfärdigheter',attr:'yrkesfardigheter','data-i18n':'profession-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})      
+      +numberedSkills({name:'yrkesfärdigheter',attr:'yrkes',transl:'profession-skills',max:12})
+      //-+box({headerObj:{name:'yrkesfärdigheter',attr:'yrkesfardigheter','data-i18n':'profession-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})      
          each skill in [1,2,3,4,5,6,7,8,9,10,11,12]
             .skill-row.collapse-container
                +checkbox({name: 'collapse-profskill-'+skill,class:'collapse',value:1})
@@ -86,7 +87,7 @@ mixin professionskills
                         +input({type: 'number', name: 'skill_mod', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
                         //-span.input-span.input-2
                         +input({type: 'number', name: 'skill_exp', class:'label-input-input'}).input-span.input-2
-+scss.
+//-+scss.
    .section-professionskills, .section-secondaryskills {
       border-bottom: 1px solid var(--border-color);
       :is(.expanded,.collapsed) {

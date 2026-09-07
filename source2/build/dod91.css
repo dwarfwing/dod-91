@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Material+Icons|Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Arimo|PT+Serif|Adgasima|Martel+Sans|Material+Symbols+Outlined|Material+Icons|Material+Icons+Outlined|&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Arimo|PT+Serif|Adgasima|Martel+Sans|Material+Symbols+Outlined|Material+Symbols+Rounded|Material+Icons|Material+Icons+Outlined|&display=swap");
 html {
   font-size: 12px;
 }
@@ -168,6 +168,7 @@ body {
   --bg-color: #fd5232;
   --bg-color: #fc562c;
   --bg-color2: #e3e3e3;
+  --bg-color3: #fefefe;
   --bg-color9: rgb(31, 31, 31);
   --bg-color0: rgb(255, 255, 255);
   --font-family: Helvetica, "Arimo", Sans-serif;
@@ -180,7 +181,7 @@ body {
   --fail-bg-color: #dcacac;
   --text-transform: capitalize;
   --border-color: #222;
-  --border-size: 3px;
+  --border-size: 2px;
   --border-size-2x: 6px;
   --fill-color: #505050;
   --fill-color-none: transparent;
@@ -1214,13 +1215,29 @@ body .ui-dialog .tab-content .charsheet #main * {
   box-sizing: border-box;
 }
 body .ui-dialog .tab-content .charsheet #main .logo {
-  width: 100%;
   height: 5rem;
   background-image: var(--logo-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 30rem 4rem;
   border-block: 2px solid black;
+}
+body .ui-dialog .tab-content .charsheet #main .roll-alternatives {
+  display: none;
+  position: absolute;
+}
+body .ui-dialog .tab-content .charsheet #main .roll-alternatives label {
+  font-family: "Material Symbols Rounded";
+  font-size: 120%;
+  border-radius: 30%;
+  aspect-ratio: 1/1;
+  height: 1.75rem;
+  justify-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+body .ui-dialog .tab-content .charsheet #main .roll-alternatives input:checked + label {
+  backdrop-filter: brightness(0.675);
 }
 body .ui-dialog .tab-content .charsheet #main .roll {
   display: block;
@@ -1257,7 +1274,10 @@ body .ui-dialog .tab-content .charsheet #main .roll button {
 body .ui-dialog .tab-content .charsheet #main .roll button[type=action] {
   display: none;
 }
-body .ui-dialog .tab-content .charsheet h1, body .ui-dialog .tab-content .charsheet h2, body .ui-dialog .tab-content .charsheet .input-label:not(.stacked).large > [name], body .ui-dialog .tab-content .charsheet span, body .ui-dialog .tab-content .charsheet label, body .ui-dialog .tab-content .charsheet li, body .ui-dialog .tab-content .charsheet button, body .ui-dialog .tab-content .charsheet input[type=text].caps-input, body .ui-dialog .tab-content .charsheet select, body .ui-dialog .tab-content .charsheet option {
+body .ui-dialog .tab-content .charsheet .display-roll-alternatives:checked ~ #main .roll-alternatives {
+  display: flex;
+}
+body .ui-dialog .tab-content .charsheet p, body .ui-dialog .tab-content .charsheet h1, body .ui-dialog .tab-content .charsheet h2, body .ui-dialog .tab-content .charsheet .input-label:not(.stacked).large > [name], body .ui-dialog .tab-content .charsheet span, body .ui-dialog .tab-content .charsheet label, body .ui-dialog .tab-content .charsheet li, body .ui-dialog .tab-content .charsheet button, body .ui-dialog .tab-content .charsheet input[type=text].caps-input, body .ui-dialog .tab-content .charsheet select, body .ui-dialog .tab-content .charsheet option {
   font-family: var(--font-family);
   font-size: var(--font-size);
   color: var(--font-color);
@@ -1316,7 +1336,7 @@ body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc 
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs {
   width: 100%;
   justify-content: space-evenly;
-  border: 3px solid var(--border-color);
+  border: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header {
   width: 100%;
@@ -1331,6 +1351,7 @@ body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc 
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list li {
   width: 100%;
   margin: 0;
+  height: 2.75rem;
 }
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list button {
   font-family: unset;
@@ -1342,6 +1363,9 @@ body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc 
   justify-self: center;
   text-align: center;
   background-color: var(--bg-color2);
+  line-height: 1.25rem;
+  height: 100%;
+  align-content: center;
 }
 body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list button.k-active-button {
   background: var(--bg-color);
@@ -1367,7 +1391,7 @@ body .ui-dialog .tab-content .charsheet .label-input {
   display: flex;
   justify-content: stretch;
   position: relative;
-  background-color: #EEE;
+  background-color: var(--bg-color2);
   justify-content: space-between;
 }
 body .ui-dialog .tab-content .charsheet .label-input label {
@@ -1452,15 +1476,137 @@ body .ui-dialog .tab-content .charsheet .fill-left label {
   width: 0.5rem;
   aspect-ratio: 1/1;
 }
+body .ui-dialog .tab-content .charsheet .repcontainer .repitem .itemcontrol {
+  z-index: 10000;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input {
+  display: grid;
+  grid-template-columns: 1fr 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input button span {
+  border: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input button[type=action] {
+  display: hidden;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 {
+  position: relative;
+  grid-template-columns: 1fr 3rem 3rem 3rem;
+  height: 100%;
+  border-bottom: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark {
+  display: none;
+  position: absolute;
+  top: 0.2rem;
+  right: 0;
+  max-width: 0.2rem;
+  max-height: 0.2rem;
+  height: 0.2rem;
+  width: 0.2rem;
+  padding: 0;
+  min-width: 0.6rem;
+  min-height: 0.6rem;
+  transform: rotate(45deg);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark.improve-mark-perfect {
+  top: 50%;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark:checked {
+  display: flex;
+  background-color: var(--fill-color);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark:checked:before {
+  content: "";
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5:hover input[type=checkbox] {
+  display: flex;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 button[type=action] {
+  display: hidden;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] input.exp-toggle {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] :is(.expanded, .collapsed) > .label-input {
+  grid-template-columns: 1fr 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] :is(.expanded, .collapsed) button span {
+  padding-left: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .collapse {
+  z-index: 1000;
+  top: -0.25rem;
+  right: 9rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row {
+  border-bottom: 1px solid var(--border-color);
+  min-width: 100%;
+  line-height: var(--line-height);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row > :is(.expanded, .collapsed) {
+  height: var(--line-height);
+  min-width: 100%;
+  border-bottom: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row label, body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button {
+  border-right: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row input[type=number] {
+  border-left: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button[type=action] {
+  min-width: 100%;
+  border-right: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button[type=action] span {
+  min-width: 100%;
+  border-right: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded option {
+  text-align: left;
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select {
+  width: 100%;
+  height: unset;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select:open {
+  max-height: 6rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select + input[type=checkbox] + input[type=text] {
+  display: none;
+  height: auto;
+  width: 100%;
+  border-bottom: 1px dashed black;
+  margin-bottom: 2px;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select + input[type=checkbox]:checked + input[type=text] {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem > .collapse {
+  right: 9rem;
+  z-index: 9000;
+  top: -0.25rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover input.exp-toggle {
+  display: flex;
+  position: absolute;
+  left: -1rem;
+  width: 1rem;
+}
 body .ui-dialog .tab-content .charsheet .box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   border: 0;
-  border: 3px solid var(--border-color);
+  border: var(--border-size) solid var(--border-color);
   box-sizing: border-box;
   position: relative;
-  background-color: var(--background-color-box);
+  background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .box.topless, body .ui-dialog .tab-content .charsheet .box.no-top-border {
   border-top: 0;
@@ -1470,7 +1616,8 @@ body .ui-dialog .tab-content .charsheet .box.bottomless {
 }
 body .ui-dialog .tab-content .charsheet .box .box-header {
   width: 100%;
-  border-bottom: 3px solid var(--border-color);
+  border-bottom: var(--border-size) solid var(--border-color);
+  background-color: var(--background-color-box);
   display: flex;
   flex-direction: row;
 }
@@ -1567,7 +1714,7 @@ body .ui-dialog .tab-content .charsheet .label-input {
   border-bottom: 1px solid var(--border-color);
   align-content: stretch;
   position: relative;
-  background-color: #EEE;
+  background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .label-input.text-field label {
   width: auto;
@@ -1763,7 +1910,7 @@ body .ui-dialog .tab-content .charsheet .section-topframe {
   align-content: top;
   display: grid;
   grid-template-columns: 1fr 3fr;
-  border: 3px solid var(--border-color);
+  border: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .size-attributes .attribute-row {
   grid-template-columns: 1fr 5rem;
@@ -1846,7 +1993,12 @@ body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row butto
 body .ui-dialog .tab-content .charsheet .section-info {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-areas: "info info info info" "stats app app app" "stats hp sp psy";
+  grid-template-areas: "info info info info" "stats app app sp" "stats hp psy sp";
+  align-content: stretch;
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: 3fr 3fr 1fr 3fr;
+  grid-template-areas: "info info info stats" "app app app stats" "hp psy sp sp";
   align-content: stretch;
   align-items: stretch;
 }
@@ -1870,6 +2022,7 @@ body .ui-dialog .tab-content .charsheet .section-info .box-tertiary span.input-s
 body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character_name span, body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character-name span {
   height: var(--line-height);
   width: 100%;
+  min-width: 100%;
 }
 body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character_name span input, body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character-name span input {
   font-weight: bold;
@@ -1891,11 +2044,14 @@ body .ui-dialog .tab-content .charsheet .section-info .hp-points {
 body .ui-dialog .tab-content .charsheet .section-info .sp-points {
   grid-area: sp;
 }
+body .ui-dialog .tab-content .charsheet .section-info .sp-points .fill-left label.fill-left__label {
+  width: 6%;
+}
 body .ui-dialog .tab-content .charsheet .section-info .psy-points {
   grid-area: psy;
 }
 body .ui-dialog .tab-content .charsheet .section-info .points {
-  background-color: white;
+  background-color: var(--bg-color3);
 }
 body .ui-dialog .tab-content .charsheet .section-info .points .input-label {
   background-color: var(--bg-color);
@@ -1953,30 +2109,6 @@ body .ui-dialog .tab-content .charsheet .section-info .points .fill-left input.c
 body .ui-dialog .tab-content .charsheet .section-info .points .fill-left input.cap:checked + label ~ :is(input, label) {
   display: none;
 }
-body .ui-dialog .tab-content .charsheet .section-skill .label-input {
-  grid-template-columns: 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-skill .label-input button span {
-  border: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-skill .label-input button[type=action] {
-  display: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-skill input.exp-toggle {
-  display: none;
-}
-body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover {
-  position: relative;
-}
-body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover input.exp-toggle {
-  display: flex;
-  position: absolute;
-  left: -1rem;
-  width: 1rem;
-}
-body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover {
-  border-bottom: 1px solid var(--border-color);
-}
 body .ui-dialog .tab-content .charsheet .section-skill .label-input.input-count-2 {
   grid-template-columns: 1fr 0 3rem 3rem;
 }
@@ -2024,95 +2156,6 @@ body .ui-dialog .tab-content .charsheet .section-skill .repitem:hover input.exp-
   position: absolute;
   left: -1rem;
   width: 1rem;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills, body .ui-dialog .tab-content .charsheet .section-secondaryskills {
-  border-bottom: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills :is(.expanded, .collapsed) > .label-input, body .ui-dialog .tab-content .charsheet .section-secondaryskills :is(.expanded, .collapsed) > .label-input {
-  grid-template-columns: 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills :is(.expanded, .collapsed) button span, body .ui-dialog .tab-content .charsheet .section-secondaryskills :is(.expanded, .collapsed) button span {
-  padding-left: 0.25rem;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .collapse, body .ui-dialog .tab-content .charsheet .section-secondaryskills .collapse {
-  z-index: 1000;
-  top: -0.25rem;
-  right: 9rem;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row {
-  border-bottom: 1px solid var(--border-color);
-  min-width: 100%;
-  line-height: var(--line-height);
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row > :is(.expanded, .collapsed) {
-  height: var(--line-height);
-  min-width: 100%;
-  border-bottom: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row label, body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row label, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row button {
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row input[type=number], body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row input[type=number] {
-  border-left: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button[type=action], body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row button[type=action] {
-  min-width: 100%;
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .skill-row button[type=action] span, body .ui-dialog .tab-content .charsheet .section-secondaryskills .skill-row button[type=action] span {
-  min-width: 100%;
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded option, body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded option {
-  text-align: left;
-  width: 100%;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select, body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select {
-  width: 100%;
-  height: unset;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select:open, body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select:open {
-  max-height: 6rem;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select + input[type=checkbox] + input[type=text], body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox] + input[type=text] {
-  display: none;
-  height: auto;
-  width: 100%;
-  border-bottom: 1px dashed black;
-  margin-bottom: 2px;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills .expanded select + input[type=checkbox]:checked + input[type=text], body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox]:checked + input[type=text] {
-  display: block;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 {
-  position: relative;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox], body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox] {
-  display: none;
-  position: absolute;
-  top: 0.2rem;
-  right: 0;
-  max-width: 0.2rem;
-  max-height: 0.2rem;
-  height: 0.2rem;
-  width: 0.2rem;
-  padding: 0;
-  min-width: 0.6rem;
-  min-height: 0.6rem;
-  transform: rotate(45deg);
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox].improve-mark-perfect, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox].improve-mark-perfect {
-  top: 50%;
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox]:checked, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox]:checked {
-  display: flex;
-  background-color: var(--fill-color);
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0 input[type=checkbox]:checked:before, body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox]:checked:before {
-  content: "";
-}
-body .ui-dialog .tab-content .charsheet .section-professionskills span.input-span.input-0:hover input[type=checkbox], body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0:hover input[type=checkbox] {
-  display: flex;
 }
 body .ui-dialog .tab-content .charsheet .section-languages {
   border-bottom: 1px solid var(--border-color);
@@ -2199,72 +2242,6 @@ body .ui-dialog .tab-content .charsheet .section-languages span.input-span.input
   content: "";
 }
 body .ui-dialog .tab-content .charsheet .section-languages span.input-span.input-0:hover input[type=checkbox] {
-  display: flex;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills {
-  border-bottom: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills :is(.expanded, .collapsed) > .label-input {
-  grid-template-columns: 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills :is(.expanded, .collapsed) button span {
-  padding-left: 0.25rem;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded option {
-  text-align: left;
-  width: 100%;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select {
-  width: 100%;
-  height: unset;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select:open {
-  max-height: 6rem;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox] + input[type=text] {
-  display: none;
-  height: auto;
-  width: 100%;
-  border-bottom: 1px dashed black;
-  margin-bottom: 2px;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .expanded select + input[type=checkbox]:checked + input[type=text] {
-  display: block;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .label-input.input-count-3 span {
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills .input-0, body .ui-dialog .tab-content .charsheet .section-secondaryskills .input-1 {
-  border-right: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 {
-  position: relative;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox] {
-  display: none;
-  position: absolute;
-  top: 0.2rem;
-  right: 0;
-  max-width: 0.2rem;
-  max-height: 0.2rem;
-  height: 0.2rem;
-  width: 0.2rem;
-  padding: 0;
-  min-width: 0.6rem;
-  min-height: 0.6rem;
-  transform: rotate(45deg);
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox].improve-mark-perfect {
-  top: 50%;
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox]:checked {
-  display: flex;
-  background-color: var(--fill-color);
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0 input[type=checkbox]:checked:before {
-  content: "";
-}
-body .ui-dialog .tab-content .charsheet .section-secondaryskills span.input-span.input-0:hover input[type=checkbox] {
   display: flex;
 }
 body .ui-dialog .tab-content .charsheet .section-customroll .customroll {
@@ -2506,9 +2483,9 @@ body .ui-dialog .tab-content .charsheet .section-hitareas {
   grid-template-columns: repeat(14, 1fr);
   row-gap: 1rem;
   column-gap: 2rem;
-  background-color: var(--bg-color2);
+  background-color: var(--bg-color3);
   padding: 1rem;
-  border: 3px solid var(--border-color);
+  border: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(1) {
   grid-row-start: 1;
@@ -2609,7 +2586,7 @@ body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas-
   padding-bottom: 0.25rem;
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-kp, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-sp {
-  border-left: 3px solid var(--border-color);
+  border-left: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left {
   width: 100%;
@@ -3349,9 +3326,6 @@ body .ui-dialog .tab-content .charsheet .tab-skills {
   display: grid;
   grid-template-columns: 33% 34% 33%;
 }
-body .ui-dialog .tab-content .charsheet .tab-skills > div {
-  border: 2px solid var(--border-color);
-}
 body .ui-dialog .tab-content .charsheet .tab-combat {
   display: grid;
   grid-template-columns: 65% 35%;
@@ -3373,7 +3347,7 @@ body .ui-dialog .tab-content .charsheet .tab-magic {
 body .ui-dialog .tab-content .charsheet .tab-gear {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "encumb encumb encumb" "gear mount money" "gear mount stash";
+  grid-template-areas: "gear mount money" "gear mount stash";
 }
 body .ui-dialog .tab-content .charsheet .tab-gear .section-encumbrance {
   grid-area: encumb;
@@ -3421,6 +3395,66 @@ body .ui-dialog .tab-content .charsheet .tab-animal .section-info {
 body .ui-dialog .tab-content .charsheet .tab-animal .section-info .box-info .label-input {
   width: 50%;
   box-sizing: border-box;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery p {
+  text-transform: none;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .box {
+  height: 100%;
+  align-content: flex-start;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .box-content {
+  background-color: var(--bg-color2);
+  padding: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .box-content button {
+  justify-content: center;
+  backdrop-filter: brightness(0.75);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row {
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed {
+  padding: 0;
+  display: grid;
+  grid-template-columns: 100%;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded *, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed * {
+  font-family: var(--font-family);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded .header, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed .header {
+  text-align: center;
+  justify-content: center;
+  background-color: var(--bg-color2);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded .input-label span:after, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed .input-label span:after {
+  content: ": ";
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded > *, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed > * {
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  text-transform: none;
+  border-radius: 0;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded .adaptive > *, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed .adaptive > * {
+  line-height: 1.5rem;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .repcontainer {
+  margin-bottom: 1.75rem;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .repcontrol {
+  bottom: 0;
+  position: absolute;
+}
+body .ui-dialog .tab-content .charsheet .section-settings .box > * {
+  width: 100%;
+  padding-inline: 0.5rem;
+  justify-content: space-between;
 }
 body.sheet-darkmode {
   --backColor:var(--dm-backColor);

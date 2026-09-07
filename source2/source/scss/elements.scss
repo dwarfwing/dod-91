@@ -17,7 +17,7 @@
       display: flex; 
       justify-content: stretch; 
       position: relative; 
-      background-color: #EEE; 
+      background-color: var(--bg-color2); 
       justify-content: space-between;
       label {
          text-indent: var(--half-gap);
@@ -109,6 +109,13 @@
       label {
          width: 0.5rem; 
          aspect-ratio: 1 / 1; 
+      }
+   }
+   .repcontainer {
+      .repitem {
+         .itemcontrol {
+            z-index: 10000; 
+         }
       }
    }
 }

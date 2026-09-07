@@ -27,6 +27,7 @@ include ./views/_index.pug
 +action({ name:'rolldamage-1D6', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
 
 +input({name:'target_area_die',type:'1D6',class:'hidden'})
++input({name:'tarningsslag alternativ',type:'checkbox',value:1,class:'hidden display-roll-alternatives'})
 //- Now, for our actual sheet. We'll wrap this in a main element and give it an ID of main.
 main#main
   .logo
@@ -51,7 +52,19 @@ main#main
       +option({value:'100'})
         | T100
     +roller({name:'custom dice roll',class:'custom-roller',trigger:{triggeredFuncs:['customDiceRoll']}})
-
+  .roll-alternatives
+    +radio({name:'whisper',id:'toggle-roll-viz-normal',value:' ',class:'hidden'})
+    label(for='toggle-roll-viz-normal',data-i18n-title='roll-normal-title')
+      | visibility 
+    +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/w gm',class:'hidden'})
+    label(for='toggle-roll-viz-whisper',data-i18n-title='roll-whispering-title')
+      | visibility_lock 
+    +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/sr',class:'hidden'})
+    label(for='toggle-roll-viz-whisper',data-i18n-title='roll-secret-title')
+      | visibility_off 
+    +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/ssr',class:'hidden'})
+    label(for='toggle-roll-viz-whisper',data-i18n-title='roll-super-secret-title')
+      | disabled_visible 
 
   +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap
     +tab({name:'pc',container:'article',button:{content:'Person_4',class:'tab-button',title:'PC','data-i18n-title':'pc-caps'}})
@@ -68,7 +81,9 @@ main#main
           +gear-tab
         +tab({name:'animal',container:'div',button:{content:'Djur',class:'tab-button',title:'animal','data-i18n-title':'animal'}})
           +animal-tab
-        +tab({name:'notes',container:'div',button:{content:'Anteckningar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
+        +tab({name:'recovery',container:'div',button:{content:'Vila & Skador',class:'tab-button',title:'recovery','data-i18n-title':'recovery'}})
+          +recovery-tab
+        //-+tab({name:'notes',container:'div',button:{content:'Anteckningar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
           +notes-tab
     //-+tab({name:'npc',container:'article',button:{content:'Person_2',class:'tab-button',title:'NPC','data-i18n-title':'npc-caps'}})
       include ./views/npc/_index.pug
@@ -76,7 +91,9 @@ main#main
       include ./views/monster/_index.pug
     //-+tab({name:'vehicle',container:'article',button:{content:'directions_car',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})
       include ./views/vehicle/_index.pug
-    //-+tab({name:'settings',container:'article',button:{content:'Settings',class:'tab-button',title:'Settings','data-i18n-title':'settings'}})
+    +tab({name:'animal',container:'article',button:{content:'chess_knight',class:'tab-button',title:'Djur','data-i18n-title':'animal'}})
+      +animal-tab
+    +tab({name:'settings',container:'article',button:{content:'Settings',class:'tab-button',title:'Settings','data-i18n-title':'settings'}})
       include ./views/settings/_index.pug
     //- Add additional tabs as needed
   //-.tabs.tabs--dod91.flex-box.tiny-gap

@@ -23,10 +23,22 @@ mixin info
                labelObj: {class: 'label-input-label',attr:info.attr},
                inputObj: inputObjs,
             })
-         +action({name:'sleep'})
+         +label-inputs({
+            label: 'Initiativ',
+            divObj: {class:'initiative'},
+            labelObj: {class: 'label-input-label',name:'init',attr:'init',type:'roller',rollType:'init'},
+            inputObj: [
+               { name:'initmod',type:'number',value:0 }
+            ],
+         })
+         +encumbrance 
+         //-+action({name:'initiative',trigger:{triggeredFuncs:['rollInit']}})
+            +span({'data-i18n':'initiative'}) 
+               | Initiativ
+         //-+action({name:'sleep'})
             +span({'data-i18n':'sleep'}) 
                | Sova 7h
-         +action({name:'rest'})
+         //-+action({name:'rest'})
             +span({'data-i18n':'rnr'}) 
                | Vila 7d
       +box({classes:'appearance headless'})
@@ -93,10 +105,19 @@ mixin info
       display: grid; 
       grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-template-areas: "info info info info"
-                           "stats app app app"
-                           "stats hp sp psy";
+                           "stats app app sp"
+                           "stats hp psy sp";
       align-content: stretch;
       align-items: stretch;
+      // TESTING
+          display: grid;
+      grid-template-columns: 3fr 3fr 1fr 3fr;
+      grid-template-areas: "info info info stats"
+      "app app app stats"
+      "hp psy sp sp";
+      align-content: stretch;
+      align-items: stretch;
+
       .box-info { 
          grid-area: info;
          align-content: stretch; 
@@ -118,6 +139,7 @@ mixin info
          span {
             height: var(--line-height);
             width: 100%; 
+            min-width: 100%; 
             input {
                font-weight: bold; 
                font-size: 120%; 
@@ -137,10 +159,15 @@ mixin info
          }
       }
       .hp-points { grid-area: hp; }
-      .sp-points { grid-area: sp; }
+      .sp-points { 
+         grid-area: sp;
+         .fill-left label.fill-left__label {
+            width: 6%; 
+         } 
+         }
       .psy-points { grid-area: psy; }
       .points {
-         background-color: white; 
+         background-color: var(--bg-color3); 
          .input-label {
             background-color: var(--bg-color);
             width: 100%;

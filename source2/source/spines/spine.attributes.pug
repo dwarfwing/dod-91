@@ -68,7 +68,7 @@
          value: '',
          mod: true,
          trigger: 'calcEncumbranceMax',
-         classes: '',
+         classes: 'currMax',
       },
       {
          name: 'bärförmåga max',
@@ -90,7 +90,7 @@
          value: '',
          mod: true,
          trigger: '',
-         classes: '',
+         classes: 'currMax',
       },
       {
          name: 'Förflyttning Max',
@@ -110,7 +110,7 @@
          i18n: 'heropoints',
          type: 'number',
          value: '',
-         classes: '',
+         classes: 'currMax',
       },
       {
          name: 'Hjältepoäng Max',
@@ -126,42 +126,45 @@
       {
          name: 'styrka',
          abbr: 'sty',
-         attr: 'sty',
+         attr: 'djur_sty',
          value: '',
-         trigger: `['calcDamageBonus','calcHealthpoints','calcEncumbranceMax']`,
       },
       {
          name: 'storlek',
          abbr: 'sto',
-         attr: 'sto',
+         attr: 'djur_sto',
          value: '',
-         trigger: `['calcDamageBonus','calcMovement]`,
+         affects: ['djur_kroppspoang_max'],
       },
       {
          name: 'fysik',
          abbr: 'fys',
-         attr: 'fys',
+         attr: 'djur_fys',
          value: '',
-         trigger: `['calcHealthpoints']`,
+         affects: ['djur_kroppspoang_max','djur_smartpoang_max'],
       },
       {
          name: 'smidighet',
          abbr: 'smi',
-         attr: 'smi',
+         attr: 'djur_smi',
          value: '',         
-         trigger: `['calcInitiativeBonus','calcMovement']`,
       },
       {
          name: 'intelligens',
          abbr: 'int',
-         attr: 'int',
+         attr: 'djur_int',
          value: '',
       },
       {
          name: 'psyke',
          abbr: 'psy',
-         attr: 'psy',
+         attr: 'djur_psy',
          value: '',
       },
+   ]   
+   spine.animialtertiary = [
+      { name: 'skadebonus', attr: 'djur_sb', type: 'text', classes: '', placeholder: ''},
+      { name: 'naturligt skydd', attr: 'djur_armor', type: 'text', classes: '', placeholder: ''},
+      { name: 'förflyttning', attr: 'djur_movement', type: 'text', classes: 'currMax', placeholder: 'currMax'},
+      { name: 'bärförmåga', attr: 'djur_barformaga', i18n: 'carrycap-animal', type: 'number', classes: 'currMax', placeholder: ''},
    ]
-   

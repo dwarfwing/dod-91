@@ -50,7 +50,7 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
       if input.type == 'textarea'
         - input.placeholder = label.charAt(0).toUpperCase()+label.slice(1);
       - const textareaclass = input.type == 'textarea' ? 'input-span-textarea' : ''
-      span.input-span&attributes(spanObj)(class=textareaclass+' input-'+index)
+      if input.nospan 
         if input.type == 'textarea'
           //-+adaptiveTextarea({name: input.name})&attributes(inputObj) 
           +adaptiveTextarea(input).input-span-adaptive
@@ -60,6 +60,17 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
           +number(input)
         else  
           +input(input)
+      else 
+        span.input-span&attributes(spanObj)(class=textareaclass+' input-'+index)
+          if input.type == 'textarea'
+            //-+adaptiveTextarea({name: input.name})&attributes(inputObj) 
+            +adaptiveTextarea(input).input-span-adaptive
+          else if input.type == 'button'
+            +action(input)
+          else if input.type == 'number'
+            +number(input)
+          else  
+            +input(input)
 +scss('sheet').
     .label-input {
       width: 100%;
@@ -69,7 +80,7 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
       border-bottom: 1px solid var(--border-color);
       align-content: stretch;
       position: relative; 
-      background-color: #EEE; 
+      background-color: var(--bg-color2); 
       &.text-field {         
          label {
             width: auto;

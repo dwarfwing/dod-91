@@ -134,5 +134,11 @@
    "herb-knowledge":"Örtkunskap",
    "survival":"Överlevnad",
    "pain": "Smärta",
-   "mount": "Ridddjur"
+   "mount": "Ridddjur",
+   "roll-alternatives": "Visa alternativ för tärningsslag",
+   "show-painpoints": "Använd smärtpoäng",
+   "roll-normal-title": "Slå tärning normalt. Alla andra spelare och SL kommer se resultatet. ",
+   "roll-whispering-title": "Slå tärning viskat till SL. Alla andra spelare kommer inte se något, endast du och SL kommer se resultatet. ",
+   "roll-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser att du skickat något till SL, men bara SL kommer se resultatet. ",
+   "roll-super-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser INTE att du skickat något till SL, och bara SL kommer se resultatet. "
 }

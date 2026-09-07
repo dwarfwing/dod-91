@@ -8,7 +8,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       rollObj.rollStr = `&{template:dod91} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{roll-name=${rollObj.name}}}`;
       if (rollObj.abilityDice && rollObj.abilityDice != '') {
          //k.log(`Ability roll ${rollObj.abilityDice}`)
-         rollObj.rollStr += ` {{roll1=[[${rollObj.abilityDice}]]}}`;
+         rollObj.rollStr += ` {{roll1=[[${rollObj.abilityDice}]]}} {{roll2=[[1d20cs<1cf>20]]}}`;
       /* } else if (rollObj.target) {
          const rollCrit = Math.floor(rollObj.target / 10)||0;
          const climit = rollObj.carryLimit ? rollObj.carryLimit : '';
@@ -48,38 +48,57 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
 
    k.log(`Executed roll : ${JSON.stringify(roll)}`);
 
-   // Success, Perfect and Improvement
-   let perfectStr = '';
-   if ( rollObj.target && rollObj.target != '') {
-      //k.log(`Perfect roll!`)
-      success = roll.results.roll1.result <= parseInt(rollObj.target);
-      perfect = roll.results.roll1.result < (rollObj.target / 10)||0; 
-      k.log(`Roll success ${success} and roll perfect ${perfect}`);
-      perfectStr = perfect && !rollObj.abilitySkillRoll ? `+1D6[${getTranslationByKey('perfect-roll')}]` : '';
-      computeObj.perfectRoll = perfect ? 1 : 0; 
-      const trainedWeaponSkills = ['bodybombing','energy_weapons','knifefighting','sabrefencing','explosives','martial_arts','heavy_weapons','rapierfencing']; 
-      k.log(`Is ${rollObj.skillAttr} weapon skillimprovement? ${ trainedWeaponSkills.includes(rollObj.skillAttr) }`);
-      if ( success && !perfect ) {
-         k.log(`${rollObj.skillAttr}_improve`);
-         if ( trainedWeaponSkills.includes(rollObj.skillAttr) ){
-            weaponTrainedSkillImprove({rollObj,attributes,sections,perfect:false});
-         } else {
-            attributes[`${rollObj.skillAttr}_improve`] = 1; 
-         }
-      } else if ( perfect ) {
-         k.log(`${rollObj.skillAttr}_improve_perfect`);
-         if ( trainedWeaponSkills.includes(rollObj.skillAttr) ){
-            weaponTrainedSkillImprove({rollObj,attributes,sections,perfect:true});
-         } else {
-            attributes[`${rollObj.skillAttr}_improve_perfect`] = 1; 
-         }
-      }
-      attributes.set();
-   }
-
    if ( roll?.results?.roll1?.result ) {
       //k.log(`Roll result is ${roll.results.roll1.result}`);
-      rollObj.result = roll.results.roll1.result; 
+      rollObj.result = parseInt(roll.results.roll1.result); 
+   }
+   if ( roll?.results?.roll2?.result ) {
+      //k.log(`Roll result is ${roll.results.roll1.result}`);
+      rollObj.result2 = parseInt(roll.results.roll2.result); 
+   }
+   
+   // Success, Perfect, Flounder, Diff and Improvement
+   let perfectStr = '', success = 0, perfect = 0, flounder = 0;
+   rollObj.diff = rollObj.target - rollObj.result;
+   k.log(` --- Rolled ${rollObj.result} and ${rollObj.result2} for skill {${rollObj.skillAttr}} with CL ${rollObj.target}. D3 rolled ${roll.results.rolld3.result}`); 
+   if ( rollObj.target && rollObj.target != '' && rollObj.result2  ) {
+      //k.log(`Perfect roll!`)
+      if ( rollObj.result <= rollObj.target ) { success = 1; k.log(`Success!`); } 
+      else if ( rollObj.rollSkill > 0 && rollObj.result == 1 ) { success = 1; k.log(`Success by rolling 1 and FV is 1 or over!`); } 
+      else if ( rollObj.target < 1 || rollObj.rollSKill == 0 && rollObj.result == 1 && rollObj.result2 == 1 ) { success = 1; k.log(`Success by rolling 2x 1 and FV is 0 and target <= 0!`); }
+      
+      if ( rollObj.target < 1 ) {
+         if ( rollObj.result == 20 ) { flounder = 1; success = 0, perfect = 0; k.log(`Floundered roll!`); }          
+      }
+      else if ( rollObj.target >= 1 && rollObj.target < 20 ) {
+         if ( rollObj.result == 1 && rollObj.result2 <= rollObj.rollSkill ) { perfect = 1; k.log(`Perfect roll (rolled 1 and ${rollObj.result2}!`); }
+         if ( rollObj.result == 20 && rollObj.result2 > rollObj.rollSkill ) { flounder = 1; success = 0, perfect = 0; k.log(`Floundered roll!`); }
+
+      } else if ( rollObj.target >= 20 ) {
+         if ( rollObj.result == 1 || ( rollObj.result == 2 && rollObj.result2 <= rollObj.rollSkill ) ) { perfect = 1; k.log(`Perfect roll!`); }
+         if ( rollObj.result == 20 && rollObj.result2 == 20 ) { flounder = 1; success = 0, perfect = 0; k.log(`Floundered roll!`); }
+      }
+      
+      k.log(`Roll success ${!!success}, roll perfect ${!!perfect}, floundered ${!!flounder}`);
+      //perfectStr = perfect && !rollObj.abilitySkillRoll ? `+1D6[${getTranslationByKey('perfect-roll')}]` : '';
+      computeObj.perfectRoll = perfect ? 1 : 0; 
+
+      const impr = attributes[`${rollObj.skillAttr}_improve`],
+            impr_perf = attributes[`${rollObj.skillAttr}_improve_perfect`],   
+            erf = attributes[`${rollObj.skillAttr}_erf`];
+      k.log(`Improved = ${impr} (${impr != '1'}), improved perfect = ${impr_perf} (${impr_perf != '1'})`);
+      if ( success && !perfect && impr != '1' ) {
+         k.log(`Normal success and erf increase by 1`);
+         //k.log(`${rollObj.skillAttr}_improve`);
+         attributes[`${rollObj.skillAttr}_improve`] = 1; 
+         attributes[`${rollObj.skillAttr}_erf`] = erf + 1; 
+
+      } else if ( success && perfect && impr_perf != '1' ) {
+         k.log(`Perfect roll and erf increase by ${1 + roll.results.rolld3.result}`);
+         attributes[`${rollObj.skillAttr}_improve_perfect`] = 1; 
+         attributes[`${rollObj.skillAttr}_erf`] = erf + 1 + roll.results.rolld3.result;
+      }
+      attributes.set();
    }
 
    /* if (rollObj.damageDice && roll?.results?.damage?.result) {      
@@ -87,7 +106,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       computeObj.calcdamage = roll.results.damage.result < 1 ? 1 : 0;
       //k.log(`Calculated Damage: ${computeObj.calcdamage}`);
    } */ 
-   if ( rollObj.damageRoll || ( rollObj.damageDice && !rollObj.damageButton  ) ) { 
+   if ( rollObj.damageRoll || ( rollObj.damageDice && !rollObj.damageButton ) ) { 
       computeObj.calcdamage = roll.results.damage.result < 0 ? 1 : 0;     
       computeObj.damageTotal = computeObj.calcdamage == 0 ? roll?.results?.damage?.result : 0;
       console.log(`Damage total: ${computeObj.damageTotal}`);
@@ -113,7 +132,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       computeObj.damageRoll = k.escape(computeObj.damageRoll);
    }
 
-   if ( rollObj.resonance == 1 ) {
+   /* if ( rollObj.resonance == 1 ) {
       //k.log(`Result higher than target ${rollObj.target < rollObj.result}`);
       computeObj.abilityfail = rollObj.target < rollObj.result ? 1 : 0 ;
       computeObj.abilityfail = rollObj.result == 100 ? 2 : computeObj.abilityfail;  
@@ -122,7 +141,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
          attributes[`resonance`] += 1;
          attributes.set();  
       }
-   } 
+   }  */
 
    computeObj.hitareadetails = 0; 
    if ( rollObj.hitAreaDie && rollObj.hitAreaDie == '6' && !rollObj.vehicleHitarea ) {

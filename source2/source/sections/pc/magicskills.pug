@@ -1,10 +1,11 @@
 mixin magicskills 
-   .section-magicskills
+   .section-skills__magic.section-magicskills
       //-+modalButton({name:'testmodal'})
          span.mateirals-icon settings
       //-+modalWindow({name:'testmodal'})
          p This is a test modal!
-      +box({headerObj:{name:'magiskolor',attr:'magicschools','data-i18n':'magic-sschools'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+      +repeatingSkills({name:'magiskolor',attr:'magicschools',transl:'magic-sschools'}) 
+      //-+box({headerObj:{name:'magiskolor',attr:'magicschools','data-i18n':'magic-sschools'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          //-+customControlFieldset({name:'magicschools',trigger:{
             triggeredFuncs:['magicSchoolRemove'],
             addFuncs:['magicSchoolAdd']
@@ -40,7 +41,8 @@ mixin magicskills
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
                   span.input-span.input-2
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
-      +box({headerObj:{name:'magifärdigheter',attr:'magicskills','data-i18n':'magic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
+      +repeatingSkills({name:'magifärdigheter',attr:'magicskills',transl:'magic-skills'}) 
+      //-+box({headerObj:{name:'magifärdigheter',attr:'magicskills','data-i18n':'magic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          +fieldset({name:'magicskills'})
             +collapse
             //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
