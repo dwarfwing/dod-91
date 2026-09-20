@@ -41,7 +41,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          const rowID = k.generateRowID('repeating_secondaryskills',sections);
          //k.log(`Row ID = ${rowID}`);
          k.setAttrs({
-            [`${rowID}_skill_name`]: skillName,
+            [`${rowID}_name`]: skillName,
             [`${rowID}_fv`]: attributes[`sek_fard_${skill}_fv`]||0,
             [`${rowID}_erf`]: attributes[`sek_fard_${skill}_erf`]||0,
             [`${rowID}_collapse`]: 1,

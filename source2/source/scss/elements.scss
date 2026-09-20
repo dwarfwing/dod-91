@@ -11,6 +11,12 @@
       position: relative; 
       .collapse {
          position: absolute; 
+         & ~ .expanded {
+            background-color: var(--bg-color3);
+            .label-input {
+               background-color: var(--bg-color3);
+            }
+         } 
       }
    }
    .label-input {

@@ -54,18 +54,19 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
    k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
    const rollObj = {};
    const [section,rowID] = k.parseTriggerName(trigger.name);
-   //const row = section != undefined ? `${section}_${rowID}` : '';
+   k.log(`Section for trained skill roll: ${section}`);
 
    rollObj.skillAttr = section ? 
                      `${section}_${rowID}` : 
                      trigger.name.startsWith("repeating-besvarjelse") ?
                      trigger.name.replace(/-roll/,'').replaceAll(/-/g,'_').toLowerCase() : 
                      trigger.name.replace(/-action/,'').replace(/-/g,'_').toLowerCase();
-   
-   rollObj.name = attributes[`${rollObj.skillAttr}_text`];
+   k.log(`SKill attr in Roll Dice: ${rollObj.skillAttr}`);
+   /* rollObj.name = attributes[`${rollObj.skillAttr}_text`];
    if ( rollObj.name == 'custom-skill' ) {
-      rollObj.name = attributes[`${rollObj.skillAttr}_skill_name`];
-   }
+      rollObj.name = attributes[`${rollObj.skillAttr}_name`];
+   } */
+   rollObj.name = attributes[`${rollObj.skillAttr}_name`];
    k.log(`Skill attribute ${rollObj.skillAttr} is `+attributes[`${rollObj.skillAttr }_fv`]);
    rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
@@ -91,14 +92,10 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
                         trigger.name.startsWith("repeating-besvarjelse") ?
                         trigger.name.replace(/-roll/,'').replaceAll(/-/g,'_').toLowerCase() : 
                         trigger.name.replace(/-action/,'').toLowerCase();
-   k.log(`SPell attr: ${rollObj.skillAttr}`);
-   rollObj.name = attributes[`${rollObj.skillAttr}_skill_name`] != undefined ? 
-                  attributes[`${rollObj.skillAttr}_skill_name`] : 
-                  ( attributes[`${rollObj.skillAttr}_name`] != undefined ?
-                  attributes[`${rollObj.skillAttr}_name`] :
-                  attributes[`${rollObj.skillAttr}_text`] );
+   k.log(`Skill attr: ${rollObj.skillAttr}`);
+   rollObj.name = attributes[`${rollObj.skillAttr}_name`];
    rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
-   k.log(`SPell S value: ${rollObj.rollSkill}`);
+   k.log(`FV value: ${rollObj.rollSkill}`);
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
    
@@ -123,21 +120,20 @@ const rollRepeatingSpell = function ({trigger,attributes,sections,casc}) {
                         trigger.name.startsWith("repeating-besvarjelse") ?
                         trigger.name.replace(/-roll/,'').replaceAll(/-/g,'_').toLowerCase() : 
                         trigger.name.replace(/-action/,'').toLowerCase();
-   k.log(`SPell attr: ${rollObj.skillAttr}`);
-   rollObj.name = attributes[`${rollObj.skillAttr}_skill_name`] != undefined ? 
-                  attributes[`${rollObj.skillAttr}_skill_name`] : 
-                  ( attributes[`${rollObj.skillAttr}_name`] != undefined ?
-                  attributes[`${rollObj.skillAttr}_name`] :
-                  attributes[`${rollObj.skillAttr}_text`] );
-   rollObj.rollSkill = attributes[`${rollObj.skillAttr}_s`];
-   k.log(`SPell S value: ${rollObj.rollSkill}`);
-   rollObj.rollEffectMod = (parseInt(attributes[`${rollObj.skillAttr}_e`]||1) - 1) * 2;
+   k.log(`Spell attr: ${rollObj.skillAttr}`);
+   rollObj.name = attributes[`${rollObj.skillAttr}_name`];
+   rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
+   rollObj.spellLevel = parseInt(attributes[`${rollObj.skillAttr}_e`]||1); 
+   k.log(`Spell S value: ${rollObj.rollSkill}`);
+   rollObj.rollEffectMod = (rollObj.spellLevel - 1) * 2;
+   const effectModStr = rollObj.spellLevel == 1 ? `` : ` -${rollObj.rollEffectMod}[${k.getTranslationByKey('spell-level')}]`;
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
+   const rollModStr = parseInt(rollObj.rollSkillMod) != 0 ? ` ${rollObj.rollSkillMod}[${k.getTranslationByKey('skill-mod')}]` : ``;
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod - rollObj.rollEffectMod;
    
    rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} `;
 
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}${effectModStr}${rollModStr}]]}}`;
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -319,9 +315,9 @@ const rollAbility = function ({trigger,attributes,sections,casc}) {
    const rollObj = {};
    const [section,rowID] = k.parseTriggerName(trigger.name);
    const row = `${section}_${rowID}_`;
-   //k.log('Name is '+ attributes[`${row}skill_name`]);
+   //k.log('Name is '+ attributes[`${row}name`]);
    if ( attributes[`${row}roll`] == '' && attributes[`${row}damage`] == '' ) { return; }
-   rollObj.name = attributes[`${row}skill_name`];
+   rollObj.name = attributes[`${row}name`];
    rollObj.abilityDice = attributes[`${row}roll`].toString().replaceAll(/[Tt]/g,'D');
 
    //k.log(`Skill attribute is `+attributes[`${row}skill`]);
@@ -341,9 +337,9 @@ const rollAbilitySkill = async function ({trigger,attributes,sections,casc}) {
    const rollObj = {};
    const [section,rowID] = k.parseTriggerName(trigger.name);
    const row = `${section}_${rowID}_`;
-   //k.log('Name is '+ attributes[`${row}skill_name`]);
+   //k.log('Name is '+ attributes[`${row}name`]);
    rollObj.skillAttr = `${section}_${rowID}`;
-   rollObj.name = attributes[`${row}skill_name`];
+   rollObj.name = attributes[`${row}name`];
    rollObj.abilitySkillRoll = true; 
    rollObj.target = attributes[`${row}skill`] + (attributes[`${row}skill_mod`]||0);
    const rollCrit = Math.ceil(rollObj.target / 10) != 0 ? Math.ceil(rollObj.target / 10) : 1;

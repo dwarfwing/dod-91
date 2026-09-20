@@ -6,7 +6,7 @@ mixin abilities
             .collapsed
                .label-title
                   //-+action({name:'roll',trigger:{triggeredFuncs:['rollAbility']}})
-                  +span({name:'skill_name'})
+                  +span({name:'name'})
                +checkbox({name:'effect_display',value:1,class:'hidden display-toggle'})
                .ability-details
                   +span({name:'effect'})
@@ -48,7 +48,7 @@ mixin abilities
                         +span({name:'duration'})
             .expanded
                .label-title
-                  +span({name:'skill_name',class:'label-title'})
+                  +span({name:'name',class:'label-title'})
                each field in spine.abilityfields
                   - const iObj = [{type: field.type, name: field.attr, class:'label-input-input input-'+field.attr,trigger:{triggeredFuncs:[field.trigger]}}];
                   +label-inputs({

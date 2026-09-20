@@ -1,6 +1,6 @@
 mixin skills 
    .section-skills__primary.section-skill 
-      +listSkills({namn:'primära färdigheter',attr:'skills',transl:'basic-skills',array:spine.primaryskills})
+      +listSkills({namn:'primära färdigheter',attr:'skills',transl:'basic-skills',array:spine.primaryskills,cost:2})
       //-+box({headerObj:{name:'primära färdigheter',attr:'skills','data-i18n':'basic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          each skill in spine.primaryskills
             - geAbbr = skill.base.slice(0,3).toUpperCase();
@@ -37,7 +37,7 @@ mixin skills
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input.collapsed 
                      +action({name:'roll',trigger:{triggeredFuncs:['rollNaturalSkill']}})
-                        +span({name:'skill_name'})
+                        +span({name:'name'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
                   //-+span({name:'skill',type:'number'}).input-span.input-0                  
@@ -54,7 +54,7 @@ mixin skills
                   //-label.text-input 
                      +text({name:'name'}).caps-input
                   label.select-input.expanded
-                     +text({name:'skill_name',id:'custom-skill-input'})
+                     +text({name:'name',id:'custom-skill-input'})
                   span.input-span.input-0
                      +input({type: 'number', name: 'skill_fv', class:'label-input-input'})
                   span.input-span.input-1

@@ -1,6 +1,6 @@
 mixin secondaryskills 
    .section-skills__secondary.section-secondaryskills
-      +repeatingSkills({name:'Sekundära färdigheter',attr:'secondaryskills',transl:'trained-skill'}) 
+      +repeatingSkills({name:'Sekundära färdigheter',attr:'secondaryskills',transl:'trained-skill',cost:5}) 
       //-   +box({headerObj:{name:'Sekundära färdigheter',attr:'secondaryskills','data-i18n':'trained-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Exp.',attr:'experience_abbr'}],classes:'coverall'})
          //-each skill in spine.secondaryskills 
             +input({name: skill.attr, type:'number', value: 0}).hidden
@@ -14,7 +14,7 @@ mixin secondaryskills
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input 
                      +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
-                        +span({name:'skill_name'})
+                        +span({name:'name'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
                   //-+span({name:'skill',type:'number'}).input-span.input-0
@@ -28,7 +28,7 @@ mixin secondaryskills
                .label-input.input-count-3 
                   //-label.text-input 
                      +text({name:'name'}).caps-input
-                  +text({name:'skill_name'}).caps-input
+                  +text({name:'sname'}).caps-input
                   //-label.select-input
                      +select({name:'name',trigger:{triggeredFuncs:['setSkill']}})                        
                         +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 

@@ -59,11 +59,11 @@ main#main
     +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/w gm',class:'hidden'})
     label(for='toggle-roll-viz-whisper',data-i18n-title='roll-whispering-title')
       | visibility_lock 
-    +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/sr',class:'hidden'})
-    label(for='toggle-roll-viz-whisper',data-i18n-title='roll-secret-title')
+    //-+radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/sr',class:'hidden'})
+    //-label(for='toggle-roll-viz-whisper',data-i18n-title='roll-secret-title')
       | visibility_off 
-    +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/ssr',class:'hidden'})
-    label(for='toggle-roll-viz-whisper',data-i18n-title='roll-super-secret-title')
+    //-+radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/ssr',class:'hidden'})
+    //-label(for='toggle-roll-viz-whisper',data-i18n-title='roll-super-secret-title')
       | disabled_visible 
 
   +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap

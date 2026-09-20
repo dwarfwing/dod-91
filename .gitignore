@@ -1,0 +1,5 @@
+source2/__tests__/*
+source2/node_modules/*
+source2/prepros.config
+source2/package-lock.json
+package-lock.json

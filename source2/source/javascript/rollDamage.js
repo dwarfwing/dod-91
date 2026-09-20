@@ -18,9 +18,9 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
       const weaponSkill = attributes[`${row}skill`];
       console.log(`Weapon skill : ${weaponSkill}`);
       const name = section ?
-         (attributes[`${row}skill_name`] ? 
-         attributes[`${row}skill_name`] :
-         attributes[`${row}name`]):
+         (attributes[`${row}name`] ? 
+         attributes[`${row}name`] :
+         attributes[`${row}name`]) :
          base.replace(/-/g,' ').replace(/ action/,'');
       const i18nKey = base.replace(/-action/,'');
       //k.log(`Roll name before translation: ${name}, base ${i18nKey} with translation ${getTranslationByKey(i18nKey)}`);

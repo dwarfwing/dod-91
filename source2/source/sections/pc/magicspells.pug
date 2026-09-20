@@ -45,14 +45,15 @@ mixin spells
                h2(class='header-field',data-i18n=field.attr)= field.name
                //-h2 class="header-field" data-i18n="spell-skill-level">S</h2>
          +fieldset({name:'spells',class:'content'})
-            .spell-row.collapse-container
+            .spell-row.skill-row.collapse-container
                //-+collapse({name:'besvarjelse_'+spell+'_collapse'})
                //-+checkbox({name:'collapse',value:1,class:'collapse'})
+               +number({name:'cost',value:0,class:'hidden'})
                +collapse
                //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
                //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
                .collapsed
-                  .label-input.input-count-5
+                  .label-input.input-count-7
                      //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                      +checkbox({name:'mem',class:'memorized',value:1,checked:false})               
                      +span({name: 'sv', class:'label-input-input'})
@@ -62,23 +63,28 @@ mixin spells
                      //- label.text-input
                         +text({name:'name',class:'text-input'})
                      //-+span({name:'skill',type:'number'}).input-span.input-0                  
-                     +span({name: 's', class:'label-input-input'})
+                     +span({name: 'fv', class:'label-input-input'})
                      +input({name: 'e', type: 'number', class:'label-input-input'})
                         //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                         //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                      +input({name:'mod',type:'number'}).input-span.input-1
                      +input({name:'erf',type:'number'}).input-span.input-2
+                     
+                     +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                .expanded
-                  .label-input.input-count-5 
+                  .label-input.input-count-7 
                      //-label.text-input 
                         +text({name:'name'}).caps-input
                      +checkbox({name:'mem',class:'memorized',value:1,checked:false})
-                     +input({name: 'sv', type: 'number', class:'label-input-input'})
+                     +input({name: 'sv', type: 'number', class:'label-input-input',triggeredFuncs:['setSpellCosts']})
                      +text({name:'name',id:'custom-skill-input'})
-                     +input({name: 's', type: 'number', class:'label-input-input'})
+                     +input({name: 'fv', type: 'number', class:'label-input-input'})
                      +input({name: 'e', type: 'number', value: 1, class:'label-input-input'})
                      +input({name: 'mod', type: 'number', class:'label-input-input'})
                      +input({name: 'erf', type: 'number', class:'label-input-input'})
+                     +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
          //-each spell in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
             .spell-row.collapse-container
                //-+collapse({name:'besvarjelse_'+spell+'_collapse'})
@@ -128,6 +134,15 @@ mixin spells
          .itemcontrol {
             z-index: 1000; 
          }
+         .collapse {
+            left: 5rem;
+            top: -0.375rem; 
+            z-index: 10000; 
+            & ~ .expanded {
+               background-color: var(--bg-color3);
+               .label-input { background-color: var(--bg-color3); }
+            }
+         }
          & > .repcontainer {
             //display: grid; 
             //grid-template-columns: 50% 50%; 
@@ -151,17 +166,9 @@ mixin spells
             //grid-template-columns: 50% 50%;
             width: 100%; 
          } 
-         .input-count-3 {
+         .input-count-7 {
             display: grid; 
-            grid-template-columns: 2rem 1fr 3rem 3rem 3rem;
-         }
-         .input-count-4 {
-            display: grid; 
-            grid-template-columns: 2rem 1fr 3rem 3rem 3rem 3rem;
-         }
-         .input-count-5 {
-            display: grid; 
-            grid-template-columns: 2rem 3rem 1fr 3rem 3rem 3rem 3rem;
+            grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
          }
          .box-header {
             column-span: all; 
@@ -195,11 +202,6 @@ mixin spells
                width: 100%;
                text-align: center;
             }
-         }
-         .collapse {
-            right: 12rem; 
-            top: -0.25rem;
-            z-index: 1000; 
          }
          .memorized {
             height: 100%;

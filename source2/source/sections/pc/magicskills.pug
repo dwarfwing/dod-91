@@ -4,7 +4,7 @@ mixin magicskills
          span.mateirals-icon settings
       //-+modalWindow({name:'testmodal'})
          p This is a test modal!
-      +repeatingSkills({name:'magiskolor',attr:'magicschools',transl:'magic-sschools'}) 
+      +repeatingSkills({name:'magiskolor',attr:'magicschools',transl:'magic-schools',exp:false}) 
       //-+box({headerObj:{name:'magiskolor',attr:'magicschools','data-i18n':'magic-sschools'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          //-+customControlFieldset({name:'magicschools',trigger:{
             triggeredFuncs:['magicSchoolRemove'],
@@ -74,7 +74,7 @@ mixin magicskills
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
                   span.input-span.input-2
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
-+scss.
+//-+scss.
    .section-magicskills { 
       .box {
          //border-top: 5px solid var(--border-color);

@@ -27,7 +27,7 @@
                //-label.text-input 
                   +text({name:'name'}).caps-input
                label.select-input.expanded
-                  +text({name:'skill_name',id:'custom-skill-input'})
+                  +text({name:'name',id:'custom-skill-input'})
                span.input-span.input-0
                   +input({name: 'fv', type: 'number', class:'label-input-input'})
                span.input-span.input-1
@@ -187,7 +187,7 @@ mixin repeatingSkills({name,attr,transl,fields})
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input.collapsed 
                      +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
-                        +span({name:'skill_name'})
+                        +span({name:'name'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
                   //-+span({name:'skill',type:'number'}).input-span.input-0                  
@@ -202,7 +202,7 @@ mixin repeatingSkills({name,attr,transl,fields})
                   //-label.text-input 
                      +text({name:'name'}).caps-input
                   label.select-input.expanded
-                     +text({name:'skill_name',id:'custom-skill-input'})
+                     +text({name:'name',id:'custom-skill-input'})
                   span.input-span.input-0
                      +input({type: 'number', name: 'fv', class:'label-input-input'})
                   span.input-span.input-1

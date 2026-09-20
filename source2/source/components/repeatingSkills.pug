@@ -1,39 +1,59 @@
-mixin repeatingSkills({name,attr,transl,fields})
+mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
    - 
       i18n = transl ? transl : attr; 
-      fields = fields ? fields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+      fields = fields ? fields : 
+               (b ? [{name:'B',attr:'bskill_level'},{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}] :
+               [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]); 
+      skillTypeB = b != undefined && b ? 'bskills ' : ''     
+      hideImprovementClass = exp == undefined || exp == true ? '' : 'hide-improvements '; 
    +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
       +fieldset({name:attr})
-         .skill-row.collapse-container
+         .skill-row.collapse-container(class=hideImprovementClass+skillTypeB)
+            if cost
+               +number({name:'cost',value:cost,class:'hidden'})
+            +number({name:'b',value:0,class:'hidden'})
+            +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
             +collapse
-            //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
-            //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
             .collapsed
-               .label-input.input-count-5
+               .label-input.input-count-6
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input.collapsed 
                      +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
-                        +span({name:'skill_name'})
+                        +span({name:'name'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
-                  //-+span({name:'skill',type:'number'}).input-span.input-0                  
-                  span.input-span.input-0
+                  //-+span({name:'skill',type:'number'}).input-span.input-0  
+                  span.input-span.input-0 
+                     +span({name:'b',type:'number',class:'label-input-input b-skill'})                
+                  span.input-span.input-1
                      +input({type: 'number', name: 'fv', class:'label-input-input'})
-                  +input({name:'mod',type:'number'}).input-span.input-1
-                  +input({name:'erf',type:'number'}).input-span.input-2
+                  span.input-span.input-2
+                     +input({name:'mod',type:'number'}).input-span.input-2
+                  span.input-span.input-2
+                     +input({name:'erf',type:'number'}).input-span.input-3
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
             .expanded
-               .label-input.input-count-5 
+               .label-input.input-count-6 
                   //-label.text-input 
                      +text({name:'name'}).caps-input
                   label.select-input.expanded
-                     +text({name:'skill_name',id:'custom-skill-input'})
-                  span.input-span.input-0
-                     +input({type: 'number', name: 'fv', class:'label-input-input'})
+                     +text({name:'name',id:'custom-skill-input'})
+                  if b 
+                     span.input-span.input-0 
+                        +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
+                  else 
+                     span.select-span.input-0
+                        +select({name: 'type', class:'label-input-select'})
+                           +option({value:'a'})
+                              | A 
+                           +option({value:'b'})
+                              | B
                   span.input-span.input-1
-                     +input({type: 'number', name: 'mod', class:'label-input-input'})
+                     +input({type: 'number', name: 'fv', class:'label-input-input'})
                   span.input-span.input-2
+                     +input({type: 'number', name: 'mod', class:'label-input-input'})
+                  span.input-span.input-3
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})

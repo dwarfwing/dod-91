@@ -1387,6 +1387,12 @@ body .ui-dialog .tab-content .charsheet .collapse-container {
 body .ui-dialog .tab-content .charsheet .collapse-container .collapse {
   position: absolute;
 }
+body .ui-dialog .tab-content .charsheet .collapse-container .collapse ~ .expanded {
+  background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .collapse-container .collapse ~ .expanded .label-input {
+  background-color: var(--bg-color3);
+}
 body .ui-dialog .tab-content .charsheet .label-input {
   display: flex;
   justify-content: stretch;
@@ -1479,23 +1485,46 @@ body .ui-dialog .tab-content .charsheet .fill-left label {
 body .ui-dialog .tab-content .charsheet .repcontainer .repitem .itemcontrol {
   z-index: 10000;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box .box-header.field-count-3, body .ui-dialog .tab-content .charsheet div.section-languages .box .box-header.field-count-3, body .ui-dialog .tab-content .charsheet div.section-magicspells .box .box-header.field-count-3 {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box .box-header.field-count-4, body .ui-dialog .tab-content .charsheet div.section-languages .box .box-header.field-count-4, body .ui-dialog .tab-content .charsheet div.section-magicspells .box .box-header.field-count-4 {
+  grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row {
+  border-bottom: 1px solid var(--border-color);
+  min-width: 100%;
+  line-height: var(--line-height);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet div.section-languages .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row > :is(.expanded, .collapsed) {
+  height: var(--line-height);
+  min-width: 100%;
+  border-bottom: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row label, body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button, body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded input:first-of-type, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row label, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row button, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded input:first-of-type, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row label, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row button, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded input:first-of-type {
+  border-right: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row input[type=number], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row input[type=number], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row input[type=number] {
+  border-left: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button[type=action], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row button[type=action], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row button[type=action] {
+  min-width: 100%;
+  border-right: 0;
+  gap: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button[type=action] span, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row button[type=action] span, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row button[type=action] span {
+  min-width: 100%;
+  border-right: 0;
+  text-indent: var(--half-gap);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input {
   display: grid;
-  grid-template-columns: 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input button span {
-  border: 0;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input button[type=action] {
-  display: hidden;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 {
   position: relative;
-  grid-template-columns: 1fr 3rem 3rem 3rem;
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
   height: 100%;
   border-bottom: 0;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input input[type=checkbox].improve-mark, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input input[type=checkbox].improve-mark, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input input[type=checkbox].improve-mark {
   display: none;
   position: absolute;
   top: 0.2rem;
@@ -1509,90 +1538,117 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.i
   min-height: 0.6rem;
   transform: rotate(45deg);
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark.improve-mark-perfect {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input input[type=checkbox].improve-mark.improve-mark-perfect, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input input[type=checkbox].improve-mark.improve-mark-perfect, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input input[type=checkbox].improve-mark.improve-mark-perfect {
   top: 50%;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark:checked {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input input[type=checkbox].improve-mark:checked, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input input[type=checkbox].improve-mark:checked, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input input[type=checkbox].improve-mark:checked {
   display: flex;
   background-color: var(--fill-color);
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 input[type=checkbox].improve-mark:checked:before {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input input[type=checkbox].improve-mark:checked:before, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input input[type=checkbox].improve-mark:checked:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input input[type=checkbox].improve-mark:checked:before {
   content: "";
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5:hover input[type=checkbox] {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input:hover input[type=checkbox], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input:hover input[type=checkbox], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input:hover input[type=checkbox] {
   display: flex;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .label-input.input-count-5 button[type=action] {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input label input[name=attr_name], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input label input[name=attr_name], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input label input[name=attr_name] {
+  text-indent: var(--tiny-gap);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input button[type=action], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input button[type=action], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input button[type=action] {
   display: hidden;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] input.exp-toggle {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input button span, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input button span, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input button span {
+  border: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input button[type=action], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input button[type=action], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input button[type=action] {
+  display: hidden;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input select {
+  text-align-last: center;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input select option, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input select option, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input select option {
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.b-skill:before, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.b-skill:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.b-skill:before {
+  content: "B";
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-5, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-5, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-5 {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-6 {
+  grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.select-span.input-0, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.select-span.input-0, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.select-span.input-0 {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.select-span.input-0:before, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.select-span.input-0:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.select-span.input-0:before {
+  content: "Typ";
+  font-size: 75%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row input.exp-toggle, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row input.exp-toggle, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row input.exp-toggle {
   display: none;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] :is(.expanded, .collapsed) > .label-input {
-  grid-template-columns: 1fr 3rem 3rem 3rem;
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] :is(.expanded, .collapsed) button span {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input span.input-0, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input span.input-0, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input span.input-0 {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row :is(.expanded, .collapsed) button span, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row :is(.expanded, .collapsed) button span, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row :is(.expanded, .collapsed) button span {
   padding-left: 0.25rem;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .collapse {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .collapse, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .collapse, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .collapse {
   z-index: 1000;
-  top: -0.25rem;
-  right: 9rem;
+  top: -0.375rem;
+  left: 0rem;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row {
-  border-bottom: 1px solid var(--border-color);
-  min-width: 100%;
-  line-height: var(--line-height);
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row > :is(.expanded, .collapsed) {
-  height: var(--line-height);
-  min-width: 100%;
-  border-bottom: 0;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row label, body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button {
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row input[type=number] {
-  border-left: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button[type=action] {
-  min-width: 100%;
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button[type=action] span {
-  min-width: 100%;
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded option {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded option, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded option, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded option {
   text-align: left;
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded select {
   width: 100%;
   height: unset;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select:open {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded select:open, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded select:open, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded select:open {
   max-height: 6rem;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select + input[type=checkbox] + input[type=text] {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded select + input[type=checkbox] + input[type=text], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded select + input[type=checkbox] + input[type=text], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded select + input[type=checkbox] + input[type=text] {
   display: none;
   height: auto;
   width: 100%;
   border-bottom: 1px dashed black;
   margin-bottom: 2px;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .expanded select + input[type=checkbox]:checked + input[type=text] {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded select + input[type=checkbox]:checked + input[type=text], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded select + input[type=checkbox]:checked + input[type=text], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded select + input[type=checkbox]:checked + input[type=text] {
   display: block;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem > .collapse {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-improvements input[type=checkbox].improve-mark, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-improvements input[type=checkbox].improve-mark, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-improvements input[type=checkbox].improve-mark {
+  display: none !important;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6 {
+  grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6.input-count-6 span.input-0, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6.input-count-6 span.input-0, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6.input-count-6 span.input-0 {
+  display: flex;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem > .collapse, body .ui-dialog .tab-content .charsheet div.section-languages .repitem > .collapse, body .ui-dialog .tab-content .charsheet div.section-magicspells .repitem > .collapse {
   right: 9rem;
   z-index: 9000;
   top: -0.25rem;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover, body .ui-dialog .tab-content .charsheet div.section-languages .repitem:hover, body .ui-dialog .tab-content .charsheet div.section-magicspells .repitem:hover {
   position: relative;
 }
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover input.exp-toggle {
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover input.exp-toggle, body .ui-dialog .tab-content .charsheet div.section-languages .repitem:hover input.exp-toggle, body .ui-dialog .tab-content .charsheet div.section-magicspells .repitem:hover input.exp-toggle {
   display: flex;
   position: absolute;
   left: -1rem;
@@ -2334,6 +2390,17 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem .itemcontrol a
   padding: 0;
   align-content: center;
 }
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapse {
+  left: 2rem;
+  top: -0.375rem;
+  z-index: 10000;
+}
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapse ~ .expanded {
+  background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapse ~ .expanded .label-input {
+  background-color: var(--bg-color3);
+}
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=text]:not(.caps-input), body .ui-dialog .tab-content .charsheet .section-weapons .repitem span {
   text-align: center;
 }
@@ -2375,7 +2442,7 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem input.manual-s
   font-size: 100%;
   width: calc(100% + 1px);
 }
-body .ui-dialog .tab-content .charsheet .section-weapons .repitem span[name=attr_skill_name],
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem span[name=attr_name],
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem span[name=attr_range],
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem select[name=attr_skill],
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem select[name=attr_skill] option,
@@ -2448,34 +2515,6 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage la
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage label.input-label:last-of-type input:checked + span:after, body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage-button label.input-label:last-of-type input:checked + span:after {
   content: "stat_3";
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input {
-  grid-template-columns: 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input button {
-  min-width: calc(100% - 9rem);
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input button span {
-  border: 0;
-  overflow: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .label-input button[type=action] {
-  display: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills input.exp-toggle {
-  display: none;
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .repitem:hover {
-  position: relative;
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .repitem:hover input.exp-toggle {
-  display: flex;
-  position: absolute;
-  left: -1rem;
-  width: 1rem;
-}
-body .ui-dialog .tab-content .charsheet .section-weaponskills .repitem:hover {
-  border-bottom: 1px solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas {
   max-width: 100%;
@@ -2723,6 +2762,17 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .re
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .itemcontrol {
   z-index: 1000;
 }
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse {
+  left: 5rem;
+  top: -0.375rem;
+  z-index: 10000;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse ~ .expanded {
+  background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse ~ .expanded .label-input {
+  background-color: var(--bg-color3);
+}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells > .repcontainer {
   width: 100%;
   column-gap: 0;
@@ -2739,17 +2789,9 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .re
   min-height: 4rem;
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-3 {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-7 {
   display: grid;
-  grid-template-columns: 2rem 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-4 {
-  display: grid;
-  grid-template-columns: 2rem 1fr 3rem 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-5 {
-  display: grid;
-  grid-template-columns: 2rem 3rem 1fr 3rem 3rem 3rem 3rem;
+  grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header {
   column-span: all;
@@ -2782,51 +2824,11 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
   width: 100%;
   text-align: center;
 }
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse {
-  right: 12rem;
-  top: -0.25rem;
-  z-index: 1000;
-}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .memorized {
   height: 100%;
   width: 100%;
   border: 0;
   border-right: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .label-input {
-  grid-template-columns: 1fr 3rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .label-input button {
-  min-width: calc(100% - 9rem);
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .label-input button span {
-  border: 0;
-  overflow: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .label-input button[type=action] {
-  display: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills input.exp-toggle {
-  display: none;
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .repitem:hover {
-  position: relative;
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .repitem:hover input.exp-toggle {
-  display: flex;
-  position: absolute;
-  left: -1rem;
-  width: 1rem;
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .repitem:hover {
-  border-bottom: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .repcontrol-button--add:before {
-  font-family: inherit;
-  content: "+Add";
-}
-body .ui-dialog .tab-content .charsheet .section-magicskills .repcontainer .repitem .itemcontrol .repcontrol_del {
-  transform: translateX(1.25rem);
 }
 body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer {
   display: flex;
@@ -3364,38 +3366,6 @@ body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__stash {
 body .ui-dialog .tab-content .charsheet .tab-gear .section-money {
   grid-area: money;
 }
-body .ui-dialog .tab-content .charsheet .tab-animal {
-  display: grid;
-  grid-template-columns: 35% 65%;
-  grid-template-areas: "ge info" "gear attacks" "gear skills" "gear abilities";
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-attributes {
-  grid-area: ge;
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-gear {
-  grid-area: gear;
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks {
-  grid-area: attacks;
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .box-header,
-body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .expanded .label-input,
-body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .collapsed .label-input {
-  grid-template-columns: 1fr 3rem 3rem 2rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-animal-abilities {
-  grid-area: abilities;
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-info {
-  grid-area: info;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "info info info" "stats hp sp";
-}
-body .ui-dialog .tab-content .charsheet .tab-animal .section-info .box-info .label-input {
-  width: 50%;
-  box-sizing: border-box;
-}
 body .ui-dialog .tab-content .charsheet .tab-recovery {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -3450,6 +3420,38 @@ body .ui-dialog .tab-content .charsheet .tab-recovery .repcontainer {
 body .ui-dialog .tab-content .charsheet .tab-recovery .repcontrol {
   bottom: 0;
   position: absolute;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-areas: "ge info" "gear attacks" "gear skills" "gear abilities";
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-attributes {
+  grid-area: ge;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-gear {
+  grid-area: gear;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks {
+  grid-area: attacks;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .box-header,
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .expanded .label-input,
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .box .collapsed .label-input {
+  grid-template-columns: 1fr 3rem 3rem 2rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-animal-abilities {
+  grid-area: abilities;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-info {
+  grid-area: info;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "info info info" "stats hp sp";
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-info .box-info .label-input {
+  width: 50%;
+  box-sizing: border-box;
 }
 body .ui-dialog .tab-content .charsheet .section-settings .box > * {
   width: 100%;

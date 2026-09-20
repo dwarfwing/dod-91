@@ -38,7 +38,7 @@ mixin weapons
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
                   +checkbox({name:'skill_manual_toggle',value:1,class:'hidden manual-skillname-toggle'})
-                  +span({name:'skill_name'}).text-span.smaller-text
+                  +span({name:'name'}).text-span.smaller-text
                   +input({name:'skill_manual',type:'number'}).text-span.smaller-text.skill-manual
                   +checkbox({name:'damagebonus',value:1}).input-span
                   +span({name:'grip'}).input-span
@@ -216,6 +216,15 @@ mixin weapons
                align-content: center;
             } 
          }
+         .collapse {
+            left: 2rem; 
+            top: -0.375rem; 
+            z-index: 10000; 
+            & ~ .expanded {
+               background-color: var(--bg-color3);
+               .label-input { background-color: var(--bg-color3); }
+            }
+         }
          input[type="text"]:not(.caps-input), span {
             text-align: center;
          }
@@ -256,7 +265,7 @@ mixin weapons
             font-size: 100%;
             width: calc(100% + 1px);
          }
-         span[name='attr_skill_name'], 
+         span[name='attr_name'], 
          span[name='attr_range'],
          select[name='attr_skill'],
          select[name='attr_skill'] option,

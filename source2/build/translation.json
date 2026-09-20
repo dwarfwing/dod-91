@@ -85,8 +85,8 @@
   "length-abbr": "Längd",
   "linkedweapons": "Kättingvapen",
   "magic": "magic",
+  "magic-schools": "magiskolor",
   "magic-skills": "magifärdigheter",
-  "magic-sschools": "magiskolor",
   "manual": "Manuellt",
   "martialarts": "Stridskonst",
   "max-value": "Max-värdet",
@@ -118,8 +118,6 @@
   "right-arm": "Höger arm",
   "roll-alternatives": "Visa alternativ för tärningsslag",
   "roll-normal-title": "Slå tärning normalt. Alla andra spelare och SL kommer se resultatet. ",
-  "roll-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser att du skickat något till SL, men bara SL kommer se resultatet. ",
-  "roll-super-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser INTE att du skickat något till SL, och bara SL kommer se resultatet. ",
   "roll-whispering-title": "Slå tärning viskat till SL. Alla andra spelare kommer inte se något, endast du och SL kommer se resultatet. ",
   "Rustning": "Rustning",
   "select-choice": "--- Välj ---",
@@ -266,5 +264,11 @@
   "grapplehooks": "Änterhake",
   "herb-knowledge": "Örtkunskap",
   "survival": "Överlevnad",
-  "show-painpoints": "Använd smärtpoäng"
+  "show-painpoints": "Använd smärtpoäng",
+  "roll-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser att du skickat något till SL, men bara SL kommer se resultatet. ",
+  "roll-super-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser INTE att du skickat något till SL, och bara SL kommer se resultatet. ",
+  "sleeping": "sover",
+  "resting": "vilar",
+  "spell-level": "Effektgrad",
+  "skill-mod": "Modifikation"
 }

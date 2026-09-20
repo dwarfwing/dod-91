@@ -16,7 +16,7 @@ mixin recovery-tab
                .box-content
                   p(data-i18n='rest-7d-decription')  
                      |  En period på 7 dagar sammanhängande vila utan pågående äventyr. Erfarenhet omvandlas till förbättringar av färdigheter. 
-                  +action({name:'sleep6h','data-i18n':'rest',trigger:{triggeredFuncs:['resetExperience','useExperience']}})
+                  +action({name:'rest7d','data-i18n':'rest',trigger:{triggeredFuncs:['useExperience']}})
                      | Vila
       .section-injuries
          +box({headerObj:{name:'Skador och Tillstånd',attr:'afflictions','data-i18n':'injuries-conditions'}})

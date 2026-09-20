@@ -140,5 +140,9 @@
    "roll-normal-title": "Slå tärning normalt. Alla andra spelare och SL kommer se resultatet. ",
    "roll-whispering-title": "Slå tärning viskat till SL. Alla andra spelare kommer inte se något, endast du och SL kommer se resultatet. ",
    "roll-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser att du skickat något till SL, men bara SL kommer se resultatet. ",
-   "roll-super-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser INTE att du skickat något till SL, och bara SL kommer se resultatet. "
+   "roll-super-secret-title": "Slå tärning hemligt till SL. Alla andra spelare kommer inte se något, du ser INTE att du skickat något till SL, och bara SL kommer se resultatet. ",
+   "sleeping": "sover",
+   "resting": "vilar",
+   "spell-level": "Effektgrad",
+   "skill-mod": "Modifikation"
 }

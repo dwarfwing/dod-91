@@ -4,6 +4,9 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    const computeObj = {};
    computeObj.perfectRoll = 0; 
    const dmgBonusStr = rollObj.damageBonus && rollObj.damageBonus != '' ? `+${rollObj.damageBonus}[${getTranslationByKey('damagebonus')}]` : '';
+   
+   rollObj.gainExp = rollObj.skillAttr.startsWith('repeating_languages') || rollObj.skillAttr.startsWith('repeating_magicschools') ? false : true; 
+
    if ( !rollObj.rollStr ) {
       rollObj.rollStr = `&{template:dod91} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{roll-name=${rollObj.name}}}`;
       if (rollObj.abilityDice && rollObj.abilityDice != '') {
@@ -83,22 +86,25 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       //perfectStr = perfect && !rollObj.abilitySkillRoll ? `+1D6[${getTranslationByKey('perfect-roll')}]` : '';
       computeObj.perfectRoll = perfect ? 1 : 0; 
 
-      const impr = attributes[`${rollObj.skillAttr}_improve`],
-            impr_perf = attributes[`${rollObj.skillAttr}_improve_perfect`],   
-            erf = attributes[`${rollObj.skillAttr}_erf`];
-      k.log(`Improved = ${impr} (${impr != '1'}), improved perfect = ${impr_perf} (${impr_perf != '1'})`);
-      if ( success && !perfect && impr != '1' ) {
-         k.log(`Normal success and erf increase by 1`);
-         //k.log(`${rollObj.skillAttr}_improve`);
-         attributes[`${rollObj.skillAttr}_improve`] = 1; 
-         attributes[`${rollObj.skillAttr}_erf`] = erf + 1; 
+      if ( rollObj.gainExp) {
+         const impr = attributes[`${rollObj.skillAttr}_improve`],
+               impr_perf = attributes[`${rollObj.skillAttr}_improve_perfect`],   
+               erf = attributes[`${rollObj.skillAttr}_erf`];
+         k.log(`Improved = ${impr} (${impr != '1'}), improved perfect = ${impr_perf} (${impr_perf != '1'})`);
+         if ( success && !perfect && impr != '1' && rollObj.gainExp ) {
+            k.log(`Normal success and erf increase by 1`);
+            //k.log(`${rollObj.skillAttr}_improve`);
+            attributes[`${rollObj.skillAttr}_improve`] = 1; 
+            attributes[`${rollObj.skillAttr}_erf`] = erf + 1; 
 
-      } else if ( success && perfect && impr_perf != '1' ) {
-         k.log(`Perfect roll and erf increase by ${1 + roll.results.rolld3.result}`);
-         attributes[`${rollObj.skillAttr}_improve_perfect`] = 1; 
-         attributes[`${rollObj.skillAttr}_erf`] = erf + 1 + roll.results.rolld3.result;
+         } else if ( success && perfect && impr_perf != '1' && rollObj.gainExp ) {
+            k.log(`Perfect roll and erf increase by ${1 + roll.results.rolld3.result}`);
+            attributes[`${rollObj.skillAttr}_improve_perfect`] = 1; 
+            attributes[`${rollObj.skillAttr}_erf`] = erf + 1 + roll.results.rolld3.result;
+         }
       }
       attributes.set();
+      
    }
 
    /* if (rollObj.damageDice && roll?.results?.damage?.result) {      

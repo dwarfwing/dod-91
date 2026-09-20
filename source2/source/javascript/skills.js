@@ -15,7 +15,7 @@ const setSkill = function ({trigger,attributes,sections,casc}) {
 
    if ( section == 'repeating_weapons') {
       if ( attributes[`${row}skill`] == 'manual' ) {
-         attributes[`${row}skill_name`] = 'manual';
+         attributes[`${row}name`] = 'manual';
          attributes[`${row}skill_manual_toggle`] = 1;
          attributes.set();
          return; 
@@ -39,7 +39,7 @@ const setSkill = function ({trigger,attributes,sections,casc}) {
                            ( attributes[`${row}skill`] == 'throwing' ? 
                            'throwing-weapon' : attributes[`${row}skill`].replace(/_/,'-')));
       //k.log(`Skill translation 2 : `+getTranslationByKey(skillName));
-      attributes[`${row}skill_name`] = getTranslationByKey(skillName);
+      attributes[`${row}name`] = getTranslationByKey(skillName);
       attributes[`${row}skill_manual_toggle`] = 0;
 
    } else if ( section == 'repeating_trainedskills' ) {
@@ -47,13 +47,13 @@ const setSkill = function ({trigger,attributes,sections,casc}) {
             i18n = attr.replace(/_/,'-');
       if ( attr == 'custom-skill' ) {
          //k.log(`Custom skill trigger: ${JSON.stringify(trigger)}`);
-         //attributes[`${row}skill_name`] = attributes[`${row}custom_name`]; /
+         //attributes[`${row}name`] = attributes[`${row}custom_name`]; /
          attributes[`${row}custom_name_display`] = 1;       
          //k.log(`Custom skill name: ${attributes[`${row}custom_name`]}`);
-         attributes[`${row}skill_name`] = attributes[`${row}custom_name`]
+         attributes[`${row}_name`] = attributes[`${row}custom_name`]
       } else {
          attributes[`${row}custom_name_display`] = 0;          
-         attributes[`${row}skill_name`] = getTranslationByKey(i18n);
+         attributes[`${row}name`] = getTranslationByKey(i18n);
          attributes[`${row}skill`] = attributes[attr];
          attributes[`${row}skill_mod`] = attributes[`${attr}_mod`];  
       }          
@@ -88,6 +88,20 @@ const setTrainedImprove = function({trigger,attributes,sections,casc}) {
 
 }
 k.registerFuncs({setTrainedImprove});
+
+const setSpellCosts = function({trigger,attributes,sections,cost}) {
+   k.log(`Spells: ${JSON.stringify(sections.repeating_spells)}`);
+   sections.repeating_spells.forEach( spellId => {
+      let spell = 'repeating_spells_'+spellId; 
+      const sv = attributes[`${spell}_sv`],
+            cost = Math.ceil( parseInt(sv) / 3 ) * 2,
+            name = attributes[`${spell}_name`];
+      attributes[`${spell}_cost`] = cost; 
+      k.log(`Set magic spell ${name} with sv ${sv} to cost ${cost}`);
+   });
+   attributes.set(); 
+}
+k.registerFuncs({setSpellCosts},{type:['opener']})
 
 const rollImprovements = async function({trigger,attributes,sections,casc}) {
    //k.log(`Skill improvement trigger: ${JSON.stringify(trigger)}`);
@@ -125,7 +139,7 @@ const rollImprovements = async function({trigger,attributes,sections,casc}) {
          if (attributes[`${trainedSkills[i]}_${improv[n]}`] == 1 || attributes[`${trainedSkills[i]}_${improv[n]}`] == '1') {
             const skillAttr = trainedSkills[i]+'_skill'; 
             //var skillName = /repeating_/.test(skill) ? getTranslationByKey(skill+'_name');
-            const skillName = attributes[`${trainedSkills[i]}_skill_name`];
+            const skillName = attributes[`${trainedSkills[i]}_name`];
             const improvAttr = `${trainedSkills[i]}_${improv[n]}`;
             const additionalAttr = attributes[`${trainedSkills[i]}_name`];
             await rollImprovement({attributes,skillAttr,skillName,improvAttr,additionalAttr})
@@ -140,7 +154,7 @@ const rollImprovements = async function({trigger,attributes,sections,casc}) {
          if (attributes[`${repeatingSkillIds[i]}_${improv[n]}`] == 1 || attributes[`${repeatingSkillIds[i]}_${improv[n]}`] == '1') {
             const skillAttr = repeatingSkillIds[i]+'_skill'; 
             //var skillName = /repeating_/.test(skill) ? getTranslationByKey(skill+'_name');
-            const skillName = attributes[`${repeatingSkillIds[i]}_skill_name`];
+            const skillName = attributes[`${repeatingSkillIds[i]}_name`];
             const improvAttr = `${repeatingSkillIds[i]}_${improv[n]}`;
             await rollImprovement({attributes,skillAttr,skillName,improvAttr})
          }
