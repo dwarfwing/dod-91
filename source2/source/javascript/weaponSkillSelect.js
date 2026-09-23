@@ -7,15 +7,20 @@
  */
 const weaponSkillSelect = function({trigger,attributes,sections,casc}){
   // assemble the options.
-  const optionsArray = sections['repeating_weapon-skills']
+  const optionsArray = sections['repeating_weaponskills']
     .filter(id => id)
     .reduce((arr,id) => {
-      arr.push({value:id.toLowerCase(),label:attributes[`repeating_weapon-skills_${id}_name`] || getTranslationByKey('New Skill')});
+      arr.push({value:'repeating_weaponskills_'+id.toLowerCase(),label:attributes[`repeating_weaponskills_${id}_name`] || getTranslationByKey('New Skill')});
+      k.log(`Weapon skill update array: ${JSON.stringify(arr)}`);
       return arr;
-    },[spine.weapontypes]);
+    },[{label:'Slagsmål',value:'prim_slagsmal'}]);
+    // REMoved teh init array [spine.weap
+    // ontypes] since only weapon skills can be used
+  optionsArray.push({label:'Anpassat',value:'custom'});
+  k.log(`Weapon skill update array done: ${JSON.stringify(optionsArray)}`);
   populateListOptions({elemSelector:'.weapon-skill-select',optionsArray});
-  // iterate over all abilities and either leave them as they are or reset them to the default if their selected skill is no longer present.
-  sections.repeating_abilities
+  // iterate over all weapons and either leave them as they are or reset them to the default if their selected skill is no longer present.
+  sections.repeating_weapons
     .filter(id => id)
     .forEach(id => {
       const row = `repeating_weapons_${id}`;

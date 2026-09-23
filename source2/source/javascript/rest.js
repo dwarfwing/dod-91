@@ -69,9 +69,10 @@ const useExperience = async function({trigger,attributes,sections,casc}) {
 
       k.log(`Testing improvement for ${name} with fv ${fv}, cost ${improveCost[fv]*base} and xp ${exp}`);
       while( improveCost[fv] * base <= exp ) {
-         fv = attributes[`${skill}_fv`] = fv + 1;
-         exp = attributes[`${skill}_erf`] = exp - improveCost[fv] * base; 
-         k.log(`increase ${name} from ${fv - 1} to ${fv} using ${improveCost[fv] * base} points leaving ${exp} points left.`);
+         const cost = improveCost[fv] * base;
+         exp = attributes[`${skill}_erf`] = exp - cost; 
+         fv = attributes[`${skill}_fv`] = ++fv;
+         k.log(`increased ${name} from ${fv - 1} to ${fv} using ${cost} points leaving ${exp} points left.`);
       } 
    });
 

@@ -8,79 +8,53 @@ const magicSchoolRemove = function({trigger,attributes,sections,casc}) {
 }
 k.registerFuncs({magicSchoolRemove})
 
-const setSkill = function ({trigger,attributes,sections,casc}) {
-   ////k.log(`Skill name trigger: ${JSON.stringify(trigger)}`);
-   const [section,rowID] = k.parseTriggerName(trigger.name);
-   const row = `${section}_${rowID}_`;
-
-   if ( section == 'repeating_weapons') {
-      if ( attributes[`${row}skill`] == 'manual' ) {
-         attributes[`${row}name`] = 'manual';
+const setWeaponSkills = function({trigger,attributes,sections,casc}) {
+   sections.repeating_weapons.forEach( id => {
+      const row = `repeating_weapons_${id}_`;
+      if ( attributes[`${row}skill`] == 'custom' ) {
+         attributes[`${row}skill_name`] = getTranslationByKey('manual')||'manual';
          attributes[`${row}skill_manual_toggle`] = 1;
-         attributes.set();
-         return; 
-      } 
-      //k.log(`trigger new value: ${trigger.newValue}`);
-      if ( trigger.newValue == 'shotgun_rifles' || trigger.newValue == 'shotgun_pistols' ) {
-         //k.log(`Setting shotgun toggle to 1`)
-         attributes[`${row}shotguntoggle`] = 1;
-         attributes.set(); 
+      } else if ( attributes[`${row}skill`] == 'prim_slagsmal' ) {
+         const skillName = attributes[`${row}skill_name`] = getTranslationByKey('slagsmål')||'slagsmål';
+         const fv = attributes[`${row}fv`] = attributes['prim_slagsmal_fv'];
+         attributes[`${row}skill_manual_toggle`] = 0;
+         k.log(`Weapon skill attribute: prim_slagsmal and name ${skillName} (översatt ${getTranslationByKey(skillName)}) med fv ${fv}`);
       } else {
-         //k.log(`Setting shotgun toggle to 0`)
-         attributes[`${row}shotguntoggle`] = 0;
-         attributes.set();
+         //k.log(`trigger new value: ${trigger.newValue}`);
+         //k.log(`Skill attr : `+attributes[`${row}skill`]);
+         //k.log(`Skill translation : `+getTranslationByKey(attributes[`${row}skill`].replace(/_/,'-')));
+         const skillAttr = attributes[`${row}skill`],
+               skillName = attributes[`${skillAttr}_name`]
+               fv = attributes[`${skillAttr}_fv`];;
+         k.log(`Weapon skill attribute: ${skillAttr} and name ${skillName} (översatt ${getTranslationByKey(skillName)}) med fv ${fv}`);
+         //k.log(`Skill translation 2 : `+getTranslationByKey(skillName));
+         attributes[`${row}skill_name`] = getTranslationByKey(skillName)||skillName;
+         attributes[`${row}fv`] = fv;
+         attributes[`${row}skill_manual_toggle`] = 0;
       }
-      //k.log(`Skill attr : `+attributes[`${row}skill`]);
-      //k.log(`Skill translation : `+getTranslationByKey(attributes[`${row}skill`].replace(/_/,'-')));
-      const skillName = attributes[`${row}skill`] == 'rapierfencing' ?
-                           'rapier' : 
-                           (attributes[`${row}skill`] == 'sabrefencing' ?
-                           'sabre' : 
-                           ( attributes[`${row}skill`] == 'throwing' ? 
-                           'throwing-weapon' : attributes[`${row}skill`].replace(/_/,'-')));
-      //k.log(`Skill translation 2 : `+getTranslationByKey(skillName));
-      attributes[`${row}name`] = getTranslationByKey(skillName);
-      attributes[`${row}skill_manual_toggle`] = 0;
+      attributes.set();
+   });
+}
+k.registerFuncs({setWeaponSkills},{type:['opener']});
 
-   } else if ( section == 'repeating_trainedskills' ) {
-      const attr = attributes[`${row}name`],
-            i18n = attr.replace(/_/,'-');
-      if ( attr == 'custom-skill' ) {
-         //k.log(`Custom skill trigger: ${JSON.stringify(trigger)}`);
-         //attributes[`${row}name`] = attributes[`${row}custom_name`]; /
-         attributes[`${row}custom_name_display`] = 1;       
-         //k.log(`Custom skill name: ${attributes[`${row}custom_name`]}`);
-         attributes[`${row}_name`] = attributes[`${row}custom_name`]
-      } else {
-         attributes[`${row}custom_name_display`] = 0;          
-         attributes[`${row}name`] = getTranslationByKey(i18n);
-         attributes[`${row}skill`] = attributes[attr];
-         attributes[`${row}skill_mod`] = attributes[`${attr}_mod`];  
-      }          
-   }   
+const setSkillB = function ({trigger,attributes,sections,casc}) {
+   k.log(`Skill name trigger: ${JSON.stringify(trigger)}`);
+   const [section,rowID,base] = k.parseTriggerName(trigger.name),
+       skillAttr = section ? `${section}_${rowID}` : base.replace(/_fv/,''),
+       skillName = attributes[`${skillAttr}_name`],
+       skillLevel = attributes[`${skillAttr}_fv`];
+   k.log(`Skill section ${section} and base ${base}, attr ${skillAttr} with name ${skillName}`);
+   const bLevel = {
+      0: 0, 1: 1, 2: 2, 3: 1, 4: 1, 
+      5: 2, 6: 2, 7: 2, 8: 2, 9: 2, 10: 2,
+      11: 2, 12: 3, 13: 3, 14: 3, 15: 3,
+      16: 4, 17: 4, 18: 4, 19: 4, 20: 5,      
+   };
+   attributes[`${skillAttr}_b`] = bLevel[skillLevel];
+  
    attributes.set();
 }
-k.registerFuncs({setSkill});
-
-const updateTrainedSkill = function({trigger,attributes,sections,casc}) {
-   //k.log(`Slill value trigger: ${JSON.stringify(trigger)}`);
-   const [section,rowID] = k.parseTriggerName(trigger.name);
-   const row = `${section}_${rowID}_`,
-         attr = attributes[`${row}name`],
-         newVal = trigger.newValue,
-         srcAttr = trigger.sourceAttribute;
-   //k.log(`SKill attribute is ${attr}, new value is ${newVal} from source attr ${srcAttr}`);
-   //k.log(`Energy eapons: ${attributes['energy_weapons']}`)
-   //k.log(`Trained skill attributes: `)
-   if ( srcAttr.endsWith("skill")) {
-      attributes[`${attr}`] = newVal;
-   } else if ( srcAttr.endsWith("skill_mod")) {
-      attributes[`${attr}_mod`] = newVal;      
-   }
-   attributes.set();
-   //k.log(`Energy eapons: ${attributes['energy_weapons']}`)
-}
-k.registerFuncs({updateTrainedSkill});
+k.registerFuncs({setSkillB});
 
 const setTrainedImprove = function({trigger,attributes,sections,casc}) {
    k.log(`Skill trained improvement trigger: ${JSON.stringify(trigger)}`);

@@ -76,8 +76,12 @@ mixin animal-tab
                +collapse
                .collapsed
                   .label-input 
-                     each field in attackfields    
-                        +span({name:field.attr})
+                     each field in attackfields
+                        if field.attr == 'name' 
+                           +action({name:'roll',trigger:{triggeredFuncs:['rollWeaponAttack']}})
+                              +span({name:'name'}) 
+                        else  
+                           +span({name:field.attr})
                .expanded
                   .label-input.input-count-16
                      each field in attackfields   
@@ -86,15 +90,15 @@ mixin animal-tab
                         else 
                            +input({name:field.attr,type:field.type})
       //-+skillList() 
-      +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill'})      
+      +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill',exp:false,b:false})      
 +scss.
    .tab-animal {
       display: grid;
-      grid-template-columns: 35% 65%; 
-      grid-template-areas: "ge info"
-                           "gear attacks"
-                           "gear skills"
-                           "gear abilities";
+      grid-template-columns: 25% 20% 55%; 
+      grid-template-areas: "ge info info"
+                           "gear gear attacks"
+                           "gear gear skills"
+                           "gear gear abilities";
       .section-attributes { grid-area: ge; }
       .section-gear { grid-area: gear; }
       .section-weapons.section-animal-attacks { 
@@ -106,12 +110,17 @@ mixin animal-tab
                grid-template-columns: 1fr 3rem 3rem 2rem 3rem 3rem; 
             } 
          }
+         .repitem {
+            .collapse {
+               left: 0; 
+            }
+         }
       }
       .section-animal-abilities { grid-area: abilities; }
       .section-info {
          grid-area: info; 
          display: grid;
-         grid-template-columns: 1fr 1fr 1fr;
+         grid-template-columns: 33% 27% 40%;
          grid-template-areas: "info info info" 
                               "stats hp sp";
          .box-info {

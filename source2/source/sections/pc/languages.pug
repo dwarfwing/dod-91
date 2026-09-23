@@ -1,8 +1,8 @@
 mixin languages 
    .section-languages
       - fields = [{name:'B',attr:'bskill_level'},{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]
-      +repeatingSkills({name:'språk',attr:'languages',transl:'languages',fleds:fields,exp:false,b:true}) 
-      +box({headerObj:{name:'språk',attr:'languages','data-i18n':'languages'},classes:'box-languages field-count-4',fields:fields})
+      +repeatingSkills({name:'språk',attr:'languages',transl:'languages',fields:fields,exp:false,b:true}) 
+      //-+box({headerObj:{name:'språk',attr:'languages','data-i18n':'languages'},classes:'box-languages field-count-4',fields:fields})
          +fieldset({name:'languages',class:'collapse-container'})
             +collapse
             .collapsed.label-input.input-count-4
@@ -26,7 +26,7 @@ mixin languages
          +number({name:`sprak_`+lang+`_erf`})
 +scss.
    .section-languages {
-            border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
       :is(.expanded,.collapsed) {
          & > .label-input {
             //grid-template-columns: 1fr 3rem 3rem;
@@ -52,7 +52,7 @@ mixin languages
             border-right: 0;
          }
          input[type=number] {
-            border-left: 1px solid var(--border-color);
+            //border-left: 1px solid var(--border-color);
          }
          button[type=action] {
             min-width: 100%;

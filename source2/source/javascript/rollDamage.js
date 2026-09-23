@@ -4,12 +4,6 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
    if (trigger.originalRollId) {  
       rollObj.damageRoll = k.unescape(trigger.originalRollId);
       console.log(`Recorded damage data: ${JSON.stringify(rollObj.damageRoll)}`);     
-   
-   } else if ( /6$/.test(trigger.name) ) {
-      rollObj.name = getTranslationByKey('shotgun-damage');
-      rollObj.damageDice = trigger.name.match(/(\d[dD]6)$/)[0];
-      rollObj.hitareas = true; 
-   // If triggered in any other way, do nothing
    } else {
       const [section,rowID,base] = k.parseTriggerName(trigger.name);
       const row = section ?
@@ -78,19 +72,19 @@ k.registerFuncs({rollDamage});
 
 const rollHitArea = function({trigger,attributes,sections,casc}) {
    rollObj = {};
+   rollObj.charname = attributes.character_name; 
    console.log(`Hitarea trigger: ${JSON.stringify(trigger)}`); 
    console.log(`Hitarea trigger OriginalRollID: ${JSON.stringify(k.unescape(trigger.originalRollId))}`); 
-   if (trigger.originalRollId) { 
-      const totals = k.unescape(trigger.originalRollId);
-      rollObj.damage = totals.damage; 
-      rollObj.pain = totals.pain; 
-      console.log(`Previous roll data: ${JSON.stringify(rollObj.damage)}`);   
-   } 
-   //k.log(`Hit area roll trigger: ${JSON.stringify(trigger)}`);
-   rollObj.name = getTranslationByKey('hitarea');
-   rollObj.hitAreaDie = trigger.name.replace(/hitarea-/,'');
+   rollObj.rollStr = k.unescape(trigger.originalRollId); 
+   console.log(`Previous roll hitarea roll string: ${JSON.stringify(rollObj.rollStr)}`);   
 
-   //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
+   //k.log(`Hit area roll trigger: ${JSON.stringify(trigger)}`);
+   //rollObj.name = getTranslationByKey('hitarea');
+   rollObj.hitAreaDie = trigger.name.replace(/hitarea-/,'');
+   rollObj.rollStr += ` {{hitarearoll=[[1D${rollObj.hitAreaDie}]]}}`;
+   k.log(`Complete hitarea roll string: ${JSON.stringify(rollObj.rollStr)}`); 
+
+   k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
 
    executeRoll({rollObj});
 }

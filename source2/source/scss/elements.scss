@@ -118,9 +118,21 @@
       }
    }
    .repcontainer {
+      .repcontrol {
+         button {
+            &:hover {
+               background-color: rgba(0, 0, 0, 0.2);
+            }
+         }
+      }
       .repitem {
          .itemcontrol {
             z-index: 10000; 
+            button {
+               &:hover {
+                  background-color: rgba(0, 0, 0, 0.2);
+               }
+            }
          }
       }
    }

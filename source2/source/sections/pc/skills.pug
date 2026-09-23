@@ -1,6 +1,6 @@
 mixin skills 
    .section-skills__primary.section-skill 
-      +listSkills({namn:'primära färdigheter',attr:'skills',transl:'basic-skills',array:spine.primaryskills,cost:2})
+      +listSkills({namn:'primära färdigheter',attr:'skills',transl:'basic-skills',array:spine.primaryskills,cost:2,b:false})
       //-+box({headerObj:{name:'primära färdigheter',attr:'skills','data-i18n':'basic-skills'},fields:[{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]})
          each skill in spine.primaryskills
             - geAbbr = skill.base.slice(0,3).toUpperCase();

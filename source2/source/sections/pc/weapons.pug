@@ -1,12 +1,14 @@
 mixin weapons 
    .section-weapons
       +input({name:'weapon_encumbrance',type:'number',value:0,class:'hidden',trigger:{affects:['encumbrance']}})
-      -   let fields = spine.weaponskills; 
+      //-   let fields = spine.weaponskills; 
       +box({headerObj:{attr:'weapons','data-i18n':'weapons'},fields:spine.weaponfields,classes:'coverall'})
-         +fieldset({name:'weapons',class:'collapse-container'})
+         +customControlFieldset({name:'weapons',addClass:'collapse-container',
+            trigger: {addFuncs:['setSkill','weaponSkillSelect']}
+            })
             +collapse
-            +checkbox({name:'shotguntoggle',value:1,class:'hidden shotgun-toggle',checked:false})
-            //-input(type='checkbox',name='attr_shotguntoggle',class='shotgun-toggle')
+            +text({name:'skill_name',class:'hidden',value:'-- Välj --'})
+            +checkbox({name:'skill_manual_toggle',value:1,class:'hidden skill-manual-toggle'})
             .collapsed
                .label-input 
                   each field in spine.weaponfields    
@@ -16,7 +18,7 @@ mixin weapons
                         else 
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
                      else if field.type == 'select' && field.attr == 'skill'
-                        +span({name:'skill'})
+                        +span({name:'skill_name'})
                         //-+select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
                            +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                               | --- Välj ---
@@ -29,67 +31,6 @@ mixin weapons
                               +span({name:field.attr})
                      else 
                         +span({name:field.attr})
-               //-.label-input
-                  +checkbox({name:'equipped',value:1,class:'weapon-equipped',checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
-                  +action({name:'attack_roll',trigger:{triggeredFuncs:['rollWeaponAttack']}})
-                     +span({name:'name'})
-                  span.input-span
-                     +input({type: 'number', name: 'weapon_mod', class:'label-input'})
-                  //- label.text-input
-                     +text({name:'name',class:'text-input'})
-                  +checkbox({name:'skill_manual_toggle',value:1,class:'hidden manual-skillname-toggle'})
-                  +span({name:'name'}).text-span.smaller-text
-                  +input({name:'skill_manual',type:'number'}).text-span.smaller-text.skill-manual
-                  +checkbox({name:'damagebonus',value:1}).input-span
-                  +span({name:'grip'}).input-span
-                  +action({name:'weapon_init_roll',trigger:{triggeredFuncs:['rollInit']}}).init-button
-                     +span({name:'init'}).input-span
-                  +action({name:'damage_roll',trigger:{triggeredFuncs:['rollDamage']}}).damage-button.not-shotgun
-                     +span({name:'damage'}).text-span
-                  span.damage-button.shotgun
-                     +action({name:'damage_roll',trigger:{triggeredFuncs:['rollDamage']}}).damage-button
-                     //-span(data-i18n='special-abbr').text-span.shotgun Spec.
-                     //-+span({name:'shotgundamage_display'})
-                     //-+checkbox({name:'olden',value:1,class:'','data-i18n-title':'olden'})
-                     //-+label({'data-i18n':'olden'}) 
-                     +checkbox-label({
-                        label: '',
-                        inputObj:{name:'sawedoff',type:'checkbox',value:1,class:'','data-i18n-title':'sawed-off'},
-                        divObj:{'data-i18n-title':'normal-or-sawedoff'}
-                        })
-                        //-spanObj:{'data-i18n':'sawed-off'},
-                     +checkbox-label({
-                        label: '',
-                        inputObj:{name:'slug',type:'checkbox',value:1,class:'','data-i18n-title':'slug'},
-                        divObj:{'data-i18n-title':'buck-or-slug'}
-                        })
-                        //-spanObj:{'data-i18n':'slug'},
-                     +checkbox-label({
-                        label: '',
-                        inputObj:{name:'olden',type:'checkbox',value:1,class:''},
-                        divObj:{'data-i18n-title':'blackpowder-or-olden'}
-                        })
-                        //-spanObj:{'data-i18n':'olden'},
-                     //-+checkbox({name:'slug',value:1,class:'','data-i18n-title':'slug'})
-                     //-+label({'data-i18n':'slug'})
-                     //-+checkbox({name:'sawedoff',value:1,class:'','data-i18n-title':'sawed-off'})
-                     //-+label({'data-i18n':'sawed-off'})
-                  +span({name:'pen'}).input-span
-                  +span({name:'range'}).input-span.smaller-text
-                  span.currMax
-                     +span({name:'durability'}).input-span
-                     span.slash /
-                     +span({name:'durability_max'}).input-span
-                  span.currMax
-                     +span({name:'reliability'}).text-span
-                     span.slash /
-                     +span({name:'reliability_max'}).text-span
-                  +span({name:'weight'}).input-span
-                  span.currMax
-                     //-+span({name:'ammo'}).input-span
-                     +input({type: 'number', name: 'ammo', class:'label-input currMax'})
-                     span.slash /
-                     +span({name:'ammo_max'}).input-span
             .expanded
                .label-input.input-count-16
                   each field in spine.weaponfields    
@@ -99,80 +40,19 @@ mixin weapons
                         else 
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
                      else if field.type == 'select' && field.attr == 'skill'
-                        +select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
+                        +select({name:'skill',trigger:{triggeredFuncs:['setWeaponSkills','updateDamagebonus']}}).weapon-skill-select
                            +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                               | --- Välj ---
-                           each skill in spine.weapontypes 
+                           //-each skill in spine.weapontypes 
                               +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
-                           +option({'data-i18n':'manual',value:'manual'})
+                           //-+option({'data-i18n':'manual',value:'manual'})
                               | Manuellt
                      else 
                         if field.trigger
                            +input({name:field.attr,type:field.type,trigger:{triggeredFuncs:[field.trigger]}})
                         else 
                            +input({name:field.attr,type:field.type})
-                  //- rmoved
-                     +checkbox({name:'equipped',value:1,class:'weapon-equipped',checked:true,trigger:{triggeredFuncs:['weaponEncumbrance']}})
-                     label.text-input 
-                        +text({name:'name'}).caps-input
-                     span.input-span
-                        +input({type: 'number', name: 'weapon_mod', class:'label-input'})
-                     span.select 
-                        +select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
-                           +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
-                              | --- Välj ---
-                           each skill in spine.weapontypes 
-                              +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
-                           +option({'data-i18n':'manual',value:'manual'})
-                              | Manuellt
-                     span.input-span 
-                        +input({name:'damagebonus',type:'checkbox',value:1})
-                     span.text-input
-                        +input({type: 'text', name: 'grip', class:'label-input'})
-                     span.input-span
-                        +input({type: 'number', name: 'init', class:'label-input'})
-                     span.text-input.damage.not-shotgun
-                        +input({type: 'text', name: 'damage', class:'label-input'})
-                     span.text-input.damage.shotgun
-                        +checkbox-label({
-                           label: '',
-                           inputObj:{name:'sawedoff',type:'checkbox',value:1,class:'','data-i18n-title':'sawed-off'},
-                           divObj:{'data-i18n-title':'normal-or-sawedoff',class:'shotgun'}
-                           })
-                        +checkbox-label({
-                           label: '',
-                           inputObj:{name:'slug',type:'checkbox',value:1,class:'','data-i18n-title':'slug'},
-                           divObj:{'data-i18n-title':'buck-or-slug',class:'shotgun'}
-                           })
-                           //-spanObj:{'data-i18n':'slug'},
-                        +checkbox-label({
-                           label: '',
-                           inputObj:{name:'olden',type:'checkbox',value:1,class:''},
-                           divObj:{'data-i18n-title':'blackpowder-or-olden',class:'shotgun'}
-                           })
-                           //-spanObj:{'data-i18n':'olden'},
-                     span.input-span
-                        +input({type: 'number', name: 'pen', class:'label-input'})
-                     span.text-input
-                        +input({type: 'text', name: 'range', class:'label-input'}).smaller-text
-                     //-span.select-input 
-                        +select({name:'range_option',trigger:{triggeredFuncs:['rangeDisplay']}})
-                           each item in ranges
-                              +option({value:item.value,'data-i18n':'range-'+item.value})= item.name
-                     span.input-span.currMax
-                        +input({type: 'number', name: 'durability', class:'label-input'})
-                        span.slash /
-                        +input({type: 'number', name: 'durability_max', class:'label-input'})
-                     span.input-span.currMax
-                        +input({type: 'number', name: 'reliability', class:'label-input currMax'})
-                        span.slash /
-                        +input({type: 'number', name: 'reliability_max', class:'label-input currMax'})
-                     span.input-span
-                        +input({type: 'number', name: 'weight', class:'label-input',trigger:{triggeredFuncs:['weaponEncumbrance']}})
-                     span.input-span.currMax
-                        +input({type: 'number', name: 'ammo', class:'label-input currMax'})
-                        span.slash /
-                        +input({type: 'number', name: 'ammo_max', class:'label-input currMax'})
+
    .hidden-weapons.for-upgrades.hidden 
       each weapon in [1,2,3,4,5,6,7]
          +text({name:'vapen_'+weapon+'_text'})
@@ -205,6 +85,30 @@ mixin weapons
             border: 0;
          }
       }
+      .repcontrol-button.repcontrol-button--add {
+         position: absolute;
+         //border: 1px solid pink;
+         width: 1rem;
+         bottom: 0.35rem;
+         right: 0.5rem;
+         padding: 0;
+         &:before {
+            inset: 0;
+            font-family: "Material Symbols Outlined";
+            content: 'playlist_add';
+            font-size: 1.5rem;
+            font-weight: normal;
+            color: var(--font-color);
+            height: 1.75rem;
+            width: 1.75rem;
+         }
+      }
+      .repcontrol {
+         width: calc(100% - 1.5rem);
+         button.repcontrol_edit {
+
+         }
+      }
       .repitem {
          .itemcontrol {
             z-index: 10000;
@@ -215,6 +119,9 @@ mixin weapons
                padding: 0;
                align-content: center;
             } 
+         }
+         .label-input {
+            height: 2.125rem;
          }
          .collapse {
             left: 2rem; 
@@ -273,7 +180,9 @@ mixin weapons
             overflow-x: hidden;
             text-indent: 0.25rem;
             white-space: nowrap;
-            font0size: 85%; 
+            appearance: auto; 
+            align-items: center; 
+
          }
          span[name=attr_damage].text-span {
             width: auto; 

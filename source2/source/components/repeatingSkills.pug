@@ -4,142 +4,74 @@ mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
       fields = fields ? fields : 
                (b ? [{name:'B',attr:'bskill_level'},{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}] :
                [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]); 
-      skillTypeB = b != undefined && b ? 'bskills ' : ''     
+      skillTypeB = b != undefined && b ? 'bskills ' : '';
+      bClass = b == undefined || b == true ? 'display-b' : 'hide-b';
+      bFields =  b == undefined || b == true ? 'input-count-6' : 'input-count-5';  
+      costDisplay = cost == undefined ? ' display-cost-select' : '';
       hideImprovementClass = exp == undefined || exp == true ? '' : 'hide-improvements '; 
    +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
       +fieldset({name:attr})
          .skill-row.collapse-container(class=hideImprovementClass+skillTypeB)
-            if cost
+            if cost != undefined && cost
                +number({name:'cost',value:cost,class:'hidden'})
             +number({name:'b',value:0,class:'hidden'})
             +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
             +collapse
             .collapsed
-               .label-input.input-count-6
+               .label-input(class=bFields)
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                   label.select-input.collapsed 
                      +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
                         +span({name:'name'})
                   //- label.text-input
                      +text({name:'name',class:'text-input'})
-                  //-+span({name:'skill',type:'number'}).input-span.input-0  
-                  span.input-span.input-0 
-                     +span({name:'b',type:'number',class:'label-input-input b-skill'})                
+                  //-+span({name:'skill',type:'number'}).input-span.input-0 
+                  if b || b == undefined
+                     span.input-span.input-0 
+                        +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
                   span.input-span.input-1
-                     +input({type: 'number', name: 'fv', class:'label-input-input'})
+                     +span({name: 'fv', class:'label-input-input'})
                   span.input-span.input-2
                      +input({name:'mod',type:'number'}).input-span.input-2
                   span.input-span.input-2
-                     +input({name:'erf',type:'number'}).input-span.input-3
+                     +span({name:'erf'}).input-span.input-3
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
             .expanded
-               .label-input.input-count-6 
+               .label-input(class=bFields+costDisplay) 
                   //-label.text-input 
                      +text({name:'name'}).caps-input
                   label.select-input.expanded
-                     +text({name:'name',id:'custom-skill-input'})
+                     +text({name:'name',id:'custom-skill-input'})                
+                  if cost == undefined || cost == false
+                     span.select-input.cost-select.input-1 
+                        +select({name:'cost'})
+                           if attr == 'languages'
+                              +option({value:'1',title:'Primärfärdighet','data-i18n-title':'primary-skill'})
+                                 | 1
+                           +option({value:'3',title:'Yrkesfärdighet','data-i18n-title':'profession-skill'})
+                              | 3
+                           +option({value:'5',selected:true,title:'Sekundärfärdighet','data-i18n-title':'secondary-skill'})
+                              | 5
                   if b 
                      span.input-span.input-0 
                         +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
-                  else 
-                     span.select-span.input-0
-                        +select({name: 'type', class:'label-input-select'})
+                  else if b == undefined
+                     span.select-span.type-select.input-0
+                        +select({name: 'type', class:'label-input-select', trigger: { triggeredFuncs: ['setSkillB']}})
                            +option({value:'a'})
                               | A 
                            +option({value:'b'})
-                              | B
-                  span.input-span.input-1
-                     +input({type: 'number', name: 'fv', class:'label-input-input'})
+                              | B  
+                  if attr == 'weaponskills'
+                     span.input-span.input-1
+                        +input({type: 'number', name: 'fv', class:'label-input-input', trigger:{ triggeredFuncs:['setWeaponSkills']}})
+                  else
+                     span.input-span.input-1
+                        +input({type: 'number', name: 'fv', class:'label-input-input', trigger: { triggeredFuncs: ['setSkillB']}})
                   span.input-span.input-2
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
                   span.input-span.input-3
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-//-+scss.
-   .box-skills {
-      .skill-row {         
-         .collapse {
-            display: none; 
-            right: 9rem;
-            z-index: 90000;
-            top: -0.25rem;
-         }
-         &:hover .collapse {
-            display: flex; 
-         }
-      }
-      .label-input {
-         display: grid; 
-         grid-template-columns: calc(100% - 9rem) 3rem 3rem 3rem;
-         button {
-            span {
-               border: 0; 
-            }
-         }         
-         button[type=action] {
-            display: hidden;
-         }
-         .expanded {
-            input[type=text] {
-               width: 100%; 
-            }
-         } 
-      }  
-      &.input-count-5 {
-         position: relative; 
-         grid-template-columns: calc(100% - 9rem) 3rem 3rem 3rem;
-         input[type=checkbox].improve-mark {
-            display: none;
-            position: absolute;
-            top: 0.2rem;
-            right: 0;
-            max-width: 0.2rem;
-            max-height: 0.2rem;
-            height: 0.2rem;
-            width: 0.2rem;
-            padding: 0;
-            min-width: 0.6rem;
-            min-height: 0.6rem;
-            transform: rotate(45deg);
-            &.improve-mark-perfect {
-               top: 50%;
-               //corner-shape: scoop;
-               //border-radius: 50%;
-               //width: 1rem;
-               //min-width: 1rem;
-               //min-height: 1rem;
-               //transform: unset;
-               //right: -0.2rem;
-            }
-            &:checked { 
-               display: flex;
-               background-color: var(--fill-color);
-               &:before {
-                  content: '';
-               }
-            }
-         }
-         &:hover input[type=checkbox] { display: flex; }
-      }
-         
-      button[type=action] {
-         display: hidden;
-      }
-
-      input.exp-toggle {
-         display: none; 
-      }
-      .repitem:hover {
-         position: relative;
-         input.exp-toggle {
-           display: flex;
-           position: absolute;
-           left: -1rem;
-           width: 1rem;
-         } 
-         border-bottom: 1px solid var(--border-color); 
-      }
-   }         
-

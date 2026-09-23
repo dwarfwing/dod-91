@@ -35,7 +35,7 @@ rolltemplate.sheet-rolltemplate-dod91
                .sheet-roll-damage.sheet-roll-pain
                   label(data-i18n='pain') Smärta
                   span {{computed::calcpain}} ({{pain}}) 
-            +templateConditionalDisplay('hitarea')
+            //-+templateConditionalDisplay('hitarea')
                +templateConditionalDisplay('damage')
                   .sheet-roll-damage.sheet-roll-hitarea
                      label(data-i18n='damage') Skada
@@ -75,7 +75,7 @@ rolltemplate.sheet-rolltemplate-dod91
                   //-span.damage-roll-button [<span data-i18n='d8'>d8</span>](~{{character_name}}|hitarea-8||{{computed::damageTotal}})
                   //-span.damage-roll-button [<span data-i18n='d10'>d10</span>](~{{character_name}}|hitarea-10||{{computed::damageTotal}})
                   //-span.damage-roll-button [<span data-i18n='d12'>d12</span>](~{{character_name}}|hitarea-12||{{computed::damageTotal}})
-                  span.damage-roll-button [<span data-i18n='d20'>d20</span>](~{{character_name}}|hitarea-20||{{computed::totals}})
+                  span.damage-roll-button [<span data-i18n='d20'>d20</span>](~{{character_name}}|hitarea-20||{{computed::hitareaRoll}})
             +templateConditionalDisplay('hitarearoll')
                .sheet-roll-hitarea               
                   label(data-i18n='hitarea') träffområde

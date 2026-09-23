@@ -1,37 +1,38 @@
 const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
    const rollObj = {};
-   const [section,rowID,] = k.parseTriggerName(trigger.name);
-   const row =`${section}_${rowID}_`;
+   const [section,rowID,base] = k.parseTriggerName(trigger.name);
+   const row =`${section}_${rowID}`;
    
    rollObj.weaponRoll = true; 
+   rollObj.charname = attributes.character_name; 
    //k.log('Name is '+ attributes[`${row}name`]);
-   rollObj.name = attributes[`${row}name`];
+   rollObj.name = attributes[`${row}_name`];
 
-   rollObj.skillAttr = attributes[`${row}skill`];
+   rollObj.skillAttr = attributes[`${row}skill`]||row;
    //k.log(`Weapon skill: ${rollObj.skillAttr}`);
    if ( rollObj.skillAttr == 'manual' ) {
-      rollObj.rollSkill = attributes[`${row}skill_level`];
+      rollObj.rollSkill = attributes[`${row}_skill_level`];
       rollObj.rollSkillMod = 0;
    } else {
-      rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`]||attributes[`${row}skill_level`];
+      rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`]||attributes[`${row}_skill_level`];
       rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`]||0;
    }
    //k.log(`Skill level is `+attributes[skillAttr]);
-   rollObj.rollWeaponMod = attributes[`${row}weapon_mod`]||0;
+   rollObj.rollWeaponMod = attributes[`${row}_weapon_mod`]||0;
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod + rollObj.rollWeaponMod;
    rollObj.damageButton = true;
    rollObj.damageDice = section ?
-      attributes[`${row}damage`] :
+      attributes[`${row}_damage`] :
       attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_damage`];
    rollObj.damageDice = rollObj.damageDice.toString().replaceAll(/[Tt]/g,'D');
    if ( attributes['use_sp'] == 1) {
       rollObj.painDice = section ?
-         attributes[`${row}pain`] :
+         attributes[`${row}_pain`] :
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_pain`];
       rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
    }
-   if (attributes[`${row}damagebonus`] == '1') {
+   if (attributes[`${row}_damagebonus`] == '1') {
       const damageBonus = attributes[`sakdebonus`],
             damageBonusMod = attributes[`skadebonus_mod`],
             bonus = damageBonusMod == '' || damageBonusMod == undefined ? damageBonus : damageBonusMod;
