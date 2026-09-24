@@ -12,7 +12,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
    +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
       +fieldset({name:attr})
          .skill-row.collapse-container(class=hideImprovementClass+skillTypeB)
-            if cost != undefined && cost
+            if cost != undefined && cost > 0
                +number({name:'cost',value:cost,class:'hidden'})
             +number({name:'b',value:0,class:'hidden'})
             +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
@@ -43,7 +43,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
                      +text({name:'name'}).caps-input
                   label.select-input.expanded
                      +text({name:'name',id:'custom-skill-input'})                
-                  if cost == undefined || cost == false
+                  if cost == undefined 
                      span.select-input.cost-select.input-1 
                         +select({name:'cost'})
                            if attr == 'languages'

@@ -90,7 +90,8 @@ mixin animal-tab
                         else 
                            +input({name:field.attr,type:field.type})
       //-+skillList() 
-      +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill',exp:false,b:false})      
+      .section-skillsanimal
+         +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill',exp:false,b:false,cost:false})      
 +scss.
    .tab-animal {
       display: grid;
