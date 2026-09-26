@@ -1491,6 +1491,9 @@ body .ui-dialog .tab-content .charsheet .repcontainer .repitem .itemcontrol {
 body .ui-dialog .tab-content .charsheet .repcontainer .repitem .itemcontrol button:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box .box-header.field-count-2, body .ui-dialog .tab-content .charsheet div.section-languages .box .box-header.field-count-2, body .ui-dialog .tab-content .charsheet div.section-magicspells .box .box-header.field-count-2 {
+  grid-template-columns: calc(100% - 5rem) 2.5rem 2.5rem;
+}
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box .box-header.field-count-3, body .ui-dialog .tab-content .charsheet div.section-languages .box .box-header.field-count-3, body .ui-dialog .tab-content .charsheet div.section-magicspells .box .box-header.field-count-3 {
   grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
 }
@@ -1669,6 +1672,21 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.bsk
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6.input-count-6.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6.input-count-6.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.bskills :is(.collapsed, .expanded) .label-input.input-count-6.input-count-6.display-cost-select {
   grid-template-columns: calc(100% - 12.5rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-experience :is(.collapsed, .expanded) span.erf, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-experience :is(.collapsed, .expanded) span.erf, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-experience :is(.collapsed, .expanded) span.erf {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-5, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-5, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-5 {
+  grid-template-columns: calc(100% - 5rem) 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-6 {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-5.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-5.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-5.display-cost-select {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-6.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-6.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-experience :is(.collapsed, .expanded) .label-input.input-count-6.display-cost-select {
+  grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem > .collapse, body .ui-dialog .tab-content .charsheet div.section-languages .repitem > .collapse, body .ui-dialog .tab-content .charsheet div.section-magicspells .repitem > .collapse {
   right: 9rem;
@@ -1949,6 +1967,9 @@ body .ui-dialog .tab-content .charsheet .label-input input[type=text].text-input
   font-family: var(--font-family);
   text-transform: var(--text-transform);
 }
+body .ui-dialog .tab-content .charsheet .label-input.currMax > span.input-span:is(.input-0, .input-1) {
+  width: 100%;
+}
 body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type {
   border-right: 0;
   position: relative;
@@ -1956,8 +1977,10 @@ body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type 
 body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type:after {
   content: "/";
   position: absolute;
-  right: 0;
-  top: 0;
+  right: -0.25rem;
+  height: 100%;
+  align-content: center;
+  font-size: 155%;
 }
 body .ui-dialog .tab-content .charsheet .fill-left {
   display: grid;
@@ -2084,7 +2107,7 @@ body .ui-dialog .tab-content .charsheet .section-info {
   align-items: stretch;
   display: grid;
   grid-template-columns: 3fr 3fr 1fr 3fr;
-  grid-template-areas: "info info info stats" "app app app stats" "hp psy sp sp";
+  grid-template-areas: "info info info stats" "app app app stats" "psy hp sp sp";
   align-content: stretch;
   align-items: stretch;
 }
@@ -2097,13 +2120,32 @@ body .ui-dialog .tab-content .charsheet .section-info .box-info input[type=text]
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-tertiary {
   grid-area: stats;
-  align-content: flex-start;
+  align-content: stretch;
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-tertiary label {
   width: stretch;
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-tertiary span.input-span {
   width: 4rem;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-initiative button {
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-initiative span.input-span {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-initiative span.input-span:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  line-height: 1rem;
+  align-content: flex-start;
+  content: "Mod.";
+  font-size: 80%;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-initiative span.input-span input {
+  margin-top: 0.25rem;
 }
 body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character_name span, body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character-name span {
   height: var(--line-height);
@@ -3476,6 +3518,7 @@ body .ui-dialog .tab-content .charsheet .tab-animal {
   display: grid;
   grid-template-columns: 25% 20% 55%;
   grid-template-areas: "ge info info" "gear gear attacks" "gear gear skills" "gear gear abilities";
+  border: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .tab-animal .section-attributes {
   grid-area: ge;
@@ -3493,6 +3536,9 @@ body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-ani
 }
 body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .repitem .collapse {
   left: 0;
+}
+body .ui-dialog .tab-content .charsheet .tab-animal .section-weapons.section-animal-attacks .repcontrol {
+  width: 100%;
 }
 body .ui-dialog .tab-content .charsheet .tab-animal .section-animal-abilities {
   grid-area: abilities;

@@ -1,17 +1,19 @@
-mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
+mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
    - 
       i18n = transl ? transl : attr; 
       fields = fields ? fields : 
                (b ? [{name:'B',attr:'bskill_level'},{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}] :
-               [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]); 
+               [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]);
+      fields = exp === false && b === false ? [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'}] : fields;
       skillTypeB = b != undefined && b ? 'bskills ' : '';
       bClass = b == undefined || b == true ? 'display-b' : 'hide-b';
       bFields =  b == undefined || b == true ? 'input-count-6' : 'input-count-5';  
       costDisplay = cost == undefined ? ' display-cost-select' : '';
-      hideImprovementClass = exp == undefined || exp == true ? '' : 'hide-improvements '; 
-   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
+      hideImprovementClass = impr == undefined || impr == true ? '' : 'hide-improvements '; 
+      hideExperienceClass = exp != undefined && exp == false ? ' hide-experience' : ''; 
+   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass})
       +fieldset({name:attr})
-         .skill-row.collapse-container(class=hideImprovementClass+skillTypeB)
+         .skill-row.collapse-container(class=hideImprovementClass+skillTypeB+hideExperienceClass)
             if cost != undefined && cost > 0
                +number({name:'cost',value:cost,class:'hidden'})
             +number({name:'b',value:0,class:'hidden'})
@@ -33,7 +35,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
                      +span({name: 'fv', class:'label-input-input'})
                   span.input-span.input-2
                      +input({name:'mod',type:'number'}).input-span.input-2
-                  span.input-span.input-2
+                  span.input-span.input-3.erf
                      +span({name:'erf'}).input-span.input-3
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
@@ -71,7 +73,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,exp,b})
                         +input({type: 'number', name: 'fv', class:'label-input-input', trigger: { triggeredFuncs: ['setSkillB']}})
                   span.input-span.input-2
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
-                  span.input-span.input-3
+                  span.input-span.input-3.erf
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})

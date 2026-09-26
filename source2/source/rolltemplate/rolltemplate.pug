@@ -9,6 +9,7 @@ rolltemplate.sheet-rolltemplate-dod91
          .sheet-roll-title 
             h2 {{roll-name}}
          .sheet-roll-result 
+            //-+rollTotal({values:'secretroll 0'})               
             +templateConditionalDisplay('roll1')
                .sheet-roll-total
                   label(data-i18n='result') Resultat 

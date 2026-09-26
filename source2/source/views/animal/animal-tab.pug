@@ -28,7 +28,7 @@ mixin animal-tab
                      {type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-placeholder':info.placeholder}
                   ]
                })
-         +box({classes:'box-tertiary'})
+         +box({classes:'box-tertiary headless'})
             each info in spine.animialtertiary
                - var inputObjs = [{type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
                if info.classes.includes("currMax") 
@@ -39,7 +39,7 @@ mixin animal-tab
                   labelObj: {class: 'label-input-label',attr:info.attr},
                   inputObj: inputObjs,
                })
-         +box({classes:'hp-points points'})
+         +box({classes:'hp-points points headless'})
             +input-label({
                   label: 'Kroppspoäng',
                   divObj: {class:'hitpoints-grid'},
@@ -53,7 +53,7 @@ mixin animal-tab
                noCLear: true,
                capAttr: 'djur_kroppspoang_max'
             })
-         +box({classes:'sp-points points'})
+         +box({classes:'sp-points points headless'})
             +input-label({
                   label: 'Smärtpoäng',
                   divObj: {class:'painpoints-grid'},
@@ -91,7 +91,7 @@ mixin animal-tab
                            +input({name:field.attr,type:field.type})
       //-+skillList() 
       .section-skillsanimal
-         +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill',exp:false,b:false,cost:false})      
+         +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill',impr:false,exp:false,b:false,cost:false})      
 +scss.
    .tab-animal {
       display: grid;
@@ -100,6 +100,7 @@ mixin animal-tab
                            "gear gear attacks"
                            "gear gear skills"
                            "gear gear abilities";
+      border: var(--border-size) solid var(--border-color);
       .section-attributes { grid-area: ge; }
       .section-gear { grid-area: gear; }
       .section-weapons.section-animal-attacks { 
@@ -115,6 +116,9 @@ mixin animal-tab
             .collapse {
                left: 0; 
             }
+         }
+         .repcontrol {
+            width: 100%; 
          }
       }
       .section-animal-abilities { grid-area: abilities; }

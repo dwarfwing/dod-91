@@ -40,7 +40,7 @@ mixin spells
       - fields = [{name:'Mem.',attr:'memorized-abbr'},{name:'SV',attr:'spell_school_level'},{name:'',attr:''},{name:'S',attr:'spell_skill_level'},{name:'E',attr:'effektgrad_abbr'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]
       +box({headerObj:{name:'Besvärjelser',attr:'spells','data-i18n':'spells'},classes:'spells coverall'})
          //-each header in [1,2]
-         .box-header.input-count-5
+         .box-header.input-count-7
             each field in fields
                h2(class='header-field',data-i18n=field.attr)= field.name
                //-h2 class="header-field" data-i18n="spell-skill-level">S</h2>

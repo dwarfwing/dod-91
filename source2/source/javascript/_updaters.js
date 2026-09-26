@@ -8,14 +8,19 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
    // KP MAX, etc
 
-   hp_fv = attributes.hjaltepoang_fv;
-   hp_erf = attributes.hjaltepoang_erf; 
+   hp_fv = attributes.hjalte_poang_fv;
+   hp_erf = attributes.hjalte_poang_erf; 
    attributes.hjaltepoang = hp_fv <= hp_erf ? hp_fv : hp_erf; 
    attributes.hjaltepoang_max = hp_fv <= hp_erf ? hp_erf : hp_fv;
+   attributes.forflyttning = attributes.forflyttning_normal; 
+   attributes.forflyttning_max = attributes.forflyttning_maximal; 
+   attributes.barformaga = attributes.barformaga_normal;
+   attributes.barformaga_max = attributes.barformaga_maximal;
 
    //APPEARANCE
    k.log(`Utseende: ${attributes.utseende1 + " " + attributes.utseende2}`);
    attributes.appearance = attributes.utseende1 + " " + attributes.utseende2; 
+   attributes.set();
 
    // ABILITIES
    [1,2,3,4].forEach( ability => {
@@ -30,7 +35,27 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
             [`${rowID}_collapse`]: 1,
          })
       }
+   });   
+   attributes.set();
+
+   // PROFESSION SKILLS
+   [1,2,3,4,5,6,7,8,9,10,11,12].forEach( skill => {
+      const skillName = attributes[`yrkes_${skill}_text`]; 
+      attributes[`yrkes_${skill}_name`] = skillName; 
+      attributes[`yrkes_${skill}_type`] = 'a'; 
+      if ( skillName != undefined && skillName != '') {
+         k.log(`Found profession skill to upgrade: ${skillName}`);
+         const rowID = k.generateRowID('repeating_professionskills',sections);
+         //k.log(`Row ID = ${rowID}`);
+         k.setAttrs({
+            [`${rowID}_name`]: skillName,
+            [`${rowID}_fv`]: attributes[`yrkes_${skill}_fv`]||0,
+            [`${rowID}_erf`]: attributes[`yrkes_${skill}_erf`]||0,
+            [`${rowID}_collapse`]: 1,
+         })
+      }
    });
+   attributes.set();
 
    // SECONDARY SKILLS
    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25].forEach( skill => {
@@ -49,23 +74,25 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
       }
    });
    attributes.set();
+
    // LANGUAGES sprak_7_text
    [1,2,3,4,5,6].forEach( lang => {
       
-      const langName = attributes[`sprak_${lang}_text`]; 
+      const langName = attributes[`sprak_${lang}_text`]; attributes[`sprak_${lang}_text`]; 
       k.log(`Testing language ${lang} with name ${langName} `+ attributes[`sprak_${lang}_text`]);
       if ( langName != undefined && langName != '') {
          k.log(`Found language to upgrade: ${langName}`);
          const rowID = k.generateRowID('repeating_languages',sections);
          //-k.log(`Row ID = ${rowID}`);
          k.setAttrs({
-            [`${rowID}_text`]: langName,
+            [`${rowID}_name`]: langName,
             [`${rowID}_fv`]: attributes[`sprak_${lang}_fv`]||0,
             [`${rowID}_erf`]: attributes[`sprak_${lang}_erf`]||0,
             [`${rowID}_collapse`]: 1, 
          })
       }
    });
+   attributes.set();
 
    // SPELLS besvarjelse_1_text
    [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19].forEach( spell => {
@@ -85,20 +112,21 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          })
       }
    });
+   attributes.set();
 
    // WEAPONS vapen_7_text
    [1,2,3,4,5,6,7].forEach( weapon => {
       
-      const weaponName = attributes[`vapen_${weapon}_text`]; 
+      const weaponName = attributes[`vapen_${weapon}_text`]||''; 
       k.log(`Testing weapon ${weapon} with name ${weaponName} `+ attributes[`vapen_${weapon}_text`]);
-      if ( weaponName != undefined || weaponName != '') {
+      if ( weaponName != '' ) {
          k.log(`Found weapon to upgrade: ${weaponName}`);
          const rowID = k.generateRowID('repeating_weapons',sections);
          k.log(`Row ID = ${rowID}`);
          k.setAttrs({
             [`${rowID}_name`]: weaponName,
             [`${rowID}_equipped`]: 1,
-            [`${rowID}_skill_level`]: attributes[`vapen_${weapon}_fv`]||0,
+            [`${rowID}_fv`]: attributes[`vapen_${weapon}_fv`]||0,
             [`${rowID}_erf`]: attributes[`vapen_${weapon}_erf`]||0,
             [`${rowID}_damage`]: attributes[`vapen_${weapon}_skada`]||0,
             [`${rowID}_bv`]: attributes[`vapen_${weapon}_bv`]||0,
@@ -109,6 +137,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          })
       }
    });
+   attributes.set();
 
    // UTRUSTNING
    [11,12,13,21,22,23,31,32,33,41,42,43,51,52,53,61,62,63,71,72,73].forEach( id => {
@@ -124,6 +153,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          })
       }
    });
+   attributes.set();
 
    // BODY AREA HITPOINTS
    ['head','chest','rarm','varm','mage','vben','hben'].forEach( part => {
@@ -138,6 +168,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
       k.log(`KP för ${area} är ${ticks}`);
       attributes[`kp_${area}`] = ticks; 
    });
+   attributes.set();
 
    // KROPPSPOÄNG & PSYPOÄNG
    attributes.kroppspoang_max = attributes.total_kp;

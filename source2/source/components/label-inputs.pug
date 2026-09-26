@@ -256,14 +256,19 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
         text-transform: var(--text-transform);
       } 
       &.currMax {
+        & > span.input-span:is(.input-0,.input-1) {
+          width: 100%; 
+        }
         span:first-of-type {
           border-right: 0;
           position: relative; 
           &:after {
             content: '/';
             position: absolute;
-            right: 0;
-            top: 0;
+            right: -0.25rem;
+            height: 100%;
+            align-content: center;
+            font-size: 155%; 
           }
         }
       }

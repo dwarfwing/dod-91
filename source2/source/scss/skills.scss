@@ -1,5 +1,8 @@
 @mixin all {
    div[class*="section-skill"], div.section-languages, div.section-magicspells { 
+      .box .box-header.field-count-2 {
+         grid-template-columns: calc(100% - 5rem) 2.5rem 2.5rem;
+      }     
       .box .box-header.field-count-3 {
          grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
       }     
@@ -203,6 +206,21 @@
                   } 
                } 
             }
+         }
+         &.hide-experience :is(.collapsed,.expanded) {
+            span.erf { display: none; }
+            .label-input.input-count-5 {            
+               grid-template-columns: calc(100% - 5rem) 2.5rem 2.5rem;
+            }
+            .label-input.input-count-6 {            
+               grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
+            }
+            .label-input.input-count-5.display-cost-select {            
+               grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
+            }
+            .label-input.input-count-6.display-cost-select {            
+               grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
+            } 
          }
       }
       .repitem {

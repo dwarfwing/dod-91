@@ -210,6 +210,9 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
         text-transform: var(--text-transform);
       } 
       &.currMax {
+        & > span {
+          width: 100%; 
+        }
         span:first-of-type {
           border-right: 0;
           position: relative; 
@@ -217,7 +220,9 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
             content: '/';
             position: absolute;
             right: 0;
-            top: 0;
+            height: 100%;
+            align-content: center;
+            font-size: 115%; 
           }
         }
       }

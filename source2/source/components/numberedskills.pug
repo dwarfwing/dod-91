@@ -9,6 +9,7 @@ mixin numberedSkills({name,attr,transl,fields,max,cost})
             if cost       
                +number({name:attr+'_'+skill+'_cost',value:cost,class:'hidden'})
             +number({name:attr+'_'+skill+'_b',value:0,class:'hidden'})
+            +text({name:attr+'_'+skill+'_text',class:'hidden'})
             +checkbox({name:attr+'_'+skill+'_type',value:'b',class:'type-b-selected hidden'})
             +checkbox({name:attr+'_'+skill+'_collapse',class:'collapse',value:1})
             .collapsed

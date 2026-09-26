@@ -1,24 +1,7 @@
 mixin languages 
    .section-languages
       - fields = [{name:'B',attr:'bskill_level'},{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]
-      +repeatingSkills({name:'språk',attr:'languages',transl:'languages',fields:fields,exp:false,b:true}) 
-      //-+box({headerObj:{name:'språk',attr:'languages','data-i18n':'languages'},classes:'box-languages field-count-4',fields:fields})
-         +fieldset({name:'languages',class:'collapse-container'})
-            +collapse
-            .collapsed.label-input.input-count-4
-               label.select-input 
-                  +action({name:'roll',trigger:{triggeredFuncs:['rollTrainedSkill']}})
-                     +span({name:'name'})
-               +number({name:'b', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
-               +number({name:'fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
-               +number({name:'mod',type:'number',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
-               +number({name:'erf',type:'number'}).input-span.input-3
-            .expanded.label-input.input-count-4 
-               +input({name: 'name', type: 'text', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-0
-               +number({name: 'b', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-1
-               +number({name: 'fv', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-2
-               +number({name: 'mod', class:'label-input-input',trigger:{triggeredFuncs:['updateTrainedSkill']}}).input-span.input-3
-               +number({name: 'erf', class:'label-input-input'}).input-span.input-3
+      +repeatingSkills({name:'språk',attr:'languages',transl:'languages',fields:fields,impr:false,b:true}) 
    .hidden-languages.for-upgrades.hidden    
       each lang in [1,2,3,4,5,6]
          +text({name:`sprak_`+lang+`_text`})

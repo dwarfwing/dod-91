@@ -111,6 +111,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
          }
          
       }
+
       attributes.set();
 
    }
@@ -187,4 +188,11 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    //k.log(`Roll: ${JSON.stringify(roll)}`); 
    k.log(`Compute Object: ${JSON.stringify(computeObj)}`); 
    finishRoll(roll.rollId,computeObj);
+
+   /* if ( rollObj.secretRoll ) {
+      const rollSecret = startRoll(`@{template:dod91} /sr [[1D20]]`);
+      k.log(`Secret roll: ${JSON.stringify(rollSecret)}`);
+      finishRoll(rollSecret.rollId);
+   } */
+
 }

@@ -45,6 +45,8 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
    rollObj.rollStr += ' {{damageRoll=[[0]]}} {{painRoll=[[0]]}} {{button-label=^{damage}}}';
 
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
    executeRoll({rollObj,attributes,sections});
@@ -76,6 +78,8 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
 
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;   
+
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
    executeRoll({rollObj,attributes});
@@ -104,6 +108,8 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
 
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
 
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
    executeRoll({rollObj,attributes});
@@ -130,11 +136,14 @@ const rollRepeatingSpell = function ({trigger,attributes,sections,casc}) {
    const effectModStr = rollObj.spellLevel == 1 ? `` : ` -${rollObj.rollEffectMod}[${k.getTranslationByKey('spell-level')}]`;
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
    const rollModStr = parseInt(rollObj.rollSkillMod) != 0 ? ` ${rollObj.rollSkillMod}[${k.getTranslationByKey('skill-mod')}]` : ``;
-   rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod - rollObj.rollEffectMod;
+   //rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod - rollObj.rollEffectMod;
+   rollObj.target = rollObj.rollSkill;
    
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} `;
+   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name} E${rollObj.spellLevel}}} `;
 
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}${effectModStr}${rollModStr}]]}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{spell-level=[[${rollObj.spellLevel}]]}} {{target=[[${parseInt(rollObj.target)}${effectModStr}${rollModStr}]]}}`;
+
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -165,6 +174,8 @@ const rollSkill = function ({trigger,attributes,sections,casc}) {
    
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
 
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
    k.log(`Roll object is: ${JSON.stringify(rollObj)}`);
    executeRoll({rollObj,attributes});
 }
@@ -181,6 +192,8 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
    rollObj.attribute = attributes[attr];
+
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
    rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}}` ;
 /*    rollObj.rollStr += ` {{easy=[[${Math.floor(parseInt(rollObj.attribute) * 7)}]]}}`;
@@ -233,25 +246,11 @@ const rollInit = async function({trigger,attributes,sections,casc}) {
    }; */
    const rollObj = {
       name: 'Initiativ',
-      initMod: attributes.initmod,
+      initMod: attributes.initmod||0,
    };
-   //rollObj.rollInit = rollObj.init + rollObj.initMod;
-   /* if ( rollObj.init == undefined || rollObj.init == 0 || rollObj.init == '' ) { */
-      rollObj.initStr = `1D10 + ${attributes.smi_fv} + ${rollObj.initMod} [${getTranslationByKey('modifier-abbr')}]`;
-   /* } else {
-      rollObj.initStr = `${rollObj.init} [${getTranslationByKey('init-abbr')}}]`;
-   } */   
-   /* if ( rollObj.initMod != 0 ) {
-      rollObj.initStr += ` + ${rollObj.initMod} [${getTranslationByKey('modifier-abbr')}]`;
-   }  */
-   /* if ( section && section == 'repeating_weapons') {
-      //k.log(`Weapon initiative!`)
-      rollObj.weaponInit = attributes[`${row}init`]||0;
-      rollObj.initStr += ` + ${rollObj.weaponInit} [${getTranslationByKey('weapon')}]`;
-   } */
-   //k.log('Name is '+base.replace(/-/g,'_').replace(/_action/,'').toLowerCase());
-   //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
-   //executeRoll({rollObj});
+   const initModStr = rollObj.initMod != 0 ? `+ ${rollObj.initMod} [${getTranslationByKey('modifier-abbr')}]` : ``;
+   rollObj.initStr = `1D10 + ${attributes.smi_fv} ${initModStr}`;
+
    rollObj.rollStr = attributes.templatestart + ` {{roll-name=${rollObj.name}}}`;
    rollObj.rollStr += ` {{roll1=[[${rollObj.initStr} &{tracker} ]]}}`;
    //k.log(`Executing roll string: ${rollObj.rollStr}`);
@@ -259,34 +258,10 @@ const rollInit = async function({trigger,attributes,sections,casc}) {
    //attributes.initiative = parseInt(roll.results.roll1.result) - rollObj.initMod - rollObj.weaponInit;
    //k.log(`Roll: ${JSON.stringify(roll)}`);
    finishRoll(roll.rollId);
+
    attributes.set();
 }
 k.registerFuncs({rollInit});
-
-// Rolled when clicking Initiativbonus field
-const setInit = async function({trigger,attributes,sections,casc}) {
-   k.log(`Set Init trigger: ${JSON.stringify(trigger)}`);
-   const rollObj = {
-      name : getTranslationByKey('initiative-set'),
-      initBonus : attributes['initiativebonus'],
-      initBonusMod : attributes[`initiativebonus_mod`]||0,
-   }; 
-   rollObj.initStr = `1d10 + ${rollObj.initBonus} [${getTranslationByKey('init-bonus-abbr')}]`;
-   if ( rollObj.initBonusMod != 0 ) {
-      rollObj.initStr += ` + ${rollObj.initBonusMod} [${getTranslationByKey('modifier-abbr')}]`;
-   }
-   rollObj.rollStr = attributes.templatestart + ` {{roll-name=${rollObj.name}}}`;
-   rollObj.rollStr += ` {{roll1=[[${rollObj.initStr} &{tracker} ]]}}`;
-   console.log(`INit roll string: ${rollObj.rollStr}`);
-   k.log(`Executing init roll string: ${rollObj.rollStr}`);
-   const roll = await startRoll(rollObj.rollStr);
-   k.log(`Init roll: ${JSON.stringify(roll)}`);
-   k.log(`Init roll result: ${roll.results.roll1.result}`);
-   attributes.initiative = roll.results.roll1.result; 
-   finishRoll(roll.rollId); 
-   attributes.set(); 
-}
-k.registerFuncs({setInit});
 
 const abilityDice = async function ({trigger,attributes,sections,casc}) {
    //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
