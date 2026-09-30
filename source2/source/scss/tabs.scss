@@ -21,6 +21,17 @@
             font-family: 'Material Symbols Outlined';
             color: var(--font-color-medium);
             font-size: 1.5rem;
+         }
+         &.tabs--pctabs__header {
+            &.tabs__header ul.tabs__nav-list {
+               button.tabs__button.tabs--pctabs__button.tab-button:not(.k-active-button):hover {
+                  background-color: var(--bg-color4);
+               }
+               li.tabs__nav-item:last-of-type {
+                  width: auto; 
+                  aspect-ratio: 4 / 3;
+                  font-family: "Material Symbols Outlined";
+               }
             }
          }
       }
@@ -85,3 +96,4 @@
          }
       }
    }
+}

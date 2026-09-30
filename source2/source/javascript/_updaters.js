@@ -186,7 +186,8 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
    attributes.set(); 
 
-   calcSmartpoang({attributes}); 
+   calcHealthnpoints({attributes}); 
+   calcPainpoints({attributes}); 
 
    attributes.whisper = '';
    attributes.version = 2.0; 

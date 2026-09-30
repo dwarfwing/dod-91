@@ -169,6 +169,7 @@ body {
   --bg-color: #fc562c;
   --bg-color2: #e3e3e3;
   --bg-color3: #fefefe;
+  --bg-color4: #bababa;
   --bg-color9: rgb(31, 31, 31);
   --bg-color0: rgb(255, 255, 255);
   --font-family: Helvetica, "Arimo", Sans-serif;
@@ -1315,45 +1316,53 @@ body .ui-dialog .tab-content .charsheet .tabs .tabs__header button.tab-button {
   color: var(--font-color-medium);
   font-size: 1.5rem;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__header.tabs--pctabs__header.tabs__header ul.tabs__nav-list button.tabs__button.tabs--pctabs__button.tab-button:not(.k-active-button):hover {
+  background-color: var(--bg-color4);
+}
+body .ui-dialog .tab-content .charsheet .tabs .tabs__header.tabs--pctabs__header.tabs__header ul.tabs__nav-list li.tabs__nav-item:last-of-type {
+  width: auto;
+  aspect-ratio: 4/3;
+  font-family: "Material Symbols Outlined";
+}
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body {
   min-width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body > article {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body > article {
   display: flex;
   flex-wrap: wrap;
   min-width: 100%;
   padding: 0;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc {
   width: 100%;
   display: flex;
   gap: 0;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .box.coverall {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .box.coverall {
   height: -webkit-fill-available;
   align-content: flex-start;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs {
   width: 100%;
   justify-content: space-evenly;
   border: var(--border-size) solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header {
   width: 100%;
   height: unset;
   border: var(--border-size) solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list {
   width: 100%;
   margin: 0;
   justify-content: space-evenly;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list li {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list li {
   width: 100%;
   margin: 0;
   height: 2.75rem;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list button {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list button {
   font-family: unset;
   color: unset;
   font-size: 1rem;
@@ -1367,10 +1376,10 @@ body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc 
   height: 100%;
   align-content: center;
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list button.k-active-button {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__header .tabs__nav-list button.k-active-button {
   background: var(--bg-color);
 }
-body .ui-dialog .tab-content .charsheet .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__body {
+body .ui-dialog .tab-content .charsheet .tabs .tabs__body .tabs--dod91__container--pc .tabs--pctabs .tabs__body {
   width: 100%;
 }
 body .ui-dialog .tab-content .charsheet .collapse-container > .collapse:not(:checked),
@@ -2021,6 +2030,9 @@ body .ui-dialog .tab-content .charsheet .section-topframe {
   grid-template-columns: 1fr 3fr;
   border: var(--border-size) solid var(--border-color);
 }
+body .ui-dialog .tab-content .charsheet .section-attributes:hover .collapse {
+  display: grid;
+}
 body .ui-dialog .tab-content .charsheet .section-attributes .size-attributes .attribute-row {
   grid-template-columns: 1fr 5rem;
 }
@@ -2028,12 +2040,24 @@ body .ui-dialog .tab-content .charsheet .section-attributes .size-attributes .at
   border-radius: 0;
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-attributes button.roller + button {
+body .ui-dialog .tab-content .charsheet .section-attributes input.collapse {
+  display: none;
+  z-index: 1000;
+  width: auto;
+  right: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:checked ~ div .expanded {
   display: none;
 }
-body .ui-dialog .tab-content .charsheet .section-attributes input {
-  width: 100%;
-  text-align: center;
+body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:not(:checked) {
+  display: grid;
+  opacity: unset;
+}
+body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:not(:checked) ~ div .collapsed {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-attributes button.roller + button {
+  display: none;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row {
   display: grid;
@@ -2043,7 +2067,18 @@ body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row label
   border: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row input {
+  width: 100%;
+  text-align: center;
   border-left: 1px solid var(--border-color);
+  background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row .label-input-span {
+  border-left: 1px solid var(--border-color);
+  width: 100%;
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row .label-input-span input {
+  border: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row button[type=action].attribute-roll {
   display: none;
@@ -2066,38 +2101,6 @@ body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row {
         display: flex; 
      }
   }*/
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row.column-initiative.input-count-3 {
-  grid-template-columns: 1fr 1.5rem 3rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row.column-initiative.input-count-3 button.roller {
-  border: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row.column-initiative.input-count-3 .input-0 {
-  width: 1.45rem;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row.column-initiative.input-count-3 .input-2 {
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row button span {
-  width: 100%;
-  border: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row button[type=action].initiative-reset {
-  justify-self: center;
-  place-self: center;
-  justify-content: center;
-  border: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row button[type=action].initiative-reset + button[type=action] {
-  display: none;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .secondary-row button[type=action].initiative-reset:before {
-  font-family: "Material Symbols Outlined";
-  content: "x_circle";
-  font-size: 1.25rem;
-  line-height: 0.5rem;
-  justify-self: center;
 }
 body .ui-dialog .tab-content .charsheet .section-info {
   display: grid;
@@ -2678,6 +2681,7 @@ body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas-
   border-radius: 0;
   font-size: 1.25rem;
   background-color: var(--bg-color2);
+  padding: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor {
   display: grid;
@@ -3513,6 +3517,27 @@ body .ui-dialog .tab-content .charsheet .tab-recovery .repcontainer {
 body .ui-dialog .tab-content .charsheet .tab-recovery .repcontrol {
   bottom: 0;
   position: absolute;
+}
+body .ui-dialog .tab-content .charsheet .section-config {
+  column-count: 2;
+  column-gap: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-config .box .input-label {
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  line-height: 2rem;
+  justify-content: space-between;
+  height: 2rem;
+  padding-right: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-config .box .input-label input[type=text] {
+  width: 4rem;
+  flex: unset;
+  text-align: center;
+  height: 1.5rem;
+  align-self: center;
+  outline: 1px solid black;
+  corner-shape: bevel;
 }
 body .ui-dialog .tab-content .charsheet .tab-animal {
   display: grid;

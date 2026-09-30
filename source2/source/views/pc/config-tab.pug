@@ -1,0 +1,76 @@
+mixin config-tab
+   .section-config 
+      +box({headerObj:{name:'Formulär',attr:'sheetsettings','data-i18n':'sheet-settings'},classes:'coverall'})
+         +input-label({
+            label: 'Visa djur-tabben för RP',
+            spanObj:{'data-i18n':'show-animal-tab'},
+            divObj:{class:''},
+            inputObj:{name:'show animal tab',type:'checkbox',value:1,checked:true}
+            })
+         +input-label({
+            label: 'Visa djur-tabben för RP',
+            spanObj:{'data-i18n':'show-animal-tab'},
+            divObj:{class:''},
+            inputObj:{name:'show animal tab',type:'checkbox',value:1,checked:true}
+            })
+      +box({headerObj:{name:'Karaktär',attr:'character settings','data-i18n':'character-settings'},classes:'coverall'})
+         +input-label({
+            label: 'Kropppoäng modifikation',
+            spanObj:{'data-i18n':'kp-modifier'},
+            divObj:{class:''},
+            inputObj:{name:'kp mod',type:'number',value:0,trigger:{triggeredFuncs:['calcHealthpoints']}}
+            })
+         +input-label({
+            label: 'Smärtpoäng modifikation',
+            spanObj:{'data-i18n':'sp-modifier'},
+            divObj:{class:'show-sp'},
+            inputObj:{name:'sp mod',type:'number',value:0,trigger:{triggeredFuncs:['calcPainpoints']}}
+            })
+         +input-label({
+            label: 'PSY-poäng modifikation',
+            spanObj:{'data-i18n':'psy-modifier'},
+            divObj:{class:''},
+            inputObj:{name:'psy mod',type:'number',value:0,trigger:{triggeredFuncs:['calcPsypoints']}}
+            })
+         +input-label({
+            label: 'Bärförmåga modifikation',
+            spanObj:{'data-i18n':'barformaga-modifier'},
+            divObj:{class:''},
+            inputObj:{name:'barformaga mod',type:'number',value:0,trigger:{triggeredFuncs:['calcCarrycap']}}
+            })
+         +input-label({
+            label: 'Förflyttning modifikation',
+            spanObj:{'data-i18n':'movement-modifier'},
+            divObj:{class:''},
+            inputObj:{name:'movement mod',type:'number',value:0,trigger:{triggeredFuncs:['calcMovement']}}
+            })
+         +input-label({
+            label: 'Skadebonus manuellt',
+            spanObj:{'data-i18n':'sb-override'},
+            divObj:{class:''},
+            inputObj:{name:'sb mod',type:'text',value:'',trigger:{triggeredFuncs:['calcDamagebonus']}}
+            })
++scss.
+   .section-config {
+      column-count: 2;
+      column-gap: 0;
+      .box {
+         .input-label {
+            width: 100%;
+            border-bottom: 1px solid var(--border-color);
+            line-height: 2rem;
+            justify-content: space-between;
+            height: 2rem;
+            padding-right: 1rem; 
+            input[type=text] {
+               width: 4rem; 
+               flex: unset; 
+               text-align: center; 
+               height: 1.5rem; 
+               align-self: center; 
+               outline: 1px solid black; 
+               corner-shape: bevel; 
+            }
+         }
+      }
+   }

@@ -116,7 +116,7 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
 }
 k.registerFuncs({rollRepeatingSkill});
 
-const rollRepeatingSpell = function ({trigger,attributes,sections,casc}) {
+const rollRepeatingSpell = async function ({trigger,attributes,sections,casc}) {
    k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
    const rollObj = {};
    const [section,rowID] = k.parseTriggerName(trigger.name);
@@ -131,6 +131,12 @@ const rollRepeatingSpell = function ({trigger,attributes,sections,casc}) {
    rollObj.name = attributes[`${rollObj.skillAttr}_name`];
    rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
    rollObj.spellLevel = parseInt(attributes[`${rollObj.skillAttr}_e`]||1); 
+   const psy = attributes.psypoang;
+   if ( parseInt(attributes.psypoang) < parseInt(rollObj.spellLevel) ) {
+      const noPsyRoll = await startRoll(`/w gm Inte tillräckligt med PSY-poäng!`);
+      finishRoll(noPsyRoll.rollId);
+      return; 
+   }
    k.log(`Spell S value: ${rollObj.rollSkill}`);
    rollObj.rollEffectMod = (rollObj.spellLevel - 1) * 2;
    const effectModStr = rollObj.spellLevel == 1 ? `` : ` -${rollObj.rollEffectMod}[${k.getTranslationByKey('spell-level')}]`;
@@ -187,15 +193,15 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
    const [section,rowID,base] = k.parseTriggerName(trigger.name);
    //k.log(`Base is ${base}`);
    //k.log('Name is '+base.replace(/-/g,'_').replace(/_action/,'').toLowerCase());
-   const attr = base.replace(/attr-/,'').replace(/_action/,'').toLowerCase();
-   rollObj.name = getTranslationByKey(attr.toLowerCase());
+   const attr = base.replace(/attr-/,'').replace(/roll-/,'').replace(/_action/,'').toLowerCase();
+   rollObj.name = getTranslationByKey(attr.toLowerCase())||attr.charAt(0).toUpperCase() + attr.slice(1);
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
-   rollObj.attribute = attributes[attr];
+   rollObj.attribute = attributes[attr+'_fv'];
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}}` ;
+   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}]]}}` ;
 /*    rollObj.rollStr += ` {{easy=[[${Math.floor(parseInt(rollObj.attribute) * 7)}]]}}`;
    rollObj.rollStr += ` {{normal=[[${Math.floor(parseInt(rollObj.attribute) * 5)}]]}}`;
    rollObj.rollStr += ` {{difficult=[[${Math.floor(parseInt(rollObj.attribute) * 3)}]]}}`;

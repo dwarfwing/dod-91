@@ -2,6 +2,7 @@ mixin info
    .section-info 
       +checkbox({name:'kroppspoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
       +checkbox({name:'psipoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
+      +checkbox({name:'smartpoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
       +box({classes:'box-info headless'})
          each info in spine.info            
             +label-inputs({
@@ -72,7 +73,7 @@ mixin info
                label: 'Smärtpoäng',
                divObj: {class:'painpoints-grid'},
                spanObj: {class: 'label-input-label'},
-               inputObj: {type: 'number',name: 'smartpoang_max',type:'number',trigger:{formula:'@{fys_fv} + @{fys_fv}'}},
+               inputObj: {type: 'number',name: 'smartpoang_max',type:'number',trigger:{triggeredFuncs:['calcPainpoints']}},
             })
          +fillLeft-label({
             radioObj:{name:'smartpoang',type:'radio',class:'counter'},

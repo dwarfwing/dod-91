@@ -30,8 +30,8 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
             weaponSkill == 'bodybombing' || 
             weaponSkill == 'knifefighting' ) { */
       if (attributes[`${row}damagebonus`] == '1') {
-         const damageBonus = attributes[`damagebonus`],
-               damageBonusMod = attributes[`damagebonus_mod`],
+         const damageBonus = attributes[`skadebonus`],
+               damageBonusMod = attributes[`sb_mod`],
                bonus = damageBonusMod == '' || damageBonusMod == undefined ? damageBonus : damageBonusMod;
          //k.log(`Damage bonus ? ${damageBonusMod == '' || damageBonusMod == undefined}`)
          rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.toString().replaceAll(/[Tt]/g,'D') : bonus;

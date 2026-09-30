@@ -1,16 +1,8 @@
 mixin attributes 
-   .section-attributes 
+   .section-attributes.collapse-container
+      +collapse(name='attributes-collapse') 
       +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'},classes:'attributes-box'})
          each attribute in spine.attributes
-            //- Removed abbreviation: label: attribute.name+' ('+attribute.abbr+')',
-            //-+label-inputs({               
-               label: attribute.name,
-               divObj: {class:'column-'+attribute.name},
-               labelObj: {class: 'label-input-label',attr:attribute.attr},  
-               inputObj: [
-                  {type: 'number', name: attribute.attr, class:'label-input-input input-'+attribute.attr}
-               ]
-               })
             div(class='column-'+attribute.attr).label-input.input-count-1.attribute-row
                //-label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
                +action({
@@ -19,29 +11,44 @@ mixin attributes
                   label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
                //-+action({name:'attr-'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']},'data-i18n-title':'attribute-roll'}).attribute-roll
                //-+action({name:'attr-contest-'+attribute.attr,trigger:{triggeredFuncs:['rollAttributeContest']},'data-i18n-title':'attribute-roll-contest'}).attribute-roll.ge-roll-geRollContest
-               +input({type: 'number', name: attribute.attr+'_fv', min: 0, class:'label-input-input input-'+attribute.attr+'',})
+               +input({type: 'number', name: attribute.attr+'_fv', min: 0, class:'expanded label-input-input input-'+attribute.attr+'',trigger:{triggeredFuncs:attribute.trigger,affects:attribute.affects}})
+               +span({name: attribute.attr+'_fv', min: 0, class:'collapsed label-input-input label-input-span input-'+attribute.attr+''})
                +input({type: 'number', name: attribute.attr+'_bc', min: 0, class:'hidden label-input-input input-'+attribute.attr+'',hidden:true})
       +box({classes:'size-attributes headless'})
-         +label-inputs({
+         div(class='column-length').label-input.input-count-1.attribute-row
+            label(class="label-input__text", data-i18n="length", title="Karaktärens längd i cm", data-i18n-title="length-title") Längd
+            span.input-span.label-input-span.input-0.expanded
+               +text({name:"length", type:"text", title:"@{length}"})
+            +span({name:'length',class:'collapsed label-input-span'})
+         div(class='column-weight').label-input.input-count-1.attribute-row
+            label(class="label-input__text", data-i18n="weight", title="Karaktärens vikt i kg", data-i18n-title="weight-title") Vikt
+            span.input-span.label-input-span.input-0.expanded
+               +text({name:"weight", type:"text", title:"@{weight}"})
+            +span({name:'weight',class:'collapsed label-input-span'})
+         //-+label-inputs({
             label: 'Längd',
             labelObj: { 'data-i18n': 'length'},
             divObj: { class: 'attribute-row'},
             spanObj: { },
             inputObj: [{ name:'length', type: 'text' }]
-         })
-         +label-inputs({
+            })
+         //-+label-inputs({
             label: 'Vikt',
             labelObj: { 'data-i18n': 'weight'},
             divObj: { class: 'attribute-row'},
             spanObj: { },
             inputObj: [{ name:'weight', type: 'text' }]
-         })
+            })
 +scss.
    .section-attributes {
       //display: inline-grid;
       //row-gap: 1rem;
+      &:hover {
+         .collapse {
+            display: grid; 
+         }
+      }
       .box.attributes-box {
-         
          //border-top: var(--border-size-2x) solid var(--border-color);
          //border-left: var(--border-size-2x) solid var(--border-color);
       }
@@ -54,15 +61,29 @@ mixin attributes
             }
          }
       }
+      input.collapse {
+         display: none;
+         z-index: 1000;
+         width: auto; 
+         right: 0.25rem; 
+         &:checked { 
+            & ~ div .expanded {
+               display: none;
+            }
+         }
+         &:not(:checked) {
+            display: grid; 
+            opacity: unset;
+            & ~ div .collapsed {
+               display: none;               
+            }
+         }
+      }
       button.roller {
          & + button {
             display: none;
          }
-      }
-      input {
-         width: 100%;
-         text-align: center; 
-      }
+      } 
       .attribute-row {
          display: grid;
          grid-template-columns: 1fr 3rem;
@@ -70,7 +91,19 @@ mixin attributes
             border: 0; 
          }
          input {
+            width: 100%;
+            text-align: center; 
             border-left: 1px solid var(--border-color);
+
+            background-color: var(--bg-color3);
+         }
+         .label-input-span {
+            border-left: 1px solid var(--border-color);
+            width: 100%; 
+            text-align: center; 
+            input {
+               border: 0; 
+            }
          }
          button[type=action].attribute-roll {
             display: none;
@@ -95,46 +128,6 @@ mixin attributes
             }
          }*/
       }
-      .secondary-row {
-         &.column-initiative.input-count-3 {
-            grid-template-columns: 1fr 1.5rem 3rem 3rem;
-            button.roller {
-               border: 0; 
-            }
-            .input-0 {
-               width: 1.45rem;
-            }
-            .input-2 {
-               border-right: 0; 
-            }
-         }         
-         button { 
-            span { 
-               width: 100%; 
-               border: 0;
-            }
-         }
-         button[type=action].initiative-reset {
-            justify-self: center;
-            place-self: center;
-            justify-content: center;
-            border: 0;
-            & + button[type=action] { display: none;}
-            &:before {
-               font-family: 'Material Symbols Outlined';
-               content: 'x_circle';
-               font-size: 1.25rem;
-               line-height: 0.5rem; 
-               justify-self: center;
-            }
-         }
-      }
    }
-+module.
-   const resetInitiative = function({trigger,attributes,sections,casc}) {
-      attributes.initiative = '';
-      attributes.set();
-   }
-   k.registerFuncs({resetInitiative});
 
 

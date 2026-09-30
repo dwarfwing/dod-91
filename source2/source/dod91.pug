@@ -67,22 +67,25 @@ main#main
       | disabled_visible 
 
   +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap
-    +tab({name:'pc',container:'article',button:{content:'Person_4',class:'tab-button',title:'PC','data-i18n-title':'pc-caps'}})
+    +tab({name:'pc',container:'article',button:{content:'Person_4',class:'tab-button',title:'Rollperson','data-i18n-title':'pc-caps'}})
       +topframe   
       p(style="width:100%;")
       +tabs({name:'pctabs',defaultActiveTab:'skills'})
-        +tab({name:'skills',container:'div',button:{content:'Färdigheter',class:'tab-button',title:'PC','data-i18n-title':'skills'}})
+        +tab({name:'skills',container:'div',button:{content:'Färdigheter',class:'tab-button',title:'Primära, Yrkes och Sekundära Färdigheter samt Språk','data-i18n-title':'skills-title'}})
           +skills-tab
-        +tab({name:'combat',container:'div',button:{content:'Strid',class:'tab-button',title:'combat','data-i18n-title':'combat'}})
+        +tab({name:'combat',container:'div',button:{content:'Strid',class:'tab-button',title:'Vapen, Rustning, Träffområden, samt Färdigheter relaterade med strid.','data-i18n-title':'combat-title'}})
           +combat-tab
-        +tab({name:'magic',container:'div',button:{content:'Magi',class:'tab-button',title:'magic','data-i18n-title':'magic'}})
+        +tab({name:'magic',container:'div',button:{content:'Magi',class:'tab-button',title:'Magiskolor, Besvärjelser och relevanta färdigheter','data-i18n-title':'magic-title'}})
           +magic-tab
-        +tab({name:'gear',container:'div',button:{content:'Utrustning',class:'tab-button',title:'gear','data-i18n-title':'gear'}})
+        +tab({name:'gear',container:'div',button:{content:'Utrustning',class:'tab-button',title:'Utrustning, både buren, på riddjur och i förvar. Samt pengar. ','data-i18n-title':'gear-title'}})
           +gear-tab
-        +tab({name:'animal',container:'div',button:{content:'Djur',class:'tab-button',title:'animal','data-i18n-title':'animal'}})
+        +tab({name:'animal',container:'div',button:{content:'Djur',class:'tab-button',title:'Riddjur, eller Familiar om man har ett sånt. ','data-i18n-title':'animal-title'}})
           +animal-tab
-        +tab({name:'recovery',container:'div',button:{content:'Vila & Skador',class:'tab-button',title:'recovery','data-i18n-title':'recovery'}})
+        +tab({name:'recovery',container:'div',button:{content:'Vila & Skador',class:'tab-button',title:'Skador och andra tillstånd, samt sömn och vila.','data-i18n-title':'recovery-title'}})
           +recovery-tab
+        +tab({name:'config',container:'div',button:{content:'settings',class:'tab-button',title:'Inställningar','data-i18n-title':'Inställningar-title'}})
+          +config-tab
+          //-+config-tab
         //-+tab({name:'notes',container:'div',button:{content:'Anteckningar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
           +notes-tab
     //-+tab({name:'npc',container:'article',button:{content:'Person_2',class:'tab-button',title:'NPC','data-i18n-title':'npc-caps'}})

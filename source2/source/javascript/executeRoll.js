@@ -115,6 +115,10 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       attributes.set();
 
    }
+
+   if ( rollObj.spellLevel ) {
+      attributes['psypoang'] = parseInt(attributes.psypoang) - parseInt(rollObj.spellLevel);
+   }
     
    if ( rollObj.damageRoll || ( rollObj.damageDice && !rollObj.damageButton ) ) { 
       computeObj.calcdamage = roll.results.damage.result < 0 ? 1 : 0;     
@@ -185,6 +189,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       computeObj.hitareadetails = 1;
       computeObj.hitarea = area != undefined ? attributes[`hitarea_${area}`] : '';
    }
+   attributes.set();
    //k.log(`Roll: ${JSON.stringify(roll)}`); 
    k.log(`Compute Object: ${JSON.stringify(computeObj)}`); 
    finishRoll(roll.rollId,computeObj);
