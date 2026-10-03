@@ -41,11 +41,12 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
       //rollObj.damageBonus = rollObj.damageBonus.test(/Tt/g) ? rollObj.damageBonus.replace(/[Tt]/g,'D') : rollObj.damageBonus;
    }
 
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
-   rollObj.rollStr += ' {{damageRoll=[[0]]}} {{painRoll=[[0]]}} {{button-label=^{damage}}}';
-
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
+   rollObj.rollStr += ` {{damageRoll=[[0]]}} {{painRoll=[[0]]}} {{button-label=^{damage}}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -75,10 +76,11 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
-   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;   
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+   
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -104,11 +106,12 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
    
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} `;
-
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
-
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -144,12 +147,13 @@ const rollRepeatingSpell = async function ({trigger,attributes,sections,casc}) {
    const rollModStr = parseInt(rollObj.rollSkillMod) != 0 ? ` ${rollObj.rollSkillMod}[${k.getTranslationByKey('skill-mod')}]` : ``;
    //rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod - rollObj.rollEffectMod;
    rollObj.target = rollObj.rollSkill;
-   
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name} E${rollObj.spellLevel}}} `;
-
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{spell-level=[[${rollObj.spellLevel}]]}} {{target=[[${parseInt(rollObj.target)}${effectModStr}${rollModStr}]]}}`;
-
+ 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{spell-level=[[${rollObj.spellLevel}]]}} {{target=[[${parseInt(rollObj.target)}${effectModStr}${rollModStr}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -176,11 +180,11 @@ const rollSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`]||0;
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
-   rollObj.rollStr = attributes.templatestart + ` {{roll-name=${rollObj.name}}} `;
-   
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
-
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+   
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
    k.log(`Roll object is: ${JSON.stringify(rollObj)}`);
    executeRoll({rollObj,attributes});
@@ -201,8 +205,11 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}]]}}` ;
-/*    rollObj.rollStr += ` {{easy=[[${Math.floor(parseInt(rollObj.attribute) * 7)}]]}}`;
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+
+   rollObj.rollStr += `{{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}` ;
+
+   /*    rollObj.rollStr += ` {{easy=[[${Math.floor(parseInt(rollObj.attribute) * 7)}]]}}`;
    rollObj.rollStr += ` {{normal=[[${Math.floor(parseInt(rollObj.attribute) * 5)}]]}}`;
    rollObj.rollStr += ` {{difficult=[[${Math.floor(parseInt(rollObj.attribute) * 3)}]]}}`;
    rollObj.rollStr += ` {{absurd=[[${rollObj.attribute}]]}}`; */
@@ -224,8 +231,12 @@ const rollAttributeContest = function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
    rollObj.attribute = attributes[attr];
+   
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
-   rollObj.rollStr = attributes['templatestart'] + ` {{roll-name=${rollObj.name}}} {{roll1=[[1d10+${rollObj.attribute}]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}}`;
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+
+   rollObj.rollStr += ` {{roll1=[[1d10+${rollObj.attribute}]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
@@ -256,9 +267,12 @@ const rollInit = async function({trigger,attributes,sections,casc}) {
    };
    const initModStr = rollObj.initMod != 0 ? `+ ${rollObj.initMod} [${getTranslationByKey('modifier-abbr')}]` : ``;
    rollObj.initStr = `1D10 + ${attributes.smi_fv} ${initModStr}`;
+   
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
 
-   rollObj.rollStr = attributes.templatestart + ` {{roll-name=${rollObj.name}}}`;
-   rollObj.rollStr += ` {{roll1=[[${rollObj.initStr} &{tracker} ]]}}`;
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+
+   rollObj.rollStr += ` {{roll1=[[${rollObj.initStr} &{tracker} ]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
    //k.log(`Executing roll string: ${rollObj.rollStr}`);
    const roll = await startRoll(rollObj.rollStr);
    //attributes.initiative = parseInt(roll.results.roll1.result) - rollObj.initMod - rollObj.weaponInit;

@@ -8,10 +8,29 @@ mixin config-tab
             inputObj:{name:'show animal tab',type:'checkbox',value:1,checked:true}
             })
          +input-label({
-            label: 'Visa djur-tabben för RP',
-            spanObj:{'data-i18n':'show-animal-tab'},
+            label: 'Visa Magi-tabben för RP',
+            spanObj:{'data-i18n':'show-magic-tab'},
             divObj:{class:''},
-            inputObj:{name:'show animal tab',type:'checkbox',value:1,checked:true}
+            inputObj:{name:'show magic tab',type:'checkbox',value:1,checked:true}
+            })
+         label(data+i18n="house-magic-cost").input-label.header-label Husregler för besvärjelsekostnad
+         +input-label({
+            label: 'Ingen huregel för kostnad',
+            spanObj:{'data-i18n':'house-magic-cost-no',title:'Ingen husregel för kostnad av besvärjelser.','data-i18n-title':'house-half-cost-magic-no'},
+            divObj:{class:'indented'},
+            inputObj:{name:'house_magic_costs',type:'radio',value:0}
+            })
+         +input-label({
+            label: 'Halv kostnad upp till SV 10',
+            spanObj:{'data-i18n':'house-magic-cost-sv10',title:'Husregel: Halva kostnaden för besvärjelser upp till och med Skolvärde 10.','data-i18n-title':'house-half-cost-magic-sv10'},
+            divObj:{class:'indented'},
+            inputObj:{name:'house_magic_costs',type:'radio',value:1,checked:true,selected:true}
+            })
+         +input-label({
+            label: 'Halv kostnad upp till S 10',
+            spanObj:{'data-i18n':'house-magic-cost-s10',title:'Husregel: Halva kostnaden för besvärjelser upp till och med Skicklighet 10.','data-i18n-title':'house-half-cost-magic-s10'},
+            divObj:{class:'indented'},
+            inputObj:{name:'house_magic_costs',type:'radio',value:2}
             })
       +box({headerObj:{name:'Karaktär',attr:'character settings','data-i18n':'character-settings'},classes:'coverall'})
          +input-label({
@@ -61,7 +80,46 @@ mixin config-tab
             line-height: 2rem;
             justify-content: space-between;
             height: 2rem;
-            padding-right: 1rem; 
+            span {
+               text-transform: none; 
+            }
+            input[type=checkbox] {
+               margin-right: 1rem;
+            }
+            /*input[type=radio] {
+               border: 1px solid var(--checkboxBorderColor);
+               cursor: pointer;
+               -webkit-appearance: none;
+               appearance: none;
+               width: var(--checkboxWidth);
+               min-width: var(--checkboxWidth);
+               height: var(--checkboxHeight);
+               min-height: var(--checkboxHeight);
+               display: grid;
+               grid-template-columns: 1fr;
+               grid-template-areas: "content";
+               width: 1.175rem;
+               aspect-ratio: 1 / 1;
+               border: 1px solid black;
+               border-radius: 40%;
+               margin-right: 1rem;
+               &:checked:before {
+                  content: var(--checkContent);
+                  grid-area: content;
+                  font-weight: var(--checkWeight);
+                  place-self: start center;
+                  color: var(--checkColor);
+                  font-size: var(--checkSize);
+                  line-height: var(--checkLineHeight);
+                  height: 1.175rem;
+                  aspect-ratio: 1 / 1;
+               }
+            }*/
+            input[type=number] {
+               height: 100%; 
+               border-left: 1px solid var(--border-color);
+               border-radius: 0;
+            }
             input[type=text] {
                width: 4rem; 
                flex: unset; 
@@ -70,6 +128,12 @@ mixin config-tab
                align-self: center; 
                outline: 1px solid black; 
                corner-shape: bevel; 
+            }
+            &.header-label {
+               text-indent: 0.5rem; 
+            }
+            &.indented {
+               padding-left: 1rem; 
             }
          }
       }

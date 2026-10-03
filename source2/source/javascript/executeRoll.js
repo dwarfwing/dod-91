@@ -195,9 +195,9 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    finishRoll(roll.rollId,computeObj);
 
    /* if ( rollObj.secretRoll ) {
-      const rollSecret = startRoll(`@{template:dod91} /sr [[1D20]]`);
+      const rollSecret = await startRoll(`&{template:dod91} /ssr {{roll-name=${rollObj.name} : ${rollObj.result}}`);
       k.log(`Secret roll: ${JSON.stringify(rollSecret)}`);
       finishRoll(rollSecret.rollId);
-   } */
+   }*/
 
 }

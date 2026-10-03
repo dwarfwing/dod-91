@@ -144,5 +144,20 @@
    "sleeping": "sover",
    "resting": "vilar",
    "spell-level": "Effektgrad",
-   "skill-mod": "Modifikation"
+   "skill-mod": "Modifikation",
+   "kp-modifier": "KP modifikation",
+   "sp-modifier": "SP modifikation",
+   "psy-modifier": "PSY-poäng modifikation",
+   "barformaga-modifier": "Bärförmåga modifikation",
+   "movement-modifier": "Förflyttning modifikation",
+   "sb-override": "Skadebonus ersättning",
+   "show-animal-tab": "Visa Djur-tab för RP karaktären",
+   "show-magic-tab": "Visa Magi-tab för RP karaktären",
+   "house-magic-cost": "Husregler för besvärjelsekostnad",
+   "house-magic-cost-no": "Ingen huregel för kostnad",
+   "house-half-cost-magic-no": "Ingen husregel för kostnad av besvärjelser.",
+   "house-half-cost-magic-sv10": "Husregel: Halva kostnaden för besvärjelser upp till och med Skolvärde 10.",
+   "house-magic-cost-sv10": "Halv kostnad upp till SV 10",
+   "house-half-cost-magic-s10": "Husregel: Halva kostnaden för besvärjelser upp till och med Skicklighet 10.",
+   "house-magic-cost-s10": "Halv kostnad upp till S 10"   
 }

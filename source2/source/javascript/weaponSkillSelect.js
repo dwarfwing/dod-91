@@ -16,7 +16,7 @@ const weaponSkillSelect = function({trigger,attributes,sections,casc}){
     },[{label:'Slagsmål',value:'prim_slagsmal'}]);
     // REMoved teh init array [spine.weap
     // ontypes] since only weapon skills can be used
-  optionsArray.push({label:'Anpassat',value:'custom'});
+  optionsArray.push({label:'Manuellt',value:'custom'});
   k.log(`Weapon skill update array done: ${JSON.stringify(optionsArray)}`);
   populateListOptions({elemSelector:'.weapon-skill-select',optionsArray});
   // iterate over all weapons and either leave them as they are or reset them to the default if their selected skill is no longer present.

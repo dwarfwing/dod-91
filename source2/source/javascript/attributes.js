@@ -19,11 +19,41 @@ const calcEncumbranceMaxOnload = function() {
 }
 k.registerFuncs({calcEncumbranceMaxOnload},{type:['opener']});
 
+
 const calcPsypoints = function({trigger,attributes,sections,casc}) {
    attributes.psypoang_max = parseInt(attributes.psy_fv) + parseInt(attributes.psy_mod)||0; 
    attributes.set();
 }
 k.registerFuncs({calcPsypoints},{type:['opener']})
+
+const calcMovement = function({attributes}) {
+   const tot = parseInt(attributes.sto_fv) + parseInt(attributes.fys_fv) + parseInt(attributes.smi_fv);
+   k.log(`Movement calculation is ${tot}`);
+   var forfl = 0; 
+   if ( tot <= 11 ) { forfl = 7; }
+   else if ( tot <= 20) { forfl = 8; }
+   else if ( tot <= 29) { forfl = 9; }
+   else if ( tot <= 38) { forfl = 10; }
+   else if ( tot <= 47) { forfl = 11; }
+   else if ( tot <= 56) { forfl = 12; }
+   else if ( tot <= 65) { forfl = 13; }
+   else if ( tot <= 74) { forfl = 14; }
+   else if ( tot <= 83) { forfl = 15; }
+   else if ( tot <= 92) { forfl = 16; }
+   else if ( tot <= 101) { forfl = 17; }
+   else if ( tot <= 109) { forfl = 18; }
+   else if ( tot <= 117) { forfl = 19; }
+   else if ( tot <= 125) { forfl = 20; }
+   else if ( tot <= 133) { forfl = 21; }
+   else if ( tot <= 141) { forfl = 22; }
+   else if ( tot <= 149) { forfl = 23; }
+   else if ( tot <= 157) { forfl = 24; }
+
+   attributes.forflyttning = forfl + attributes.movement_mod; 
+   attributes.forflyttning_max = (forfl + attributes.movement_mod) * 2; 
+   attributes.set(); 
+}
+k.registerFuncs({calcMovement},{type:['opener']});
 
 const calcHealthpoints = function({attributes}) {
    const kp = Math.ceil( ( attributes.sto_fv + attributes.fys_fv ) / 2 ),
@@ -33,7 +63,10 @@ const calcHealthpoints = function({attributes}) {
    k.log(`Health points is ${kp} calculated from STO ${attributes.sto_fv} and FYS ${attributes.fys_fv}, KP modifier is ${kp_mod} `);
 
    var high = 0; 
-   switch( kp ) {
+   if ( kp <= 7 ) { high = 4; }
+   else if ( kp <= 11 ) { high = 5; }
+   else { high = ( Math.ceil(kp / 5 )) + 3; } 
+   /* switch( kp ) {
       case 5 : 
       case 6 : 
       case 7 : { high = 4; break; }
@@ -95,7 +128,7 @@ const calcHealthpoints = function({attributes}) {
       case 63 : 
       case 64 : 
       case 65 : { high = 16; break; }
-   }
+   } */
    attributes.kp_brostkorg_tot = high; 
    attributes.kp_huvud_tot = high - 1; 
    attributes.kp_hben_tot = high - 1; 
@@ -113,8 +146,11 @@ const calcPainpoints = function({attributes}) {
    const sp = attributes.fys_fv + attributes.fys_fv + attributes.sp_mod;
    attributes.smartpoang_max = sp;
 
-   var high = 0; 
-   switch( sp ) {
+   var high = 0;
+   if ( sp <= 7 ) { high = 4; }
+   else if ( sp <= 11 ) { high = 5; }
+   else { high = ( Math.ceil(sp / 5 )) + 3; } 
+   /* switch( sp ) {
       case 5 : 
       case 6 : 
       case 7 : { high = 4; break; }
@@ -176,7 +212,7 @@ const calcPainpoints = function({attributes}) {
       case 63 : 
       case 64 : 
       case 65 : { high = 16; break; }
-   }
+   } */
    attributes.sp_brostkorg_tot = high; 
    attributes.sp_huvud_tot = high - 1; 
    attributes.sp_hben_tot = high - 1; 
@@ -227,3 +263,25 @@ const calcDamagebonus = function({attributes}) {
    attributes.set(); 
 }
 k.registerFuncs({calcDamagebonus},{type:['opener']});
+
+const calcAnimalHealth = function({trigger,attributes,sections,casc}) {
+   const type = trigger.name.match(/^([a-z]*)/)[1];
+   //k.log(`Animal KP trigger: ${JSON.stringify(trigger)}`);
+   //k.log(`Animal type: ${type}`);
+   const kp_max = Math.ceil(( attributes[`${type}_sto_fv`] + attributes[`${type}_fys_fv`] ) / 2); 
+   k.log(`triggered a recalc of Animal KP: ${kp_max}`);
+   attributes[`${type}_kroppspoang_max`] = kp_max; 
+   attributes.set();
+}
+k.registerFuncs({calcAnimalHealth});
+
+const calcAnimalPainpoints = function({trigger,attributes,sections,casc}) {
+   const type = trigger.name.match(/^([a-z]*)/)[1];
+   //k.log(`Animal SP trigger: ${JSON.stringify(trigger)}`);
+   //k.log(`Animal type: ${type}`);
+   const sp_max = attributes[`${type}_fys_fv`] * 2; 
+   k.log(`triggered a recalc of Animal SP: ${sp_max}`);
+   attributes[`${type}_smartpoang_max`] = sp_max; 
+   attributes.set();
+}
+k.registerFuncs({calcAnimalPainpoints});

@@ -61,15 +61,18 @@ const useExperience = async function({trigger,attributes,sections,casc}) {
 
    allArray.forEach( skill => {
       attributes[`${skill}_improve`] = 0; 
-      attributes[`${skill}_improve_perfect`] = 0; 
+      attributes[`${skill}_improve_perfect`] = 0, 
+      isHouseRules = attributes.house_magic_costs == 1 ? true : false,
+      isSpellSv10 = isHouseRules && attributes[`${skill}_sv`] && parseInt(attributes[`${skill}_sv`]) <= 10 ? true : false; 
       var name = attributes[`${skill}_name`],
             fv = parseInt(attributes[`${skill}_fv`]) > 20 ? 20 : attributes[`${skill}_fv`],
             base = attributes[`${skill}_cost`],
             exp = attributes[`${skill}_erf`];
 
       k.log(`Testing improvement for ${name} with fv ${fv}, cost ${improveCost[fv]*base} and xp ${exp}`);
-      while( improveCost[fv] * base <= exp ) {
-         const cost = improveCost[fv] * base;
+      while( ( isSpellSv10 && improveCost[fv] / 2 * base <= exp ) || ( !isSpellSv10 && improveCost[fv] * base <= exp ) ) {
+         const cost = isSpellSv10 ? improveCost[fv] / 2 * base : improveCost[fv] * base;
+         k.log(`Is spell and SV under 10: ${true}, base cost is${base} and multiplier is ${improveCost[fv]}`);
          exp = attributes[`${skill}_erf`] = exp - cost; 
          fv = attributes[`${skill}_fv`] = ++fv;
          k.log(`increased ${name} from ${fv - 1} to ${fv} using ${cost} points leaving ${exp} points left.`);

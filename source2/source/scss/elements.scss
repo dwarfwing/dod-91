@@ -1,4 +1,10 @@
 @mixin all {
+   input.show-animal-tab:not(:checked) ~ #main .tabs--pctabs__header .tabs__nav-item:has(> .tabs--pctabs__button--animal) {
+      display: none; 
+   }
+   input.show-magic-tab:not(:checked) ~ #main .tabs--pctabs__header .tabs__nav-item:has(> .tabs--pctabs__button--magic) {
+      display: none; 
+   }
    .collapse-container > .collapse:not(:checked),
    .repitem > .collapse:not(:checked) {
       opacity: var(--collapseHoverOpacity);
@@ -83,6 +89,35 @@
    input[type=number], input[type=text] {
       &.underline {
          border-bottom: 1px solid var(--border-color);
+      }
+   }
+   input[type=radio] {
+      border: 1px solid var(--checkboxBorderColor);
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      width: var(--checkboxWidth);
+      min-width: var(--checkboxWidth);
+      height: var(--checkboxHeight);
+      min-height: var(--checkboxHeight);
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas: "content";
+      width: 1.175rem;
+      aspect-ratio: 1 / 1;
+      border: 1px solid black;
+      border-radius: 40%;
+      margin-right: 1rem;
+      &:checked:before {
+         content: var(--checkContent);
+         grid-area: content;
+         font-weight: var(--checkWeight);
+         place-self: start center;
+         color: var(--checkColor);
+         font-size: var(--checkSize);
+         line-height: var(--checkLineHeight);
+         height: 1.175rem;
+         aspect-ratio: 1 / 1;
       }
    }
    input[type=checkbox]:not(.collapse):not(.fill-left__radio) {

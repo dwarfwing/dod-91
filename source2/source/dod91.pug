@@ -28,6 +28,8 @@ include ./views/_index.pug
 
 +input({name:'target_area_die',type:'1D6',class:'hidden'})
 +input({name:'tarningsslag alternativ',type:'checkbox',value:1,class:'hidden display-roll-alternatives'})
++input({name:'show animal tab',type:'checkbox',value:1,class:'hidden show-animal-tab' })
++input({name:'show magic tab',type:'checkbox',value:1,class:'hidden show-magic-tab' })
 //- Now, for our actual sheet. We'll wrap this in a main element and give it an ID of main.
 main#main
   .logo
@@ -80,7 +82,8 @@ main#main
         +tab({name:'gear',container:'div',button:{content:'Utrustning',class:'tab-button',title:'Utrustning, både buren, på riddjur och i förvar. Samt pengar. ','data-i18n-title':'gear-title'}})
           +gear-tab
         +tab({name:'animal',container:'div',button:{content:'Djur',class:'tab-button',title:'Riddjur, eller Familiar om man har ett sånt. ','data-i18n-title':'animal-title'}})
-          +animal-tab
+          .tab-animal
+            +animal('djur','animal')
         +tab({name:'recovery',container:'div',button:{content:'Vila & Skador',class:'tab-button',title:'Skador och andra tillstånd, samt sömn och vila.','data-i18n-title':'recovery-title'}})
           +recovery-tab
         +tab({name:'config',container:'div',button:{content:'settings',class:'tab-button',title:'Inställningar','data-i18n-title':'Inställningar-title'}})
@@ -90,12 +93,12 @@ main#main
           +notes-tab
     //-+tab({name:'npc',container:'article',button:{content:'Person_2',class:'tab-button',title:'NPC','data-i18n-title':'npc-caps'}})
       include ./views/npc/_index.pug
-    //-+tab({name:'monster',container:'article',button:{content:'Pets',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})
-      include ./views/monster/_index.pug
+    +tab({name:'monster',container:'article',button:{content:'Pets',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})
+      +monster
     //-+tab({name:'vehicle',container:'article',button:{content:'directions_car',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})
       include ./views/vehicle/_index.pug
-    +tab({name:'animal',container:'article',button:{content:'chess_knight',class:'tab-button',title:'Djur','data-i18n-title':'animal'}})
-      +animal-tab
+    //-+tab({name:'animal',container:'article',button:{content:'chess_knight',class:'tab-button',title:'Djur','data-i18n-title':'animal'}})
+      +beast
     +tab({name:'settings',container:'article',button:{content:'Settings',class:'tab-button',title:'Settings','data-i18n-title':'settings'}})
       include ./views/settings/_index.pug
     //- Add additional tabs as needed
@@ -106,6 +109,7 @@ main#main
 //- An input to contain template fields that should always be output with a roll.
 +hidden({name:'templatestart',value:`@{whisper}&{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
 +hidden({name:'templatestartwhisper',value:`/w gm &{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
++hidden({name:'templatestartsecret',value:`&{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
 +hidden({name:'whisper',value:``})
 include rolltemplate/rolltemplate.pug
 

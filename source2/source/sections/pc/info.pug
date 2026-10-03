@@ -55,11 +55,20 @@ mixin info
          +text({name:'utseende1'}) 
          +text({name:'utseende2'})
       +box({classes:'hp-points points headless'})
-         +input-label({
+         //-+input-label({
                label: 'Kroppspoäng',
                divObj: {class:'hitpoints-grid'},
                spanObj: {class: 'label-input-label'},
                inputObj: {type: 'number',name: 'kroppspoang_max',type:'number'},
+            })
+         +label-inputs({
+               label: 'Kroppspoäng',
+               divObj: {class:'hitpoints-grid input-label currMax'},
+               labelObj: {class: 'label-input-label input-label'},
+               inputObj: [
+                  {type: 'number',name: 'kroppspoang',type:'number'},
+                  {type: 'number',name: 'kroppspoang_max',type:'number'},
+               ],
             })
          +fillLeft-label({
             radioObj:{name:'kroppspoang',type:'radio',class:'counter'},
@@ -69,11 +78,20 @@ mixin info
             capAttr: 'kroppspoang_max'
          })
       +box({classes:'sp-points points headless'})
-         +input-label({
+         //-+input-label({
                label: 'Smärtpoäng',
                divObj: {class:'painpoints-grid'},
                spanObj: {class: 'label-input-label'},
                inputObj: {type: 'number',name: 'smartpoang_max',type:'number',trigger:{triggeredFuncs:['calcPainpoints']}},
+            })
+         +label-inputs({
+               label: 'Smärtpoäng',
+               divObj: {class:'painpoints-grid input-label currMax'},
+               labelObj: {class: 'label-input-label input-label'},
+               inputObj: [
+                  {type: 'number',name: 'smartpoang',type:'number'},
+                  {type: 'number',name: 'smartpoang_max',type:'number'},
+               ],
             })
          +fillLeft-label({
             radioObj:{name:'smartpoang',type:'radio',class:'counter'},
@@ -83,11 +101,20 @@ mixin info
             capAttr: 'smartpoang_max'
          })
       +box({classes:'psy-points points headless'})
-         +input-label({
+         //-+input-label({
                label: 'PSY-poäng',
                divObj: {class:'psypoints-grid'},
                spanObj: {class: 'label-input-label'},
                inputObj: {type: 'number',name: 'psypoang_max',type:'number'},
+            })
+         +label-inputs({
+               label: 'PSY-poäng',
+               divObj: {class:'psypoints-grid input-label currMax'},
+               labelObj: {class: 'label-input-label input-label'},
+               inputObj: [
+                  {type: 'number',name: 'psypoang',type:'number'},
+                  {type: 'number',name: 'psypoang_max',type:'number'},
+               ],
             })
          +fillLeft-label({
             radioObj:{name:'psypoang',type:'radio',class:'counter'},
@@ -203,9 +230,13 @@ mixin info
             width: 100%;
             height: 2.125rem;
             display: grid; 
-            grid-template-columns: auto 3rem;  
+            //grid-template-columns: auto 3rem;  
             border-bottom: 1px solid var(--border-color);
-            span { width: stretch; }
+            span { 
+               width: stretch;
+               align-self: flex-start; 
+               height: calc(100% - 1px);
+            }
             input { 
                width: 3rem;
                height: calc(2.125rem - 1px); 

@@ -9,11 +9,11 @@ rolltemplate.sheet-rolltemplate-dod91
          .sheet-roll-title 
             h2 {{roll-name}}
          .sheet-roll-result 
-            //-+rollTotal({values:'secretroll 0'})               
-            +templateConditionalDisplay('roll1')
-               .sheet-roll-total
-                  label(data-i18n='result') Resultat 
-                  span {{roll1}} {{#rollTotal() roll1 1}}{{#rollBetween() target 1 19}} ({{roll2}}) {{/rollBetween() target 1 19}}{{/rollTotal() roll1 1}} {{#rollTotal() roll1 2}}{{#rollBetween() target 20 100}} ({{roll2}}) {{/rollBetween() target 20 100}}{{/rollTotal() roll1 2}}
+            +rollTotal({values:'secretroll 0'})               
+               +templateConditionalDisplay('roll1')
+                  .sheet-roll-total
+                     label(data-i18n='result') Resultat 
+                     span {{roll1}} {{#rollTotal() roll1 1}}{{#rollBetween() target 1 19}} ({{roll2}}) {{/rollBetween() target 1 19}}{{/rollTotal() roll1 1}} {{#rollTotal() roll1 2}}{{#rollBetween() target 20 100}} ({{roll2}}) {{/rollBetween() target 20 100}}{{/rollTotal() roll1 2}}
             +templateConditionalDisplay('target')
                .sheet-roll-target
                   label(data-i18n='target') CL

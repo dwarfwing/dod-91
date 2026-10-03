@@ -1,38 +1,46 @@
-mixin animal-tab 
-   .tab-animal
+mixin beast
+   .tab-animal.tab-beast 
+      +animal('vilddjur','beast')
+
+//-mixin animal-tab(name,attr) 
+   - name = !name ? 'djur' : name;
+   - attr = !attr ? 'animal' : attr;     
+   .tab-animal(class='tab-'+attr)
       .section-attributes 
          +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'}})
             each attribute in spine.animal_attributes
                div(class='column-'+attribute.attr).label-input.input-count-1.attribute-row
                   //-label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
                   +action({
-                     name:'roll_'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']}
+                     name:'roll_'+name+'_'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']}
                   })
                      label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
                   //-+action({name:'attr-'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']},'data-i18n-title':'attribute-roll'}).attribute-roll
                   //-+action({name:'attr-contest-'+attribute.attr,trigger:{triggeredFuncs:['rollAttributeContest']},'data-i18n-title':'attribute-roll-contest'}).attribute-roll.ge-roll-geRollContest
-                  if attribute.affects
+                  //-if attribute.affects
                      +input({type: 'number', name: attribute.attr+'_fv', class:'label-input-input input-'+attribute.attr+'',affects:attribute.affects})
-                  else 
-                     +input({type: 'number', name: attribute.attr+'_fv', class:'label-input-input input-'+attribute.attr+'',})
-                  +input({type: 'number', name: attribute.attr+'_bc', class:'hidden label-input-input input-'+attribute.attr+'',hidden:true})
+                  //-else if attribute.triggeredFuncs
+                     +input({type: 'number', name: attribute.attr+'_fv', class:'label-input-input input-'+attribute.attr+'',trigger:{triggeredFuncs:attribute.triggeredFuncs}})
+                  //-else 
+                  +input({type: 'number', name: name+'_'+attribute.attr+'_fv', class:'label-input-input input-'+attr+'_'+attribute.attr+'',trigger:{triggeredFuncs:attribute.trigger,affects:attribute.affects}})
+                  +input({type: 'number', name: name+'_'+attribute.attr+'_bc', class:'hidden label-input-input input-'+attr+'_'+attribute.attr+'',hidden:true})
       .section-info
-         +checkbox({name:'djur_kroppspoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
+         //-+checkbox({name:'djur_kroppspoang_max',type:'checkbox',value:0,hidden:true,class:'hidden'})
          +box({classes:'box-info headless'})
             each info in spine.animalinfo            
                +label-inputs({
                   label: info.name,
-                  divObj: {class:'column-'+info.attr+' text-field '+info.classes},
+                  divObj: {class:'column-'+name+'_'+info.attr+' text-field '+info.classes},
                   labelObj: {class: 'label-input-label',attr:info.attr},
                   inputObj: [
-                     {type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-placeholder':info.placeholder}
+                     {type: info.type, name: name+'_'+info.attr, class:'label-input-input input-'+info.attr,'data-i18n-placeholder':info.placeholder}
                   ]
                })
          +box({classes:'box-tertiary headless'})
             each info in spine.animialtertiary
-               - var inputObjs = [{type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
+               - var inputObjs = [{type: info.type, name: name+'_'+info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
                if info.classes.includes("currMax") 
-                  - inputObjs.push({type: info.type, name: info.attr+'_max', class:'label-input-input input-'+info.attr+'-max', 'data-i18n-title':'max-value',title:'Max-värdet'}); 
+                  - inputObjs.push({type: info.type, name: name+'_'+info.attr+'_max', class:'label-input-input input-'+info.attr+'-max', 'data-i18n-title':'max-value',title:'Max-värdet'}); 
                +label-inputs({
                   label: info.name,
                   divObj: {class:'column-'+info.attr+' '+info.classes},
@@ -40,39 +48,45 @@ mixin animal-tab
                   inputObj: inputObjs,
                })
          +box({classes:'hp-points points headless'})
-            +input-label({
-                  label: 'Kroppspoäng',
-                  divObj: {class:'hitpoints-grid'},
-                  spanObj: {class: 'label-input-label'},
-                  inputObj: {type: number,name: 'djur_kroppspoang_max',type:'number',trigger:{calculation: 'calcAnimalKP'}},
-               })
+            +label-inputs({
+               label: 'Kroppspoäng',
+               divObj: {class:'hitpoints-grid input-label currMax'},
+               labelObj: {class: 'label-input-label input-label'},
+               inputObj: [
+                  {type: 'number',name: name+'_kroppspoang',type:'number'},
+                  {type: 'number',name: name+'_kroppspoang_max',type:'number',type:'number'},
+               ],
+            })
             +fillLeft-label({
-               radioObj:{name:'djur_kroppspoang',type:'radio',class:'counter'},
+               radioObj:{name:name+'_kroppspoang',type:'radio',class:'counter'},
                divObj:{class:''},
                valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],
                noCLear: true,
-               capAttr: 'djur_kroppspoang_max'
+               capAttr: name+'_kroppspoang_max'
             })
          +box({classes:'sp-points points headless'})
-            +input-label({
-                  label: 'Smärtpoäng',
-                  divObj: {class:'painpoints-grid'},
-                  spanObj: {class: 'label-input-label'},
-                  inputObj: {type: number,name: 'djur_smartpoang_max',type:'number',trigger:{formula:'@{djur_fys_fv} + @{djur_fys_fv}'}},
-               })
+            +label-inputs({
+               label: 'Smärtpoäng',
+               divObj: {class:'painpoints-grid input-label currMax'},
+               labelObj: {class: 'label-input-label input-label'},
+               inputObj: [
+                  {type: 'number',name: name+'_smartpoang',type:'number'},
+                  {type: 'number',name: name+'_smartpoang_max',type:'number'},
+               ],
+            })
             +fillLeft-label({
-               radioObj:{name:'djur_smartpoang',type:'radio',class:'counter'},
+               radioObj:{name:name+'_smartpoang',type:'radio',class:'counter'},
                divObj:{class:''},
                valueArray:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39],
                noCLear: true,
-               capAttr: 'djur_smartpoang_max'
+               capAttr: name+'_smartpoang_max'
             })
       +gear('Utrustning','mount',i18n='gear-mount') 
       .section-weapons.section-animal-attacks 
          //- Modify weapons mixin to be more declarative ? 
          -   let attackfields = spine.attackfields
          +box({headerObj:{attr:'attacker','data-i18n':'attacks'},fields:attackfields,classes:'coverall'})
-            +fieldset({name:'animalattacks',class:'collapse-container'})
+            +fieldset({name:attr+'attacks',class:'collapse-container'})
                +collapse
                .collapsed
                   .label-input 
@@ -91,8 +105,8 @@ mixin animal-tab
                            +input({name:field.attr,type:field.type})
       //-+skillList() 
       .section-skillsanimal
-         +repeatingSkills({name:'Djurfärdigheter',attr:'animalskills',transl:'animal-skill',impr:false,exp:false,b:false,cost:false})      
-+scss.
+         +repeatingSkills({name:name+'färdigheter',attr:attr+'skills',transl:attr+'-skill',impr:false,exp:false,b:false,cost:false})      
+//-+scss.
    .tab-animal {
       display: grid;
       grid-template-columns: 25% 20% 55%; 
@@ -133,10 +147,3 @@ mixin animal-tab
          }
       }
    }
-+module.
-   const calcAnimalKP = function({trigger,attributes}) {
-      k.log(`Calculating Animal HP`);
-      const tot = attributes[`djur_fys_fv`] + attributes[`djur_sto_fv`];
-      return Math.floor( tot / 2 ); 
-   }
-   k.registerFuncs({calcAnimalKP});

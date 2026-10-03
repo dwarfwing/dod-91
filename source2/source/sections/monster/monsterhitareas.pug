@@ -1,0 +1,199 @@
+mixin monster-hitareas 
+   +checkbox({name:'hitareas2',value:1,class:'hitareas-2 hidden'})
+   +checkbox({name:'hitareas4',value:1,class:'hitareas-4 hidden'})
+   +checkbox({name:'hitareas6',value:1,class:'hitareas-6 hidden'})
+   +checkbox({name:'hitareas8',value:1,class:'hitareas-8 hidden'})
+   +checkbox({name:'hitareas12',value:1,class:'hitareas-12 hidden'})
+   .section-monster-hitareas
+      .section-monster-hitareas__header 
+         +roller({name:'monster-hitarea',trigger:{triggeredFuncs:['rollMonsterHitarea']}})
+            h1(data-i18n='hitareas')
+         +select({name:'hitarea_display',trigger:{triggeredFuncs:['MonsterHitareaDisplay']}}).hitarea-display
+            +option({value:2,'data-i18n':'2'})
+            +option({value:4,'data-i18n':'4'})
+            +option({value:6,'data-i18n':'6'})
+            +option({value:8,'data-i18n':'8'})
+            +option({value:12,'data-i18n':'12'})
+      .section-monster-hitareas__content
+         each area in ['1','2','3','4','5','6','7','8','9','10','11','12',]
+            //-+box({headerObj:{name:'hitarea_'+area,attr:'vehcile_hitarea_'+area})
+            .box 
+               span(value=area+'. ').hitarea-name 
+                  +text({name:'hitarea_'+area,'data-i18n-placeholder':'hitarea'})
+               +box({headerObj:{name:'Fasta komponenter','data-i18n':'fixed-components'},fields:[{name:'uts',attr:'uts'}],classes:'section-monster-hitareas__fixed-components bottomless'})
+                  +fieldset({name:'hitarea'+area+'fixedcomp'})
+                     +text({name:'name'})
+                     +checkbox({name:'uts',value:1})
+               +box({headerObj:{name:'Extra pansar','data-i18n':'extra-plating'},fields:[{name:'abs',attr:'abs'}],classes:'section-monster-hitareas__extra-plating bottomless'})
+                  +fieldset({name:'hitarea'+area+'extraplating'})
+                     +text({name:'name'})
+                     +number({name:'abs',value:0}).cut-corner
+               +box({headerObj:{name:'Besättning','data-i18n':'crew'},classes:'section-monster-hitareas__rew bottomless'})
+                  +fieldset({name:'hitarea'+area+'crew'})
+                     +text({name:'name'})
+               +box({headerObj:{name:'Övrigt','data-i18n':'other'},classes:'section-monster-hitareas__other bottomless'})
+                  +fieldset({name:'hitarea'+area+'extra'})
+                     +text({name:'name'})
+
+               //.collapsed
+
+               //.expanded 
+                  +text({name:'monster_hitarea_'+area}).expanded
+                  +
++module.
+   const MonsterHitareaDisplay = function({trigger,attributes,sections,casc}) {
+      k.log(`Monster hitarea display trigger: ${JSON.stringify(trigger)}`);
+      if ( trigger == undefined || trigger.newValue == undefined ) {
+         attributes[`hitareas2`] = 1; 
+      } else {
+         ['2','4','6','8','12'].forEach( n => {
+               attributes[`hitareas${n}`] = trigger.newValue == parseInt(n) ? 1 : 0;         
+            if (trigger.newValue == parseInt(n) ) k.log(`New hitarea display: ${n}`);
+         });
+      }
+   }
+   k.registerFuncs({MonsterHitareaDisplay},{type:['opener']});
++scss.
+   input.hitareas-2:checked ~ .section-monster-hitareas .section-monster-hitareas__content { 
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      align-items: center; 
+      .box:is(:nth-of-type(1),:nth-of-type(2)) {
+         display: flex; 
+      } 
+   }
+   input.hitareas-4:checked ~ .section-monster-hitareas .section-monster-hitareas__content { 
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .box:is(:nth-of-type(1),:nth-of-type(2),:nth-of-type(3),:nth-of-type(4)) {
+         display: flex; 
+      } 
+   }
+   input.hitareas-6:checked ~ .section-monster-hitareas .section-monster-hitareas__content {
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .box:is(:nth-of-type(1),:nth-of-type(2),:nth-of-type(3),:nth-of-type(4),:nth-of-type(5),:nth-of-type(6)) {
+         display: flex; 
+      } 
+   }
+   input.hitareas-8:checked ~ .section-monster-hitareas .section-monster-hitareas__content {
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .box:is(:nth-of-type(1),:nth-of-type(2),:nth-of-type(3),:nth-of-type(4),:nth-of-type(5),:nth-of-type(6),:nth-of-type(7),:nth-of-type(8)) {
+         display: flex; 
+      } 
+   }
+   input.hitareas-12:checked ~ .section-monster-hitareas .section-monster-hitareas__content {
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .box:is(:nth-of-type(1),:nth-of-type(2),:nth-of-type(3),:nth-of-type(4),:nth-of-type(5),:nth-of-type(6),:nth-of-type(7),:nth-of-type(8),:nth-of-type(9),:nth-of-type(10),:nth-of-type(11),:nth-of-type(12)) {
+         display: flex; 
+      } 
+   }
+   .section-monster-hitareas {      
+      &__header {
+         margin-top: 1rem; 
+         width: 100%;
+         display: flex;
+         align-content: center; 
+         justify-content: center; 
+         select {
+            appearance: auto; 
+         }
+         display: flex; 
+         justify-content: center; 
+         button[type=roll] { width: auto; }
+         button[type=action] { display: none; }
+      }
+      &__content {
+         margin-top: 0.5rem;         
+         span.hitarea-name {
+            background-color: var(--border-color);
+            color: var(--font-color-inverse);
+            justify-self: center;
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            align-items: center; 
+            input {
+               min-width: 5rem;
+               border: 0; 
+               text-transform: capitalize;
+               field-sizing: content;  
+            }
+            &:before {
+               content: attr(value);
+            }
+         }
+         & > .box {
+            display: none;
+            justify-content: center; 
+            align-self: flex-start;
+            border: 2px solid var(--border-color);
+            background-color: transparent;
+            width: 45%;
+            margin-top: 0.5rem; 
+            & > * {
+               width: 100%;
+               input {
+                  border: 1px solid var(--border-color);
+                  &:first-of-type {
+                     border-radius: 0;
+                  }
+               }
+            }
+            .box {
+               background-color: transparent;
+            }
+            .box-header {
+               background-color: var(--background-color-box);
+               h1,h2,h3 {
+                  color: var(--font-color);
+               }               
+            }
+            & > h3 {
+               height: 2rem;
+               font-size: 0.675rem;
+               display: flex;
+               justify-content: center; 
+               span,input {
+                  text-align: center; 
+                  border: 0;
+               }
+            }
+            .repitem {
+               margin-top: 0.25rem;
+               padding-inline: 0.25rem;
+            }
+         }
+      } 
+      &__fixed-components {
+         .box-header.field-count-1 {
+            grid-template-columns: auto 2.5rem;
+         } 
+         .repitem {
+            display: grid;
+            grid-template-columns: auto 2rem;
+            column-gap: 0.5rem;
+            input[type=checkbox]:checked:before {
+               content: '✗';
+            }
+         }
+      }
+      &__extra-plating {
+         .repitem {
+            display: grid;
+            grid-template-columns: auto 3rem;
+            column-gap: 0.5rem;
+         }
+      }     
+   }
