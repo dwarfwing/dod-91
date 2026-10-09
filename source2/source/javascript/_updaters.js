@@ -16,6 +16,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
    attributes.forflyttning_max = attributes.forflyttning_maximal; 
    attributes.barformaga = attributes.barformaga_normal;
    attributes.barformaga_max = attributes.barformaga_maximal;
+   attributes.encumbrance_max = attributes.sty_fv;
 
    //APPEARANCE
    k.log(`Utseende: ${attributes.utseende1 + " " + attributes.utseende2}`);
@@ -105,7 +106,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
          //k.log(`Row ID = ${rowID}`);
          k.setAttrs({
             [`${rowID}_name`]: spellName,
-            [`${rowID}_s`]: attributes[`besvarjelse_${spell}_s`]||0,
+            [`${rowID}_fv`]: attributes[`besvarjelse_${spell}_s`]||0,
             [`${rowID}_erf`]: attributes[`besvarjelse_${spell}_erf`]||0,
             [`${rowID}_e`]: 1,
             [`${rowID}_collapse`]: 1,
@@ -186,7 +187,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
    attributes.set(); 
 
-   calcHealthnpoints({attributes}); 
+   calcHealthpoints({attributes}); 
    calcPainpoints({attributes}); 
 
    attributes.whisper = '';

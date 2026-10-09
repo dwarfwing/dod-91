@@ -1,18 +1,44 @@
 mixin config-tab
    .section-config 
-      +box({headerObj:{name:'Formulär',attr:'sheetsettings','data-i18n':'sheet-settings'},classes:'coverall'})
+      +box({headerObj:{name:'Formulär',attr:'sheetsettings','data-i18n':'sheet-settings'},classes:''})
          +input-label({
-            label: 'Visa djur-tabben för RP',
+            label: 'Visa djur-tabben',
             spanObj:{'data-i18n':'show-animal-tab'},
             divObj:{class:''},
             inputObj:{name:'show animal tab',type:'checkbox',value:1,checked:true}
             })
          +input-label({
-            label: 'Visa Magi-tabben för RP',
+            label: 'Visa Magi-tabben',
             spanObj:{'data-i18n':'show-magic-tab'},
             divObj:{class:''},
             inputObj:{name:'show magic tab',type:'checkbox',value:1,checked:true}
             })
+         +input-label({
+            label: 'Visa Noteringar-tabben',
+            spanObj:{'data-i18n':'show-notes-tab'},
+            divObj:{class:''},
+            inputObj:{name:'show notes tab',type:'checkbox',value:1,checked:true}
+            })
+         +input-label({
+            label: 'Visa Vapentekniker i Strid-tabben',
+            spanObj:{'data-i18n':'show-weapon-techniques'},
+            divObj:{class:''},
+            inputObj:{name:'show weapon techniques',type:'checkbox',value:1,checked:true}
+            })
+         +select-label({
+            label: 'Visa Stridskonster i Strid-tabben',
+            spanObj:{'data-i18n':'show-martial-arts'},
+            divObj:{class:''},
+            inputObj:{name:'show martial arts',value:1}
+            })
+            +option({value:0,})
+               |0
+            +option({value:1,selected:''})
+               |1
+            +option({value:2})
+               |2
+            +option({value:3})
+               |3
          label(data+i18n="house-magic-cost").input-label.header-label Husregler för besvärjelsekostnad
          +input-label({
             label: 'Ingen huregel för kostnad',
@@ -74,6 +100,7 @@ mixin config-tab
       column-count: 2;
       column-gap: 0;
       .box {
+         height: auto; 
          .input-label {
             width: 100%;
             border-bottom: 1px solid var(--border-color);
@@ -128,6 +155,14 @@ mixin config-tab
                align-self: center; 
                outline: 1px solid black; 
                corner-shape: bevel; 
+            }
+            select {
+               appearance: auto;
+               width: 3rem; 
+               text-align: center; 
+               option {
+                  text-align: center;                    
+               }
             }
             &.header-label {
                text-indent: 0.5rem; 

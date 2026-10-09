@@ -16,16 +16,6 @@ mixin info
       +box({classes:'box-tertiary headless'})
          +input({name:'encumbrance', type:'number',class:'label-input-input input-encumbrance hidden',trigger:{formula:'@{gear_encumbrance}+@{weapon_encumbrance}+@{armor_encumbrance}+@{shield_encumbrance}'}})
          +input({name:'encumbrance_max', type:'number',class:'label-input-input input-encumbrance hidden',trigger:{formula:'@{sty_fv}+@{carrycap_mod}'}})
-         each info in spine.tertiary
-            - var inputObjs = [{type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'}]; 
-            if info.classes.includes("currMax") 
-               - inputObjs.push({type: info.type, name: info.attr+'_max', class:'label-input-input input-'+info.attr+'-max', 'data-i18n-title':'max-value',title:'Max-värdet'}); 
-            +label-inputs({
-               label: info.name,
-               divObj: {class:'column-'+info.attr+' '+info.classes},
-               labelObj: {class: 'label-input-label',attr:info.attr},
-               inputObj: inputObjs,
-            })
          +label-inputs({
             label: 'Initiativ',
             divObj: {class:'column-initiative'},
@@ -34,6 +24,18 @@ mixin info
                { name:'initmod',type:'number',value:0 }
             ],
          })
+         each info in spine.tertiary
+            - var inpObj = {type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'};
+            - if (info.name == 'belastning') { inpObj.step = "0.01"; }
+            - var inputObjs = [inpObj]; 
+            if info.classes.includes("currMax") 
+               - inputObjs.push({type: info.type, name: info.attr+'_max', class:'label-input-input input-'+info.attr+'-max', 'data-i18n-title':'max-value',title:'Max-värdet'}); 
+            +label-inputs({
+               label: info.name,
+               divObj: {class:'column-'+info.attr+' '+info.classes},
+               labelObj: {class: 'label-input-label',attr:info.attr},
+               inputObj: inputObjs,
+            })
          //-+encumbrance 
          //-+action({name:'initiative',trigger:{triggeredFuncs:['rollInit']}})
             +span({'data-i18n':'initiative'}) 

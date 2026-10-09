@@ -21,23 +21,33 @@
     padding: 1rem;
     backdrop-filter: var(--invert-bg);
     box-sizing: border-box; 
-
     * {
       box-sizing: border-box; 
     }
-
-    .logo { 
-      height: 5rem;
-      background-image: var(--logo-image);
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 30rem 4rem;
-      border-block: 2px solid black;
+    .logo-container {
+      margin-top: -2rem;
+      margin-inline: -1rem;
+      padding-top: 1rem;
+      padding-inline: 1rem;
+      top: 3.5rem;
+      position: sticky;
+      background-color: var(--bg-color);
+      z-index: 11000; 
+      .logo { 
+        height: 5rem;
+        background-image: var(--logo-image);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 30rem 4rem;
+        border-block: 2px solid black;
+      }
     }
     .roll-alternatives {
       //margin-bottom: -1.75rem;
-      display: none; 
-      position: absolute; 
+      position: sticky;
+      top: 7.5rem;
+      z-index: 12000;
+      width: 5rem; 
       label {
         font-family: 'Material Symbols Rounded';
         font-size: 120%; 

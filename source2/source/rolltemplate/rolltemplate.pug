@@ -87,30 +87,42 @@ rolltemplate.sheet-rolltemplate-dod91
                      |{{computed::hitarea}}
             +templateConditionalDisplay('easy')
                .sheet-roll-difficulty   
+                  +rollLess({values:'roll1 veasy'})
+                     span(data-i18n='sg1').success SG 1 
+                  +rollTotal({values:'roll1 veasy'})
+                     span(data-i18n='sg1').success SG 1  
+                  +rollGreater({values:'roll1 veasy'})
+                     span(data-i18n='sg1').fail SG 1 
                   +rollLess({values:'roll1 easy'})
-                     span(data-i18n='easy').success EASY 
+                     span(data-i18n='sg5').success 5
                   +rollTotal({values:'roll1 easy'})
-                     span(data-i18n='easy').success EASY  
+                     span(data-i18n='sg5').success 5  
                   +rollGreater({values:'roll1 easy'})
-                     span(data-i18n='easy').fail EASY  
+                     span(data-i18n='sg5').fail 5  
                   +rollLess({values:'roll1 normal'})
-                     span(data-i18n='normal').success NORMAL  
+                     span(data-i18n='sg10').success 10  
                   +rollTotal({values:'roll1 normal'})
-                     span(data-i18n='normal').success NORMAL  
+                     span(data-i18n='sg10').success 10  
                   +rollGreater({values:'roll1 normal'})
-                     span(data-i18n='normal').fail NORMAL  
+                     span(data-i18n='sg10').fail 10  
                   +rollLess({values:'roll1 difficult'})
-                     span(data-i18n='difficult').success DIFFICULT  
+                     span(data-i18n='sg15').success 15  
                   +rollTotal({values:'roll1 difficult'})
-                     span(data-i18n='difficult').success DIFFICULT  
+                     span(data-i18n='sg15').success 15  
                   +rollGreater({values:'roll1 difficult'})
-                     span(data-i18n='difficult').fail DIFFICULT  
-                  +rollLess({values:'roll1 absurd'})
-                     span(data-i18n='absurd').success ABSURD  
-                  +rollTotal({values:'roll1 absurd'})
-                     span(data-i18n='absurd').success ABSURD  
-                  +rollGreater({values:'roll1 absurd'})
-                     span(data-i18n='absurd').fail ABSURD
+                     span(data-i18n='sg15').fail 15 
+                  +rollLess({values:'roll1 vdifficult'})
+                     span(data-i18n='sg20').success 20  
+                  +rollTotal({values:'roll1 vdifficult'})
+                     span(data-i18n='sg20').success 20  
+                  +rollGreater({values:'roll1 vdifficult'})
+                     span(data-i18n='sg20').fail 20 
+                  +rollLess({values:'roll1 extreme'})
+                     span(data-i18n='sg25').success 25  
+                  +rollTotal({values:'roll1 extreme'})
+                     span(data-i18n='sg25').success 25  
+                  +rollGreater({values:'roll1 extreme'})
+                     span(data-i18n='sg25').fail 25
             //-+allProps({values:''})
                .sheet-roll-result 
                   .sheet-roll-total

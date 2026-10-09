@@ -159,5 +159,8 @@
    "house-half-cost-magic-sv10": "Husregel: Halva kostnaden för besvärjelser upp till och med Skolvärde 10.",
    "house-magic-cost-sv10": "Halv kostnad upp till SV 10",
    "house-half-cost-magic-s10": "Husregel: Halva kostnaden för besvärjelser upp till och med Skicklighet 10.",
-   "house-magic-cost-s10": "Halv kostnad upp till S 10"   
+   "house-magic-cost-s10": "Halv kostnad upp till S 10",
+   "show-martial-arts": "Visa Stridskonster i Strid-tabben",
+   "show-weapon-techniques": "Visa Vapentekniker i Strid-tabben",
+   "show-notes-tab": "Visa Noteringar-tabben"   
 }

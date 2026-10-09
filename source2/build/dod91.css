@@ -194,6 +194,8 @@ body {
   --invert-bg: invert(0);
   --anim-pulse: bgpulse;
   --collapseHoverOpacity: 1;
+  --checkboxHeight: 0.75rem;
+  --checkboxWidth: 0.75rem;
   color: var(--font-color);
   background-color: var(--background-color);
   font-size: 1rem;
@@ -210,6 +212,10 @@ body .ui-dialog .nav-tabs a {
 }
 body .ui-dialog .tabs__header {
   height: 1.75rem;
+}
+body .ui-dialog .tab-content .charsheet {
+  position: relative;
+  overflow: none;
 }
 body .ui-dialog .tab-content .charsheet button[type=action][name=act_k-network-call] {
   display: none;
@@ -1215,7 +1221,17 @@ body .ui-dialog .tab-content .charsheet #main {
 body .ui-dialog .tab-content .charsheet #main * {
   box-sizing: border-box;
 }
-body .ui-dialog .tab-content .charsheet #main .logo {
+body .ui-dialog .tab-content .charsheet #main .logo-container {
+  margin-top: -2rem;
+  margin-inline: -1rem;
+  padding-top: 1rem;
+  padding-inline: 1rem;
+  top: 3.5rem;
+  position: sticky;
+  background-color: var(--bg-color);
+  z-index: 11000;
+}
+body .ui-dialog .tab-content .charsheet #main .logo-container .logo {
   height: 5rem;
   background-image: var(--logo-image);
   background-position: center;
@@ -1224,8 +1240,10 @@ body .ui-dialog .tab-content .charsheet #main .logo {
   border-block: 2px solid black;
 }
 body .ui-dialog .tab-content .charsheet #main .roll-alternatives {
-  display: none;
-  position: absolute;
+  position: sticky;
+  top: 7.5rem;
+  z-index: 12000;
+  width: 5rem;
 }
 body .ui-dialog .tab-content .charsheet #main .roll-alternatives label {
   font-family: "Material Symbols Rounded";
@@ -1291,6 +1309,9 @@ body .ui-dialog .tab-content .charsheet option {
 }
 body .ui-dialog .tab-content .charsheet h1, body .ui-dialog .tab-content .charsheet h2, body .ui-dialog .tab-content .charsheet .input-label:not(.stacked).large > [name] {
   line-height: 2rem;
+}
+body .ui-dialog .tab-content .charsheet .tabs.tabs--dod91 {
+  margin-top: -2rem;
 }
 body .ui-dialog .tab-content .charsheet .tabs {
   display: flex;
@@ -1388,6 +1409,15 @@ body .ui-dialog .tab-content .charsheet input.show-animal-tab:not(:checked) ~ #m
 body .ui-dialog .tab-content .charsheet input.show-magic-tab:not(:checked) ~ #main .tabs--pctabs__header .tabs__nav-item:has(> .tabs--pctabs__button--magic) {
   display: none;
 }
+body .ui-dialog .tab-content .charsheet input.show-notes-tab:not(:checked) ~ #main .tabs--pctabs__header .tabs__nav-item:has(> .tabs--pctabs__button--notes) {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet input.show-weapon-techniques:not(:checked) ~ #main .tabs--pctabs__body .box-weapontechniques {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet input.sticky-header:not(:checked) ~ #main :is(.logo-container, .roll-alternatives, .tabs--dod91) {
+  position: static;
+}
 body .ui-dialog .tab-content .charsheet .collapse-container > .collapse:not(:checked),
 body .ui-dialog .tab-content .charsheet .repitem > .collapse:not(:checked) {
   opacity: var(--collapseHoverOpacity);
@@ -1468,6 +1498,9 @@ body .ui-dialog .tab-content .charsheet button[type=action].hidden:before {
 body .ui-dialog .tab-content .charsheet .tabs__body button[type=roll] + button[type=action] {
   display: none;
 }
+body .ui-dialog .tab-content .charsheet .adaptive textarea, body .ui-dialog .tab-content .charsheet .adaptive span, body .ui-dialog .tab-content .charsheet .repeating-martialart .collapsed .span.description {
+  font-family: Arial, Helvetica;
+}
 body .ui-dialog .tab-content .charsheet input[type=number].underline, body .ui-dialog .tab-content .charsheet input[type=text].underline {
   border-bottom: 1px solid var(--border-color);
 }
@@ -1518,6 +1551,62 @@ body .ui-dialog .tab-content .charsheet input[type=checkbox]:not(.collapse):not(
   color: var(--font-color);
   place-self: center center;
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .collapse-container input[type=checkbox].collapse,
+body .ui-dialog .tab-content .charsheet div.section-weapons .repitem input[type=checkbox].collapse {
+  max-height: 0.5rem;
+  line-height: 0.5rem;
+  top: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe {
+  width: 0.5rem;
+  line-height: 1rem;
+  max-width: 0.5rem;
+  text-align: left;
+  /* padding-top: 0.125rem; */
+  height: 0.5rem;
+  display: flex;
+  justify-content: center;
+  text-indent: 0.25rem;
+  top: 1.25rem;
+  margin: 0;
+  position: absolute;
+  z-index: 1000;
+  left: 0rem;
+  top: 1.25rem;
+  appearance: none;
+  border: 0;
+  opacity: var(--collapseBaseOpacity);
+  cursor: pointer;
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:before {
+  content: "arrow_drop_up";
+  font-family: "Material Symbols Outlined";
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ .collapsed {
+  height: auto;
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ .collapsed span.description {
+  display: flex;
+  text-indent: 0;
+  padding-left: 1.25rem;
+  padding-right: 0.75rem;
+  text-align: justify;
+  font-size: 95%;
+  width: 100%;
+  justify-content: flex-start;
+  min-height: 1lh;
+  border-top: 1px dashed var(--border-color);
+  line-height: 1.75rem;
+  letter-spacing: unset;
+  text-transform: none;
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:not(:checked):before {
+  content: "arrow_drop_down";
+  font-family: "Material Symbols Outlined";
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:not(:checked) ~ .collapsed .description {
+  display: none;
+}
 body .ui-dialog .tab-content .charsheet .fill-left input[type=radio], body .ui-dialog .tab-content .charsheet .fill-left input[type=checkbox] {
   aspect-ratio: 1/1;
   display: none;
@@ -1549,10 +1638,67 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row, bo
   min-width: 100%;
   line-height: var(--line-height);
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row:hover input[type=checkbox].describe, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row:hover input[type=checkbox].describe, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row:hover input[type=checkbox].describe {
+  opacity: var(--collapseHoverOpacity);
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row {
+  /* input[type=checkbox].describe {
+     position: absolute;
+     z-index: 1000;
+     left: 0rem;
+     top: 1.25rem; 
+     appearance: none; 
+     border: 0;
+     opacity: var(--collapseBaseOpacity);
+     width: 0.5rem;
+     line-height: 1rem;
+     max-width: 0.5rem;
+     text-align: left;
+     height: 0.5rem;
+     display: flex;
+     justify-content: center;
+     text-indent: 0.25rem;
+     top: 1.25rem;
+     margin: 0;
+     cursor: pointer;
+     &:before {
+        content: 'arrow_drop_up';
+        font-family: 'Material Symbols Outlined';
+     }
+     &:checked {
+        //opacity: var(--collapseHoverOpacity);
+        ~ .collapsed {
+           height: auto; 
+           span.description {
+              display: flex;
+              --margin-left: 1rem;
+              text-indent: 1.25rem;
+              width: 100%;
+              justify-content: flex-start; 
+              min-height: 1lh; 
+              border-top: 1px dashed var(--border-color);
+           }
+        }
+     }
+     &:not(:checked) {                
+        &:before {
+           content: 'arrow_drop_down';
+           font-family: 'Material Symbols Outlined';
+        } 
+        ~ .collapsed .description {
+           display: none;
+        }
+     }
+  } */
+}
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet div.section-languages .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row > :is(.expanded, .collapsed) {
   height: var(--line-height);
+  line-height: var(--line-height);
   min-width: 100%;
   border-bottom: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row > :is(.expanded, .collapsed) .description, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row > :is(.expanded, .collapsed) .description, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row > :is(.expanded, .collapsed) .description {
+  font-family: Arial, Helvetica, sans-serif;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row label, body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row button, body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded input:first-of-type, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row label, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row button, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded input:first-of-type, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row label, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row button, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded input:first-of-type {
   border-right: 0;
@@ -1592,7 +1738,7 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
   transform: rotate(45deg);
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input input[type=checkbox].improve-mark.improve-mark-perfect, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input input[type=checkbox].improve-mark.improve-mark-perfect, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input input[type=checkbox].improve-mark.improve-mark-perfect {
-  top: 50%;
+  top: 1rem;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input input[type=checkbox].improve-mark:checked, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input input[type=checkbox].improve-mark:checked, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input input[type=checkbox].improve-mark:checked {
   display: flex;
@@ -1622,8 +1768,19 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input select option, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input select option, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input select option {
   text-align: center;
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.select-input.cost-select input, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.select-input.cost-select input, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.select-input.cost-select input {
+  margin: 0;
+  border: 0;
+  width: 100%;
+}
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.b-skill:before, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.b-skill:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.b-skill:before {
   content: "B";
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-1, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-1, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-1 {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-4, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-4, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-4 {
+  grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-5, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-5, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-5 {
   grid-template-columns: calc(100% - 7.5rem) 2.5rem 2.5rem 2.5rem;
@@ -1656,7 +1813,7 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
   position: relative;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.select-input.cost-select:before, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.select-input.cost-select:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.select-input.cost-select:before {
-  content: "Kostn.";
+  content: "Kost.";
   font-size: 75%;
   position: absolute;
   top: 0;
@@ -1681,8 +1838,19 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row :is
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .collapse, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .collapse, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .collapse {
   z-index: 1000;
-  top: -0.375rem;
+  top: 0;
   left: 0rem;
+  height: 1.25rem;
+  max-height: 1.25rem;
+  width: 1.25rem;
+  max-width: 1.25rem;
+  line-height: 1.25rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded {
+  height: auto;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded .label-input, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded .label-input, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded .label-input {
+  height: auto;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded option, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded option, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded option {
   text-align: left;
@@ -1704,6 +1872,17 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .ex
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded select + input[type=checkbox]:checked + input[type=text], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded select + input[type=checkbox]:checked + input[type=text], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded select + input[type=checkbox]:checked + input[type=text] {
   display: block;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded .adaptive.description, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded .adaptive.description, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded .adaptive.description {
+  grid-column: 1/-1;
+  border-top: 1px solid var(--border-color);
+  align-self: unset;
+  align-content: unset;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .expanded .adaptive.description textarea, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .expanded .adaptive.description textarea, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .expanded .adaptive.description textarea {
+  min-height: 100%;
+  align-self: unset;
+  align-content: unset;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hide-improvements input[type=checkbox].improve-mark, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row.hide-improvements input[type=checkbox].improve-mark, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row.hide-improvements input[type=checkbox].improve-mark {
   display: none !important;
@@ -1735,7 +1914,6 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row.hid
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem > .collapse, body .ui-dialog .tab-content .charsheet div.section-languages .repitem > .collapse, body .ui-dialog .tab-content .charsheet div.section-magicspells .repitem > .collapse {
   right: 9rem;
   z-index: 9000;
-  top: -0.25rem;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .repitem:hover, body .ui-dialog .tab-content .charsheet div.section-languages .repitem:hover, body .ui-dialog .tab-content .charsheet div.section-magicspells .repitem:hover {
   position: relative;
@@ -1865,7 +2043,7 @@ body .ui-dialog .tab-content .charsheet .label-input {
   background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .label-input.text-field label {
-  width: auto;
+  width: 100%;
   position: absolute;
   font-size: 75%;
   top: 0;
@@ -1874,10 +2052,9 @@ body .ui-dialog .tab-content .charsheet .label-input.text-field label {
   height: 50%;
   padding: 0;
   line-height: 1rem;
-  width: auto;
 }
 body .ui-dialog .tab-content .charsheet .label-input.text-field span.input-span {
-  width: auto;
+  width: 100%;
 }
 body .ui-dialog .tab-content .charsheet .label-input.text-field input[type=text] {
   width: 100%;
@@ -1888,8 +2065,13 @@ body .ui-dialog .tab-content .charsheet .label-input label.text-input,
 body .ui-dialog .tab-content .charsheet .label-input button.roller {
   border-right: 1px solid var(--border-color);
   align-content: center;
-  width: auto;
+  width: 100%;
   padding: 0;
+}
+body .ui-dialog .tab-content .charsheet .label-input label input,
+body .ui-dialog .tab-content .charsheet .label-input label.text-input input,
+body .ui-dialog .tab-content .charsheet .label-input button.roller input {
+  width: 100%;
 }
 body .ui-dialog .tab-content .charsheet .label-input * {
   height: 100%;
@@ -1900,7 +2082,6 @@ body .ui-dialog .tab-content .charsheet .label-input * {
 }
 body .ui-dialog .tab-content .charsheet .label-input input[type=number],
 body .ui-dialog .tab-content .charsheet .label-input span.input-span {
-  width: 3rem;
   box-sizing: content-box;
   border-radius: 0;
   text-align: center;
@@ -1938,18 +2119,18 @@ body .ui-dialog .tab-content .charsheet .label-input span.input-last {
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-2 {
   display: grid;
-  grid-template-columns: 1fr 3rem 3rem;
+  grid-template-columns: calc(100% - 6rem) 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-2 span.input-0 {
   border: 0;
   border-right: 1px solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-2.checkboxed {
-  grid-template-columns: 2rem 1fr 3rem 3rem;
+  grid-template-columns: 2rem calc(100% - 8rem) 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-3 {
   display: grid;
-  grid-template-columns: 1fr 3rem 3rem 3rem;
+  grid-template-columns: calc(100% - 9rem) 3rem 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-3 label,
 body .ui-dialog .tab-content .charsheet .label-input.input-count-3 button.roller,
@@ -1965,11 +2146,11 @@ body .ui-dialog .tab-content .charsheet .label-input.input-count-3 span.input-la
   border: 0;
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-3.checkboxed {
-  grid-template-columns: 2rem 1fr 3rem 3rem 3rem;
+  grid-template-columns: 2rem calc(100% - 11rem) 3rem 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .label-input.input-count-4 {
   display: grid;
-  grid-template-columns: 1fr 3rem 3rem 3rem 3rem;
+  grid-template-columns: calc(100% - 12rem) 3rem 3rem 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .label-input.wide-text-input label {
   width: 30%;
@@ -2375,7 +2556,6 @@ body .ui-dialog .tab-content .charsheet .section-languages :is(.expanded, .colla
 }
 body .ui-dialog .tab-content .charsheet .section-languages .collapse {
   z-index: 1000;
-  top: -0.25rem;
   right: 12rem;
 }
 body .ui-dialog .tab-content .charsheet .section-languages .repitem {
@@ -2447,6 +2627,98 @@ body .ui-dialog .tab-content .charsheet .section-languages span.input-span.input
 }
 body .ui-dialog .tab-content .charsheet .section-languages span.input-span.input-0:hover input[type=checkbox] {
   display: flex;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills .martialart {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart0:checked ~ .box.box-martialarts {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart1:checked ~ .box.box-martialarts {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart1:checked ~ .box.box-martialarts .martialart1 {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart2:checked ~ .box.box-martialarts {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart2:checked ~ .box.box-martialarts :is(.martialart.martialart1, .martialart.martialart2) {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart3:checked ~ .box.box-martialarts {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet .section-weaponskills input.martialart3:checked ~ .box.box-martialarts .martialart {
+  display: block;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts {
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .collapse {
+  z-index: 10000;
+  right: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .martialart {
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts span {
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .skill-row.martialart-header:not(.skill-row-martialart1) {
+  border-top: 3px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .martialart-header .expanded .input-0 {
+  position: relative;
+  vertical-align: baseline;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  margin-top: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .martialart-header .expanded .input-0:before {
+  content: "Kost.";
+  font-size: 75%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontrol {
+  border-top: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer {
+  margin-left: 1.25rem;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem {
+  position: relative;
+  border-left: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem:before {
+  position: absolute;
+  left: -1rem;
+  top: -0.25rem;
+  align-content: center;
+  font-family: "Material Symbols Outlined";
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem input[type=number] {
+  width: 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem .collapsed span {
+  display: flex;
+  width: 100%;
+  text-indent: 0.75rem;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem .expanded input[type=text] {
+  text-indent: 0.75rem;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem:last-of-type .skill-row {
+  border: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-customroll .customroll {
   justify-content: flex-end;
@@ -2563,7 +2835,6 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem .label-input {
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapse {
   left: 2rem;
-  top: -0.375rem;
   z-index: 10000;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapse ~ .expanded {
@@ -2585,10 +2856,10 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem button span {
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem button.init-button span {
   width: 1.25rem;
 }
-body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox] {
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox]:not(.collapse, .describe) {
   height: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox]:first-of-type {
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox]:not(.collapse, .describe):first-of-type {
   border-right: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox].weapon-equipped:not(:checked) ~ button,
@@ -2696,6 +2967,7 @@ body .ui-dialog .tab-content .charsheet .section-hitareas {
   column-gap: 2rem;
   background-color: var(--bg-color3);
   padding: 1rem;
+  align-content: flex-start;
   border: var(--border-size) solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(1) {
@@ -2937,7 +3209,6 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .it
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse {
   left: 5rem;
-  top: -0.375rem;
   z-index: 10000;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse ~ .expanded {
@@ -2945,6 +3216,9 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .co
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .collapse ~ .expanded .label-input {
   background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells input[type=checkbox].describe {
+  left: 5rem;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells > .repcontainer {
   width: 100%;
@@ -2989,6 +3263,9 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
   border-radius: 0;
   width: 100%;
 }
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded input:first-of-type {
+  border-right: 1px solid var(--border-color);
+}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.button-text, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button[type=action] {
   border-right: 0;
   justify-content: center;
@@ -2997,11 +3274,35 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
   width: 100%;
   text-align: center;
 }
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded {
+  line-height: unset;
+  height: auto;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .adaptive.description {
+  grid-column: 1/-1;
+  border-top: 1px solid var(--border-color);
+  align-self: unset;
+  align-content: unset;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .adaptive.description textarea {
+  min-height: 100%;
+  align-self: unset;
+  align-content: unset;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .label-input:hover input[type=checkbox].memorized {
+  display: grid;
+}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .memorized {
   height: 100%;
   width: 100%;
   border: 0;
   border-right: 1px solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-skills__magic .box-skills-minimagic input[type=text], body .ui-dialog .tab-content .charsheet .section-skills__magic .box-skills-minimagic span {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
 }
 body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer {
   display: flex;
@@ -3138,15 +3439,20 @@ body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcont
   width: 1.5rem;
   justify-self: center;
 }
-body .ui-dialog .tab-content .charsheet .section-money .field-count-3, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 {
-  grid-template-columns: 1fr 4.5rem 4.5rem 4.5rem;
+body .ui-dialog .tab-content .charsheet .section-money .box-money .box-header.field-count-3, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 {
+  grid-template-columns: calc(100% - 13.5rem) 4.5rem 4.5rem 4.5rem;
 }
-body .ui-dialog .tab-content .charsheet .section-money .field-count-3 span, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 span {
+body .ui-dialog .tab-content .charsheet .section-money .box-money .box-header.field-count-3 span, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 span {
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-money .field-count-3 span input, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 span input {
+body .ui-dialog .tab-content .charsheet .section-money .box-money .box-header.field-count-3 span input, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 span input {
   padding: 0;
   text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-notes {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-notes .adaptive {
   width: 100%;
@@ -3400,6 +3706,9 @@ body .ui-dialog .tab-content .charsheet .section-config {
   column-count: 2;
   column-gap: 0;
 }
+body .ui-dialog .tab-content .charsheet .section-config .box {
+  height: auto;
+}
 body .ui-dialog .tab-content .charsheet .section-config .box .input-label {
   width: 100%;
   border-bottom: 1px solid var(--border-color);
@@ -3457,6 +3766,14 @@ body .ui-dialog .tab-content .charsheet .section-config .box .input-label input[
   align-self: center;
   outline: 1px solid black;
   corner-shape: bevel;
+}
+body .ui-dialog .tab-content .charsheet .section-config .box .input-label select {
+  appearance: auto;
+  width: 3rem;
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-config .box .input-label select option {
+  text-align: center;
 }
 body .ui-dialog .tab-content .charsheet .section-config .box .input-label.header-label {
   text-indent: 0.5rem;
@@ -3706,7 +4023,7 @@ body.sheet-darkmode .charactersheet {
 }
 .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-roll-result .sheet-roll-difficulty {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   border-top: 1px solid var(--border-color);
 }
 .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-roll-result .sheet-roll-difficulty span {

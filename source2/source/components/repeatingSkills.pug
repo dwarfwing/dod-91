@@ -1,4 +1,4 @@
-mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
+mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,headedit})
    - 
       i18n = transl ? transl : attr; 
       fields = fields ? fields : 
@@ -11,7 +11,10 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
       costDisplay = cost == undefined ? ' display-cost-select' : '';
       hideImprovementClass = impr == undefined || impr == true ? '' : 'hide-improvements '; 
       hideExperienceClass = exp != undefined && exp == false ? ' hide-experience' : ''; 
-   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass})
+      altcosts = altcosts ? altcosts : false; 
+      desc = desc ? desc : false; 
+      headedit = headedit ? headedit : false; 
+   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,headEdit:headedit,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass})
       +fieldset({name:attr})
          .skill-row.collapse-container(class=hideImprovementClass+skillTypeB+hideExperienceClass)
             if cost != undefined && cost > 0
@@ -19,6 +22,8 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
             +number({name:'b',value:0,class:'hidden'})
             +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
             +collapse
+            if desc 
+               +describe
             .collapsed
                .label-input(class=bFields)
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
@@ -39,6 +44,8 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
                      +span({name:'erf'}).input-span.input-3
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  if desc 
+                     +span({name:'description',class:'description'})
             .expanded
                .label-input(class=bFields+costDisplay) 
                   //-label.text-input 
@@ -47,14 +54,17 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
                      +text({name:'name',id:'custom-skill-input'})                
                   if cost == undefined 
                      span.select-input.cost-select.input-1 
-                        +select({name:'cost'})
-                           if attr == 'languages'
-                              +option({value:'1',title:'Primärfärdighet','data-i18n-title':'primary-skill'})
-                                 | 1
-                           +option({value:'3',title:'Yrkesfärdighet','data-i18n-title':'profession-skill'})
-                              | 3
-                           +option({value:'5',selected:true,title:'Sekundärfärdighet','data-i18n-title':'secondary-skill'})
-                              | 5
+                        if altcosts 
+                           +number({name:'cost'})
+                        else 
+                           +select({name:'cost'})
+                              if attr == 'languages'
+                                 +option({value:'1',title:'Primärfärdighet','data-i18n-title':'primary-skill'})
+                                    | 1
+                              +option({value:'3',title:'Yrkesfärdighet','data-i18n-title':'profession-skill'})
+                                 | 3
+                              +option({value:'5',selected:true,title:'Sekundärfärdighet','data-i18n-title':'secondary-skill'})
+                                 | 5
                   if b 
                      span.input-span.input-0 
                         +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
@@ -77,3 +87,5 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b})
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  if desc                     
+                     +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')

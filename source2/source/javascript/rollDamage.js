@@ -65,7 +65,7 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
 
-   executeRoll({rollObj});
+   executeRoll({rollObj,attributes});
 
 }
 k.registerFuncs({rollDamage});
@@ -86,7 +86,7 @@ const rollHitArea = function({trigger,attributes,sections,casc}) {
 
    k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
 
-   executeRoll({rollObj});
+   executeRoll({rollObj,attributes});
 }
 k.registerFuncs({rollHitArea});
 

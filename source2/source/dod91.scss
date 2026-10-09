@@ -42,6 +42,8 @@ body{
     }
     .tab-content{
       .charsheet{
+        position: relative; 
+        overflow: none;
         button[type=action][name=act_k-network-call] {
           display: none;
           height: 0;

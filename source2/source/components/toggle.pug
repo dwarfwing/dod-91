@@ -1,3 +1,7 @@
-mixin toggle({name,value=1,checked})
-   - attr = name.toString().replace(/-/,"_");
-   +checkbox({name:attr,value:value,class:'hidden toggle-'+name,hidden:true,checked:checked})
+mixin toggle({name,value,checked,classes})
+   - attr = name.toString().replace(/-/,"_").replace(/ /,"_");
+   - name = name.toString().replace(/ /,"-").replace(/_/,"-");
+   - value = !value && value != '0' ? 1 : value; 
+   - checked = checked ? checked : true; 
+   - classes = classes ? classes : '';
+   +checkbox({name:attr,value:value,class:'hidden toggle-'+name+' '+name+' '+classes,hidden:true,checked:checked})

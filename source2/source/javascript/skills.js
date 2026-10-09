@@ -75,7 +75,17 @@ const setSpellCosts = function({trigger,attributes,sections,cost}) {
    });
    attributes.set(); 
 }
-k.registerFuncs({setSpellCosts},{type:['opener']})
+k.registerFuncs({setSpellCosts},{type:['opener']});
+
+const setMartialartsCost = function({trigger,attributes,sections,casc}) {
+   const [section,rowID,base] = k.parseTriggerName(trigger.name);
+   k.log(`martial arts ${section} cost update: ${JSON.stringify(trigger)}`);
+   const cost = sections[`${section}`].reduce( (acc,curr) => attributes[`${section}_${curr}_cost`] + acc, 0 );
+   k.log(`Calculated cost = ${cost}`);
+   attributes[`${section.replace(/repeating_/,'')}_cost`] = cost; 
+
+}
+k.registerFuncs({setMartialartsCost});
 
 const rollImprovements = async function({trigger,attributes,sections,casc}) {
    //k.log(`Skill improvement trigger: ${JSON.stringify(trigger)}`);

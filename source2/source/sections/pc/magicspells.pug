@@ -1,41 +1,4 @@
 mixin spells 
-   //-mixin spell
-      .spell.collapse-container
-         +collapse
-         //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
-         //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
-         .collapsed
-            .label-input.input-count-3
-               //- labelObj: {class: 'label-input-label',type:'roller',name: spell.name, attr: spell.attr },
-               label.select-input.collapsed 
-                  +action({name:'roll',trigger:{triggeredFuncs:['rollSkill']}})
-                     +span({name:'name'})
-               //- label.text-input
-                  +text({name:'name',class:'text-input'})
-               //-+span({name:'spell',type:'number'}).input-span.input-0                  
-               span.input-span.input-0
-                  +input({type: 'number', name: 'spell_s', class:'label-input-input'})
-                  //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
-                  //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-               +input({name:'mod',type:'number'}).input-span.input-1
-               +input({name:'erf',type:'number'}).input-span.input-2
-         .expanded
-            .label-input.input-count-3 
-               //-label.text-input 
-                  +text({name:'name'}).caps-input
-               label.select-input.expanded
-                  +text({name:'name',id:'custom-spell-input'})
-               span.input-span.input-0
-                  +input({type: 'number', name: 's', class:'label-input-input'})
-               span.input-span.input-1
-                  +input({type: 'number', name: 'mod', class:'label-input-input'})
-               span.input-span.input-2
-                  +input({type: 'number', name: 'erf', class:'label-input-input'})
-   //-mixin spelllist() 
-      .spell-list 
-         +box({headerObj:{name:'Test'},fields:[]})
-            +fieldset({name: name})
-               +spell
    .section-magicspells 
       - fields = [{name:'Mem.',attr:'memorized-abbr'},{name:'SV',attr:'spell_school_level'},{name:'',attr:''},{name:'S',attr:'spell_skill_level'},{name:'E',attr:'effektgrad_abbr'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}]
       +box({headerObj:{name:'Besvärjelser',attr:'spells','data-i18n':'spells'},classes:'spells coverall'})
@@ -50,6 +13,7 @@ mixin spells
                //-+checkbox({name:'collapse',value:1,class:'collapse'})
                +number({name:'cost',value:0,class:'hidden'})
                +collapse
+               +describe
                //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
                //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
                .collapsed
@@ -72,6 +36,7 @@ mixin spells
                      
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                     +span({name:'description',class:'description'})
                .expanded
                   .label-input.input-count-7 
                      //-label.text-input 
@@ -85,36 +50,7 @@ mixin spells
                      +input({name: 'erf', type: 'number', class:'label-input-input'})
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-         //-each spell in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-            .spell-row.collapse-container
-               //-+collapse({name:'besvarjelse_'+spell+'_collapse'})
-               +checkbox({name:'besvarjelse_'+spell+'_collapse',value:1,class:'collapse'})
-               //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
-               //-+checkbox({name:'exp_perfect',class:'exp-toggle exp-toggle-perfect'})
-               .collapsed
-                  .label-input.input-count-3
-                     //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
-                     +checkbox({name:'besvarjelse_'+spell+'_mem',class:'memorized',value:1,checked:false})
-                     label.select-input.collapsed 
-                        +action({name:'besvarjelse_'+spell+'_roll',trigger:{triggeredFuncs:['rollTrainedSkill']}})
-                           +span({name:'besvarjelse_'+spell+'_text',class:'button-text'})
-                     //- label.text-input
-                        +text({name:'name',class:'text-input'})
-                     //-+span({name:'skill',type:'number'}).input-span.input-0                  
-                     +span({name: 'besvarjelse_'+spell+'_s', class:'label-input-input'})
-                        //- +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
-                        //- +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                     +input({name:'besvarjelse_'+spell+'_mod',type:'number'}).input-span.input-1
-                     +input({name:'besvarjelse_'+spell+'_erf',type:'number'}).input-span.input-2
-               .expanded
-                  .label-input.input-count-3 
-                     //-label.text-input 
-                        +text({name:'name'}).caps-input
-                     +checkbox({name:'besvarjelse_'+spell+'_mem',class:'memorized',value:1,checked:false})
-                     +text({name:'besvarjelse_'+spell+'_text',id:'custom-skill-input'})
-                     +input({name: 'besvarjelse_'+spell+'_s', type: 'number', class:'label-input-input'})
-                     +input({name: 'besvarjelse_'+spell+'_mod', type: 'number', class:'label-input-input'})
-                     +input({name: 'besvarjelse_'+spell+'_erf', type: 'number', class:'label-input-input'})
+                     +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')
    .hidden-besvarjelser.for-upgrades.hidden 
       each spell in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
          +text({name:'besvarjelse_'+spell+'_text'})
@@ -136,12 +72,15 @@ mixin spells
          }
          .collapse {
             left: 5rem;
-            top: -0.375rem; 
+            //top: -0.375rem; 
             z-index: 10000; 
             & ~ .expanded {
                background-color: var(--bg-color3);
                .label-input { background-color: var(--bg-color3); }
             }
+         }
+         input[type=checkbox].describe {
+            left: 5rem; 
          }
          & > .repcontainer {
             //display: grid; 
@@ -194,6 +133,9 @@ mixin spells
                border-radius: 0; 
                width: 100%; 
             }
+            .expanded input:first-of-type {
+               border-right: 1px solid var(--border-color);
+            }
             span.button-text, button[type=action], {
                border-right: 0; 
                justify-content: center;
@@ -202,6 +144,24 @@ mixin spells
                width: 100%;
                text-align: center;
             }
+            .expanded {
+               line-height: unset; 
+               height: auto;
+            }
+            .adaptive.description {
+               grid-column: 1 / -1;
+               border-top: 1px solid var(--border-color);
+               align-self: unset; 
+               align-content: unset; 
+               textarea {
+                  min-height: 100%;
+                  align-self: unset; 
+                  align-content: unset; 
+               }               
+            }
+         }
+         .label-input:hover input[type=checkbox].memorized {
+            display: grid; 
          }
          .memorized {
             height: 100%;

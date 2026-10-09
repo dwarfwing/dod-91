@@ -1,0 +1,177 @@
+mixin martialarts 
+   +toggle({name:'show martial arts',value:0,checked:false,classes:'martialart0'})
+   +toggle({name:'show martial arts',value:1,checked:false,classes:'martialart1'})
+   +toggle({name:'show martial arts',value:2,checked:false,classes:'martialart2'})
+   +toggle({name:'show martial arts',value:3,checked:false,classes:'martialart3'})
+   - fields = [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+   +box({headerObj:{name:'Stridskonster',attr:'martialarts','data-i18n':'martial-arts',class:'box-martialarts'},fields:fields,})
+      //- fields = [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+      //-+box({headerObj:{name:'Stridskonst',attr:'martialarts','data-i18n':'martial-arts'},fields:fields,headEdit:'martialartsname'})
+         //-+fieldset({name:attr})
+            .skill-row.collapse-container.hide-improvements.hide-experience
+      //- fields = [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
+      //-each id in ['martialart1','martialart2','martialart3','martialart4']
+      //-each id in ['martialart1']
+         +repeatingSkills({name:'Stridskonst',attr:id,'data-i18n':'martial-art',class:'martial-art',impr:false,exp:false,b:false,altcosts:true,desc:true,headedit:true})
+
+      //-.box-header.field-count-3 
+         span 
+         h2.header-field(data-18n='skill-level') FV 
+         h2.header-field(data-18n='modification-abbr') Mod. 
+         h2.header-field(data-18n='experience-abbr') Erf. 
+      each id in ['1','2','3']
+         - attr = 'martialart'+id
+         .martialart(class=attr) 
+            +number({name:attr+'_cost',class:'hidden'})
+            .skill-row.martialart-header.collapse-container(class='skill-row-'+attr) 
+               +collapse({name:attr+'_collapse'})
+               .collapsed 
+                  .label-input.input-count-5    
+                     label.select-input.collapsed 
+                        +action({name:attr+'_roll',trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                           +span({name:attr+'_name'})
+                     +span({name: attr+'_fv', class:'label-input-input'}).input-0
+                     span.input-span.input-1
+                        +input({name:attr+'_mod',type:'number'}).input-span
+                     +span({name:attr+'_erf'}).input-span.input-2
+                     +checkbox({name:attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})   
+               .expanded
+                  .label-input.input-count-6
+                     //-label.text-input 
+                        +text({name:'name'}).caps-input
+                     label.select-input.expanded
+                        +text({name:attr+'_name',attr:'custom-skill-input',value:'Stridskonst '+id}) 
+                     +span({name:attr+'_cost',class:'label-input-span'}).input-0     
+                     span.input-span.input-1
+                        +input({type: 'number', name: attr+'_fv', class:'label-input-input'})
+                     span.input-span.input-2
+                        +input({type: 'number', name: attr+'_mod', class:'label-input-input'})
+                     span.input-span.input-3.erf
+                        +input({type: 'number', name: attr+'_erf', class:'label-input-input'})
+                     +checkbox({name:attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+            +fieldset({name:attr})(class='repeating-martialart')
+               .skill-row.collapse-container 
+                  +collapse
+                  +describe
+                  .collapsed
+                     label.select-input.collapsed 
+                        +action({name:attr+'_roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
+                           +span({name:'name'}) 
+                     +span({name:'description',class:'description'})
+                  .expanded
+                     .label-input.input-count-1
+                        +text({name:'name',class:''})
+                        span.label-input-input.input-0
+                           +number({name:'cost',class:'',trigger:{triggeredFuncs:['setMartialartsCost']}})
+                     +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')         
++scss.
+   .section-weaponskills {
+      .martialart {
+         display: none; 
+      }
+      input.martialart0:checked ~ .box.box-martialarts {
+         display: none;
+      }
+      input.martialart1:checked ~ .box.box-martialarts { 
+         display: block;
+         .martialart1 {
+            display: block;
+         }
+      }
+      input.martialart2:checked ~ .box.box-martialarts {
+         display: block; 
+         :is(.martialart.martialart1,.martialart.martialart2) {
+            display: block;
+         }
+      }
+      input.martialart3:checked ~ .box.box-martialarts {
+         display: block;
+         .martialart {
+            display: block;
+         }
+      }
+   }
+   .box-martialarts {
+      width: 100%; 
+      .collapse {
+         z-index: 10000; 
+         right: 0.25rem; 
+      } 
+      .martialart {
+         width: 100%; 
+      }
+      span {
+         text-align: center; 
+      }
+      .skill-row {
+         &.martialart-header:not(.skill-row-martialart1) {
+            border-top: 3px solid var(--border-color);
+         }
+      }
+      .martialart-header {
+         .expanded {
+            .input-0 {
+               position: relative; 
+               vertical-align: baseline;
+               display: flex;
+               justify-content: center;
+               flex-wrap: wrap;
+               align-content: flex-end;
+               margin-top: 0.25rem;
+               &:before {
+                  content: "Kost.";
+                  font-size: 75%;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  width: 100%;
+                  height: 0.75rem;
+                  line-height: 0.75rem;
+                  text-align: center;
+               }
+            }
+         }
+      }
+      .repcontrol {
+         border-top: 1px solid var(--border-color);
+      }
+      .repcontainer {
+         margin-left: 1.25rem;
+         .repitem {
+            position: relative; 
+            border-left: 1px solid var(--border-color);
+            &:before {
+               position: absolute; 
+               left: -1rem; 
+               top: -0.25rem;
+               align-content: center; 
+               //content: 'subdirectory_arrow_right';
+               font-family: 'Material Symbols Outlined';
+            }
+            input[type=number] {
+               width: 2.5rem;
+            }
+            .collapsed {
+               span {
+                  display: flex; 
+                  width: 100%;
+                  text-indent: 0.75rem; 
+               }
+            }
+            .expanded {
+               input[type=text] {
+                  text-indent: 0.75rem;
+               }
+            }
+            &:last-of-type {
+               .skill-row {
+                  border: 0; 
+               }
+            }
+         }
+      }
+   }
+

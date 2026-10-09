@@ -1,4 +1,26 @@
 mixin magicskills 
    .section-skills__magic.section-magicskills
       +repeatingSkills({name:'magiskolor',attr:'magicschools',transl:'magic-schools',impr:false,b:false}) 
-      +repeatingSkills({name:'magifärdigheter',attr:'magicskills',transl:'magic-skills'}) 
+      +repeatingSkills({name:'magifärdigheter',attr:'magicskills',transl:'magic-skills'})
+      +box({headerObj:{name:'Minimagi',attr:'minimagi','data-i18n':'minimagic'},classes:'box-skills box-skills-minimagic'})
+         +fieldset({name:'minimagi'})
+            .skill-row.minimagic-row.collapse-container
+               +collapse
+               +describe
+               .collapsed
+                  +span({name:'name'})
+                  +span({name:'description',class:'description'})
+               .expanded
+                  +text({name:'name',placeholder:'Namn...'})
+                  +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')
++scss.
+   .section-skills__magic {
+      .box-skills-minimagic {
+         input[type=text], span {
+            display: flex; 
+            width: 100%;
+            text-align: center; 
+            justify-content: center; 
+         } 
+      }
+   }

@@ -12,6 +12,7 @@
          attr:'name',
          type:'text',
          roller:true,
+         rollaction:'roll',
          class:'',
          transl:'weapon-shields',
          placeholder:'namn på vapen',
@@ -64,6 +65,9 @@
          transl:'hitpoints-abbr',
          title_transl:'damage-hp',
          title:'Skada på KP',
+         roller:true,
+         rollaction:'rolldamage',
+         trigger:'rollDamage',
       },
       {
          name:'SP',
@@ -73,6 +77,9 @@
          transl:'painpoints-abbr',
          title_transl:'damage-sp',
          title:'Skada på SP',
+         roller:true,
+         rollaction:'rolldamage',
+         trigger:'rollDamage',
       },
       {
          name:'PV',

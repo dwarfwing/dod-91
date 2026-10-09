@@ -30,9 +30,14 @@ include ./views/_index.pug
 +input({name:'tarningsslag alternativ',type:'checkbox',value:1,class:'hidden display-roll-alternatives'})
 +input({name:'show animal tab',type:'checkbox',value:1,class:'hidden show-animal-tab' })
 +input({name:'show magic tab',type:'checkbox',value:1,class:'hidden show-magic-tab' })
++input({name:'show notes tab',type:'checkbox',value:1,class:'hidden show-notes-tab' })
++input({name:'show martial arts',type:'checkbox',value:1,class:'hidden show-martial-arts' })
++input({name:'show_weapon_techniques',type:'checkbox',value:1,class:'hidden show-weapon-techniques' })
++toggle({name:'sticky header'})
 //- Now, for our actual sheet. We'll wrap this in a main element and give it an ID of main.
 main#main
-  .logo
+  .logo-container 
+    .logo 
   //-.roll
     +number({name:'dice count',value:1})
     //-span T 
@@ -86,11 +91,10 @@ main#main
             +animal('djur','animal')
         +tab({name:'recovery',container:'div',button:{content:'Vila & Skador',class:'tab-button',title:'Skador och andra tillstånd, samt sömn och vila.','data-i18n-title':'recovery-title'}})
           +recovery-tab
+        +tab({name:'notes',container:'div',button:{content:'Noteringar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
+          +notes-tab
         +tab({name:'config',container:'div',button:{content:'settings',class:'tab-button',title:'Inställningar','data-i18n-title':'Inställningar-title'}})
           +config-tab
-          //-+config-tab
-        //-+tab({name:'notes',container:'div',button:{content:'Anteckningar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})
-          +notes-tab
     //-+tab({name:'npc',container:'article',button:{content:'Person_2',class:'tab-button',title:'NPC','data-i18n-title':'npc-caps'}})
       include ./views/npc/_index.pug
     +tab({name:'monster',container:'article',button:{content:'Pets',class:'tab-button',title:'Monster','data-i18n-title':'monster'}})

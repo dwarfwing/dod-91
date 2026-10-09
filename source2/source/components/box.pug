@@ -1,17 +1,25 @@
-mixin box({headerObj={},fields=[],classes=""})
+mixin box({headerObj={},fields=[],classes="",headEdit=false})
    - boxClass = classes; 
    if headerObj
       - headerName = headerObj.name ? headerObj.name : '';
       - boxClass += headerObj.attr ? " box-"+headerObj.attr : "";
+      - headEditClass = headEdit ? ' collapse-container editable-head' : '';
    if fields
       //- fields = fields.isArray ? fields : [...fields];  
       - fieldCount = fields.length;
       //- boxClass += ' field-count-'+fieldCount;
    .box(class=boxClass)     
-      .box-header(class='field-count-'+fieldCount) 
-         if headerObj && headerObj.name 
+      .box-header(class='field-count-'+fieldCount+headEditClass) 
+         if headerObj && headerObj.name && headEdit == false
             h1(data-i18n=headerObj['data-i18n']) 
                = headerName
+         else if headerObj && headEdit != false
+            +collapse(name='header-edit')
+            .collapsed
+               h1 
+                  +span({name:headEdit})
+            .expanded   
+               +text({name:headEdit})
          each field in fields
             - let transl = ''; 
             if field.transl 

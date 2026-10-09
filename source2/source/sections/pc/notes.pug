@@ -2,8 +2,13 @@ mixin notes
    .section-notes
       +box({headerObj:{name:'Anteckningar',attr:'sheet_notes','data-i18n':'sheet-notes'},classes:'coverall'})
          +adaptiveTextarea({name:'sheet notes'})
+      +box({headerObj:{name:'Kontakter',attr:'sheet_contacts','data-i18n':'sheet-contaacts'},classes:'coverall'})
+         +adaptiveTextarea({name:'sheet contacts'})
 +scss.
    .section-notes {
+      display: grid; 
+      grid-template-columns: 60% 40%; 
+      gap: 0; 
       .adaptive {
          width: 100%; 
          background-color: var(--bg-color2);

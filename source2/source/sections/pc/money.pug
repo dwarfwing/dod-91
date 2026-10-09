@@ -2,7 +2,7 @@ mixin money
    .section-money
       +box({headerObj:{name:'pengar',attr:'money','data-i18n':'money'},fields:[{name:'börs',attr:'carried'},{name:'juveler',attr:'juveler'},{name:'bank',attr:'bank'}]})
          //each attribute in ['akrobatics','bows','first aid','rifles','perception','throwing','bartering','melee','pistol','sneak/hide']
-         each mynt in [{name:'gm',attr:'gm'},{name:'sm',attr:'sm'},{name:'km',attr:'km'},]
+         each mynt in [{name:'Guldmynt',attr:'gm'},{name:'Silvermynt',attr:'sm'},{name:'Kopparmynt',attr:'km'},]
             - bors = 'pengar_bors_'+mynt.attr;
             - bank = 'pengar_bank_'+mynt.attr;
             - juvel = 'pengar_juveler_'+mynt.attr;
@@ -20,8 +20,8 @@ mixin money
             })
 +scss.
    .section-money {
-      .field-count-3, .input-count-3 {
-         grid-template-columns: 1fr 4.5rem 4.5rem 4.5rem;
+      .box-money .box-header.field-count-3, .input-count-3 {
+         grid-template-columns: calc(100% - 13.5rem) 4.5rem 4.5rem 4.5rem;
          span {
             width: 100%; 
             input { padding: 0; text-align: center; }

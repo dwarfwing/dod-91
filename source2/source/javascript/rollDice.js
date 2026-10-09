@@ -9,8 +9,8 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    //k.log('Name is '+ attributes[`${row}name`]);
    rollObj.name = attributes[`${row}_name`];
 
-   rollObj.skillAttr = attributes[`${row}skill`]||row;
-   //k.log(`Weapon skill: ${rollObj.skillAttr}`);
+   rollObj.skillAttr = attributes[`${row}_skill`]||row;
+   k.log(`Weapon skill: ${rollObj.skillAttr}`);
    if ( rollObj.skillAttr == 'manual' ) {
       rollObj.rollSkill = attributes[`${row}_skill_level`];
       rollObj.rollSkillMod = 0;
@@ -62,9 +62,7 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
 
    rollObj.skillAttr = section ? 
                      `${section}_${rowID}` : 
-                     trigger.name.startsWith("repeating-besvarjelse") ?
-                     trigger.name.replace(/-roll/,'').replaceAll(/-/g,'_').toLowerCase() : 
-                     trigger.name.replace(/-action/,'').replace(/-/g,'_').toLowerCase();
+                     trigger.name.replace(/-roll/,'').replace(/-action/,'').replaceAll(/-/g,'_').toLowerCase();
    k.log(`SKill attr in Roll Dice: ${rollObj.skillAttr}`);
    /* rollObj.name = attributes[`${rollObj.skillAttr}_text`];
    if ( rollObj.name == 'custom-skill' ) {
@@ -101,6 +99,10 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
                         trigger.name.replace(/-action/,'').toLowerCase();
    k.log(`Skill attr: ${rollObj.skillAttr}`);
    rollObj.name = attributes[`${rollObj.skillAttr}_name`];
+   if ( section.startsWith('repeating_martialart') ) {
+      rollObj.skillAttr = section.replace(/repeating_/,'');
+      k.log(`Martial art skill attr: ${rollObj.skillAttr}`);
+   }
    rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
    k.log(`FV value: ${rollObj.rollSkill}`);
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
@@ -133,13 +135,12 @@ const rollRepeatingSpell = async function ({trigger,attributes,sections,casc}) {
    k.log(`Spell attr: ${rollObj.skillAttr}`);
    rollObj.name = attributes[`${rollObj.skillAttr}_name`];
    rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
-   rollObj.spellLevel = parseInt(attributes[`${rollObj.skillAttr}_e`]||1); 
-   const psy = attributes.psypoang;
-   if ( parseInt(attributes.psypoang) < parseInt(rollObj.spellLevel) ) {
+   rollObj.spellLevel = parseInt(attributes[`${rollObj.skillAttr}_e`]||1);
+   /* if ( parseInt(attributes.psypoang) < parseInt(rollObj.spellLevel) ) {
       const noPsyRoll = await startRoll(`/w gm Inte tillräckligt med PSY-poäng!`);
       finishRoll(noPsyRoll.rollId);
       return; 
-   }
+   } */
    k.log(`Spell S value: ${rollObj.rollSkill}`);
    rollObj.rollEffectMod = (rollObj.spellLevel - 1) * 2;
    const effectModStr = rollObj.spellLevel == 1 ? `` : ` -${rollObj.rollEffectMod}[${k.getTranslationByKey('spell-level')}]`;
@@ -209,16 +210,60 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
 
    rollObj.rollStr += `{{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}` ;
 
-   /*    rollObj.rollStr += ` {{easy=[[${Math.floor(parseInt(rollObj.attribute) * 7)}]]}}`;
-   rollObj.rollStr += ` {{normal=[[${Math.floor(parseInt(rollObj.attribute) * 5)}]]}}`;
-   rollObj.rollStr += ` {{difficult=[[${Math.floor(parseInt(rollObj.attribute) * 3)}]]}}`;
-   rollObj.rollStr += ` {{absurd=[[${rollObj.attribute}]]}}`; */
+   const difficulty = getContestTargets(rollObj.attribute);
+   k.log(`Contest targets: ${JSON.stringify(difficulty)},`)
+
+   rollObj.rollStr += ` {{veasy=[[${difficulty.veasy}]]}}`;
+   rollObj.rollStr += ` {{easy=[[${difficulty.easy}]]}}`;
+   rollObj.rollStr += ` {{normal=[[${difficulty.normal}]]}}`;
+   rollObj.rollStr += ` {{difficult=[[${difficulty.hard}]]}}`;
+   rollObj.rollStr += ` {{vdifficult=[[${difficulty.difficult}]]}}`;
+   rollObj.rollStr += ` {{extreme=[[${difficulty.extreme}]]}}`;
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
    //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
    executeRoll({rollObj,attributes});
 }
 k.registerFuncs({rollAttribute});
+
+
+const getContestTargets = function(ge,vs) {
+   const max = ge + 9, min = ge - 9 <= 1 ? 1 : ge - 9;
+   const sg = vs ? 
+      { target: vs }
+      : {
+         veasy: 1,
+         easy: 5,
+         normal: 10,
+         hard: 15,
+         difficult: 20,
+         extreme: 25,
+      }; 
+   const ret = {}; 
+   k.log(`GE is ${ge}, max = ${max} and min ${min}`); 
+
+   
+   Object.keys(sg).forEach( key => {
+      k.log(`Key: ${key}, value: ${sg[key]}`);
+      if ( sg[key] <= min ) {
+         // autosuccess
+         k.log(`Autosuccess: sg[key] <= min : ${sg[key] <= min}`);
+         ret[`${key}`] = 100;
+      } else if ( sg[key] >= max ) {
+         // autofail
+         k.log(`Autofail: sg[key] >= max : ${sg[key] >= max}`);
+         ret[`${key}`] = 1;
+      } else {
+         // 14 ge och 5 sg = 19
+         // 12 ge och 10 sg = 12
+         k.log(`Calculate: ge + 10 - sg : ${ge + 10 - sg[key]}`);
+         ret[`${key}`] = ge + 10 - sg[key];
+      }
+   });
+   k.log(`Attribute targets = ${JSON.stringify(ret)}`);
+   if ( vs ) { return ret.target; }
+   return ret; 
+}
 
 const rollAttributeContest = function ({trigger,attributes,sections,casc}) {
    //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
@@ -377,4 +422,5 @@ const rollCustomDice = function({trigger,attributes,sections,casc}) {
    executeRoll({rollObj,attributes});
 }
 k.registerFuncs({rollCustomDice});
+
 
