@@ -1,6 +1,6 @@
 mixin toggle({name,value,checked,classes})
-   - attr = name.toString().replace(/-/,"_").replace(/ /,"_");
-   - name = name.toString().replace(/ /,"-").replace(/_/,"-");
+   - attr = name.toString().replaceAll(/-/g,"_").replaceAll(/ /g,"_");
+   - name = name.toString().replaceAll(/ /g,"-").replaceAll(/_/g,"-");
    - value = !value && value != '0' ? 1 : value; 
    - checked = checked ? checked : true; 
    - classes = classes ? classes : '';

@@ -163,6 +163,14 @@
                         &::after { content: ')'; }
                      }
                   }
+               }
+               .sheet-roll-description {
+                  font-family: Arial;
+                  text-transform: none;
+                  font-weight: normal;
+                  font-size: 1rem;
+                  padding: 0.5rem;
+                  line-height: 1rem;
                } 
             }
          }

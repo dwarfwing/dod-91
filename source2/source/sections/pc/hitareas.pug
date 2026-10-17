@@ -1,76 +1,146 @@
 mixin hitareas 
    .section-hitareas
-      each area in spine.hitareas          
-         //-+box({headerObj:{name:area.name,attr:area.attr,'data-i18n':area.attr},fields:[{name:'KP',attr:'healthpoints_abbr'},{name:'SP',attr:'painpoints_abbr'}],classes:'coverall section-hitareas--hitarea hitarea'})    
-         .box.section-hitareas--hitarea.hitarea.coverall.box-head
-            .box-header.field-count-2 
-               h1(data-i18n=area.attr)= area.name 
-               h2 
-                  span KP
-                  +number({name:area.kp_tot})
-               h2 
-                  span SP
-                  +number({name:area.sp_tot})
-         
-            //-h2= area.name  
-            .hitarea-armor
-               +input-label({
-                  label: 'Rustning',
-                  divObj: {class:'label-input text-field armor'},
-                  inputObj: {name:area.armor,type:'text'}
-                  }) 
-               +input-label({
-                  label: 'Vikt',
-                  divObj: {class:'label-input text-field weight'},
-                  inputObj: {name:area.armorweight,type:'number'}
-                  }) 
-               +input-label({
-                  label: 'Abs. KP',
-                  divObj: {class:'label-input text-field abs-kp'},
-                  inputObj: {name:area.abs,type:'text'}
-                  }) 
-               +input-label({
-                  label: 'Abs. SP',
-                  divObj: {class:'label-input text-field abs-sp sp-display'},
-                  inputObj: {name:area.spabs,type:'text'}
-                  }) 
-            .hitarea-kp 
-               //-+input-label({
-                  label: 'KP',
-                  divObj: {class: ''},
-                  inputObj: {name: area.kp_tot, type: 'number', class:''}
-                  })
-               +fillLeft-label({
-                  radioObj:{name:area.kp,type:'radio',class:'counter'},
-                  divObj:{class:''},
-                  valueArray:[0,1,2,3,4,5,6,7,8,9,10,11],
-                  noCLear: true,
-                  capAttr: area.kp_tot
-               })
-            .hitarea-sp.sp-display
-               //-+input-label({
-                  label: 'SP',
-                  divObj: {class: ''},
-                  inputObj: {name: area.sp_tot, type: 'number', class:''}
-                  })
-               +fillLeft-label({
-                  radioObj:{name:area.sp,type:'radio',class:'counter'},
-                  divObj:{class:''},
-                  valueArray:[0,1,2,3,4,5,6,7,8,9,10,11],
-                  noCLear: true,
-                  capAttr: area.sp_tot
-               })
-   .hidden-hitareas.for-upgrades.hidden   
-      each area in ['head','chest','rarm','varm','mage','vben','hben']
-         each id in [1,2,3,4,5,6,7,8,9]
-            +checkbox({name:area+id,value:1})
+      .section-hitarea-control
+         .box.section-hitareas--hitarea.hitarea
+            +input-label({
+               label: 'Visa all 3 rader för rustningar',
+               divObj: {class:''},
+               inputObj:{name:'multi row armor',type:'checkbox',value:1,class:'multi-row-armor'}
+            })
+      .section-hitareas-content
+         //+checkbox({name:'multi row armor',value:1,class:'multi-row-armor hidden'}) 
+         +toggle({name:'multi row armor',checked:'false'})
+         each area in spine.hitareas  
+            - attr = area.attr.replaceAll(/-/g,'_') 
+            - i18n = area.attr.replaceAll(/_/g,'-')       
+            //-+box({headerObj:{name:area.name,attr:area.attr,'data-i18n':area.attr},fields:[{name:'KP',attr:'healthpoints_abbr'},{name:'SP',attr:'painpoints_abbr'}],classes:'coverall section-hitareas--hitarea hitarea'})    
+            .box.section-hitareas--hitarea.hitarea.coverall.box-head
+               .box-header 
+                  h1(data-i18n=i18n)= area.name
+               .armor.collapse-container
+                  //-+collapse(name='armor_'+attr+'_collapse') 
+                  +checkbox({name:'armor_'+attr+'_collapse',value:1,class:'collapse'})
+                  .hitarea-armor.hitarea-armor-sum.multi-row  
+                     label.input-label.label-input.text-field.armor 
+                        p(data-i18n='rustning') Rustning
+                     +input-label({
+                        label: 'Vikt',
+                        divObj: {class:'label-input text-field weight'},
+                        inputObj: {name:area.armorweight+'_total',type:'number'}
+                        }) 
+                     +input-label({
+                        label: 'KP',
+                        divObj: {class:'label-input text-field abs-kp'},
+                        spanObj:{title:'KP Absorption'},
+                        inputObj: {name:area.abs+'_total',type:'text'}
+                        }) 
+                     +input-label({
+                        label: 'SP',
+                        divObj: {class:'label-input text-field abs-sp sp-display'},
+                        spanObj:{title:'SP Absorption'},
+                        inputObj: {name:area.spabs+'_total',type:'text'}
+                        }) 
+                  each id in ['','2','3']
+                     - roman = id == '' ? 'I' : ( roman == '2' ? 'II' : 'III' )
+                     .hitarea-armor(class='expanded hitarea-armor-'+id).expanded
+                        //-+input-label({
+                           label: 'Rustning',
+                           divObj: {class:'label-input text-field armor'},
+                           inputObj: {name:area.armor,type:'text'}
+                           }) 
+                        label.input-label.label-input.text-field.armor 
+                           +checkbox({name:area.armor+id+'_equipped',class:'equipped',value:1,label:roman,checked:true,trigger:{triggeredFuncs:['armorCalcAll']}})
+                           +span({'data-i18n':'Rustning'}) Rustning
+                           +input({name:area.armor+id,type:'text',class:'input-label__input'})
+                        +input-label({
+                           label: 'Vikt',
+                           divObj: {class:'label-input text-field weight'},
+                           inputObj: {name:area.armorweight+id,type:'number',trigger:{triggeredFuncs:['armorCalcAll']}}
+                           }) 
+                        +input-label({
+                           label: 'KP',
+                           divObj: {class:'label-input text-field abs-kp'},
+                           spanObj:{title:'KP Absorption'},
+                           inputObj: {name:area.abs+id,type:'number',trigger:{triggeredFuncs:['armorCalcAll']}}
+                           }) 
+                        +input-label({
+                           label: 'SP',
+                           divObj: {class:'label-input text-field abs-sp sp-display'},
+                           spanObj:{title:'SP Absorption'},
+                           inputObj: {name:area.spabs+id,type:'number',trigger:{triggeredFuncs:['armorCalcAll']}}
+                           }) 
+               .points
+                  .hitarea-kp 
+                     h2 
+                        span KP
+                        +number({name:area.kp_tot,class:'hidden'})
+                        +span({name:area.kp_tot,class:'number'})
+                     //-+input-label({
+                        label: 'KP',
+                        divObj: {class: ''},
+                        inputObj: {name: area.kp_tot, type: 'number', class:''}
+                        })
+                     +fillLeft-label({
+                        radioObj:{name:area.kp,type:'radio',class:'counter'},
+                        divObj:{class:''},
+                        valueArray:[0,1,2,3,4,5,6,7,8,9,10,11],
+                        noCLear: true,
+                        capAttr: area.kp_tot
+                     })
+                  .hitarea-sp.sp-display
+                     h2 
+                        span SP
+                        //-+number({name:area.sp_tot,disabled:true})                        
+                        +number({name:area.sp_tot,class:'hidden'})
+                        +span({name:area.sp_tot,class:'number'})
+                     //-+input-label({
+                        label: 'SP',
+                        divObj: {class: ''},
+                        inputObj: {name: area.sp_tot, type: 'number', class:''}
+                        })
+                     +fillLeft-label({
+                        radioObj:{name:area.sp,type:'radio',class:'counter'},
+                        divObj:{class:''},
+                        valueArray:[0,1,2,3,4,5,6,7,8,9,10,11],
+                        noCLear: true,
+                        capAttr: area.sp_tot
+                     })
+      .hidden-hitareas.for-upgrades.hidden   
+         each area in ['head','chest','rarm','varm','mage','vben','hben']
+            each id in [1,2,3,4,5,6,7,8,9]
+               +checkbox({name:area+id,value:1})
 +scss.
    .section-hitareas {
+      display: flex; 
+      flex-wrap: wrap; 
+      align-content: flex-start;
+   }
+   .section-hitarea-control { 
+      width: 100%;
+      height: auto;    
+      .box {
+         width: 100%;
+         height: auto; 
+         display: flex; 
+         background-color: var(--bg-color);   
+         & > label {
+            height: 2rem; 
+            width: 100%; 
+            background-color: var(--bg-color);
+            flex-direction: row-reverse; 
+            justify-content: flex-end;
+            margin-left: 1rem; 
+         }
+      }
+   }
+   .section-hitareas-content {
+      position: relative; 
       max-width: 100%;
+      width: 100%; 
       display: grid; 
       grid-template-columns: repeat(14, 1fr);
       row-gap: 1rem; 
-      column-gap: 2rem; 
+      column-gap: 1rem; 
       background-color: var(--bg-color3);
       padding: 1rem; 
       align-content: flex-start; 
@@ -78,7 +148,117 @@ mixin hitareas
       //border-left: 6px solid var(--border-color);
       //border-bottom: 6px solid var(--border-color);
       //border-right: 6px solid var(--border-color);
+      & > label {
+         height: 2rem; 
+         width: 100%; 
+         background-color: var(--bg-color);
+         border-bottom: var(--border-size) solid var(--border-color);
+      }
       border: var(--border-size) solid var(--border-color);
+      input.multi-row-armor {
+         position: absolute;
+         top: 1rem;
+         left: 1rem; 
+      }
+      input.multi-row-armor:checked {
+         & ~ .box.section-hitareas--hitarea.hitarea.coverall {
+            
+            &:nth-of-type(1) { grid-row-start: 1; grid-column: 2 / 14; }
+            &:nth-of-type(2) { grid-row-start: 2; grid-column: 1 / 8; grid-template-columns: calc(100% - 8rem) 8rem; }
+            &:nth-of-type(3) { grid-row-start: 2; grid-column: 8 / 15; grid-template-columns: calc(100% - 8rem) 8rem; }
+            &:nth-of-type(4) { grid-row-start: 3; grid-column: 2 / 14; }
+            &:nth-of-type(5) { grid-row-start: 4; grid-column: 2 / 14; }
+            &:nth-of-type(6) { grid-row-start: 5; grid-column: 1 / 8; grid-template-columns: calc(100% - 8rem) 8rem; }
+            &:nth-of-type(7) { grid-row-start: 5; grid-column: 8 / 15; grid-template-columns: calc(100% - 8rem) 8rem; }
+
+            grid-template-columns: calc(100% - 10rem) 10rem;
+            .points {
+               //grid-template-columns: 100%;
+            }
+            .armor {
+               display: flex;
+               flex-wrap: wrap;
+               position: relative; 
+               input.collapse { 
+                  position: absolute; 
+                  left: 0; 
+                  z-index: 5000; 
+                  display: grid; 
+                  width: 0.5rem;
+                  height: 0.5rem; 
+                  left: -0.25rem;
+                  top: 0.25rem;
+                  &:before {
+                     content: "arrow_drop_up";
+                     font-family: "Material Symbols Outlined";
+                     font-size: 150%;
+                     justify-content: center;
+                     left: 0.125rem;
+                     top: 0.25rem;
+                  }
+                  &:checked:before {
+                     content: 'arrow_drop_down'
+                  }
+               }
+               input.equipped {
+                  margin-left: 0.25rem;
+               }
+               .hitarea-armor-sum {
+                  align-self: flex-start;
+                  p { text-indent: 1rem; width: 100%;  }
+               }
+               .hitarea-armor {
+                  grid-template-columns: 40% 20% 20% 20%;
+                  grid-template-columns: 55% 15% 15% 15%;
+                  grid-template-areas: "armor weight kp sp";
+                  border-bottom: 1px solid var(--border-color);
+                  /*input.equipped:after {
+                     content: attr(label);
+                     right: -0.5rem; 
+                  }*/
+                  &.hitarea-armor-2, &.hitarea-armor-3, &.hitarea-armor-sum {
+                     display: grid; 
+                  }
+                  label.input-label.text-field {
+                     min-height: 2rem;
+                     &.weight { border-left: 1px solid var(--border-color); border-radius: 0; }
+                     &.abs-kp { border-left: 1px solid var(--border-color); border-radius: 0; }
+                     &.abs-sp { border-left: 1px solid var(--border-color); border-radius: 0; }
+                  }
+                  label.label-input span {
+                     position: absolute;
+                     font-size: 65%;
+                     left: 0;
+                     top: -0.125rem;
+                     border-right: 0;
+                     height: 50%;
+                     padding: 0;
+                     line-height: 0.25rem; 
+                     text-indent: 0; 
+                     text-align: center;
+                     width: 100%;
+                  }
+                  label.label-input :is(input[type=text],input[type=number]) {
+                     //height: calc(var(--line-height) * 0.75);  
+                     //align-self: flex-end; 
+                     //padding-bottom: 0.25rem; 
+                     height: 2rem; 
+                     max-height: 2rem; 
+                     padding-top: 0.75rem;
+                     width: 100%; 
+                  }
+                  &.hitarea-armor-, &.hitarea-armor-2, &.hitarea-armor-3 {                     
+                     label.label-input span {
+                        display: none; 
+                     }
+                  }
+               }
+            }
+         }
+      }
+      input.multi-row-armor:checked ~ .points {
+         grid-template-columns: 100%; 
+      }
       .box.section-hitareas--hitarea.hitarea.coverall { 
          &:nth-of-type(1) { grid-row-start: 1; grid-column: 4 / 12; }
          &:nth-of-type(2) { grid-row-start: 2; grid-column: 1 / 8; }
@@ -93,13 +273,20 @@ mixin hitareas
          box-shadow: #777 3px 3px;
          background-color: var(--bg-color0);
          display: grid; 
-         grid-template-columns: 60% 20% 20%; 
+         //grid-template-columns: 60% 20% 20%; 
+         grid-template-columns: 60% 40%; 
+         grid-template-areas: "header points"
+                              "armor points";
+         grid-template-rows: 2.125rem auto;
+         //grid-template-rows: 2.125rem calc(100% - 2.125rem);
          height: fit-content; 
          h2 { width: 100%; background-color: var(--background-color-box); grid-column: 1 / -1; }
          .box-header {
-            grid-template-columns: 60% 20% 20%; 
+            div:nth-of-type(1) { grid-area: header; }
+            div:nth-of-type(2) { grid-area: armor; }
+            div:nth-of-type(3) { grid-area: points; }
             grid-column: 1 / -1;
-            h1 { background-color: var(--background-color); }
+            h1 { background-color: var(--background-color); width: 100%; text-align: center;  }
             h2 { 
                grid-column: unset;
                display: grid; 
@@ -115,15 +302,31 @@ mixin hitareas
                } 
             }
          }
+         .box-header {
+            grid-area: header; 
+            height: 2.125rem;
+         }
+         .armor {
+            grid-area: armor;
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            //background-color: var(--bg-color2);
+            input.collapse { display: none; }
+         }
          .hitarea-armor {
+            width: 100%; 
             display: grid; 
             grid-template-columns: 25% 25% 25% 25%; 
             grid-template-areas: "armor armor armor weight"
                                  "kp kp sp sp";
-            .armor { grid-area: armor; }
-            .weight { grid-area: weight; }
-            .abs-kp { grid-area: kp; }
-            .abs-sp { grid-area: sp; }
+            &.hitarea-armor-2, &.hitarea-armor-3, &.hitarea-armor-sum {
+               display: none; 
+            }
+            .armor { grid-area: armor; border: 0; }
+            .weight { grid-area: weight; border: 0;   }
+            .abs-kp { grid-area: kp; border: 0; }
+            .abs-sp { grid-area: sp; border: 0; }
             label.text-field {
                min-height: calc(var(--line-height) * 1.25);
                height: 100%; 
@@ -138,16 +341,55 @@ mixin hitareas
                   padding: 0;
                   line-height: 1rem; 
                   width: auto; 
+                  text-indent: 0; 
+                  text-align: center;
+                  width: 100%;
                }
-               input {
+               input[type=text],input[type=number] {
                   height: calc(var(--line-height) * 0.75);  
                   align-self: flex-end; 
                   padding-bottom: 0.25rem; 
+                  width: 100%; 
+                  //border-left: 1px solid var(--border-color);
+               }
+               input.equipped {
+                  margin-top: 1rem;
+                  &:checked:before {
+                     font-size: 110%; 
+                  }
                }
             }
          }
-         .hitarea-kp, .hitarea-sp {
+         .points {
+            grid-area: points; 
             border-left: var(--border-size) solid var(--border-color);
+            display: grid; 
+            grid-template-columns: 50% 50%; 
+            .hitarea-sp { border-left: var(--border-size) solid var(--border-color); }
+            .hitarea-kp, .hitarea-sp {
+               h2 {
+                  height: 2.125rem;
+                  display: grid;
+                  grid-template-columns: calc(100% - 2rem) 2rem; 
+                  font-size: 1rem;
+                  justify-content: space-between; 
+                  border-bottom: var(--border-size) solid var(--border-color);
+                  span {
+                     text-align: center; 
+                     &.number {
+                        background-color: var(--bg-color2);
+                        height: 99%; 
+                     }
+                  }
+                  input {
+                     font-size: 1.25rem;
+                     background-color: var(--bg-color2);
+                     height: 100%;
+                     width: 2rem;
+                     border-radius: 0;
+                  }
+               }
+            }
          } 
          .fill-left {
             width: 100%; 

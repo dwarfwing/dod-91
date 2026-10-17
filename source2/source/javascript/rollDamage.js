@@ -7,47 +7,47 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
    } else {
       const [section,rowID,base] = k.parseTriggerName(trigger.name);
       const row = section ?
-         `${section}_${rowID}_` :
+         `${section}_${rowID}` :
          '';
-      const weaponSkill = attributes[`${row}skill`];
+      const weaponSkill = attributes[`${row}_skill`];
       console.log(`Weapon skill : ${weaponSkill}`);
-      const name = section ?
-         (attributes[`${row}name`] ? 
-         attributes[`${row}name`] :
-         attributes[`${row}name`]) :
-         base.replace(/-/g,' ').replace(/ action/,'');
+      const name = attributes[`${row}_name`] ? attributes[`${row}_name`] : base.replace(/-/g,' ').replace(/ action/,'');
       const i18nKey = base.replace(/-action/,'');
       //k.log(`Roll name before translation: ${name}, base ${i18nKey} with translation ${getTranslationByKey(i18nKey)}`);
       rollObj.name = getTranslationByKey(i18nKey) != false ? getTranslationByKey(i18nKey) : name;   
       //k.log(`Roll name after translation: ${rollObj.name}`);
 
       rollObj.damageDice = section ?
-         attributes[`${row}damage`] :
+         attributes[`${row}_damage`] :
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_damage`];
       /* if ( weaponSkill == 'melee' || 
             weaponSkill == 'martial_arts'  || 
             weaponSkill == 'sabrefencing' || 
             weaponSkill == 'bodybombing' || 
             weaponSkill == 'knifefighting' ) { */
-      if (attributes[`${row}damagebonus`] == '1') {
-         const damageBonus = attributes[`skadebonus`],
+      k.log(`Damage bonus ${attributes[`${row}_damagebonus`]} == ${attributes[`${row}_damagebonus`] == '1'}`);
+      rollObj.damageBonus = attributes[`${row}_damagebonus`] == 1 ? true : false; 
+      rollObj.damageBonusStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].replaceAll(/[Tt]/g,'D')} [${getTranslationByKey('damagebonus')}]`; 
+      /* if (attributes[`${row}_damagebonus`] == '1') {
+         const damageBonus = attributes[`sb`],
                damageBonusMod = attributes[`sb_mod`],
                bonus = damageBonusMod == '' || damageBonusMod == undefined ? damageBonus : damageBonusMod;
+         k.log(`--- Roll Damage bonus ${bonus}`);
          //k.log(`Damage bonus ? ${damageBonusMod == '' || damageBonusMod == undefined}`)
-         rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.toString().replaceAll(/[Tt]/g,'D') : bonus;
+         rollObj.damageBonus = bonus.toString().replaceAll(/[Tt]/g,'D');
          //rollObj.damageBonus = rollObj.damageBonus.test(/Tt/g) ? rollObj.damageBonus.replace(/[Tt]/g,'D') : rollObj.damageBonus;
-      }
+      } */
       rollObj.damageDice = rollObj.damageDice.toString().replaceAll(/[Tt]/g,'D');
 
       rollObj.painDice = section && attributes['use_sp'].toString() == "1" ?
-         attributes[`${row}pain`] :
+         attributes[`${row}_pain`] :
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_pain`];
       /* if ( weaponSkill == 'melee' || 
             weaponSkill == 'martial_arts'  || 
             weaponSkill == 'sabrefencing' || 
             weaponSkill == 'bodybombing' || 
             weaponSkill == 'knifefighting' ) { */
-      /* if (attributes[`${row}damagebonus`] == '1') {
+      /* if (attributes[`${row}_damagebonus`] == '1') {
          const painBonus = attributes[`damagebonus`],
                painBonusMod = attributes[`damagebonus_mod`],
                bonus = painBonusMod == '' || painBonusMod == undefined ? painBonus : painBonusMod;
@@ -57,9 +57,19 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
       } */
       rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
 
-      k.log(`Damage dice ${rollObj.damageDice} and pain dice ${rollObj.painDice}`);
+      //const dmgBonusStr = rollObj.damageBonus ? `+${rollObj.damageBonusStr}[${getTranslationByKey('damagebonus')}]` : '';
 
-      rollObj.hitareas = true; 
+      k.log(`Damage dice ${rollObj.damageDice} ${rollObj.damageBonusStr} and pain dice ${rollObj.painDice}`);
+
+      //rollObj.hitareas = true; 
+
+      rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+
+      rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+      //rollObj.rollStr += ` {{damageRoll=[[0]]}} {{painRoll=[[0]]}} {{hitarearoll=[[0]]}} {{button-label=^{damage}}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+      rollObj.rollStr += ` {{damage=[[${rollObj.damageDice}[${getTranslationByKey('damage')}]${rollObj.damageBonusStr}]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}}`;
+      rollObj.rollStr += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
+      rollObj.rollStr += ` {{secretroll=[[${rollObj.secretRoll}]]}} {{target-area=[[1D20]]}} {{hitareas=true}} {{hitareaRoll=[[0]]}}`;
     
    }
 

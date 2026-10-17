@@ -189,6 +189,8 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
    calcHealthpoints({attributes}); 
    calcPainpoints({attributes}); 
+   calcDamagebonus({attributes});
+
 
    attributes.whisper = '';
    attributes.version = 2.0; 

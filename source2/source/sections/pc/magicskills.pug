@@ -8,7 +8,10 @@ mixin magicskills
                +collapse
                +describe
                .collapsed
-                  +span({name:'name'})
+                  //-+span({name:'name'})
+                  label.select-input.collapsed 
+                     +action({name:'roll',trigger:{triggeredFuncs:['rollDescription']}})
+                        +span({name:'name',class:'button-text'})
                   +span({name:'description',class:'description'})
                .expanded
                   +text({name:'name',placeholder:'Namn...'})

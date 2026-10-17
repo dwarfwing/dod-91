@@ -1212,6 +1212,12 @@ body .ui-dialog .tab-content .charsheet .tabs__nav-item {
 body .ui-dialog .tab-content .charsheet .tabs__nav-list {
   display: flex;
 }
+body .ui-dialog .tab-content .charsheet div:has(> .sheet-rolltemplate-dod91) .message {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .message.secret-text {
+  display: none;
+}
 body .ui-dialog .tab-content .charsheet #main {
   background-color: var(--bg-color);
   padding: 1rem;
@@ -1312,6 +1318,12 @@ body .ui-dialog .tab-content .charsheet h1, body .ui-dialog .tab-content .charsh
 }
 body .ui-dialog .tab-content .charsheet .tabs.tabs--dod91 {
   margin-top: -2rem;
+}
+body .ui-dialog .tab-content .charsheet .tabs nav.tabs--dod91__header {
+  width: 50%;
+  max-width: 50%;
+  justify-self: flex-end;
+  margin-left: 50%;
 }
 body .ui-dialog .tab-content .charsheet .tabs {
   display: flex;
@@ -1591,12 +1603,11 @@ body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.secti
   padding-left: 1.25rem;
   padding-right: 0.75rem;
   text-align: justify;
-  font-size: 95%;
   width: 100%;
   justify-content: flex-start;
   min-height: 1lh;
   border-top: 1px dashed var(--border-color);
-  line-height: 1.75rem;
+  line-height: 1.5rem;
   letter-spacing: unset;
   text-transform: none;
 }
@@ -1640,56 +1651,6 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row, bo
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row:hover input[type=checkbox].describe, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row:hover input[type=checkbox].describe, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row:hover input[type=checkbox].describe {
   opacity: var(--collapseHoverOpacity);
-}
-body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row {
-  /* input[type=checkbox].describe {
-     position: absolute;
-     z-index: 1000;
-     left: 0rem;
-     top: 1.25rem; 
-     appearance: none; 
-     border: 0;
-     opacity: var(--collapseBaseOpacity);
-     width: 0.5rem;
-     line-height: 1rem;
-     max-width: 0.5rem;
-     text-align: left;
-     height: 0.5rem;
-     display: flex;
-     justify-content: center;
-     text-indent: 0.25rem;
-     top: 1.25rem;
-     margin: 0;
-     cursor: pointer;
-     &:before {
-        content: 'arrow_drop_up';
-        font-family: 'Material Symbols Outlined';
-     }
-     &:checked {
-        //opacity: var(--collapseHoverOpacity);
-        ~ .collapsed {
-           height: auto; 
-           span.description {
-              display: flex;
-              --margin-left: 1rem;
-              text-indent: 1.25rem;
-              width: 100%;
-              justify-content: flex-start; 
-              min-height: 1lh; 
-              border-top: 1px dashed var(--border-color);
-           }
-        }
-     }
-     &:not(:checked) {                
-        &:before {
-           content: 'arrow_drop_down';
-           font-family: 'Material Symbols Outlined';
-        } 
-        ~ .collapsed .description {
-           display: none;
-        }
-     }
-  } */
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet div.section-languages .skill-row > :is(.expanded, .collapsed), body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row > :is(.expanded, .collapsed) {
   height: var(--line-height);
@@ -1768,6 +1729,12 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input select option, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input select option, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input select option {
   text-align: center;
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.attr-select select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.attr-select select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.attr-select select {
+  padding: 0;
+  font-size: 80%;
+  margin: 0;
+  border: 0;
+}
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.select-input.cost-select input, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.select-input.cost-select input, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.select-input.cost-select input {
   margin: 0;
   border: 0;
@@ -1788,11 +1755,17 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-6, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-6 {
   grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-7, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-7, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-7 {
+  grid-template-columns: calc(100% - 12.5rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+}
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-5.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-5.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-5.display-cost-select {
   grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-6.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-6.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-6.display-cost-select {
   grid-template-columns: calc(100% - 12.5rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input.input-count-7.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input.input-count-7.display-cost-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input.input-count-7.display-cost-select {
+  grid-template-columns: calc(100% - 15rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input span.select-span.type-select, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input span.select-span.type-select, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input span.select-span.type-select {
   position: relative;
@@ -2312,45 +2285,72 @@ body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:not(:
 body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:not(:checked) ~ div .collapsed {
   display: none;
 }
+body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:not(:checked) ~ div .collapsed input {
+  background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .section-attributes input.collapse:not(:checked) ~ div input {
+  background-color: var(--bg-color3);
+}
 body .ui-dialog .tab-content .charsheet .section-attributes button.roller + button {
   display: none;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row {
   display: grid;
-  grid-template-columns: 1fr 3rem;
+  grid-template-columns: 1fr 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row label {
   border: 0;
+  cursor: pointer;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row input {
   width: 100%;
   text-align: center;
   border-left: 1px solid var(--border-color);
-  background-color: var(--bg-color3);
+  background-color: var(--bg-color2);
+}
+body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row span.input-span-sty-mod {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row span.input-span-sty-mod:before {
+  content: "Mod.";
+  font-size: 75%;
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  text-align: center;
+  z-index: 6000;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row .label-input-span {
   border-left: 1px solid var(--border-color);
   width: 100%;
   text-align: center;
+  background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row .label-input-span input {
   border: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row button[type=action].attribute-roll {
-  display: none;
-  width: 2rem;
-  justify-self: center;
-  justify-content: center;
-  margin-inline: 0.5rem;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row button[type=action].attribute-roll:before {
-  content: "t";
-  font-size: 2.25rem;
-}
-body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row button[type=action].attribute-roll:last-of-type:before {
-  content: "k";
-}
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row {
+  /*button[type=action].attribute-roll {
+     display: none;
+     width: 2rem;
+     justify-self: center; 
+     justify-content: center;
+     margin-inline: 0.5rem; 
+     cursor: pointer; 
+     &:before {
+        content: 't';
+        font-size: 2.25rem;
+     }
+     &:last-of-type {
+        &:before {
+           content: 'k'; 
+        }
+     }
+  }*/
   /*&:hover {            
      grid-template-columns: 1fr 2.25rem 2.25rem 3rem;
      button[type=action].attribute-roll {
@@ -2424,6 +2424,9 @@ body .ui-dialog .tab-content .charsheet .section-info .appearance .input-span-te
   width: 100% !important;
   max-height: calc(var(--line-height) * 2);
   overflow: hidden;
+}
+body .ui-dialog .tab-content .charsheet .section-info .appearance .input-span-textarea > * {
+  line-height: 1.5rem;
 }
 body .ui-dialog .tab-content .charsheet .section-info .hp-points {
   grid-area: hp;
@@ -2689,11 +2692,31 @@ body .ui-dialog .tab-content .charsheet .box-martialarts .martialart-header .exp
   line-height: 0.75rem;
   text-align: center;
 }
+body .ui-dialog .tab-content .charsheet .box-martialarts .martialart-header .expanded span.base-cost {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .martialart-header .expanded span.base-cost::before {
+  content: "Bas";
+  font-size: 75%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0.85rem;
+  line-height: 0.85rem;
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .box-martialarts .martialart-header .expanded span.base-cost select {
+  height: 1.5rem;
+  display: block;
+}
 body .ui-dialog .tab-content .charsheet .box-martialarts .repcontrol {
   border-top: 1px solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer {
   margin-left: 1.25rem;
+  width: calc(100% - 1.25rem);
 }
 body .ui-dialog .tab-content .charsheet .box-martialarts .repcontainer .repitem {
   position: relative;
@@ -2960,70 +2983,244 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.damage la
   content: "stat_3";
 }
 body .ui-dialog .tab-content .charsheet .section-hitareas {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+body .ui-dialog .tab-content .charsheet .section-hitarea-control {
+  width: 100%;
+  height: auto;
+}
+body .ui-dialog .tab-content .charsheet .section-hitarea-control .box {
+  width: 100%;
+  height: auto;
+  display: flex;
+  background-color: var(--bg-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitarea-control .box > label {
+  height: 2rem;
+  width: 100%;
+  background-color: var(--bg-color);
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-left: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content {
+  position: relative;
   max-width: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(14, 1fr);
   row-gap: 1rem;
-  column-gap: 2rem;
+  column-gap: 1rem;
   background-color: var(--bg-color3);
   padding: 1rem;
   align-content: flex-start;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content > label {
+  height: 2rem;
+  width: 100%;
+  background-color: var(--bg-color);
+  border-bottom: var(--border-size) solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content {
   border: var(--border-size) solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(1) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(1) {
+  grid-row-start: 1;
+  grid-column: 2/14;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(2) {
+  grid-row-start: 2;
+  grid-column: 1/8;
+  grid-template-columns: calc(100% - 8rem) 8rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(3) {
+  grid-row-start: 2;
+  grid-column: 8/15;
+  grid-template-columns: calc(100% - 8rem) 8rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(4) {
+  grid-row-start: 3;
+  grid-column: 2/14;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(5) {
+  grid-row-start: 4;
+  grid-column: 2/14;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(6) {
+  grid-row-start: 5;
+  grid-column: 1/8;
+  grid-template-columns: calc(100% - 8rem) 8rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(7) {
+  grid-row-start: 5;
+  grid-column: 8/15;
+  grid-template-columns: calc(100% - 8rem) 8rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall {
+  grid-template-columns: calc(100% - 10rem) 10rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor input.collapse {
+  position: absolute;
+  left: 0;
+  z-index: 5000;
+  display: grid;
+  width: 0.5rem;
+  height: 0.5rem;
+  left: -0.25rem;
+  top: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor input.collapse:before {
+  content: "arrow_drop_up";
+  font-family: "Material Symbols Outlined";
+  font-size: 150%;
+  justify-content: center;
+  left: 0.125rem;
+  top: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor input.collapse:checked:before {
+  content: "arrow_drop_down";
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor input.equipped {
+  margin-left: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor-sum {
+  align-self: flex-start;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor-sum p {
+  text-indent: 1rem;
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor {
+  grid-template-columns: 40% 20% 20% 20%;
+  grid-template-columns: 55% 15% 15% 15%;
+  grid-template-areas: "armor weight kp sp";
+  border-bottom: 1px solid var(--border-color);
+  /*input.equipped:after {
+     content: attr(label);
+     right: -0.5rem; 
+  }*/
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor.hitarea-armor-2, body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor.hitarea-armor-3, body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor.hitarea-armor-sum {
+  display: grid;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor label.input-label.text-field {
+  min-height: 2rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor label.input-label.text-field.weight {
+  border-left: 1px solid var(--border-color);
+  border-radius: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor label.input-label.text-field.abs-kp {
+  border-left: 1px solid var(--border-color);
+  border-radius: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor label.input-label.text-field.abs-sp {
+  border-left: 1px solid var(--border-color);
+  border-radius: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor label.label-input span {
+  position: absolute;
+  font-size: 65%;
+  left: 0;
+  top: -0.125rem;
+  border-right: 0;
+  height: 50%;
+  padding: 0;
+  line-height: 0.25rem;
+  text-indent: 0;
+  text-align: center;
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor label.label-input :is(input[type=text], input[type=number]) {
+  height: 2rem;
+  max-height: 2rem;
+  padding-top: 0.75rem;
+  width: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor.hitarea-armor- label.label-input span, body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor.hitarea-armor-2 label.label-input span, body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .box.section-hitareas--hitarea.hitarea.coverall .armor .hitarea-armor.hitarea-armor-3 label.label-input span {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content input.multi-row-armor:checked ~ .points {
+  grid-template-columns: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(1) {
   grid-row-start: 1;
   grid-column: 4/12;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(2) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(2) {
   grid-row-start: 2;
   grid-column: 1/8;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(3) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(3) {
   grid-row-start: 2;
   grid-column: 8/15;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(4) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(4) {
   grid-row-start: 3;
   grid-column: 4/12;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(5) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(5) {
   grid-row-start: 4;
   grid-column: 4/12;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(6) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(6) {
   grid-row-start: 5;
   grid-column: 1/8;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(7) {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall:nth-of-type(7) {
   grid-row-start: 5;
   grid-column: 8/15;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall {
   box-shadow: #777 3px 3px;
   background-color: var(--bg-color0);
   display: grid;
-  grid-template-columns: 60% 20% 20%;
+  grid-template-columns: 60% 40%;
+  grid-template-areas: "header points" "armor points";
+  grid-template-rows: 2.125rem auto;
   height: fit-content;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall h2, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .input-label:not(.stacked).large > [name] {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall h2, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .input-label:not(.stacked).large > [name] {
   width: 100%;
   background-color: var(--background-color-box);
   grid-column: 1/-1;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header {
-  grid-template-columns: 60% 20% 20%;
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header div:nth-of-type(1) {
+  grid-area: header;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header div:nth-of-type(2) {
+  grid-area: armor;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header div:nth-of-type(3) {
+  grid-area: points;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header {
   grid-column: 1/-1;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header h1 {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header h1 {
   background-color: var(--background-color);
+  width: 100%;
+  text-align: center;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header h2, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header .input-label:not(.stacked).large > [name] {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header h2, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header .input-label:not(.stacked).large > [name] {
   grid-column: unset;
   display: grid;
   grid-template-columns: 1fr 2rem;
   border-left: 1px solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header h2 input, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .box-header .input-label:not(.stacked).large > [name] input {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header h2 input, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header .input-label:not(.stacked).large > [name] input {
   width: 2rem;
   height: var(--line-height);
   border-radius: 0;
@@ -3031,28 +3228,49 @@ body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas-
   background-color: var(--bg-color2);
   padding: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .box-header {
+  grid-area: header;
+  height: 2.125rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .armor {
+  grid-area: armor;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .armor input.collapse {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor {
+  width: 100%;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-areas: "armor armor armor weight" "kp kp sp sp";
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .armor {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor.hitarea-armor-2, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor.hitarea-armor-3, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor.hitarea-armor-sum {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .armor {
   grid-area: armor;
+  border: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .weight {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .weight {
   grid-area: weight;
+  border: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .abs-kp {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .abs-kp {
   grid-area: kp;
+  border: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .abs-sp {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor .abs-sp {
   grid-area: sp;
+  border: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field {
   min-height: calc(var(--line-height) * 1.25);
   height: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field span {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field span {
   width: auto;
   position: absolute;
   font-size: 75%;
@@ -3063,16 +3281,54 @@ body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas-
   padding: 0;
   line-height: 1rem;
   width: auto;
+  text-indent: 0;
+  text-align: center;
+  width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field input {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field input[type=text], body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field input[type=number] {
   height: calc(var(--line-height) * 0.75);
   align-self: flex-end;
   padding-bottom: 0.25rem;
+  width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-kp, body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .hitarea-sp {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field input.equipped {
+  margin-top: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .hitarea-armor label.text-field input.equipped:checked:before {
+  font-size: 110%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points {
+  grid-area: points;
+  border-left: var(--border-size) solid var(--border-color);
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp {
   border-left: var(--border-size) solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp h2, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp .input-label:not(.stacked).large > [name], body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp h2, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp .input-label:not(.stacked).large > [name] {
+  height: 2.125rem;
+  display: grid;
+  grid-template-columns: calc(100% - 2rem) 2rem;
+  font-size: 1rem;
+  justify-content: space-between;
+  border-bottom: var(--border-size) solid var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp h2 span, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp .input-label:not(.stacked).large > [name] span, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp h2 span, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp .input-label:not(.stacked).large > [name] span {
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp h2 span.number, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp .input-label:not(.stacked).large > [name] span.number, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp h2 span.number, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp .input-label:not(.stacked).large > [name] span.number {
+  background-color: var(--bg-color2);
+  height: 99%;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp h2 input, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-kp .input-label:not(.stacked).large > [name] input, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp h2 input, body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .points .hitarea-sp .input-label:not(.stacked).large > [name] input {
+  font-size: 1.25rem;
+  background-color: var(--bg-color2);
+  height: 100%;
+  width: 2rem;
+  border-radius: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .fill-left {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -3082,11 +3338,11 @@ body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas-
   margin-left: 0;
   padding-block: 0.25rem;
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left label {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .fill-left label {
   width: 85%;
   border: 1px solid var(--border-color);
 }
-body .ui-dialog .tab-content .charsheet .section-hitareas .box.section-hitareas--hitarea.hitarea.coverall .fill-left label:after {
+body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-hitareas--hitarea.hitarea.coverall .fill-left label:after {
   font-size: 90%;
   padding-top: 0;
 }
@@ -3236,7 +3492,7 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .re
   min-height: 4rem;
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .input-count-7 {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .label-input.input-count-7 {
   display: grid;
   grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
 }
@@ -3257,6 +3513,10 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .label-input {
   height: stretch;
 }
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .label-input.input-count-7 {
+  display: grid;
+  grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row label, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=number], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span:not(.button-text) {
   border-right: 1px solid var(--border-color);
   border-left: 0;
@@ -3265,12 +3525,13 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded input:first-of-type {
   border-right: 1px solid var(--border-color);
+  height: var(--row-height);
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.button-text, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button[type=action] {
   border-right: 0;
   justify-content: center;
 }
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text] {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.button-text {
   width: 100%;
   text-align: center;
 }
@@ -4069,6 +4330,14 @@ body.sheet-darkmode .charactersheet {
 }
 .sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-roll-result .sheet-roll-hitarea + .sheet-roll-result span::after {
   content: ")";
+}
+.sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-roll-result .sheet-roll-description {
+  font-family: Arial;
+  text-transform: none;
+  font-weight: normal;
+  font-size: 1rem;
+  padding: 0.5rem;
+  line-height: 1rem;
 }
 
 .sheet-rolltemplate-darkmode {

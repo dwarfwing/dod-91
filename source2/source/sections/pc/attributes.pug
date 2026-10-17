@@ -1,9 +1,9 @@
 mixin attributes 
    .section-attributes.collapse-container
-      +collapse({name:'attributes_collapse'}) 
+      +collapse(name='attributes_collapse') 
       +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'},classes:'attributes-box'})
          each attribute in spine.attributes
-            div(class='column-'+attribute.attr).label-input.input-count-1.attribute-row
+            div(class='column-'+attribute.attr).label-input.input-count-2.attribute-row
                //-label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
                +action({
                   name:'roll_'+attribute.attr,trigger:{triggeredFuncs:['rollAttribute']}
@@ -13,6 +13,8 @@ mixin attributes
                //-+action({name:'attr-contest-'+attribute.attr,trigger:{triggeredFuncs:['rollAttributeContest']},'data-i18n-title':'attribute-roll-contest'}).attribute-roll.ge-roll-geRollContest
                +input({type: 'number', name: attribute.attr+'_fv', min: 0, class:'expanded label-input-input input-'+attribute.attr+'',trigger:{triggeredFuncs:attribute.trigger,affects:attribute.affects}})
                +span({name: attribute.attr+'_fv', min: 0, class:'collapsed label-input-input label-input-span input-'+attribute.attr+''})
+               span.input-span.input-span-mod(class='input-span-'+attribute.attr+'-mod')
+                  +input({type: 'number', name: attribute.attr+'_mod', min: 0, class:'label-input-input input-'+attribute.attr+'-mod'})
                +input({type: 'number', name: attribute.attr+'_bc', min: 0, class:'hidden label-input-input input-'+attribute.attr+'',hidden:true})
       +box({classes:'size-attributes headless'})
          div(class='column-length').label-input.input-count-1.attribute-row
@@ -75,7 +77,15 @@ mixin attributes
             display: grid; 
             opacity: unset;
             & ~ div .collapsed {
-               display: none;               
+               display: none;
+               input {               
+                  background-color: var(--bg-color3);
+               }               
+            }
+            & ~ div {
+               input {               
+                  background-color: var(--bg-color3);
+               }             
             }
          }
       }
@@ -86,31 +96,50 @@ mixin attributes
       } 
       .attribute-row {
          display: grid;
-         grid-template-columns: 1fr 3rem;
+         grid-template-columns: 1fr 3rem 3rem;
          label {
             border: 0; 
+            cursor: pointer; 
          }
          input {
             width: 100%;
             text-align: center; 
             border-left: 1px solid var(--border-color);
 
-            background-color: var(--bg-color3);
+            background-color: var(--bg-color2);
+         }
+         span.input-span-sty-mod {
+            position: relative; 
+            &:before {
+               content: "Mod.";
+               font-size: 75%;
+               position: absolute;
+               top: -1rem;
+               left: 0;
+               right: 0;
+               width: 100%;
+               height: 0.75rem;
+               line-height: 0.75rem;
+               text-align: center;
+               z-index: 6000; 
+            }
          }
          .label-input-span {
             border-left: 1px solid var(--border-color);
             width: 100%; 
             text-align: center; 
+            background-color: var(--bg-color2);
             input {
                border: 0; 
             }
          }
-         button[type=action].attribute-roll {
+         /*button[type=action].attribute-roll {
             display: none;
             width: 2rem;
             justify-self: center; 
             justify-content: center;
             margin-inline: 0.5rem; 
+            cursor: pointer; 
             &:before {
                content: 't';
                font-size: 2.25rem;
@@ -120,7 +149,7 @@ mixin attributes
                   content: 'k'; 
                }
             }
-         }
+         }*/
          /*&:hover {            
             grid-template-columns: 1fr 2.25rem 2.25rem 3rem;
             button[type=action].attribute-roll {

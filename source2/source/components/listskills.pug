@@ -4,30 +4,20 @@ mixin listSkills({namn,attr,transl,fields,array,cost,b})
       fields = fields ? fields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
       //array = Array.isArray(array) ? array : [];
    +box({headerObj:{name:namn,attr:attr,'data-i18n':i18n},fields:fields,classes:'box-skills box-skills-'+attr})
-      //-each skill in rows
-         - geAbbr = skill.base.slice(0,3).toUpperCase();
-         +text({name: attr+'_name',value: skill.name,class:'hidden'})
-         +label-inputs({
-            label: name + geAbbr,
-            divObj: {class:'column-'+attr},
-            labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr,rollType:'skill'},
-            inputObj: [
-               {type: 'number', name: skill.attr+'_fv', class:'label-input-input input-'+skill.name},
-               {type: 'number', name: skill.attr+'_mod', class:'label-input-input input-mod-'+skill.name},
-               {type: 'number', name: skill.attr+'_erf', class:'label-input-input input-exp-'+skill.name},
-               {type: 'checkbox', name: skill.attr+'_improve', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-normal input-impr-'+skill.name},
-               {type: 'checkbox', name: skill.attr+'_improve_perfect', value:1, nospan: true, class:'label-input-input improve-mark improve-mark-perfect input-impr-perf-'+skill.name},
-            ]
-            })
       each skill in array
-         - geAbbr = skill.base ? ' ('+skill.base.slice(0,3).toUpperCase()+')' : "" ;
-         - bskill = skill.bskill ? skill.bskill : false; 
+         - 
+            ge = skill.base.replace(/_fv/,'');
+            geAbbr = skill.base ? ' ('+skill.base.slice(0,3).toUpperCase()+')' : "" ;
+            bskill = skill.bskill ? skill.bskill : false;
+            skillType = skill.secret ? 'asecret' : 'a';
          .skill-row 
             if cost
                +number({name:skill.attr+'_cost',value:cost,class:'hidden'})
             +text({name:skill.attr+'_name',value:skill.name,class:'hidden'})
+            +text({name:skill.attr+'_type',value:skillType,class:'hidden'})
+            +text({name:skill.attr+'_attr',value:ge,class:'hidden'})
             +number({name:skill.attr+'_b',value:0,class:'hidden'})
-            +checkbox({name:skill.attr+'_type',value:'b',class:'type-b-selected hidden'})
+            //-+checkbox({name:skill.attr+'_type',value:'b',class:'type-b-selected hidden'})
             if bskill
                label.label-input.input-count-6
                   +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
@@ -47,10 +37,10 @@ mixin listSkills({namn,attr,transl,fields,array,cost,b})
                label.label-input.input-count-5
                   +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
                      span('data-18n'=skill.i18n+'-ge')= skill.name+geAbbr
-                  if b 
+                  //-if b 
                      span.input-span.input-0 
                         +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
-                  else if b == undefined 
+                  //-else if b == undefined 
                      span.select-span.type-select.input-0
                         +select({name: 'type', class:'label-input-select', trigger: { triggeredFuncs: ['setSkillB']}})
                            +option({value:'a'})

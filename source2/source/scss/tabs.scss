@@ -1,8 +1,14 @@
 @mixin all {
    .tabs {
       &.tabs--dod91 {
-         margin-top: -2rem; 
+         margin-top: -2rem;         
       }
+      nav.tabs--dod91__header {
+         width: 50%; 
+         max-width: 50%;             
+         justify-self: flex-end;
+         margin-left: 50%; 
+      } 
       display: flex;
       flex-direction: column;
       width: 100%;

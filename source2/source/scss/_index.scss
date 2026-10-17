@@ -12,6 +12,16 @@
 }
 @mixin generic{
   // Put generic styling that will be used in both the sheet and the roll template here
+  div:has(> .sheet-rolltemplate-dod91) {
+    .message {
+      display: none; 
+    }
+  }
+  .message.secret-text {
+    display: none;
+  }
+  
+
   #main {
     //background-image: var(--bg-image);
     //background-repeat: repeat-y;

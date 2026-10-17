@@ -75,7 +75,7 @@ mixin config-tab
             label: 'PSY-poäng modifikation',
             spanObj:{'data-i18n':'psy-modifier'},
             divObj:{class:''},
-            inputObj:{name:'psy mod',type:'number',value:0,trigger:{triggeredFuncs:['calcPsypoints']}}
+            inputObj:{name:'psypoang mod',type:'number',value:0,trigger:{triggeredFuncs:['calcPsypoints']}}
             })
          +input-label({
             label: 'Bärförmåga modifikation',
@@ -93,7 +93,7 @@ mixin config-tab
             label: 'Skadebonus manuellt',
             spanObj:{'data-i18n':'sb-override'},
             divObj:{class:''},
-            inputObj:{name:'sb mod',type:'text',value:'',trigger:{triggeredFuncs:['calcDamagebonus']}}
+            inputObj:{name:'sb mod',type:'text',trigger:{triggeredFuncs:['calcDamagebonus']}}
             })
 +scss.
    .section-config {

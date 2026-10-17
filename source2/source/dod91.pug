@@ -66,8 +66,8 @@ main#main
     +radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/w gm',class:'hidden'})
     label(for='toggle-roll-viz-whisper',data-i18n-title='roll-whispering-title')
       | visibility_lock 
-    //-+radio({name:'whisper',id:'toggle-roll-viz-secret',value:'/sr',class:'hidden'})
-    //-label(for='toggle-roll-viz-secret',data-i18n-title='roll-secret-title')
+    +radio({name:'whisper',id:'toggle-roll-viz-secret',value:'/sr',class:'hidden'})
+    label(for='toggle-roll-viz-secret',data-i18n-title='roll-secret-title')
       | visibility_off 
     //-+radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/ssr',class:'hidden'})
     //-label(for='toggle-roll-viz-whisper',data-i18n-title='roll-super-secret-title')
@@ -113,7 +113,7 @@ main#main
 //- An input to contain template fields that should always be output with a roll.
 +hidden({name:'templatestart',value:`@{whisper}&{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
 +hidden({name:'templatestartwhisper',value:`/w gm &{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
-+hidden({name:'templatestartsecret',value:`&{template:${templateName}} {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
++hidden({name:'templatestartsecret',value:`&{template:${templateName}} /sr {{character_name=@{character_name}}} {{character_id=@{character_id}}}`})
 +hidden({name:'whisper',value:``})
 include rolltemplate/rolltemplate.pug
 

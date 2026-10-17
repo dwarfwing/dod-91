@@ -24,8 +24,16 @@ mixin info
                { name:'initmod',type:'number',value:0 }
             ],
          })
+         +label-inputs({
+            label: 'Skadebonus',
+            divObj: {class:'column-damagebonus'},
+            labelObj: {class: 'label-input-label',name:'sb',attr:'sb',type:'',rollType:''},
+            inputObj: [
+               { name:'sb',type:'text',value:'' }
+            ],
+         })
          each info in spine.tertiary
-            - var inpObj = {type: info.type, name: info.attr, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'};
+            - var inpObj = {name: info.attr, type: info.type, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'};
             - if (info.name == 'belastning') { inpObj.step = "0.01"; }
             - var inputObjs = [inpObj]; 
             if info.classes.includes("currMax") 
@@ -214,6 +222,9 @@ mixin info
             width: 100% !important;
             max-height: calc(var(--line-height)*2);
             overflow: hidden;
+            & > * {
+               line-height: 1.5rem; 
+            }
             
          }
       }

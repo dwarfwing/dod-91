@@ -23,8 +23,9 @@ mixin martialarts
          - attr = 'martialart'+id
          .martialart(class=attr) 
             +number({name:attr+'_cost',class:'hidden'})
+            +text({name:attr+'_attr',value:'smi',class:'hidden'})
             .skill-row.martialart-header.collapse-container(class='skill-row-'+attr) 
-               +collapse({name:attr+'_collapse'})
+               +collapse(name=attr+'_collapse')
                .collapsed 
                   .label-input.input-count-5    
                      label.select-input.collapsed 
@@ -37,17 +38,23 @@ mixin martialarts
                      +checkbox({name:attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})   
                .expanded
-                  .label-input.input-count-6
+                  .label-input.input-count-7
                      //-label.text-input 
                         +text({name:'name'}).caps-input
                      label.select-input.expanded
                         +text({name:attr+'_name',attr:'custom-skill-input',value:'Stridskonst '+id}) 
                      +span({name:attr+'_cost',class:'label-input-span'}).input-0     
-                     span.input-span.input-1
-                        +input({type: 'number', name: attr+'_fv', class:'label-input-input'})
+                     span.input-span.input-1.base-cost
+                        +select({name: attr+'_basecost', class:'label-input-select',trigger:{triggeredFuncs:['setMartialartsCost']}})
+                           +option({value:0})
+                              |0
+                           +option({value:2})
+                              |2
                      span.input-span.input-2
+                        +input({type: 'number', name: attr+'_fv', class:'label-input-input'})
+                     span.input-span.input-3
                         +input({type: 'number', name: attr+'_mod', class:'label-input-input'})
-                     span.input-span.input-3.erf
+                     span.input-span.input-4.erf
                         +input({type: 'number', name: attr+'_erf', class:'label-input-input'})
                      +checkbox({name:attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
@@ -132,6 +139,25 @@ mixin martialarts
                   line-height: 0.75rem;
                   text-align: center;
                }
+            }            
+            span.base-cost {
+               position: relative; 
+               &::before {
+                  content: "Bas";
+                  font-size: 75%;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  right: 0;
+                  width: 100%;
+                  height: 0.85rem;
+                  line-height: 0.85rem;
+                  text-align: center;
+               }
+               select {
+                  height: 1.5rem;
+                  display: block;
+               }
             }
          }
       }
@@ -140,6 +166,7 @@ mixin martialarts
       }
       .repcontainer {
          margin-left: 1.25rem;
+         width: calc(100% - 1.25rem);
          .repitem {
             position: relative; 
             border-left: 1px solid var(--border-color);

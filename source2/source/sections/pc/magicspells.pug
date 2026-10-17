@@ -105,7 +105,7 @@ mixin spells
             //grid-template-columns: 50% 50%;
             width: 100%; 
          } 
-         .input-count-7 {
+         .label-input.input-count-7 {
             display: grid; 
             grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
          }
@@ -126,6 +126,10 @@ mixin spells
             }
             .label-input {
                height: stretch;
+               &.input-count-7 {
+                  display: grid; 
+                  grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+               }
             }
             label, input[type=number], input[type=text], span:not(.button-text) {
                border-right: 1px solid var(--border-color); 
@@ -135,12 +139,13 @@ mixin spells
             }
             .expanded input:first-of-type {
                border-right: 1px solid var(--border-color);
+               height: var(--row-height);
             }
             span.button-text, button[type=action], {
                border-right: 0; 
                justify-content: center;
             }
-            input[type=text] {
+            input[type=text], span.button-text {
                width: 100%;
                text-align: center;
             }

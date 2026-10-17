@@ -1,5 +1,6 @@
 const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
+   //k.log(`Roll attributes: ${JSON.stringify(attributes)}`);
    const rollObj = {};
    const [section,rowID,base] = k.parseTriggerName(trigger.name);
    const row =`${section}_${rowID}`;
@@ -32,16 +33,24 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_pain`];
       rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
    }
-   if (attributes[`${row}_damagebonus`] == '1') {
-      const damageBonus = attributes[`sakdebonus`],
-            damageBonusMod = attributes[`skadebonus_mod`],
-            bonus = damageBonusMod == '' || damageBonusMod == undefined ? damageBonus : damageBonusMod;
-      //k.log(`Damage bonus ? ${damageBonusMod == '' || damageBonusMod == undefined}`)
+   k.log(`Damage bonus ${attributes[`${row}_damagebonus`]} == ${attributes[`${row}_damagebonus`] == '1'} with ${attributes['sb']}`);
+   rollObj.damageBonus = attributes[`${row}_damagebonus`] == 1 ? true : false; 
+   rollObj.damageBonusStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].replaceAll(/[Tt]/g,'D')} [${getTranslationByKey('damagebonus')}]`; 
+   /* if (attributes[`${row}_damagebonus`] == '1') {
+      const damageBonus = attributes[`sb`],
+            damageBonusMod = attributes[`sb_mod`],
+            bonus = attributes.sb_mod != '' ? damageBonus : damageBonusMod;
+         k.log(`--- Roll Damage bonus ${attributes[`sb`]} == ${bonus}`);
+      k.log(`Damage bonus ? ${damageBonusMod == '' || damageBonusMod == undefined}`)
       rollObj.damageBonus = /[Tt]/g.test(bonus) ? bonus.toString().replaceAll(/[Tt]/g,'D') : bonus;
       //rollObj.damageBonus = rollObj.damageBonus.test(/Tt/g) ? rollObj.damageBonus.replace(/[Tt]/g,'D') : rollObj.damageBonus;
-   }
+      const dmgBonusStr = rollObj.damageBonus && rollObj.damageBonus != '' ? `+${rollObj.damageBonus}[${getTranslationByKey('damagebonus')}]` : '';
+  
+      } */
+   //rollObj.hitareas = true;
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
@@ -75,6 +84,8 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   k.log(`${rollObj.name} skill type ${attributes[`${rollObj.skillAttr}_type`]}`);
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
@@ -109,14 +120,12 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
 
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
-
-   //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
-   //const rollCrit = Math.ceil(rollSkill / 10) != 0 ? Math.ceil(rollSkill / 10) : 1;
    executeRoll({rollObj,attributes});
 }
 k.registerFuncs({rollRepeatingSkill});
@@ -150,8 +159,9 @@ const rollRepeatingSpell = async function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill;
  
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
-   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name} E${rollObj.spellLevel}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name} E${rollObj.spellLevel}}}`;
 
    rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{spell-level=[[${rollObj.spellLevel}]]}} {{target=[[${parseInt(rollObj.target)}${effectModStr}${rollModStr}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
@@ -182,6 +192,7 @@ const rollSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
    
@@ -203,12 +214,14 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
    rollObj.attribute = attributes[attr+'_fv'];
+   rollObj.attrMod = attributes[attr+'_mod']||0;
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
 
-   rollObj.rollStr += `{{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}` ;
+   rollObj.rollStr += `{{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<1cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}+${rollObj.attrMod}[${getTranslationByKey('modification-abbr')}]]]}} {{secretroll=[[${rollObj.secretRoll}]]}}` ;
 
    const difficulty = getContestTargets(rollObj.attribute);
    k.log(`Contest targets: ${JSON.stringify(difficulty)},`)
@@ -226,6 +239,31 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
 }
 k.registerFuncs({rollAttribute});
 
+const rollDescription = function({trigger,attributes,sections,casc}) {
+   k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
+   const rollObj = {};
+   const [section,rowID] = k.parseTriggerName(trigger.name);
+   rollObj.skillAttr = section ? 
+                     `${section}_${rowID}` : 
+                     trigger.name.startsWith("repeating-besvarjelse") ?
+                     trigger.name.replace(/-roll/,'').replaceAll(/-/g,'_').toLowerCase() : 
+                     trigger.name.replace(/-action/,'').toLowerCase();
+   rollObj.name = attributes[`${rollObj.skillAttr}_name`];
+   rollObj.description = attributes[`${rollObj.skillAttr}_description`];
+   rollObj.descriptionRoll = true; 
+
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
+
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+
+   rollObj.rollStr += ` {{description=${rollObj.description}}}`;
+
+
+   executeRoll({rollObj,attributes});
+
+}
+k.registerFuncs({rollDescription});
 
 const getContestTargets = function(ge,vs) {
    const max = ge + 9, min = ge - 9 <= 1 ? 1 : ge - 9;
@@ -278,6 +316,7 @@ const rollAttributeContest = function ({trigger,attributes,sections,casc}) {
    rollObj.attribute = attributes[attr];
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
 
@@ -314,6 +353,7 @@ const rollInit = async function({trigger,attributes,sections,casc}) {
    rollObj.initStr = `1D10 + ${attributes.smi_fv} ${initModStr}`;
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
 

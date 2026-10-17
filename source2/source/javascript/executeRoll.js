@@ -3,8 +3,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    let char_id = '';
    const computeObj = {};
    computeObj.perfectRoll = 0; 
-   const dmgBonusStr = rollObj.damageBonus && rollObj.damageBonus != '' ? `+${rollObj.damageBonus}[${getTranslationByKey('damagebonus')}]` : '';
-   
+   //const dmgBonusStr = rollObj.damageBonus && rollObj.damageBonus != '' ? `+${rollObj.damageBonus}[${getTranslationByKey('damagebonus')}]` : '';
+   k.log(`Damage bonus in Execute Roll: ${rollObj.damageBonus} and string: ${rollObj.damageBonusStr}`);   
    if ( rollObj.skillAttr ) {
       rollObj.gainExp = rollObj?.skillAttr.startsWith('repeating_languages') || rollObj.skillAttr.startsWith('repeating_magicschools') ? false : true; 
    }   
@@ -28,7 +28,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
          }
       }
       if (rollObj.damageDice && !rollObj.damageButton ) {      
-         rollObj.rollStr += ` {{damage=[[${rollObj.damageDice}[${getTranslationByKey('damage')}]${dmgBonusStr}]]}} {{target-area=[[1D6]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}}`;
+         rollObj.rollStr += ` {{damage=[[${rollObj.damageDice} [${getTranslationByKey('damage')}] ${rollObj.damageBonusStr}]]}} {{target-area=[[1D6]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}}`;
          if (rollObj.painDice && !rollObj.damageButton ) {      
             rollObj.rollStr += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
          }
@@ -114,7 +114,11 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    }
 
    if ( rollObj.spellLevel ) {
-      attributes['psypoang'] = parseInt(attributes.psypoang) - parseInt(rollObj.spellLevel);
+      var reduce = parseInt(rollObj.spellLevel)
+      if ( perfect == 1 && reduce != 1 ) {
+         reduce = Math.floor(reduce / 2);
+      }
+      attributes['psypoang'] = parseInt(attributes.psypoang) - reduce;
    }
    attributes.set();
     
@@ -135,17 +139,17 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       computeObj.damageRoll = `&{template:dod91} {{character_name=${attributes.character_name}}} {{character_id=@{character_id}}} {{roll-name=${rollObj.name}}} {{target-area=[[1D6]]}} {{hitareas=true}} {{hitareaRoll=[[0]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
       //k.log(`REsult ${roll.results.roll1.result} with ttarget ${rollObj.target} is perfect ${roll.results.roll1.result < (Math.floor(rollObj.target / 10)||0)}`)
       
-      computeObj.damageRoll += ` {{damage=[[${rollObj.damageDice}[${getTranslationByKey('damage')}]${dmgBonusStr}${perfectStr}]]}} {{totals=[0]}}`;
+      computeObj.damageRoll += ` {{damage=[[${rollObj.damageDice} [${getTranslationByKey('damage')}] ${rollObj.damageBonusStr}${perfectStr}]]}} {{totals=[0]}}`;
       if ( rollObj.painDice && attributes[`use_sp`] == 1 ){
-         computeObj.damageRoll += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]${dmgBonusStr}${perfectStr}]]}}`;
+         computeObj.damageRoll += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]${rollObj.damageBonusStr}${perfectStr}]]}}`;
       }
       k.log(`Damage compute Obj pre-escape: ${JSON.stringify(computeObj)}`);
       computeObj.damageRoll = k.escape(computeObj.damageRoll);
    }
 
-   computeObj.hitareaRoll = `&{template:dod91} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{roll-name=^{hitarea}}}`;
-   computeObj.hitareaRoll += ` {{hitarea=[[0]]}} {{hitareadetails=[[0]]}}`;
-   computeObj.hitareaRoll += `  {{damage=${computeObj.damageTotal}}} {{calcdamage=[[${computeObj.calcdamage}]]}} {{pain=${computeObj.painTotal}}} {{calcpain=[[${computeObj.calcpain}]]}}`; 
+   //computeObj.hitareaRoll = `&{template:dod91} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{roll-name=^{hitarea}}}`;
+   computeObj.hitareaRoll = attributes.templatestart + ` {{hitarea=[[0]]}} {{hitareadetails=[[0]]}}`;
+   computeObj.hitareaRoll += ` {{damage=${computeObj.damageTotal}}} {{calcdamage=[[${computeObj.calcdamage}]]}} {{pain=${computeObj.painTotal}}} {{calcpain=[[${computeObj.calcpain}]]}}`; 
    k.log(`Hit area roll string: ${computeObj.hitareaRoll}`);
    computeObj.hitareaRoll = k.escape(computeObj.hitareaRoll);
 
@@ -181,7 +185,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       }
    }
    if ( rollObj.vehicleHitarea ) {
-     // k.log(`Vehicle hit area ${roll?.results?.hitarearoll?.result}`);
+   // k.log(`Vehicle hit area ${roll?.results?.hitarearoll?.result}`);
       //k.log(`Vehicle hit area sections ${JSON.stringify(sections.repeating_vehiclehitareas)}`);
       const area = roll?.results?.hitarearoll?.result;
       computeObj.hitareadetails = 1;
@@ -189,14 +193,16 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    }
    //await attributes.set();
 
+   
+
    //k.log(`Roll: ${JSON.stringify(roll)}`); 
    k.log(`Compute Object: ${JSON.stringify(computeObj)}`); 
    finishRoll(roll.rollId,computeObj);
 
    /* if ( rollObj.secretRoll ) {
-      const rollSecret = await startRoll(`&{template:dod91} /ssr {{roll-name=${rollObj.name} : ${rollObj.result}}`);
+      const rollSecret = await startRoll(`&{template:dod91} /ssr {{character_name=@{character_name}}} {{roll-name=${rollObj.name} : ${rollObj.result}}}`);
       k.log(`Secret roll: ${JSON.stringify(rollSecret)}`);
       finishRoll(rollSecret.rollId);
-   }*/
+   } */
 
 }

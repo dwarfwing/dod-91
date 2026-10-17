@@ -19,54 +19,6 @@
                opacity: var(--collapseHoverOpacity);
             }
          }         
-         /* input[type=checkbox].describe {
-            position: absolute;
-            z-index: 1000;
-            left: 0rem;
-            top: 1.25rem; 
-            appearance: none; 
-            border: 0;
-            opacity: var(--collapseBaseOpacity);
-            width: 0.5rem;
-            line-height: 1rem;
-            max-width: 0.5rem;
-            text-align: left;
-            height: 0.5rem;
-            display: flex;
-            justify-content: center;
-            text-indent: 0.25rem;
-            top: 1.25rem;
-            margin: 0;
-            cursor: pointer;
-            &:before {
-               content: 'arrow_drop_up';
-               font-family: 'Material Symbols Outlined';
-            }
-            &:checked {
-               //opacity: var(--collapseHoverOpacity);
-               ~ .collapsed {
-                  height: auto; 
-                  span.description {
-                     display: flex;
-                     --margin-left: 1rem;
-                     text-indent: 1.25rem;
-                     width: 100%;
-                     justify-content: flex-start; 
-                     min-height: 1lh; 
-                     border-top: 1px dashed var(--border-color);
-                  }
-               }
-            }
-            &:not(:checked) {                
-               &:before {
-                  content: 'arrow_drop_down';
-                  font-family: 'Material Symbols Outlined';
-               } 
-               ~ .collapsed .description {
-                  display: none;
-               }
-            }
-         } */
          & > :is(.expanded,.collapsed) {
             height: var(--line-height);
             line-height: var(--line-height);
@@ -154,6 +106,12 @@
                   text-align: center; 
                }
             }
+            span.attr-select select {
+               padding: 0; 
+               font-size: 80%; 
+               margin: 0;
+               border: 0;
+            }
             span.select-input.cost-select {
                input {
                   margin: 0;
@@ -176,11 +134,17 @@
             &.input-count-6 {            
                grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
             }
+            &.input-count-7 {            
+               grid-template-columns: calc(100% - 12.5rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+            }
             &.input-count-5.display-cost-select {            
                grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
             }
             &.input-count-6.display-cost-select {            
                grid-template-columns: calc(100% - 12.5rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
+            }
+            &.input-count-7.display-cost-select {            
+               grid-template-columns: calc(100% - 15rem) 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem 2.5rem;
             }
             span.select-span.type-select {
                position: relative; 
