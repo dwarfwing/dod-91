@@ -1714,6 +1714,9 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input label input[name=attr_name], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input label input[name=attr_name], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input label input[name=attr_name] {
   text-indent: var(--tiny-gap);
 }
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input label.action-button, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input label.action-button, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input label.action-button {
+  position: relative;
+}
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input button[type=action], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input button[type=action], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input button[type=action] {
   display: hidden;
 }
@@ -1805,6 +1808,16 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .ty
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input span.input-0, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input span.input-0, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .type-b-selected:not(:checked) ~ .collapsed .label-input span.input-0 {
   display: none;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .type-asecret-selected:checked ~ .collapsed .label-input label.action-button.collapsed:before, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .type-asecret-selected:checked ~ .collapsed .label-input label.action-button.collapsed:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .type-asecret-selected:checked ~ .collapsed .label-input label.action-button.collapsed:before {
+  position: absolute;
+  right: 0;
+  top: 0.125rem;
+  height: 1rem;
+  line-height: 1rem;
+  font-size: 1rem;
+  font-family: "Material Symbols Outlined";
+  content: "visibility_off";
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row :is(.expanded, .collapsed) button span, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row :is(.expanded, .collapsed) button span, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row :is(.expanded, .collapsed) button span {
   padding-left: 0.25rem;
@@ -3500,6 +3513,10 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .bo
   column-span: all;
   background-color: var(--bg-color);
 }
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header.input-count-7 {
+  display: grid;
+  grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header h2, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .box-header .input-label:not(.stacked).large > [name] {
   overflow: visible;
 }
@@ -3516,6 +3533,9 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .label-input.input-count-7 {
   display: grid;
   grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded .label-input.input-count-7 {
+  grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem 3rem;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row label, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=number], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span:not(.button-text) {
   border-right: 1px solid var(--border-color);
@@ -3538,6 +3558,30 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded {
   line-height: unset;
   height: auto;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.select-span.type-select {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.select-span.type-select select {
+  display: block;
+  font-size: 80%;
+  padding: 0;
+  margin: 0;
+  height: 1.75rem;
+  padding-top: 0.125rem;
+  letter-spacing: normal;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span.select-span.type-select:before {
+  content: "Typ";
+  font-size: 75%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  text-align: center;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .adaptive.description {
   grid-column: 1/-1;

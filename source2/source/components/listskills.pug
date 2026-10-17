@@ -10,48 +10,53 @@ mixin listSkills({namn,attr,transl,fields,array,cost,b})
             geAbbr = skill.base ? ' ('+skill.base.slice(0,3).toUpperCase()+')' : "" ;
             bskill = skill.bskill ? skill.bskill : false;
             skillType = skill.secret ? 'asecret' : 'a';
-         .skill-row 
-            if cost
-               +number({name:skill.attr+'_cost',value:cost,class:'hidden'})
-            +text({name:skill.attr+'_name',value:skill.name,class:'hidden'})
-            +text({name:skill.attr+'_type',value:skillType,class:'hidden'})
-            +text({name:skill.attr+'_attr',value:ge,class:'hidden'})
-            +number({name:skill.attr+'_b',value:0,class:'hidden'})
-            //-+checkbox({name:skill.attr+'_type',value:'b',class:'type-b-selected hidden'})
-            if bskill
-               label.label-input.input-count-6
-                  +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
-                     span('data-18n'=skill.i18n+'-ge')= skill.name+geAbbr
-                  if b || b == undefined
+         .skill-row
+            if skillType == 'asecret'
+               +checkbox({name:skill.attr+'_type',value:'asecret',class:'type-asecret-selected hidden', checked:true})
+            .collapsed  
+               if cost
+                  +number({name:skill.attr+'_cost',value:cost,class:'hidden'})
+               +text({name:skill.attr+'_name',value:skill.name,class:'hidden'})
+               +text({name:skill.attr+'_type',value:skillType,class:'hidden'})
+               +text({name:skill.attr+'_attr',value:ge,class:'hidden'})
+               +number({name:skill.attr+'_b',value:0,class:'hidden'})
+               //-+checkbox({name:skill.attr+'_type',value:'b',class:'type-b-selected hidden'})
+               if bskill
+                  label.label-input.input-count-6
+                     label.action-button.collapsed 
+                        +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                           span('data-18n'=skill.i18n+'-ge')= skill.name+geAbbr
+                     if b || b == undefined
+                        span.input-span.input-0 
+                           +span({name:skill.attr+'_b',type:'number',class:'label-input-input b-skill'})
+                     span.input-span.input-1 
+                        +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['setSkillB']}}).input-span.input-0
+                     span.input-span.input-2 
+                        +input({name:skill.attr+'_mod',type:'number'}).input-span.input-1
+                     span.input-span.input-3 
+                        +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
+                     +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+               else 
+                  label.label-input.input-count-5
+                     label.action-button.collapsed    
+                        +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
+                           span('data-18n'=skill.i18n+'-ge')= skill.name+geAbbr
+                     //-if b 
+                        span.input-span.input-0 
+                           +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
+                     //-else if b == undefined 
+                        span.select-span.type-select.input-0
+                           +select({name: 'type', class:'label-input-select', trigger: { triggeredFuncs: ['setSkillB']}})
+                              +option({value:'a'})
+                                 | A 
+                              +option({value:'b'})
+                                 | B 
                      span.input-span.input-0 
-                        +span({name:skill.attr+'_b',type:'number',class:'label-input-input b-skill'})
-                  span.input-span.input-1 
-                     +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['setSkillB']}}).input-span.input-0
-                  span.input-span.input-2 
-                     +input({name:skill.attr+'_mod',type:'number'}).input-span.input-1
-                  span.input-span.input-3 
-                     +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
-                  +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
-                  +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-            else 
-               label.label-input.input-count-5
-                  +action({name:skill.attr,trigger:{triggeredFuncs:['rollTrainedSkill']}})
-                     span('data-18n'=skill.i18n+'-ge')= skill.name+geAbbr
-                  //-if b 
-                     span.input-span.input-0 
-                        +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
-                  //-else if b == undefined 
-                     span.select-span.type-select.input-0
-                        +select({name: 'type', class:'label-input-select', trigger: { triggeredFuncs: ['setSkillB']}})
-                           +option({value:'a'})
-                              | A 
-                           +option({value:'b'})
-                              | B 
-                  span.input-span.input-0 
-                     +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['setSkillB']}}).input-span.input-0
-                  span.input-span.input-1 
-                     +input({name:skill.attr+'_mod',type:'number'}).input-span.input-1
-                  span.input-span.input-2 
-                     +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
-                  +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
-                  +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                        +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['setSkillB']}}).input-span.input-0
+                     span.input-span.input-1 
+                        +input({name:skill.attr+'_mod',type:'number'}).input-span.input-1
+                     span.input-span.input-2 
+                        +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
+                     +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})

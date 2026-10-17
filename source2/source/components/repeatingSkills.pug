@@ -21,13 +21,14 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                +number({name:'cost',value:cost,class:'hidden'})
             +number({name:'b',value:0,class:'hidden'})
             +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
+            +checkbox({name:'type',value:'asecret',class:'type-asecret-selected hidden'})
             +collapse
             if desc 
                +describe
             .collapsed
                .label-input(class=bFields)
                   //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
-                  label.select-input.collapsed 
+                  label.action-button.collapsed 
                      +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSkill']}})
                         +span({name:'name'})
                   //- label.text-input

@@ -89,6 +89,9 @@
                   text-indent: var(--tiny-gap);
                }
             }
+            label.action-button {
+               position: relative; 
+            }
             button[type=action] {
                display: hidden;
             }
@@ -187,6 +190,19 @@
             span.input-0 {
                display: none; 
             }
+         }
+         .type-asecret-selected:checked ~ .collapsed .label-input label.action-button.collapsed {
+            &:before {
+               position: absolute;
+               right: 0; 
+               top: 0.125rem; 
+               height: 1rem; 
+               line-height: 1rem;
+               font-size: 1rem; 
+               font-family: 'Material Symbols Outlined';
+               content: 'visibility_off';
+            } 
+
          }
 
          // Numbered & repeating skills 

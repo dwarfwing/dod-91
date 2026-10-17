@@ -12,6 +12,7 @@ mixin spells
                //-+collapse({name:'besvarjelse_'+spell+'_collapse'})
                //-+checkbox({name:'collapse',value:1,class:'collapse'})
                +number({name:'cost',value:0,class:'hidden'})
+               +checkbox({name:'type',value:'asecret',class:'type-asecret-selected hidden'})
                +collapse
                +describe
                //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
@@ -21,7 +22,7 @@ mixin spells
                      //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
                      +checkbox({name:'mem',class:'memorized',value:1,checked:false})               
                      +span({name: 'sv', class:'label-input-input'})
-                     label.select-input.collapsed 
+                     label.action-button.collapsed 
                         +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSpell']}})
                            +span({name:'name',class:'button-text'})
                      //- label.text-input
@@ -44,6 +45,12 @@ mixin spells
                      +checkbox({name:'mem',class:'memorized',value:1,checked:false})
                      +input({name: 'sv', type: 'number', class:'label-input-input',triggeredFuncs:['setSpellCosts']})
                      +text({name:'name',id:'custom-skill-input'})
+                     span.select-span.type-select
+                        +select({name: 'type', class:'label-input-select', trigger: { triggeredFuncs: ['setSkillB']}})
+                           +option({value:'a',title:'Tärningsslaget slås öppet så alla kan se resultatet'})
+                              | Öppen
+                           +option({value:'asecret',title:'Tärningsslaget slås hemligt såbara SL kan se resultatet'})
+                              | Hemlig 
                      +input({name: 'fv', type: 'number', class:'label-input-input'})
                      +input({name: 'e', type: 'number', value: 1, class:'label-input-input'})
                      +input({name: 'mod', type: 'number', class:'label-input-input'})
@@ -112,6 +119,10 @@ mixin spells
          .box-header {
             column-span: all; 
             background-color: var(--bg-color); 
+            &.input-count-7 {               
+               display: grid; 
+               grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+            }
             h2 {
                overflow: visible; 
             }
@@ -130,6 +141,9 @@ mixin spells
                   display: grid; 
                   grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
                }
+            }
+            .expanded .label-input.input-count-7 {
+               grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem 3rem;
             }
             label, input[type=number], input[type=text], span:not(.button-text) {
                border-right: 1px solid var(--border-color); 
@@ -152,6 +166,30 @@ mixin spells
             .expanded {
                line-height: unset; 
                height: auto;
+            }
+            span.select-span.type-select {
+               position: relative; 
+               select {
+                  display: block;
+                  font-size: 80%; 
+                  padding: 0; 
+                  margin: 0; 
+                  height: 1.75rem;
+                  padding-top: 0.125rem; 
+                  letter-spacing: normal;
+               }
+               &:before { 
+                  content: 'Typ';
+                  font-size: 75%; 
+                  position: absolute; 
+                  top: 0; 
+                  left: 0;
+                  right: 0; 
+                  width: 100%;
+                  height: 0.75rem; 
+                  line-height: 0.75rem;
+                  text-align: center; 
+               }
             }
             .adaptive.description {
                grid-column: 1 / -1;
