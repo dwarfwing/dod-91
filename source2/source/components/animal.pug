@@ -1,7 +1,7 @@
 mixin animal(name='djur',attr='animal')
    //- name = name == undefined ? 'djur' : name; 
    //- attr = attr == undefined ? 'animal' : attr; 
-   .section-animal
+   .section-animal(class='section-'+attr)
       .section-attributes 
          +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'}})
             each attribute in spine.animal_attributes

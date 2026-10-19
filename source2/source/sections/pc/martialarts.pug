@@ -25,7 +25,7 @@ mixin martialarts
             +number({name:attr+'_cost',class:'hidden'})
             +text({name:attr+'_attr',value:'smi',class:'hidden'})
             .skill-row.martialart-header.collapse-container(class='skill-row-'+attr) 
-               +collapse(name=attr+'_collapse')
+               +collapse(name='attr_'+attr+'_collapse')
                .collapsed 
                   .label-input.input-count-5    
                      label.select-input.collapsed 

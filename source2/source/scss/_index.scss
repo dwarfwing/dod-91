@@ -57,8 +57,9 @@
       position: sticky;
       top: 7.5rem;
       z-index: 12000;
-      width: 5rem; 
+      width: 10rem; 
       label {
+        display: inline-flex; 
         font-family: 'Material Symbols Rounded';
         font-size: 120%; 
         border-radius: 30%;

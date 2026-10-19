@@ -101,12 +101,12 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
       const spellName = attributes[`besvarjelse_${spell}_text`]; 
       //k.log(`Testing spell ${spell} with name ${spellName} `+ attributes[`besvarjelse_${spell}_text`]);
       if ( spellName != undefined && spellName != '') {
-         k.log(`Found spell to upgrade: ${spellName}`);
+         k.log(`Found spell to upgrade: ${spellName} with S ${attributes[`besvarjelse_${spell}_s`]}`);
          const rowID = k.generateRowID('repeating_spells',sections);
          //k.log(`Row ID = ${rowID}`);
          k.setAttrs({
             [`${rowID}_name`]: spellName,
-            [`${rowID}_fv`]: attributes[`besvarjelse_${spell}_s`]||0,
+            [`${rowID}_fv`]: attributes[`besvarjelse_${spell}_s`],
             [`${rowID}_erf`]: attributes[`besvarjelse_${spell}_erf`]||0,
             [`${rowID}_e`]: 1,
             [`${rowID}_collapse`]: 1,
@@ -198,4 +198,27 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
 }
 k.registerFuncs({'2.0':v2x0},{type:['updater','new']});
+
+const v2x1 = function({trigger,attributes,sections,casc}) {
+   // Spell S 
+   sections.repeating_spells.forEach( id => {
+      k.log(`Found spell id ${id} to upgrade: ${attributes[`repeating_spells_${id}_name`]} with S ${attributes[`repeating_spells_${id}_s`]} and FV ${attributes[`repeating_spells_${id}_fv`]}`);
+      const fv = parseInt(attributes[`repeating_spells_${id}_fv`]),
+            s = parseInt(attributes[`repeating_spells_${id}_s`]);
+      attributes[`repeating_spells_${id}_fv`] = s > fv ? s : fv;
+   });
+   attributes.set();
+
+   // Need to change CSS to always show, then if not checked then hide it...  
+   attributes['show_animal_tab'] = 1;
+   attributes['show_magic_tab'] = 1;
+   attributes['show_notes_tab'] = 1;
+   attributes['show_weapon_techniques'] = 1;
+   attributes['show_martial_arts'] = 1;
+   attributes['house_magic_costs'] = 1; 
+
+   attributes.set(); 
+
+}
+k.registerFuncs({'2.1':v2x1},{type:['updater','new']});
 

@@ -20,7 +20,10 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
             if cost != undefined && cost > 0
                +number({name:'cost',value:cost,class:'hidden'})
             +number({name:'b',value:0,class:'hidden'})
-            +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
+            if b
+               +checkbox({name:'type',value:'b',class:'type-b-selected hidden',checked:true})
+            else 
+               +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
             +checkbox({name:'type',value:'asecret',class:'type-asecret-selected hidden'})
             +collapse
             if desc 
@@ -45,7 +48,8 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                      +span({name:'erf'}).input-span.input-3
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                  if desc 
+               if desc 
+                  .description
                      +span({name:'description',class:'description'})
             .expanded
                .label-input(class=bFields+costDisplay) 
@@ -83,6 +87,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                   if b 
                      span.input-span.input-0 
                         +span({name:'b',type:'number',class:'label-input-input b-skill'}) 
+                     +input({name:'type',type:'text',value:'b',class:'hidden'})
                   else if b == undefined
                      span.select-span.type-select.input-0
                         +select({name: 'type', class:'label-input-select', trigger: { triggeredFuncs: ['setSkillB']}})
@@ -104,5 +109,5 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                      +input({type: 'number', name: 'erf', class:'label-input-input'})
                   +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                   +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                  if desc                     
-                     +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')
+               if desc                     
+                  +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')

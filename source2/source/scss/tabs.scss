@@ -1,13 +1,20 @@
 @mixin all {
    .tabs {
       &.tabs--dod91 {
-         margin-top: -2rem;         
+         margin-top: -2.5rem;         
       }
       nav.tabs--dod91__header {
          width: 50%; 
          max-width: 50%;             
          justify-self: flex-end;
          margin-left: 50%; 
+         .tabs__nav-list {
+            .tabs__nav-item {
+               button {
+                  margin-top: 0.125rem;
+               }
+            }
+         }
       } 
       display: flex;
       flex-direction: column;

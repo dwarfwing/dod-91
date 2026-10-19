@@ -6586,7 +6586,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
       const spellName = attributes[`besvarjelse_${spell}_text`]; 
       //k.log(`Testing spell ${spell} with name ${spellName} `+ attributes[`besvarjelse_${spell}_text`]);
       if ( spellName != undefined && spellName != '') {
-         k.log(`Found spell to upgrade: ${spellName}`);
+         k.log(`Found spell to upgrade: ${spellName} with S ${attributes[`besvarjelse_${spell}_s`]||0}`);
          const rowID = k.generateRowID('repeating_spells',sections);
          //k.log(`Row ID = ${rowID}`);
          k.setAttrs({

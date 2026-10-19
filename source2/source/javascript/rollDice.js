@@ -1,6 +1,9 @@
 const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
    //k.log(`Roll attributes: ${JSON.stringify(attributes)}`);
+   if ( trigger.name == '' ) {
+      return; 
+   }
    const rollObj = {};
    const [section,rowID,base] = k.parseTriggerName(trigger.name);
    const row =`${section}_${rowID}`;

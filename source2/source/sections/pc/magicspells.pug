@@ -37,6 +37,7 @@ mixin spells
                      
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  .description
                      +span({name:'description',class:'description'})
                .expanded
                   .label-input.input-count-7 
@@ -114,14 +115,14 @@ mixin spells
          } 
          .label-input.input-count-7 {
             display: grid; 
-            grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+            grid-template-columns: 2.5rem 2.5rem calc(100% - 17rem) 3rem 3rem 3rem 3rem;
          }
          .box-header {
             column-span: all; 
             background-color: var(--bg-color); 
             &.input-count-7 {               
                display: grid; 
-               grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+               grid-template-columns: 2.5rem 2.5rem calc(100% - 17rem) 3rem 3rem 3rem 3rem;
             }
             h2 {
                overflow: visible; 
@@ -139,11 +140,11 @@ mixin spells
                height: stretch;
                &.input-count-7 {
                   display: grid; 
-                  grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem;
+                  grid-template-columns: 2.5rem 2.5rem calc(100% - 17rem) 3rem 3rem 3rem 3rem;
                }
             }
             .expanded .label-input.input-count-7 {
-               grid-template-columns: 2.5rem 2.5rem 1fr 3rem 3rem 3rem 3rem 3rem;
+               grid-template-columns: 2.5rem 2.5rem calc(100% - 20rem) 3rem 3rem 3rem 3rem 3rem;
             }
             label, input[type=number], input[type=text], span:not(.button-text) {
                border-right: 1px solid var(--border-color); 

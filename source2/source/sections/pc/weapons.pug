@@ -19,18 +19,11 @@ mixin weapons
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
                      else if field.type == 'select' && field.attr == 'skill'
                         +span({name:'skill_name'})
-                        //-+select({name:'skill',trigger:{triggeredFuncs:['setSkill','updateDamagebonus']}}).smaller-text
-                           +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
-                              | --- Välj ---
-                           each skill in spine.weapontypes 
-                              +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
-                           +option({'data-i18n':'manual',value:'manual'})
-                              | Manuellt
                      else if field.roller
-                        +action({name:field.rollaction,trigger:{triggeredFuncs:[field.trigger]}})
+                        +action({name:field.rollaction,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
                               +span({name:field.attr})
                      else 
-                        +span({name:field.attr})
+                        +span({name:field.attr,class:field.class})
             .expanded
                .label-input.input-count-16
                   each field in spine.weaponfields    
@@ -40,13 +33,9 @@ mixin weapons
                         else 
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
                      else if field.type == 'select' && field.attr == 'skill'
-                        +select({name:'skill',trigger:{triggeredFuncs:['setWeaponSkills','updateDamagebonus']}}).weapon-skill-select
+                        +select({name:'skill',trigger:{triggeredFuncs:['setWeaponSkills']}}).weapon-skill-select
                            +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                               | --- Välj ---
-                           //-each skill in spine.weapontypes 
-                              +option({'data-i18n':skill.attr,value:skill.attr,id:skill.attr})
-                           //-+option({'data-i18n':'manual',value:'manual'})
-                              | Manuellt
                      else 
                         if field.trigger
                            +input({name:field.attr,type:field.type,trigger:{triggeredFuncs:[field.trigger]}})
@@ -68,9 +57,15 @@ mixin weapons
       width: 100%;
       grid-column: 1 / -1;
       //border-inline: 4px solid var(--border-color);
+      .box-header {
+         h2:nth-of-type(2) {
+            font-weight: bold; 
+            font-size: 100%;
+         }
+      }
       .box-header, .repitem .collapsed div, .repitem .expanded div {
          display: grid; 
-         grid-template-columns: 2rem calc(22% - 1rem) 10% 4% 4% 4% 3% 6% 6% 4% 6% 6% 4% 7% 4% 5% 4%;
+         grid-template-columns: 2rem calc(22% - 1rem) 10% 4% 4% 4% 3% 7% 7% 4% 6% 5% 4% 6% 4% 5% 4%;
          & * {
             border: 0;
             width: 100%;
@@ -138,6 +133,7 @@ mixin weapons
          button {
             display: flex;
             justify-content: center;
+            gap: 0; 
             span {
                text-align: center; 
             }
@@ -196,45 +192,7 @@ mixin weapons
             width: 1rem;
          }
          .smaller-text {
-            font-size: 80%;
-         }
-         span.damage, span.damage-button {
-            display: flex;
-            flex-direction: row; 
-            justify-content: space-around; 
-            input[type=checkbox] {
-               border: 1px solid var(--border-color);
-               margin-inline: 0.125rem;
-            }
-            label.input-label {
-               display: flex;
-               flex-direction: column-reverse;
-               align-content: center;
-               height: auto;
-               cursor: pointer; 
-               input[type=checkbox] {
-                  border: 1px solid var(--border-color);
-                  margin-inline: 0.125rem;
-                  display: none;
-               }
-               span {
-                  font-family: 'Material Symbols Outlined';
-                  text-align: center;
-                  &:after {
-                     font-family: 'Material Symbols Outlined';
-                     font-size: 1.375rem;
-                     text-align: center;
-                     padding-top: 0.25rem;
-                  }
-               }
-               &:first-of-type span:after { content: 'toggle_on'; transform: rotate(-45deg);} 
-               &:nth-of-type(2) span:after { content: 'nest_secure_alarm'; }
-               &:last-of-type span:after { content: 'stat_1'; }
-                 
-               &:first-of-type input:checked + span:after { content: 'carpenter'; }
-               &:nth-of-type(2) input:checked + span:after { content: 'nest_heat_link_e'; }
-               &:last-of-type input:checked + span:after { content: 'stat_3'; }
-            }
+            font-size: 90%;
          }
       }
    }              

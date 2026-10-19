@@ -163,5 +163,7 @@
    "show-martial-arts": "Visa Stridskonster i Strid-tabben",
    "show-weapon-techniques": "Visa Vapentekniker i Strid-tabben",
    "show-notes-tab": "Visa Noteringar-tabben",
-   "damagebonus": "Skadebonus"
+   "damagebonus": "Skadebonus",
+   "manual": "Manuell",
+   "multiple-armor-rows": "Visa alla 3 rader för rustningar"
 }

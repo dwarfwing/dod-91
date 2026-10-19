@@ -92,6 +92,7 @@
   "mount": "Ridddjur",
   "movement": "förflyttning",
   "movement-modifier": "Förflyttning modifikation",
+  "multiple-armor-rows": "Visa alla 3 rader för rustningar",
   "name": "namn",
   "namn": "namn",
   "notes": "notes",
@@ -171,7 +172,6 @@
   "type": "Typ",
   "value": "Värde",
   "Vikt": "Vikt",
-  "Visa all 3 rader för rustningar": "Visa all 3 rader för rustningar",
   "weapon-shields": "Vapen / Sköldar",
   "weapon-skill": "Vapenfärdigheter",
   "weapon-techniques": "Vapentekniker",
@@ -307,5 +307,6 @@
   "resting": "vilar",
   "spell-level": "Effektgrad",
   "skill-mod": "Modifikation",
-  "damagebonus": "Skadebonus"
+  "damagebonus": "Skadebonus",
+  "manual": "Manuell"
 }

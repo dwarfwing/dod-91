@@ -3,8 +3,9 @@ mixin hitareas
       .section-hitarea-control
          .box.section-hitareas--hitarea.hitarea
             +input-label({
-               label: 'Visa all 3 rader för rustningar',
+               label: 'Visa alla 3 rader för rustningar',
                divObj: {class:''},
+               spanObj: {'data-i18n':'multiple-armor-rows'},
                inputObj:{name:'multi row armor',type:'checkbox',value:1,class:'multi-row-armor'}
             })
       .section-hitareas-content
@@ -159,6 +160,24 @@ mixin hitareas
          position: absolute;
          top: 1rem;
          left: 1rem; 
+      }
+      input.multi-row-armor:not(:checked) {
+         & ~ .box.section-hitareas--hitarea.hitarea.coverall {
+            .armor {
+               .hitarea-armor {
+                  &.hitarea-armor- {
+                     display: grid !important;
+                     align-self: flex-start; 
+                     label.input-label.armor, label.input-label.weight {
+                        border-bottom: 1px solid var(--border-color);
+                     } 
+                     label.input-label:nth-of-type(2n) {
+                        border-left: 1px solid var(--border-color);
+                     }
+                  }
+               }
+            }
+         }
       }
       input.multi-row-armor:checked {
          & ~ .box.section-hitareas--hitarea.hitarea.coverall {
