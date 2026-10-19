@@ -193,7 +193,7 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
 
    attributes.whisper = '';
-   attributes.version = 2.0; 
+   attributes.version = 2.00; 
    attributes.set();
 
 }
@@ -217,6 +217,7 @@ const v2x1 = function({trigger,attributes,sections,casc}) {
    attributes['show_martial_arts'] = 1;
    attributes['house_magic_costs'] = 1; 
 
+   attributes.version = 2.10; 
    attributes.set(); 
 
 }
