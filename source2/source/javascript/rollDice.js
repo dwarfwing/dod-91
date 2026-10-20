@@ -15,13 +15,13 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
 
    rollObj.skillAttr = attributes[`${row}_skill`]||row;
    k.log(`Weapon skill: ${rollObj.skillAttr}`);
-   if ( rollObj.skillAttr == 'manual' ) {
-      rollObj.rollSkill = attributes[`${row}_skill_level`];
+   if ( rollObj.skillAttr == 'manual' || rollObj.skillAttr == 'custom' ) {
+      rollObj.rollSkill = attributes[`${row}_fv`];
       rollObj.rollSkillMod = 0;
    } else {
-      rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`]||attributes[`${row}_skill_level`];
+      rollObj.rollSkill = attributes[`${rollObj.skillAttr}_fv`];
       rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`]||0;
-   }
+   } /* */
    //k.log(`Skill level is `+attributes[skillAttr]);
    rollObj.rollWeaponMod = attributes[`${row}_weapon_mod`]||0;
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod + rollObj.rollWeaponMod;
