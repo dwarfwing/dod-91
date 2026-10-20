@@ -18,7 +18,7 @@ mixin weapons
                         else 
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
                      else if field.type == 'select' && field.attr == 'skill'
-                        +span({name:'skill_name'})
+                        +span({name:'skill_name',class:'skill-name-select'})
                      else if field.roller
                         +action({name:field.rollaction,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
                               +span({name:field.attr})
@@ -38,9 +38,9 @@ mixin weapons
                               | --- Välj ---
                      else 
                         if field.trigger
-                           +input({name:field.attr,type:field.type,trigger:{triggeredFuncs:[field.trigger]}})
+                           +input({name:field.attr,type:field.type,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
                         else 
-                           +input({name:field.attr,type:field.type})
+                           +input({name:field.attr,type:field.type,class:field.class})
 
    .hidden-weapons.for-upgrades.hidden 
       each weapon in [1,2,3,4,5,6,7]
@@ -179,6 +179,9 @@ mixin weapons
             appearance: auto; 
             align-items: center; 
 
+         }
+         span.skill-name-select {
+            overflow: hidden; 
          }
          span[name=attr_damage].text-span {
             width: auto; 

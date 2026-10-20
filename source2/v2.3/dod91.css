@@ -1318,7 +1318,7 @@ body .ui-dialog .tab-content .charsheet h1, body .ui-dialog .tab-content .charsh
   line-height: 2rem;
 }
 body .ui-dialog .tab-content .charsheet .tabs.tabs--dod91 {
-  margin-top: -2.5rem;
+  margin-top: -2rem;
 }
 body .ui-dialog .tab-content .charsheet .tabs nav.tabs--dod91__header {
   width: 50%;
@@ -2969,6 +2969,9 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[name=att
   white-space: nowrap;
   appearance: auto;
   align-items: center;
+}
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem span.skill-name-select {
+  overflow: hidden;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem span[name=attr_damage].text-span {
   width: auto;

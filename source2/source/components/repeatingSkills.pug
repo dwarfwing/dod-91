@@ -1,4 +1,4 @@
-mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,headedit})
+mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,headedit,listTrigger})
    - 
       i18n = transl ? transl : attr; 
       fields = fields ? fields : 
@@ -15,7 +15,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
       desc = desc ? desc : false; 
       headedit = headedit ? headedit : false; 
    +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,headEdit:headedit,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass})
-      +fieldset({name:attr})
+      +fieldset({name:attr,trigger:{triggeredFuncs:listTrigger}})
          .skill-row.collapse-container(class=hideImprovementClass+skillTypeB+hideExperienceClass)
             if cost != undefined && cost > 0
                +number({name:'cost',value:cost,class:'hidden'})
