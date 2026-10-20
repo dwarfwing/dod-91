@@ -5,8 +5,8 @@ include ./sections/_index.pug
 include ./views/_index.pug
 - const templateName = 'dod91';
 //- Stores the sheet version number for use with version control functions
-+hidden({name:'sheet_version',value:2.10})
-+hidden({name:'version',value:0})
++hidden({name:'sheet_version',value:"2.4"})
++hidden({name:'version',value:"0"})
 +toggle({name:'use-sp',checked:true})
 +action({ name:'rolldamage', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollDamage']} })
 +action({ name:'hitarea-2', hidden:'', class:'hidden', trigger:{triggeredFuncs:['rollHitArea']} })

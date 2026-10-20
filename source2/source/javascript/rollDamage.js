@@ -27,7 +27,7 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
             weaponSkill == 'knifefighting' ) { */
       k.log(`Damage bonus ${attributes[`${row}_damagebonus`]} == ${attributes[`${row}_damagebonus`] == '1'}`);
       rollObj.damageBonus = attributes[`${row}_damagebonus`] == 1 ? true : false; 
-      rollObj.damageBonusStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].replaceAll(/[Tt]/g,'D')} [${getTranslationByKey('damagebonus')}]`; 
+      rollObj.damageBonusStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].toString().replaceAll(/[Tt]/g,'D')} [${getTranslationByKey('damagebonus')}]`; 
       /* if (attributes[`${row}_damagebonus`] == '1') {
          const damageBonus = attributes[`sb`],
                damageBonusMod = attributes[`sb_mod`],

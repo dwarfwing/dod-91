@@ -38,12 +38,12 @@ const setWeaponSkills = function({trigger,attributes,sections,casc}) {
 k.registerFuncs({setWeaponSkills},{type:['opener']});
 
 const setSkillB = function ({trigger,attributes,sections,casc}) {
-   k.log(`Skill name trigger: ${JSON.stringify(trigger)}`);
+   //k.log(`Skill name trigger: ${JSON.stringify(trigger)}`);
    const [section,rowID,base] = k.parseTriggerName(trigger.name),
        skillAttr = section ? `${section}_${rowID}` : base.replace(/_fv/,''),
        skillName = attributes[`${skillAttr}_name`],
        skillLevel = attributes[`${skillAttr}_fv`];
-   k.log(`Skill section ${section} and base ${base}, attr ${skillAttr} with name ${skillName}`);
+   //k.log(`Skill section ${section} and base ${base}, attr ${skillAttr} with name ${skillName}`);
    const bLevel = {
       0: 0, 1: 1, 2: 2, 3: 1, 4: 1, 
       5: 2, 6: 2, 7: 2, 8: 2, 9: 2, 10: 2,

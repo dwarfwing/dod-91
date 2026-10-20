@@ -197,9 +197,10 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
    attributes.set();
 
 }
-k.registerFuncs({'2.0':v2x0},{type:['updater','new']});
+k.registerFuncs({'2.0':v2x0},{type:['updater']});
 
-const v2x1 = function({trigger,attributes,sections,casc}) {
+const v2x10 = function({trigger,attributes,sections,casc}) {
+   k.log('Upgrading to version 2.10');
    // Spell S 
    sections.repeating_spells.forEach( id => {
       k.log(`Found spell id ${id} to upgrade: ${attributes[`repeating_spells_${id}_name`]} with S ${attributes[`repeating_spells_${id}_s`]} and FV ${attributes[`repeating_spells_${id}_fv`]}`);
@@ -221,5 +222,5 @@ const v2x1 = function({trigger,attributes,sections,casc}) {
    attributes.set(); 
 
 }
-k.registerFuncs({'2.1':v2x1},{type:['updater','new']});
+k.registerFuncs({'2.10':v2x10},{type:['updater']});
 
