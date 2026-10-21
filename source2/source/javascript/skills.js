@@ -70,6 +70,7 @@ const setSpellCosts = function({trigger,attributes,sections,cost}) {
       const sv = attributes[`${spell}_sv`],
             cost = Math.ceil( parseInt(sv) / 3 ) * 2,
             name = attributes[`${spell}_name`];
+      if ( isNaN(cost) ) { return; }
       attributes[`${spell}_cost`] = cost; 
       k.log(`Set magic spell ${name} with sv ${sv} to cost ${cost}`);
    });

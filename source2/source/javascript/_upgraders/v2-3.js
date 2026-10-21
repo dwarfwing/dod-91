@@ -6,7 +6,9 @@ const v2x3 = function({trigger,attributes,sections,casc}) {
       k.log(`Version ${parseFloat(attributes.version)}, sheet version ${parseFloat(attributes.sheet_version)}`)
       return; 
    } */
-
+   k.log(`Version ${attributes.version}, sheet version ${attributes.sheet_version}, k version ${k.version}`);
+   //if( attributes.sheet_version == '2.3' ) { return; }
+ 
    attributes.whisper = '/w gm';
    attributes.set();
 
@@ -230,10 +232,10 @@ const v2x3 = function({trigger,attributes,sections,casc}) {
 
    k.log('Upgrading to version 2.3');
    
-   attributes.sheet_version = '2.3'; 
-   attributes.version = '2.3'; 
-   k.version = '2.3';
+   //attributes.sheet_version = '2.3'; 
+   //attributes.version = '2.3'; 
+   //k.version = '2.3';
    attributes.set(); 
 
 }
-k.registerFuncs({'2.3':v2x3},{type:['updater','new']});
+k.registerFuncs({'2.3':v2x3},{type:['updater']});

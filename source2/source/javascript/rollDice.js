@@ -1,7 +1,7 @@
 const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
-   //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
+   k.log(`Weapon Roll trigger: ${JSON.stringify(trigger)}`);
    //k.log(`Roll attributes: ${JSON.stringify(attributes)}`);
-   if ( trigger.name == '' ) {
+   if ( trigger.name == '' || trigger.listenerFunc == 'accessSheet' ) {
       return; 
    }
    const rollObj = {};
