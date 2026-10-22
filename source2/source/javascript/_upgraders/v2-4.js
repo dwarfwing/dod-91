@@ -263,7 +263,7 @@ const v2x4 = function(trigger,attributes,sections,casc) {
          attributes['show_weapon_techniques'] = 1;
          attributes['show_martial_arts'] = 1;
          attributes['house_magic_costs'] = 1;
-         attrobutes['attributes_collapse'] = 1; 
+         attributes['attributes_collapse'] = 1; 
          attributes.set(); 
 
 
