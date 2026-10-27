@@ -14,8 +14,13 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
       altcosts = altcosts ? altcosts : false; 
       desc = desc ? desc : false; 
       headedit = headedit ? headedit : false; 
+      fieldset = listTrigger && listTrigger != undefined ? 'customControlFieldset' : 'fieldset';
+      fieldsetObj = { name: attr, addClass: fieldset }
+      if ( fieldset == 'customControlFieldset' ) {
+         fieldsetObj.trigger = {triggeredFuncs:listTrigger,addFuncs:[`${attr}Add`]};
+      }
    +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,headEdit:headedit,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass})
-      +fieldset({name:attr,trigger:{triggeredFuncs:listTrigger}})
+      +#{`${fieldset}`}(fieldsetObj)
          .skill-row.collapse-container(class=hideImprovementClass+skillTypeB+hideExperienceClass)
             if cost != undefined && cost > 0
                +number({name:'cost',value:cost,class:'hidden'})
@@ -44,10 +49,12 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                      +span({name: 'fv', class:'label-input-input'})
                   span.input-span.input-2
                      +input({name:'mod',type:'number'}).input-span.input-2
-                  span.input-span.input-3.erf
-                     +span({name:'erf'}).input-span.input-3
-                  +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
-                  +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  if ( exp == undefined || exp != false )
+                     span.input-span.input-3.erf
+                        +span({name:'erf'}).input-span.input-3
+                  if ( impr == undefined || impr != false )
+                     +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                if desc 
                   .description
                      +span({name:'description',class:'description'})
@@ -56,7 +63,10 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                   //-label.text-input 
                      +text({name:'name'}).caps-input
                   label.select-input.expanded
-                     +text({name:'name',id:'custom-skill-input'})
+                     if ( fieldset == 'customControlFieldset' )
+                        +text({name:'name',id:'custom-skill-input',trigger:{triggeredFuncs:listTrigger}})
+                     else
+                        +text({name:'name',id:'custom-skill-input'})
                   span.input-select.attr-select 
                      +select({name:'attr'}) 
                         +option({value:'sty'}) 
@@ -97,17 +107,18 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                               | A Hemlig 
                            +option({value:'b'})
                               | B  
-                  if attr == 'weaponskills'
-                     span.input-span.input-1
-                        +input({type: 'number', name: 'fv', class:'label-input-input', trigger:{ triggeredFuncs:['setWeaponSkills']}})
-                  else
-                     span.input-span.input-1
+                  span.input-span.input-1
+                     if ( fieldset == 'customControlFieldset' )
+                        +input({type: 'number', name: 'fv', class:'label-input-input', trigger:{ triggeredFuncs:listTrigger}})
+                     else
                         +input({type: 'number', name: 'fv', class:'label-input-input', trigger: { triggeredFuncs: ['setSkillB']}})
                   span.input-span.input-2
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
-                  span.input-span.input-3.erf
-                     +input({type: 'number', name: 'erf', class:'label-input-input'})
-                  +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
-                  +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                  if ( exp == undefined || exp != false )
+                     span.input-span.input-3.erf
+                        +input({type: 'number', name: 'erf', class:'label-input-input'})
+                  if ( impr == undefined || impr != false )
+                     +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
+                     +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                if desc                     
                   +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')

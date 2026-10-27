@@ -73,6 +73,7 @@ const useExperience = async function({trigger,attributes,sections,casc}) {
          k.log(`increased ${name} from ${fv - 1} to ${fv} using ${cost} points leaving ${exp} points left.`);
       } 
    });
+   setWeaponSkills({trigger,attributes,sections,casc});
 
    attributes.set();
 
@@ -81,3 +82,4 @@ const useExperience = async function({trigger,attributes,sections,casc}) {
    
 }
 k.registerFuncs({useExperience});
+

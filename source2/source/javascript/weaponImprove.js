@@ -20,3 +20,4 @@ const weaponTrainedSkillImprove = function({rollObj,attributes,sections,perfect}
    }
    attributes.set();
 }
+

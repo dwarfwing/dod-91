@@ -8,7 +8,32 @@
       }     
       .box .box-header.field-count-4 {
          grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
-      }     
+      } 
+      .box-weaponskills {
+         button.repcontrol-button.repcontrol-button--add {
+            position: absolute;
+            bottom: 0.25rem;
+            width: 1.75rem;
+            right: 0;
+            &:before {
+               //position: relative;
+               inset: 0;
+               font-family: "Material Symbols Outlined";
+               content: "playlist_add";
+               font-size: 1.5rem;
+               font-weight: normal;
+               color: var(--font-color);
+               height: 1.75rem;
+               width: 1.75rem;
+               margin-right: 0.25rem;
+               display: grid;
+               place-content: center;
+            }
+         }
+         .repcontrol {
+            width: calc(100% - 1.675rem);
+         }
+      }    
       .skill-row {         
          border-bottom: 1px solid var(--border-color);
          min-width: 100%;
@@ -65,7 +90,10 @@
                padding: 0;
                border: 0; 
             }
-            * { box-sizing: content-box !important; max-height: 100%; }
+            * { 
+               //box-sizing: content-box !important; 
+               max-height: 100%; 
+            }
             & > span input[type=number] {
                padding: 0; 
             }

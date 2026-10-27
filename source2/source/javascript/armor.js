@@ -37,3 +37,4 @@ DoD 91 log| Armor calculation trigger: {"name":"rustning_huvud_vikt3","type":"nu
 "sourceAttribute":"rustning_huvud_vikt3","sourceType":"player","triggerName":"rustning_huvud_vikt3","newValue":"1"}
 
 */
+

@@ -1,6 +1,4 @@
-const v2x4 = function(trigger,attributes,sections,casc) {
-   k.log(`Running a v2.4 upgrade script, from ${k.version}`);
-   k.log('Upgrading to version 2.4');
+const v2x4 = function(trigger,attributes,sections,casc) { 
    
    //attributes.sheet_version = '2.4'; 
    //const ver = await attributes.version; 
@@ -22,10 +20,17 @@ const v2x4 = function(trigger,attributes,sections,casc) {
 
    k.getAllAttrs({
       callback:(attributes,sections,casc)=>{
+         k.log(`Running a v2.4 upgrade script, from K version ${k.version}`);
 
          k.log(`Entered K all attributes section`);
+         k.log(`Recorded version is ${attributes.version}`);
 
+         if ( parseFloat(attributes.version) >= 2.4 ) {
+            k.log(`WIill not upgrade version ${attributes.version}`);
+            return; 
+         } 
 
+         k.log('Upgrading to version 2.4');
          
          k.log(`Identified upgrade to 2.0 version`);
 
@@ -267,7 +272,8 @@ const v2x4 = function(trigger,attributes,sections,casc) {
          attributes.set(); 
 
 
-         k.log('Upgrading to version 2.3');
+         k.log('Upgrading to version 2.4');
+         attributes.version = "2.4";
          
          //attributes.sheet_version = '2.3'; 
          //attributes.version = '2.3'; 
@@ -278,4 +284,5 @@ const v2x4 = function(trigger,attributes,sections,casc) {
    })
 
 }
-k.registerFuncs({'2.4':v2x4},{type:['updater']});
+k.registerFuncs({'2.4':v2x4},{type:['updater','opener']});
+

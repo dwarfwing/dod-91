@@ -3,7 +3,7 @@ mixin weapons
       +input({name:'weapon_encumbrance',type:'number',value:0,class:'hidden',trigger:{affects:['encumbrance']}})
       //-   let fields = spine.weaponskills; 
       +box({headerObj:{attr:'weapons','data-i18n':'weapons'},fields:spine.weaponfields,classes:'coverall'})
-         +customControlFieldset({name:'weapons',addClass:'collapse-container',
+         +customControlFieldset({name:'weapons',addClass:'collapse-container custom-control-fieldset',
             trigger: {addFuncs:['setSkill','weaponSkillSelect']}
             })
             +collapse
@@ -22,6 +22,8 @@ mixin weapons
                      else if field.roller
                         +action({name:field.rollaction,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
                               +span({name:field.attr})
+                     else if field.modifiable != undefined && field.modifiable 
+                        +input({name:field.attr,type:field.type,class:field.class})
                      else 
                         +span({name:field.attr,class:field.class})
             .expanded
@@ -37,7 +39,7 @@ mixin weapons
                            +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                               | --- Välj ---
                      else 
-                        if field.trigger
+                        if field.trigger && trigger != 'rollDamage' && trigger != 'rollWeaponAttack'
                            +input({name:field.attr,type:field.type,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
                         else 
                            +input({name:field.attr,type:field.type,class:field.class})
@@ -65,7 +67,7 @@ mixin weapons
       }
       .box-header, .repitem .collapsed div, .repitem .expanded div {
          display: grid; 
-         grid-template-columns: 2rem calc(22% - 1rem) 10% 4% 4% 4% 3% 7% 7% 4% 6% 5% 4% 6% 4% 5% 4%;
+         grid-template-columns: 2rem calc(22% - 1rem) 11% 5% 5% 5% 3% 7% 7% 4% 6% 5% 4% 6% 4% 5%;
          & * {
             border: 0;
             width: 100%;

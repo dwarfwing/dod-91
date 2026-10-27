@@ -10,7 +10,7 @@ const weaponSkillSelect = function({trigger,attributes,sections,casc}){
   const optionsArray = sections['repeating_weaponskills']
     .filter(id => id)
     .reduce((arr,id) => {
-      arr.push({value:'repeating_weaponskills_'+id.toLowerCase(),label:attributes[`repeating_weaponskills_${id}_name`] || getTranslationByKey('New Skill')});
+      arr.push({value:'repeating_weaponskills_'+id.toLowerCase(),label:attributes[`repeating_weaponskills_${id}_name`] || ' '});
       k.log(`Weapon skill update array: ${JSON.stringify(arr)}`);
       return arr;
     },[{label:'Slagsmål',value:'prim_slagsmal'}]);
@@ -28,5 +28,17 @@ const weaponSkillSelect = function({trigger,attributes,sections,casc}){
         attributes[`${row}_skill`] :
         'custom';
     });
+  attributes.set(); 
+  setWeaponSkills({trigger,attributes,sections,casc});
 };
 k.registerFuncs({weaponSkillSelect},{type:['opener']});
+
+
+const weaponskillsAdd = async function({trigger,attributes,sections,casc}) {
+   k.log(`Add weapon skill trigger: ${JSON.stringify(trigger)}`);
+   //await attributes.repeating_weaponskills.create({name:' '}); 
+   weaponSkillSelect({attributes,sections});
+}
+k.registerFuncs({weaponskillsAdd});
+
+

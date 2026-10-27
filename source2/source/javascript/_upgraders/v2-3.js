@@ -233,9 +233,10 @@ const v2x3 = function({trigger,attributes,sections,casc}) {
    k.log('Upgrading to version 2.3');
    
    //attributes.sheet_version = '2.3'; 
-   //attributes.version = '2.3'; 
+   attributes.version = '2.3'; 
    //k.version = '2.3';
    attributes.set(); 
 
 }
 k.registerFuncs({'2.3':v2x3},{type:['updater']});
+

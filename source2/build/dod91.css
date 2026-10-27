@@ -1598,10 +1598,10 @@ body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.secti
   content: "arrow_drop_up";
   font-family: "Material Symbols Outlined";
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ .collapsed {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) {
   height: auto;
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ .collapsed span.description {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) span.description, body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) textarea {
   display: flex;
   text-indent: 0;
   padding-left: 1.25rem;
@@ -1619,7 +1619,7 @@ body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.secti
   content: "arrow_drop_down";
   font-family: "Material Symbols Outlined";
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:not(:checked) ~ .collapsed .description {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:not(:checked) ~ :is(.collapsed, .expanded) .description {
   display: none;
 }
 body .ui-dialog .tab-content .charsheet .fill-left input[type=radio], body .ui-dialog .tab-content .charsheet .fill-left input[type=checkbox] {
@@ -1647,6 +1647,28 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box .box-head
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box .box-header.field-count-4, body .ui-dialog .tab-content .charsheet div.section-languages .box .box-header.field-count-4, body .ui-dialog .tab-content .charsheet div.section-magicspells .box .box-header.field-count-4 {
   grid-template-columns: calc(100% - 10rem) 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box-weaponskills button.repcontrol-button.repcontrol-button--add, body .ui-dialog .tab-content .charsheet div.section-languages .box-weaponskills button.repcontrol-button.repcontrol-button--add, body .ui-dialog .tab-content .charsheet div.section-magicspells .box-weaponskills button.repcontrol-button.repcontrol-button--add {
+  position: absolute;
+  bottom: 0.25rem;
+  width: 1.75rem;
+  right: 0;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box-weaponskills button.repcontrol-button.repcontrol-button--add:before, body .ui-dialog .tab-content .charsheet div.section-languages .box-weaponskills button.repcontrol-button.repcontrol-button--add:before, body .ui-dialog .tab-content .charsheet div.section-magicspells .box-weaponskills button.repcontrol-button.repcontrol-button--add:before {
+  inset: 0;
+  font-family: "Material Symbols Outlined";
+  content: "playlist_add";
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: var(--font-color);
+  height: 1.75rem;
+  width: 1.75rem;
+  margin-right: 0.25rem;
+  display: grid;
+  place-content: center;
+}
+body .ui-dialog .tab-content .charsheet div[class*=section-skill] .box-weaponskills .repcontrol, body .ui-dialog .tab-content .charsheet div.section-languages .box-weaponskills .repcontrol, body .ui-dialog .tab-content .charsheet div.section-magicspells .box-weaponskills .repcontrol {
+  width: calc(100% - 1.675rem);
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row {
   border-bottom: 1px solid var(--border-color);
@@ -1707,7 +1729,6 @@ body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .la
   border: 0;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input *, body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input *, body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input * {
-  box-sizing: content-box !important;
   max-height: 100%;
 }
 body .ui-dialog .tab-content .charsheet div[class*=section-skill] .skill-row .label-input > span input[type=number], body .ui-dialog .tab-content .charsheet div.section-languages .skill-row .label-input > span input[type=number], body .ui-dialog .tab-content .charsheet div.section-magicspells .skill-row .label-input > span input[type=number] {
@@ -2854,7 +2875,7 @@ body .ui-dialog .tab-content .charsheet .section-weapons .box-header h2:nth-of-t
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div {
   display: grid;
-  grid-template-columns: 2rem calc(22% - 1rem) 10% 4% 4% 4% 3% 7% 7% 4% 6% 5% 4% 6% 4% 5% 4%;
+  grid-template-columns: 2rem calc(22% - 1rem) 11% 5% 5% 5% 3% 7% 7% 4% 6% 5% 4% 6% 4% 5%;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .box-header *, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed div *, body .ui-dialog .tab-content .charsheet .section-weapons .repitem .expanded div * {
   border: 0;
@@ -3529,6 +3550,32 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
   height: var(--row-height);
   line-height: var(--row-height);
 }
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row :is(.collapsed, .expanded) :is(.spellcasting, .spellcasting span.parenthesis, .spellcasting-k, .spellcasting-f, .spellcasting-r) {
+  display: none;
+  text-indent: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row :is(.type-k-selected, .type-f-selected, .type-r-selected):checked ~ :is(.collapsed, .expanded) .spellcasting {
+  display: flex;
+  flex-wrap: nowrap;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row :is(.type-k-selected, .type-f-selected, .type-r-selected):checked ~ :is(.collapsed, .expanded) .spellcasting span:first-of-type {
+  margin-left: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row :is(.type-k-selected, .type-f-selected, .type-r-selected):checked ~ :is(.collapsed, .expanded) .spellcasting .parenthesis {
+  display: flex;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .type-k-selected:checked ~ :is(.collapsed, .expanded) .spellcasting .spellcasting-k {
+  display: flex;
+  margin-right: 0.125rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .type-f-selected:checked ~ :is(.collapsed, .expanded) .spellcasting .spellcasting-f {
+  display: flex;
+  margin-right: 0.125rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .type-r-selected:checked ~ :is(.collapsed, .expanded) .spellcasting .spellcasting-r {
+  display: flex;
+  margin-right: 0.125rem;
+}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .label-input {
   height: stretch;
 }
@@ -3538,6 +3585,15 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .expanded .label-input.input-count-7 {
   grid-template-columns: 2.5rem 2.5rem calc(100% - 20rem) 3rem 3rem 3rem 3rem 3rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button {
+  display: flex;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button span, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button span.button-text, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row button span.spellcasting {
+  width: auto;
+  min-width: unset;
+  padding-left: 0;
+  border-right: 0 !important;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row label, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=number], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row input[type=text], body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row span:not(.button-text) {
   border-right: 1px solid var(--border-color);
@@ -3585,16 +3641,81 @@ body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .sp
   line-height: 0.75rem;
   text-align: center;
 }
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .adaptive.description {
-  grid-column: 1/-1;
-  border-top: 1px solid var(--border-color);
-  align-self: unset;
-  align-content: unset;
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .collapsed .description {
+  background-color: var(--color-surface2);
 }
-body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .adaptive.description textarea {
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px dashed var(--border-color);
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info {
+  border-left: 1px solid black;
+  width: 100%;
+  font-size: 90%;
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  margin-left: 2.45rem;
+  display: grid;
+  grid-template-columns: 2rem 1fr 1fr 1fr 3fr 3fr;
+  height: 2.125rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info button[type=action] {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info button[type=action]:before {
+  position: absolute;
+  inset: 0;
+  font-family: "Material Symbols Outlined";
+  font-size: 1.5rem;
+  content: "chat_bubble";
+  text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info label.input-label {
+  justify-content: center;
+  border-bottom: 0;
+  max-height: 2.125rem;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info label.input-label * {
+  border-right: 0 !important;
+  border-left: 0 !important;
+  max-height: 100%;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info label.input-label input[type=checkbox] {
+  border: 0;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info label.input-label span {
+  width: auto;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description .spell-info label.input-label span:has(+ input[type=checkbox]) {
+  cursor: pointer;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description span.description, body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description textarea.description {
+  min-width: calc(100% - 2.5rem) !important;
+  max-width: calc(100% - 2.5rem) !important;
+  border-left: 1px solid black;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description span.description {
+  grid-column: 1/-1;
+  margin-left: 2.45rem;
+  white-space: pre-wrap;
+  min-height: unset !important;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .description textarea.description {
+  border-right: 1px solid var(--border-color);
+  border-radius: 0;
+  grid-column: 1/-1;
+  margin-left: 2.45rem;
+  overflow-y: scroll;
+  resize: block;
   min-height: 100%;
   align-self: unset;
   align-content: unset;
+}
+body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .spell-row .collapsed .spell-info :is(label, input) {
+  pointer-events: none;
+  pointer: unset;
 }
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells .label-input:hover input[type=checkbox].memorized {
   display: grid;
@@ -3938,7 +4059,7 @@ body .ui-dialog .tab-content .charsheet .tab-magic {
 body .ui-dialog .tab-content .charsheet .tab-gear {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "gear mount money" "gear mount stash";
+  grid-template-areas: "gear stash money" "gear stash mount";
 }
 body .ui-dialog .tab-content .charsheet .tab-gear .section-encumbrance {
   grid-area: encumb;
@@ -4385,6 +4506,22 @@ body.sheet-darkmode .charactersheet {
   font-size: 1rem;
   padding: 0.5rem;
   line-height: 1rem;
+}
+.sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-spell-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-spell-info * {
+  font-size: 90%;
+}
+.sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-spell-info .sheet-info-key {
+  text-align: right;
+}
+.sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-spell-info .sheet-info-key:after {
+  content: ":";
+}
+.sheet-rolltemplate-dod91 .sheet-template .sheet-container .sheet-spell-info .sheet-info-value {
+  text-indent: 1rem;
 }
 
 .sheet-rolltemplate-darkmode {

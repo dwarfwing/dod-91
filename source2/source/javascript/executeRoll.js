@@ -4,8 +4,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    const computeObj = {};
    computeObj.perfectRoll = 0; 
    //const dmgBonusStr = rollObj.damageBonus && rollObj.damageBonus != '' ? `+${rollObj.damageBonus}[${getTranslationByKey('damagebonus')}]` : '';
-   k.log(`Damage bonus in Execute Roll: ${rollObj.damageBonus} and string: ${rollObj.damageBonusStr}`);   
-   if ( rollObj.skillAttr ) {
+   //k.log(`Damage bonus in Execute Roll: ${rollObj.damageBonus} and string: ${rollObj.damageBonusStr}`);   
+   if ( rollObj?.skillAttr ) {
       rollObj.gainExp = rollObj?.skillAttr.startsWith('repeating_languages') || rollObj.skillAttr.startsWith('repeating_magicschools') ? false : true; 
    }   
 
@@ -13,7 +13,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       rollObj.rollStr = `&{template:dod91} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{roll-name=${rollObj.name}}}`;
       if (rollObj.abilityDice && rollObj.abilityDice != '') {
          //k.log(`Ability roll ${rollObj.abilityDice}`)
-         rollObj.rollStr += ` {{roll1=[[${rollObj.abilityDice}]]}} {{roll2=[[1d20cs<1cf>20]]}}`;
+         const target2 = rollObj?.skillAttr ? attributes[`${rollObj.skillAttr}_fv`] : 1; 
+         rollObj.rollStr += ` {{roll1=[[${rollObj.abilityDice}]]}} {{roll2=[[1d20cs<${target2}cf>20]]}}`;
       /* } else if (rollObj.target) {
          const rollCrit = Math.floor(rollObj.target / 10)||0;
          const climit = rollObj.carryLimit ? rollObj.carryLimit : '';
@@ -117,6 +118,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       var reduce = parseInt(rollObj.spellLevel)
       if ( perfect == 1 && reduce != 1 ) {
          reduce = Math.floor(reduce / 2);
+      } else if ( !success ) {
+         reduce = 1; 
       }
       attributes['psypoang'] = parseInt(attributes.psypoang) - reduce;
    }
@@ -206,3 +209,4 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    } */
 
 }
+

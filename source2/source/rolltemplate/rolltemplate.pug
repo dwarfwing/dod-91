@@ -123,6 +123,20 @@ rolltemplate.sheet-rolltemplate-dod91
                      span(data-i18n='sg25').success 25  
                   +rollGreater({values:'roll1 extreme'})
                      span(data-i18n='sg25').fail 25
+            +templateConditionalDisplay('is-spell')
+               +templateConditionalDisplay('showtype')
+                  .sheet-spell-info 
+                     .sheet-info-key Typ 
+                     .sheet-info-value                    
+                           span {{k}}                 
+                           span {{f}}                    
+                           span {{r}} 
+               .sheet-spell-info 
+                  .sheet-info-key Räckvidd 
+                  .sheet-info-value {{range}}
+               .sheet-spell-info 
+                  .sheet-info-key Varaktighet 
+                  .sheet-info-value {{duration}}
             +templateConditionalDisplay('description')
                .sheet-roll-description
                   |{{description}} 

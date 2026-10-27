@@ -10,3 +10,4 @@ const rollVehicleHitarea = function({trigger,attributes,sections,casc}) {
    executeRoll({rollObj,attributes,sections});
 }
 k.registerFuncs({rollVehicleHitarea});
+

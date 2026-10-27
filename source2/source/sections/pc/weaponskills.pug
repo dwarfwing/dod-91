@@ -9,7 +9,8 @@ mixin weaponskills
 
       +martialarts
 
-      +listSkills({namn:'vapengrupper',attr:'weapontypes',transl:'weapon-types',array:spine.weaponskills,b:false})
+      - fields = [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'}]
+      +listSkills({namn:'vapengrupper',attr:'weapontypes',transl:'weapon-types',array:spine.weaponskills,fields:fields,b:false,exp:false,impr:false})
 
 //-+scss.
    .section-weaponskills { 

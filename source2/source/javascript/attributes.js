@@ -160,3 +160,4 @@ const calcAnimalPainpoints = function({trigger,attributes,sections,casc}) {
    attributes.set();
 }
 k.registerFuncs({calcAnimalPainpoints});
+

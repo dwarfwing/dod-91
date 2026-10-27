@@ -13,6 +13,9 @@ mixin spells
                //-+checkbox({name:'collapse',value:1,class:'collapse'})
                +number({name:'cost',value:0,class:'hidden'})
                +checkbox({name:'type',value:'asecret',class:'type-asecret-selected hidden'})
+               +checkbox({name:'k',value:'1',class:'type-k-selected hidden'})
+               +checkbox({name:'f',value:'1',class:'type-f-selected hidden'})
+               +checkbox({name:'r',value:'1',class:'type-r-selected hidden'})
                +collapse
                +describe
                //-+checkbox({name:'exp_normal',class:'exp-toggle exp-toggle-normal'})
@@ -25,6 +28,12 @@ mixin spells
                      label.action-button.collapsed 
                         +action({name:'roll',trigger:{triggeredFuncs:['rollRepeatingSpell']}})
                            +span({name:'name',class:'button-text'})
+                           span.spellcasting
+                              span.parenthesis (
+                              span.spellcasting-k K
+                              span.spellcasting-f F
+                              span.spellcasting-r R
+                              span.parenthesis )
                      //- label.text-input
                         +text({name:'name',class:'text-input'})
                      //-+span({name:'skill',type:'number'}).input-span.input-0                  
@@ -38,6 +47,29 @@ mixin spells
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                   .description
+                     .spell-info    
+                        +action({name:'chatdescribe',class:'chat-describe',trigger:{triggeredFuncs:['chatSpellDescription']}})   
+                        +input-label({
+                           label: 'K',
+                           inputObj: {name:'k',type:'checkbox',value:1}
+                        })    
+                        +input-label({
+                           label: 'F',
+                           inputObj: {name:'f',type:'checkbox',value:1}
+                        })   
+                        +input-label({
+                           label: 'R',
+                           inputObj: {name:'r',type:'checkbox',value:1}
+                        })      
+                        +input-label({
+                           label: 'Räckvidd:',
+                           inputObj: {name:'range',type:'text'}
+                        }) 
+                        +input-label({
+                           label: 'Varaktighet:',
+                           inputObj: {name:'duration',type:'text'}
+                        })
+                     //-.text-description
                      +span({name:'description',class:'description'})
                .expanded
                   .label-input.input-count-7 
@@ -58,7 +90,32 @@ mixin spells
                      +input({name: 'erf', type: 'number', class:'label-input-input'})
                      +checkbox({name:'improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:'improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
-                     +adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')
+                  .description
+                     .spell-info 
+                        +action({name:'chatdescribe',class:'char-describe',trigger:{triggeredFuncs:['chatSpellDescription']}})   
+                        +input-label({
+                           label: 'K',
+                           inputObj: {name:'k',type:'checkbox',value:1}
+                        })    
+                        +input-label({
+                           label: 'F',
+                           inputObj: {name:'f',type:'checkbox',value:1}
+                        })   
+                        +input-label({
+                           label: 'R',
+                           inputObj: {name:'r',type:'checkbox',value:1}
+                        })      
+                        +input-label({
+                           label: 'Räckvidd:',
+                           inputObj: {name:'range',type:'text'}
+                        }) 
+                        +input-label({
+                           label: 'Varaktighet:',
+                           inputObj: {name:'duration',type:'text'}
+                        })
+                     //-+adaptiveTextarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='text-description')
+                     //-.text-description
+                     +textarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')
    .hidden-besvarjelser.for-upgrades.hidden 
       each spell in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
          +text({name:'besvarjelse_'+spell+'_text'})
@@ -136,6 +193,32 @@ mixin spells
                height: var(--row-height);
                line-height: var(--row-height);
             }
+            :is(.collapsed,.expanded) :is(.spellcasting, .spellcasting span.parenthesis, .spellcasting-k, .spellcasting-f, .spellcasting-r ) {
+               display: none; 
+               text-indent: 0; 
+            }
+            :is(.type-k-selected,.type-f-selected,.type-r-selected):checked ~ :is(.collapsed,.expanded) .spellcasting {
+               display: flex; 
+               flex-wrap: nowrap; 
+               span:first-of-type {
+                  margin-left: 0.25rem; 
+               }
+               .parenthesis {
+                  display: flex; 
+               }
+            }
+            .type-k-selected:checked ~ :is(.collapsed,.expanded) .spellcasting .spellcasting-k {
+               display: flex;
+               margin-right: 0.125rem;  
+            }
+            .type-f-selected:checked ~ :is(.collapsed,.expanded) .spellcasting .spellcasting-f {
+               display: flex; 
+               margin-right: 0.125rem; 
+            }
+            .type-r-selected:checked ~ :is(.collapsed,.expanded) .spellcasting .spellcasting-r {
+               display: flex; 
+               margin-right: 0.125rem; 
+            }
             .label-input {
                height: stretch;
                &.input-count-7 {
@@ -145,6 +228,15 @@ mixin spells
             }
             .expanded .label-input.input-count-7 {
                grid-template-columns: 2.5rem 2.5rem calc(100% - 20rem) 3rem 3rem 3rem 3rem 3rem;
+            }
+            button {
+               display: flex; 
+               span, span.button-text, span.spellcasting {
+                  width: auto; 
+                  min-width: unset; 
+                  padding-left: 0; 
+                  border-right: 0 !important; 
+               }
             }
             label, input[type=number], input[type=text], span:not(.button-text) {
                border-right: 1px solid var(--border-color); 
@@ -191,18 +283,86 @@ mixin spells
                   line-height: 0.75rem;
                   text-align: center; 
                }
-            }
-            .adaptive.description {
-               grid-column: 1 / -1;
-               border-top: 1px solid var(--border-color);
-               align-self: unset; 
-               align-content: unset; 
-               textarea {
+            }  
+            .collapsed .description {
+               background-color: var(--color-surface2);
+            }          
+            .description {
+               display: flex; 
+               flex-wrap: wrap;                
+               border-top: 1px dashed var(--border-color);
+               .spell-info {
+                  border-left: 1px solid black;
+                  width: 100%; 
+                  font-size: 90%; 
+                  display: flex; 
+                  justify-content: space-between; 
+                  justify-items: center; 
+                  margin-left: 2.45rem;
+                  display: grid; 
+                  grid-template-columns: 2rem 1fr 1fr 1fr 3fr 3fr; 
+                  height: 2.125rem; 
+                  //border-bottom: 1px dashed var(--border-color);
+                  button[type=action] {
+                     position: relative; 
+                     &:before {
+                        position: absolute; 
+                        inset: 0; 
+                        font-family: 'Material Symbols Outlined';
+                        font-size: 1.5rem; 
+                        content: 'chat_bubble';
+                        text-align: center;
+                     }
+                  }
+                  label.input-label {
+                     justify-content: center; 
+                     border-bottom: 0; 
+                     max-height: 2.125rem;  
+                     * { 
+                        border-right: 0 !important;
+                        border-left: 0 !important; 
+                        max-height: 100%; 
+                     }
+                     input[type=checkbox] {
+                        border: 0; 
+                     }
+                     span {
+                        width: auto; 
+                        &:has(+ input[type=checkbox]) {
+                           cursor: pointer; 
+                        }
+                     }
+                  }
+               } 
+               span.description, textarea.description {
+                  min-width: calc(100% - 2.5rem) !important; 
+                  max-width: calc(100% - 2.5rem) !important; 
+                  border-left: 1px solid black;
+               }
+               span.description {      
+                  grid-column: 1 / -1;           
+                  margin-left: 2.45rem; 
+                  white-space: pre-wrap;
+                  min-height: unset !important;
+               }
+               textarea.description {   
+                  border-right: 1px solid var(--border-color);  
+                  border-radius: 0;
+                  grid-column: 1 / -1;              
+                  margin-left: 2.45rem; 
+                  //padding: 0.125rem !important;
+                  overflow-y: scroll;
+                  resize: block; 
                   min-height: 100%;
                   align-self: unset; 
                   align-content: unset; 
-               }               
+               } 
             }
+            .collapsed .spell-info :is(label,input) {
+               pointer-events: none; 
+               pointer: unset; 
+            }
+            
          }
          .label-input:hover input[type=checkbox].memorized {
             display: grid; 

@@ -40,6 +40,7 @@
          type:'number',
          class:'',
          transl:'modifier-abbr',
+         modifiable: true,
       },
       {
          name:'STY',
@@ -84,7 +85,7 @@
       {
          name:'PV',
          attr:'penetration',
-         type:'number',
+         type:'text',
          class:'',
          transl:'penetration-abbr',
       },
@@ -92,7 +93,7 @@
          name:'Räckv.',
          attr:'range',
          type:'text',
-         class:'',
+         class:'smaller-text',
          transl:'range-abbr',
       },
       {
@@ -115,6 +116,7 @@
          type:'text',
          class:'currMax smaller-text',
          transl:'ammo-max-abbr',
+         modifiable: true,
       },
       {
          name:'Vikt',
@@ -128,16 +130,16 @@
          name:'Värde',
          attr:'value',
          type:'text',
-         class:'',
+         class:'smaller-text',
          transl:'value',
       },
-      {
+      /*{
          name:'Erf',
          attr:'erf',
          type:'number',
          class:'',
          transl:'experience-abbr',
-      },
+      },*/
    ]
    spine.weapontypes = [
       {
@@ -278,7 +280,7 @@
          kp: 'kp_hben',
          sp: 'sp_hben',
          armor: 'rustning_hben',
-         armorweight: 'rustning_vben_vikt',
+         armorweight: 'rustning_hben_vikt',
          abs: 'rustning_hben_abs',
          spabs: 'rustning_hben_spabs'
       },

@@ -1,6 +1,6 @@
 mixin attributes 
    .section-attributes.collapse-container
-      +collapse(name='attributes_collapse') 
+      +collapse(name='attr_attributes_collapse') 
       +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'},classes:'attributes-box'})
          each attribute in spine.attributes
             div(class='column-'+attribute.attr).label-input.input-count-2.attribute-row

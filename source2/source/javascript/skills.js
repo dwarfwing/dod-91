@@ -47,10 +47,10 @@ const setSkillB = function ({trigger,attributes,sections,casc}) {
    const bLevel = {
       0: 0, 1: 1, 2: 2, 3: 1, 4: 1, 
       5: 2, 6: 2, 7: 2, 8: 2, 9: 2, 10: 2,
-      11: 2, 12: 3, 13: 3, 14: 3, 15: 3,
-      16: 4, 17: 4, 18: 4, 19: 4, 20: 5,      
+      11: 3, 12: 3, 13: 3, 14: 3, 15: 3,
+      16: 4, 17: 4, 18: 4, 19: 4, 20: 5,    
    };
-   attributes[`${skillAttr}_b`] = bLevel[skillLevel];
+   attributes[`${skillAttr}_b`] = ( skillLevel < 21 ) ? bLevel[skillLevel] : 5;
   
    attributes.set();
 }
@@ -77,6 +77,36 @@ const setSpellCosts = function({trigger,attributes,sections,cost}) {
    attributes.set(); 
 }
 k.registerFuncs({setSpellCosts},{type:['opener']});
+
+const chatSpellDescription = async function({trigger,attributes,sections, casc}) {
+   const [section,rowID,base] = k.parseTriggerName(trigger.name);
+   const row = `${section}_${rowID}`;
+   const rollObj = {
+      name: attributes[`${row}_name`],
+      description: attributes[`${row}_description`],
+      quick: attributes[`${row}_k`] == '1' ? 'K ' : '',
+      physical: attributes[`${row}_f`] == '1' ? 'F ' : '',
+      ritual: attributes[`${row}_r`] == '1' ? 'R ' : '',
+      range: attributes[`${row}_range`]||'',
+      duration: attributes[`${row}_duration`]||'',
+   }
+   rollObj.showType = ( rollObj.quick == '' && rollObj.physical == '' && rollObj.ritual == '' ) ? '' : ' {{showtype=[[1]]}}';
+
+   rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
+   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
+
+   rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
+   rollObj.rollStr += ` {{description=${rollObj.description}}} {{k=${rollObj.quick}}} {{f=${rollObj.physical}}} {{r=${rollObj.ritual}}}`;
+   rollObj.rollStr += ` {{range=${rollObj.range}}} {{duration=${rollObj.duration}}} {{is-spell=[[1]]}} ${rollObj.showType}`;
+
+   //executeRoll(rollObj,attributes);
+
+   const roll = await startRoll(rollObj.rollStr);
+   finishRoll(roll.rollId);
+
+}
+
+k.registerFuncs({chatSpellDescription});
 
 const setMartialartsCost = function({trigger,attributes,sections,casc}) {
    ['martialart1','martialart2','martialart3'].forEach( art => {

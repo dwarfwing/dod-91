@@ -1,4 +1,4 @@
-mixin listSkills({namn,attr,transl,fields,array,cost,b})
+mixin listSkills({namn,attr,transl,fields,array,cost,b,impr,exp})
    - 
       i18n = transl ? transl : attr; 
       fields = fields ? fields : [{name:'FV',attr:'skill_level'},{name:'Mod.',attr:'modification_abbr'},{name:'Erf.',attr:'experience_abbr'}];
@@ -33,10 +33,12 @@ mixin listSkills({namn,attr,transl,fields,array,cost,b})
                         +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['setSkillB']}}).input-span.input-0
                      span.input-span.input-2 
                         +input({name:skill.attr+'_mod',type:'number'}).input-span.input-1
-                     span.input-span.input-3 
-                        +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
-                     +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
-                     +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                     if ( exp == undefined || exp != false )
+                        span.input-span.input-3.erf
+                           +span({name:skill.attr+'_erf'}).input-span.input-3
+                     if ( impr == undefined || impr != false )
+                        +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                        +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
                else 
                   label.label-input.input-count-5
                      label.action-button.collapsed    
@@ -56,7 +58,9 @@ mixin listSkills({namn,attr,transl,fields,array,cost,b})
                         +input({name:skill.attr+'_fv', type:'number', class:'label-input-input',trigger:{triggeredFuncs:['setSkillB']}}).input-span.input-0
                      span.input-span.input-1 
                         +input({name:skill.attr+'_mod',type:'number'}).input-span.input-1
-                     span.input-span.input-2 
-                        +input({name: skill.attr+'_erf',type:'number'}).input-span.input-2
-                     +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
-                     +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})
+                     if ( exp == undefined || exp != false )
+                        span.input-span.input-2.erf
+                           +input({name: skill.attr+'_erf', type: 'number', class:'label-input-input'})
+                     if ( impr == undefined || impr != false )
+                        +checkbox({name:skill.attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
+                        +checkbox({name:skill.attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})

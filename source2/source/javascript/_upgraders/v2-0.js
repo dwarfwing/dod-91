@@ -192,8 +192,9 @@ const v2x0 = function({trigger,attributes,sections,casc}) {
 
 
    attributes.whisper = '';
-   attributes.version = 2.0; 
+   attributes.version = '2.0'; 
    attributes.set();
 
 }
 k.registerFuncs({'2.0':v2x0},{type:['updater']});
+

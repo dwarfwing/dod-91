@@ -173,6 +173,22 @@
                   line-height: 1rem;
                } 
             }
+            .sheet-spell-info {
+               display: grid;
+               grid-template-columns: 1fr 1fr; 
+               * {
+                  font-size: 90%; 
+               }
+               .sheet-info-key {
+                  text-align: right; 
+                  &:after {
+                     content: ':';
+                  }
+               }
+               .sheet-info-value {
+                  text-indent: 1rem; 
+               }
+            }
          }
       }
    }

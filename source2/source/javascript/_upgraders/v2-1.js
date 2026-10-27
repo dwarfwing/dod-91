@@ -17,8 +17,9 @@ const v2x1 = function({trigger,attributes,sections,casc}) {
    attributes['show_martial_arts'] = 1;
    attributes['house_magic_costs'] = 1; 
 
-   attributes.version = 2.1; 
+   attributes.version = '2.1'; 
    attributes.set(); 
 
 }
 k.registerFuncs({'2.1':v2x1},{type:['updater']});
+
