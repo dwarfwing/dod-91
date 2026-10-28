@@ -16,6 +16,14 @@ const armorCalcAll = function({trigger,attributes,sections,casc}) {
                                                          attributes[`rustning_${part}_${attr}3`]*parseInt(attributes[`rustning_${part}3_equipped`]);
       });      
    });
+   var wgtTot = 0;
+   ['huvud','harm','varm','brostkorg','mage','hben','vben'].forEach( (part) => {
+      k.log(`Armo ${part} weight is ${attributes[`rustning_${part}_vikt_total`]} added to subtotal of ${wgtTot}`);
+      wgtTot += parseInt(attributes[`rustning_${part}_vikt_total`]||0);
+   },0);  
+   k.log(`Armor weight: ${wgtTot}`)
+   attributes['armor_encumbrance'] = wgtTot; 
+
    attributes.set();
 }
 k.registerFuncs({armorCalcAll},{type:['opener']});

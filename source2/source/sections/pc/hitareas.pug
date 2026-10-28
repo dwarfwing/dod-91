@@ -8,8 +8,8 @@ mixin hitareas
                spanObj: {'data-i18n':'multiple-armor-rows'},
                inputObj:{name:'multi row armor',type:'checkbox',value:1,class:'multi-row-armor'}
             })
-      .section-hitareas-content
-         //+checkbox({name:'multi row armor',value:1,class:'multi-row-armor hidden'}) 
+      .section-hitareas-content         
+         +input({name:'armor_encumbrance',type:'number',value:0,class:'hidden'})
          +toggle({name:'multi row armor',checked:'false'})
          each area in spine.hitareas  
             - attr = area.attr.replaceAll(/-/g,'_') 
@@ -50,25 +50,25 @@ mixin hitareas
                            inputObj: {name:area.armor,type:'text'}
                            }) 
                         label.input-label.label-input.text-field.armor 
-                           +checkbox({name:area.armor+id+'_equipped',class:'equipped',value:1,label:roman,checked:true,trigger:{triggeredFuncs:['armorCalcAll']}})
+                           +checkbox({name:area.armor+id+'_equipped',class:'equipped',value:1,label:roman,checked:true,trigger:{triggeredFuncs:['calcAllEncumbrance']}})
                            +span({'data-i18n':'Rustning'}) Rustning
                            +input({name:area.armor+id,type:'text',class:'input-label__input'})
                         +input-label({
                            label: 'Vikt',
                            divObj: {class:'label-input text-field weight'},
-                           inputObj: {name:area.armorweight+id,type:'number',trigger:{triggeredFuncs:['armorCalcAll']}}
+                           inputObj: {name:area.armorweight+id,type:'number',trigger:{triggeredFuncs:['calcAllEncumbrance']}}
                            }) 
                         +input-label({
                            label: 'KP',
                            divObj: {class:'label-input text-field abs-kp'},
                            spanObj:{title:'KP Absorption'},
-                           inputObj: {name:area.abs+id,type:'number',trigger:{triggeredFuncs:['armorCalcAll']}}
+                           inputObj: {name:area.abs+id,type:'number',trigger:{triggeredFuncs:['calcAllEncumbrance']}}
                            }) 
                         +input-label({
                            label: 'SP',
                            divObj: {class:'label-input text-field abs-sp sp-display'},
                            spanObj:{title:'SP Absorption'},
-                           inputObj: {name:area.spabs+id,type:'number',trigger:{triggeredFuncs:['armorCalcAll']}}
+                           inputObj: {name:area.spabs+id,type:'number',trigger:{triggeredFuncs:['calcAllEncumbrance']}}
                            }) 
                .points
                   .hitarea-kp 

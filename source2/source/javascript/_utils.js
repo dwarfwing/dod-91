@@ -29,7 +29,7 @@ const repeatingSum = (destinations, section, fields) => {
             });
             setAttrs(output);
         }); 
-    }); 
+    });   
 };
 
 const initNumberedArray = function(max) {

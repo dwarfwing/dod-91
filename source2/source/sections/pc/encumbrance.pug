@@ -14,10 +14,6 @@ mixin encumbrance
          +input({name:'encumbrance', type:'number',class:'label-input-input input-encumbrance hidden',trigger:{formula:'@{gear_encumbrance}+@{weapon_encumbrance}+@{armor_encumbrance}+@{shield_encumbrance}'}})
          +span({name:'encumbrance',class:''})
          +span({name:'barformaga', class:'label-input-input input-encumbrance-max'})
-+module.
-   const calcEncumbrance = function({trigger,attributes,sections,casc}) {
-      return parseFloat(attributes['weapon_encumbrance'])+parseFloat(attributes[gear_encumbrance])+parseFloat(attributes['armor_encumbrance'])+parseFloat(attributes['shield_encumbrance']);
-   }
 +scss.
    .section-encumbrance {
       .currMax {

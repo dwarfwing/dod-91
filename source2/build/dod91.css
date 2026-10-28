@@ -3382,92 +3382,6 @@ body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-h
   font-size: 90%;
   padding-top: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 span {
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 span.colon {
-  font-size: 85%;
-  text-align: right;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 span.colon:after {
-  content: ":";
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 input:not(:checked):before {
-  content: " ";
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 label.input-label input {
-  width: 0;
-  min-width: 0;
-  border: 0;
-  pointer-events: none;
-  margin-right: 0.5rem;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 label.input-label input:before {
-  all: unset;
-  content: "";
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 label.input-label input:after {
-  width: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 label.input-label input.armor-icon:checked:after {
-  content: "directions_walk";
-  font-family: "Material Symbols Outlined";
-  width: 0.75rem;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 label.input-label input.helmet-icon:checked:after {
-  content: "face_6";
-  font-family: "Material Symbols Outlined";
-  width: 0.75rem;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .label-input.input-count-3 input[class*=indicator] {
-  justify-self: center;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .collapsed label.input-label {
-  overflow-x: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-armor .expanded label.text-input {
-  overflow-x: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-shield .box-header {
-  display: grid;
-  grid-template-columns: 1fr 3rem 3rem 3rem 6rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-shield .collapsed,
-body .ui-dialog .tab-content .charsheet .section-shield .expanded {
-  display: grid;
-  grid-template-columns: 2rem 1fr 3rem 3rem 3rem 6rem 3rem;
-}
-body .ui-dialog .tab-content .charsheet .section-shield .collapsed label.input-label {
-  overflow-x: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-shield .expanded label.text-input {
-  overflow-x: hidden;
-}
-body .ui-dialog .tab-content .charsheet .section-shield label:is(.input-label, .text-input) {
-  border: 0;
-  width: 100%;
-}
-body .ui-dialog .tab-content .charsheet .section-shield span.input-span {
-  display: flex;
-  justify-content: space-evenly;
-  border-left: 1px solid var(--border-color);
-}
-body .ui-dialog .tab-content .charsheet .section-shield .label-input.input-count-3 span {
-  border-right: 0;
-}
-body .ui-dialog .tab-content .charsheet .section-shield .label-input.input-count-3 span.colon {
-  font-size: 85%;
-  text-align: right;
-}
-body .ui-dialog .tab-content .charsheet .section-shield .label-input.input-count-3 span.colon:after {
-  content: ":";
-}
-body .ui-dialog .tab-content .charsheet .section-shield .label-input.input-count-3 input:not(:checked):before {
-  content: " ";
-}
-body .ui-dialog .tab-content .charsheet .section-shield .repitem {
-  border-bottom: 1px solid var(--border-color);
-}
 body .ui-dialog .tab-content .charsheet .section-gear .expanded {
   background-color: transparent;
 }
@@ -3867,6 +3781,23 @@ body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcont
   width: 1.5rem;
   justify-self: center;
 }
+body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer .repitem .expanded span.input-span-textarea {
+  line-height: 1.5rem;
+  min-height: 4lh;
+}
+body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer .repitem .expanded span.input-span-textarea textarea {
+  font-size: 90%;
+  line-height: 1.5rem;
+  min-height: 4lh;
+  resize: block;
+  width: 100%;
+  height: 100%;
+  position: unset;
+  display: flex;
+  padding: 0.5rem;
+  margin: 0px;
+  border: 0px;
+}
 body .ui-dialog .tab-content .charsheet .section-money .box-money .box-header.field-count-3, body .ui-dialog .tab-content .charsheet .section-money .input-count-3 {
   grid-template-columns: calc(100% - 13.5rem) 4.5rem 4.5rem 4.5rem;
 }
@@ -4059,7 +3990,7 @@ body .ui-dialog .tab-content .charsheet .tab-magic {
 body .ui-dialog .tab-content .charsheet .tab-gear {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "gear stash money" "gear stash mount";
+  grid-template-areas: "gear stash col3" "gear stash col3";
 }
 body .ui-dialog .tab-content .charsheet .tab-gear .section-encumbrance {
   grid-area: encumb;
@@ -4067,14 +3998,11 @@ body .ui-dialog .tab-content .charsheet .tab-gear .section-encumbrance {
 body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__gear {
   grid-area: gear;
 }
-body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__mount {
-  grid-area: mount;
+body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__col3 {
+  grid-area: col3;
 }
 body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__stash {
   grid-area: stash;
-}
-body .ui-dialog .tab-content .charsheet .tab-gear .section-money {
-  grid-area: money;
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery {
   display: grid;

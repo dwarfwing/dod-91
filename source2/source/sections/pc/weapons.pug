@@ -1,6 +1,6 @@
 mixin weapons 
    .section-weapons
-      +input({name:'weapon_encumbrance',type:'number',value:0,class:'hidden',trigger:{affects:['encumbrance']}})
+      +input({name:'weapon_encumbrance',type:'number',value:0,class:'hidden'})
       //-   let fields = spine.weaponskills; 
       +box({headerObj:{attr:'weapons','data-i18n':'weapons'},fields:spine.weaponfields,classes:'coverall'})
          +customControlFieldset({name:'weapons',addClass:'collapse-container custom-control-fieldset',
@@ -202,11 +202,6 @@ mixin weapons
       }
    }              
 +module.
-   const weaponEncumbrance = function() {
-      repeatingSum("weapon_encumbrance","weapons",["weight","equipped"]);
-   }
-   k.registerFuncs({weaponEncumbrance});
-
    const initializeWeapons = function() {
       const weapons = k.getSections(
          {section:'repeating_weapons',fields:['name']},

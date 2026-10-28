@@ -2,18 +2,20 @@ mixin gear-tab
    .tab-gear 
       //-+encumbrance 
       +gear()
-      +gear('Riddjur','mount') 
       +gear('Förvar','storage')
-      +money
+      .column3.section-gear__col3
+         +money
+         +gear('Riddjur','animal') 
 +scss.
    .tab-gear {
-      display: grid; 
+      display: grid;       
       grid-template-columns: 1fr 1fr 1fr;
-      grid-template-areas: "gear stash money"
-                           "gear stash mount";
+      grid-template-areas: "gear stash col3"
+                           "gear stash col3";
       .section-encumbrance { grid-area: encumb; }
       .section-gear__gear { grid-area: gear; }
-      .section-gear__mount { grid-area: mount; }
+      .section-gear__col3 { grid-area: col3; }
+      //.section-gear__animal { grid-area: animal; }
       .section-gear__stash { grid-area: stash; }
-      .section-money { grid-area: money; }
+      //.section-money { grid-area: money; }
    }

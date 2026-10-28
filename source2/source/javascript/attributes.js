@@ -1,3 +1,51 @@
+
+
+const gearEncumbrance = function({trigger,attributes,sections}) {
+   calcAllEncumbrance({trigger,attributes,sections});
+}
+k.registerFuncs({gearEncumbrance})
+
+const calcAllEncumbrance = function({trigger,attributes,sections,casc}) {
+   // ARMOR
+   ['huvud','harm','varm','brostkorg','mage','hben','vben'].forEach( part => {
+      ['vikt','abs','spabs'].forEach( attr => {
+         //k.log(`Equipped ${part} ${attr} is ${parseInt(attributes[`rustning_${part}_equipped`])}`);
+         attributes[`rustning_${part}_${attr}_total`] = attributes[`rustning_${part}_${attr}`]*parseInt(attributes[`rustning_${part}_equipped`]) + 
+                                                         attributes[`rustning_${part}_${attr}2`]*parseInt(attributes[`rustning_${part}2_equipped`]) +
+                                                         attributes[`rustning_${part}_${attr}3`]*parseInt(attributes[`rustning_${part}3_equipped`]);
+      });      
+   });
+   var armorTot = 0;
+   ['huvud','harm','varm','brostkorg','mage','hben','vben'].forEach( (part) => {
+      //k.log(`Armor ${part} weight is ${attributes[`rustning_${part}_vikt_total`]} added to subtotal of ${armorTot}`);
+      armorTot += parseInt(attributes[`rustning_${part}_vikt_total`]||0);
+   },0);  
+   k.log(`Armor weight: ${armorTot}`);
+   
+   //WEAPONS
+   var weaponTot = 0; 
+   sections.repeating_weapons.forEach( (id) => {
+      const row = `repeating_weapons_${id}`;
+      //k.log(`Weapon ${attributes[`${row}_name`]} weight is ${attributes[`${row}_weight`]||0} and equipped ${attributes[`${row}_equipped`]||0} for total of ${parseInt(attributes[`${row}_equipped`]||0) * parseFloat(attributes[`${row}_weight`]||0)}`);
+      weaponTot += parseInt(attributes[`${row}_equipped`]||0) * parseFloat(attributes[`${row}_weight`]||0); 
+   }); 
+   k.log(`Weapon weight: ${weaponTot}`);  
+
+   //GEAR
+   var gearTot = 0; 
+   sections.repeating_gear.forEach( (id) => {
+      const row = `repeating_gear_${id}`;
+      //k.log(`Gear ${attributes[`${row}_name`]} x ${attributes[`${row}_amount`]} weight is ${attributes[`${row}_weight`]} and equipped ${attributes[`${row}_equipped`]} for total of ${parseInt(attributes[`${row}_equipped`]||0) * parseInt(attributes[`${row}_amount`]) * parseFloat(attributes[`${row}_weight`])}`);
+      gearTot += parseInt(attributes[`${row}_equipped`]||0) * parseInt(attributes[`${row}_amount`]) * parseFloat(attributes[`${row}_weight`])
+   });
+   k.log(`Gear weight: ${gearTot}`); 
+
+   attributes['encumbrance'] = armorTot + weaponTot + gearTot; 
+   k.log(`Encumbrance is ${armorTot + weaponTot + gearTot}`);
+   attributes.set(); 
+}
+k.registerFuncs({calcAllEncumbrance},{type:['opener']});
+
 const calcEncumbranceMax = function ({trigger,attributes,sections,casc}) {
    //k.log(`Encumbrance max trigger: ${JSON.stringify(trigger)}`);
    const carrycap = attributes.carrycap,

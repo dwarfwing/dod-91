@@ -14,7 +14,8 @@ mixin info
                ]
             })
       +box({classes:'box-tertiary headless'})
-         +input({name:'encumbrance', type:'number',class:'label-input-input input-encumbrance hidden',trigger:{formula:'@{gear_encumbrance}+@{weapon_encumbrance}+@{armor_encumbrance}+@{shield_encumbrance}'}})
+         +input({name:'gear_encumbrance', type:'number',class:'label-input-input input-encumbrance hidden'})        
+         +input({name:'encumbrance', type:'number',class:'label-input-input input-encumbrance hidden'})
          +input({name:'encumbrance_max', type:'number',class:'label-input-input input-encumbrance hidden',trigger:{formula:'@{sty_fv}+@{carrycap_mod}'}})
          +label-inputs({
             label: 'Initiativ',

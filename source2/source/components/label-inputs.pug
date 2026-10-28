@@ -62,9 +62,11 @@ mixin label-inputs({label,inputObj=[],divObj,labelObj,spanObj,infoObj})
           +input(input)
       else 
         span.input-span&attributes(spanObj)(class=textareaclass+' input-'+index)
-          if input.type == 'textarea'
+          if input.type == 'adaptivetextarea'
             //-+adaptiveTextarea({name: input.name})&attributes(inputObj) 
             +adaptiveTextarea(input).input-span-adaptive
+          else if input.type == 'textarea'
+            +textarea(input).input-span-textarea
           else if input.type == 'button'
             +action(input)
           else if input.type == 'number'
