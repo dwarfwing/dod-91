@@ -72,6 +72,10 @@ main#main
     //-+radio({name:'whisper',id:'toggle-roll-viz-whisper',value:'/ssr',class:'hidden'})
     //-label(for='toggle-roll-viz-whisper',data-i18n-title='roll-super-secret-title')
       | disabled_visible 
+    span |
+    +checkbox({name:'roll contest',id:'toggle-roll-contest',value:1,class:'hidden'})
+    label(for='toggle-roll-contest',data-i18n-title='roll-secret-title')
+      | compare_arrows 
 
   +tabs({name:'dod91',defaultActiveTab:'pc'}).flex-box.tiny-gap
     +tab({name:'pc',container:'article',button:{content:'Person_4',class:'tab-button',title:'Rollperson','data-i18n-title':'pc-caps'}})

@@ -170,8 +170,14 @@ body {
   --bg-color2: #e3e3e3;
   --bg-color3: #fefefe;
   --bg-color4: #bababa;
+  --bg-color5: #fff;
+  --bg-color8: rgb(64, 64, 64);
   --bg-color9: rgb(31, 31, 31);
   --bg-color0: rgb(255, 255, 255);
+  --fill-color: #fd5232;
+  --background-color: #fc562c;
+  --background-color-inv: var(--dark-surface1);
+  --background-color-box: #fc562c;
   --font-family: Helvetica, "Arimo", Sans-serif;
   --font-color: #111;
   --font-color2: #222;
@@ -186,9 +192,6 @@ body {
   --border-size-2x: 6px;
   --fill-color: #505050;
   --fill-color-none: transparent;
-  --background-color: #fc562c;
-  --background-color-inv: var(--dark-surface1);
-  --background-color-box: #fc562c;
   --dm-collapseExpandedColor: #e3e3e3;
   --rt-bg-color: #fff;
   --invert-bg: invert(0);
@@ -1259,6 +1262,7 @@ body .ui-dialog .tab-content .charsheet #main .roll-alternatives label {
   aspect-ratio: 1/1;
   height: 1.75rem;
   justify-items: center;
+  justify-content: center;
   text-align: center;
   cursor: pointer;
 }
@@ -2233,14 +2237,14 @@ body .ui-dialog .tab-content .charsheet .label-input input[type=text].text-input
   font-family: var(--font-family);
   text-transform: var(--text-transform);
 }
-body .ui-dialog .tab-content .charsheet .label-input.currMax > span.input-span:is(.input-0, .input-1) {
+body .ui-dialog .tab-content .charsheet .label-input.currMax > span.input-span:is(.input-0, .input-1), body .ui-dialog .tab-content .charsheet .label-input.currMod > span.input-span:is(.input-0, .input-1) {
   width: 100%;
 }
-body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type {
+body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type, body .ui-dialog .tab-content .charsheet .label-input.currMod span:first-of-type {
   border-right: 0;
   position: relative;
 }
-body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type:after {
+body .ui-dialog .tab-content .charsheet .label-input.currMax span:first-of-type:after, body .ui-dialog .tab-content .charsheet .label-input.currMod span:first-of-type:after {
   content: "/";
   position: absolute;
   right: -0.25rem;
@@ -2375,6 +2379,19 @@ body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row input
   text-align: center;
   border-left: 1px solid var(--border-color);
   background-color: var(--bg-color2);
+}
+body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row span.input-span {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row span.input-span .label-input-super {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 1rem;
+  font-size: 80%;
+  z-index: 7000;
+  line-height: 0.75rem;
+  height: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-attributes .attribute-row span.input-span-sty-mod {
   position: relative;
@@ -2530,8 +2547,12 @@ body .ui-dialog .tab-content .charsheet .section-info .points .input-label input
   border-radius: 0;
   text-align: center;
 }
+body .ui-dialog .tab-content .charsheet .section-info .points .input-label input.derived-max {
+  pointer-events: none;
+  pointer: unset;
+}
 body .ui-dialog .tab-content .charsheet .section-info .points .fill-left {
-  background-color: #FFF;
+  background-color: var(--bg-color3);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   display: flex;
@@ -4153,23 +4174,21 @@ body.sheet-darkmode {
   --borderColor:var(--dm-borderColor);
   --fontColor:var(--dm-fontColor);
   --disabledColor:var(--dm-disabledColor);
+  --bg-color: #d43c00;
+  --background-color-box: #d43c00;
+  --background-color: var(--bg-color8);
+  --background-color2: var(--bg-color8);
   --font-color: #e3e3e3;
-  --font-color2: #a3a3a3;
-  --font-color-inverse: #3e3e3e;
-  --border-color: #e3e3e3;
-  --fill-color: #000;
-  --fill-color: #e3e3e3;
   --checkColor: var(--fontColor);
-  --background-color: #000;
-  --background-color: var(--dark-surface1);
-  --background-color2: #3e3e3e;
-  --background-color-inv: #5e5e5e;
-  --background-color-box: rgb(255,255,255,0.1);
-  --bg-color: rgb(255,255,255,0.1);
-  --collapseExpandedColor: var(--dm-collapseExpandedColor);
-  --rt-bg-color: #000;
-  --invert-bg: invert(100%);
-  --anim-pulse: bgpulse-dark;
+  --bg-color2: rgb(255,255,255,0.02);
+  --bg-color0: var(--bg-color3);
+  --bg-color2: var(--bg-color8);
+  --bg-color3: var(--bg-color9);
+  --bg-color4: var(--bg-color4);
+  --success-color: #319131;
+  --success-bg-color: #125a2a;
+  --fail-color: #913131;
+  --fail-bg-color: #5f1414;
 }
 body.sheet-darkmode .charactersheet {
   background-color: var(--dark-surface1);
@@ -4185,6 +4204,13 @@ body.sheet-darkmode .charactersheet {
   --font-color-inv: #c3c3c3;
   --font-color-inverse: #a1a1a1;
   --bg-color: #fc562c;
+  --bg-color2: #e3e3e3;
+  --bg-color3: #fefefe;
+  --bg-color4: #bababa;
+  --bg-color5: #fff;
+  --bg-color8: rgb(64, 64, 64);
+  --bg-color9: rgb(31, 31, 31);
+  --bg-color0: rgb(255, 255, 255);
   --success-color: #319131;
   --success-bg-color: #acdcbc;
   --fail-color: #913131;
@@ -4453,6 +4479,34 @@ body.sheet-darkmode .charactersheet {
 }
 
 .sheet-rolltemplate-darkmode {
+  font-family: "PT Serif";
+  font-size: 14px;
+  text-transform: capitalize;
+  --font-family: "PT Serif", Serif;
+  --font-color: #000;
+  --font-color2: #3e3e3e;
+  --font-color-inv: #c3c3c3;
+  --font-color-inverse: #a1a1a1;
+  --bg-color: #fc562c;
+  --bg-color2: #e3e3e3;
+  --bg-color3: #fefefe;
+  --bg-color4: #bababa;
+  --bg-color5: #fff;
+  --bg-color8: rgb(64, 64, 64);
+  --bg-color9: rgb(31, 31, 31);
+  --bg-color0: rgb(255, 255, 255);
+  --success-color: #319131;
+  --success-bg-color: #acdcbc;
+  --fail-color: #913131;
+  --fail-bg-color: #dcacac;
+  --text-transform: capitalize;
+  --border-color: #000;
+  --fill-collor: transparent;
+  --background-color: transparent;
+  --background-color2: #e3e3e3;
+  --background-color-inv: var(--dark-surface1);
+  --rt-bg-color: #fff;
+  --invert-bg: invert(0);
   --backColor:var(--dm-backColor);
   --selectedColor:var(--dm-selectedColor);
   --unselectedColor1:var(--dm-unselectedColor1);
@@ -4462,21 +4516,28 @@ body.sheet-darkmode .charactersheet {
   --borderColor:var(--dm-borderColor);
   --fontColor:var(--dm-fontColor);
   --disabledColor:var(--dm-disabledColor);
+  --bg-color: #d43c00;
+  --background-color-box: #d43c00;
+  --background-color: var(--bg-color8);
+  --background-color2: var(--bg-color8);
   --font-color: #e3e3e3;
-  --font-color2: #a3a3a3;
-  --font-color-inverse: #3e3e3e;
-  --border-color: #e3e3e3;
-  --fill-color: #000;
-  --fill-color: #e3e3e3;
   --checkColor: var(--fontColor);
-  --background-color: #000;
-  --background-color: var(--dark-surface1);
-  --background-color2: #3e3e3e;
-  --background-color-inv: #5e5e5e;
-  --background-color-box: rgb(255,255,255,0.1);
-  --bg-color: rgb(255,255,255,0.1);
-  --collapseExpandedColor: var(--dm-collapseExpandedColor);
-  --rt-bg-color: #000;
-  --invert-bg: invert(100%);
-  --anim-pulse: bgpulse-dark;
+  --bg-color2: rgb(255,255,255,0.02);
+  --bg-color0: var(--bg-color3);
+  --bg-color2: var(--bg-color8);
+  --bg-color3: var(--bg-color9);
+  --bg-color4: var(--bg-color4);
+  --success-color: #319131;
+  --success-bg-color: #125a2a;
+  --fail-color: #913131;
+  --fail-bg-color: #5f1414;
+}
+.sheet-rolltemplate-darkmode .sheet-template .sheet-container a {
+  color: var(--bg-color4);
+}
+.sheet-rolltemplate-darkmode .sheet-template .sheet-container .sheet-roll-title {
+  background-color: var(--bg-color3);
+}
+.sheet-rolltemplate-darkmode .sheet-template .sheet-container .sheet-roll-result {
+  background-color: var(--bg-color2);
 }

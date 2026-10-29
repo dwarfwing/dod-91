@@ -137,6 +137,10 @@ rolltemplate.sheet-rolltemplate-dod91
                .sheet-spell-info 
                   .sheet-info-key Varaktighet 
                   .sheet-info-value {{duration}}
+            +templateConditionalDisplay('contest')
+               .sheet-roll-target
+                  label(data-i18n='contest') Motstånd
+                  span {{computed::contestresult}}
             +templateConditionalDisplay('description')
                .sheet-roll-description
                   |{{description}} 

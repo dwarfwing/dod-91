@@ -40,21 +40,39 @@ const calcAllEncumbrance = function({trigger,attributes,sections,casc}) {
    });
    k.log(`Gear weight: ${gearTot}`); 
 
-   attributes['encumbrance'] = armorTot + weaponTot + gearTot; 
-   k.log(`Encumbrance is ${armorTot + weaponTot + gearTot}`);
+   const enc = attributes['encumbrance'] = parseInt(armorTot + weaponTot + gearTot); 
+
+   const max = parseInt(attributes[`encumbrance_max`]);
+   k.log(`Encumbrance is ${enc}, or ${armorTot + weaponTot + gearTot}, with carrycap ${max}`);
+   var mod = "0", multi = ""; 
+   if ( enc <= max ) { mod = "0"; multi = ""; }
+   else if ( enc <= (max * 2) ) { mod = "-1"; multi = "x2"; }
+   else if ( enc <= (max * 3) ) { mod = "-2"; multi = "x3"; }
+   else if ( enc <= (max * 4) ) { mod = "-4"; multi = "x4"; }
+   else if ( enc <= (max * 5) ) { mod = "-6"; multi = "x5"; }
+   else { mod = "-8"; multi = "x6+"; }
+   attributes['encumbrance_mod'] = mod; 
+   attributes['encumbrance_multi'] = multi; 
+
+   attributes['smi_fv_mod'] = mod != "0" ? parseInt(mod) : '';
+
    attributes.set(); 
+
+   calcMovement({attributes});
 }
 k.registerFuncs({calcAllEncumbrance},{type:['opener']});
 
 const calcEncumbranceMax = function ({trigger,attributes,sections,casc}) {
    //k.log(`Encumbrance max trigger: ${JSON.stringify(trigger)}`);
-   const carrycap = attributes.carrycap,
-         carrycapMod = attributes.carrycap_mod||0;
+   const carrycap = attributes.sty_fv,
+         carrycapMod = attributes.barformaga_mod||0;
 
+   attributes.barformaga = parseInt(carrycap) + parseInt(carrycapMod); 
+   attributes.barformaga_max = (parseInt(carrycap) + parseInt(carrycapMod)) * 6; 
    attributes.encumbrance_max = parseInt(carrycap) + parseInt(carrycapMod); 
    attributes.set();
 }
-k.registerFuncs({calcEncumbranceMax});
+k.registerFuncs({calcEncumbranceMax},{type:['opener']});
 //k.registerFuncs({abilityDisplay},{type:['opener']});
 
 const calcEncumbranceMaxOnload = function() {
@@ -96,9 +114,10 @@ const calcMovement = function({attributes}) {
    else if ( tot <= 141) { forfl = 22; }
    else if ( tot <= 149) { forfl = 23; }
    else if ( tot <= 157) { forfl = 24; }
+   k.log(`Movement is ${forfl} plus move mod ${parseInt(attributes.movement_mod)} and encumbrance mod ${parseInt(attributes.encumbrance_mod)} `);
 
-   attributes.forflyttning = forfl + attributes.movement_mod; 
-   attributes.forflyttning_max = (forfl + attributes.movement_mod) * 2; 
+   attributes.forflyttning = forfl + parseInt(attributes.movement_mod) + parseInt(attributes.encumbrance_mod); 
+   attributes.forflyttning_max = (forfl + parseInt(attributes.movement_mod) + parseInt(attributes.encumbrance_mod)) * 2; 
    attributes.set(); 
 }
 k.registerFuncs({calcMovement},{type:['opener']});

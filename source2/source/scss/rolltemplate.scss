@@ -193,6 +193,20 @@
       }
    }
    .sheet-rolltemplate-darkmode {
+      @include variables.roll;
       @include variables.dark;
+      .sheet-template {
+         .sheet-container {
+            a {
+               color: var(--bg-color4);
+            }
+            .sheet-roll-title {
+               background-color: var(--bg-color3);
+            }
+            .sheet-roll-result {
+               background-color: var(--bg-color2);
+            }
+         }
+      }      
    }
 }

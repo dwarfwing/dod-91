@@ -25,6 +25,7 @@
   "chest": "Bröstkorg",
   "combat-skill": "Stridsfärdigheter",
   "combat-title": "Vapen, Rustning, Träffområden, samt Färdigheter relaterade med strid.",
+  "contest": "Motstånd",
   "current-value": "Nuvarande värdet",
   "d20": "T20",
   "damage": "Skada",
@@ -86,6 +87,7 @@
   "max-value": "Max-värdet",
   "memorized-abbr": "Mem.",
   "minimagic": "Minimagi",
+  "mod-value": "Modifiering",
   "modification_abbr": "Mod.",
   "modification-abbr": "Mod.",
   "modifier-abbr": "mod.",
@@ -98,6 +100,7 @@
   "name": "namn",
   "namn": "namn",
   "notes": "notes",
+  "overencumbered": "Överbelastad",
   "pain": "Smärta",
   "painpoints-abbr": "SP",
   "pc-caps": "Rollperson",
@@ -161,7 +164,7 @@
   "spell_skill_level": "S",
   "spelledare": "spelledare",
   "spells": "Besvärjelser",
-  "sticky-header": "sticky-header",
+  "sticky-header": "Sticky header",
   "sto": "storlek",
   "stomach": "Mage",
   "storage": "Förvar",
@@ -314,5 +317,6 @@
   "spell-level": "Effektgrad",
   "skill-mod": "Modifikation",
   "damagebonus": "Skadebonus",
-  "manual": "Manuell"
+  "manual": "Manuell",
+  "contests-secret": "Slå alltid motståndsslag hemligt"
 }

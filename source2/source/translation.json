@@ -165,5 +165,8 @@
    "show-notes-tab": "Visa Noteringar-tabben",
    "damagebonus": "Skadebonus",
    "manual": "Manuell",
-   "multiple-armor-rows": "Visa alla 3 rader för rustningar"
+   "multiple-armor-rows": "Visa alla 3 rader för rustningar",
+   "overencumbered": "Överbelastad",
+   "contests-secret": "Slå alltid motståndsslag hemligt",
+   "sticky-header": "Sticky header"
 }

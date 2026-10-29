@@ -36,6 +36,15 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_pain`];
       rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
    }
+
+   // Overencumberance modifier
+   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+      k.log(`Weapon skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
+   }
+   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+
    k.log(`Damage bonus ${attributes[`${row}_damagebonus`]} == ${attributes[`${row}_damagebonus`] == '1'} with ${attributes['sb']}`);
    rollObj.damageBonus = attributes[`${row}_damagebonus`] == 1 ? true : false; 
    rollObj.damageBonusStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].toString().replaceAll(/[Tt]/g,'D')} [${getTranslationByKey('damagebonus')}]`; 
@@ -56,7 +65,7 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}${encumbranceModStr}]]}}`;
    rollObj.rollStr += ` {{damageRoll=[[0]]}} {{painRoll=[[0]]}} {{button-label=^{damage}}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
 
@@ -86,12 +95,20 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
+      // Overencumberance modifier
+   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+      k.log(`Trained skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
+   }
+   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    k.log(`${rollObj.name} skill type ${attributes[`${rollObj.skillAttr}_type`]}`);
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}${encumbranceModStr}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
    
 
    //k.log(`Roll object before execute: ${JSON.stringify(rollObj)}`);
@@ -121,13 +138,21 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
    k.log(`FV value: ${rollObj.rollSkill}`);
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`];
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
+
+   // Overencumberance modifier
+   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+      k.log(`Repeating skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
+   }
+   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
 
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}${encumbranceModStr}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
    executeRoll({rollObj,attributes});
 }
@@ -194,12 +219,20 @@ const rollSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.rollSkillMod = attributes[`${rollObj.skillAttr}_mod`]||0;
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
+   // Overencumberance modifier
+   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+      k.log(`Skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
+   }
+   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
    
-   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
+   rollObj.rollStr += ` {{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.rollSkill}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${parseInt(rollObj.target)}${encumbranceModStr}]]}} {{secretroll=[[${rollObj.secretRoll}]]}}`;
 
    k.log(`Roll object is: ${JSON.stringify(rollObj)}`);
    executeRoll({rollObj,attributes});
@@ -217,15 +250,17 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
    rollObj.attribute = attributes[attr+'_fv'];
+   rollObj.attrFvModStr = attributes[attr+'_fv_mod'] != '' ? ` ${attributes[attr+'_fv_mod']} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = attributes[attr+'_fv_mod'] != '' ? attributes[attr+'_fv_mod'] : 0; 
+   k.log(`Attribute modifier: ${rollObj.attrFvModStr}`);
    rollObj.attrMod = attributes[attr+'_mod']||0;
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
-   rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
 
    rollObj.rollStr = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
  
 
-   rollObj.rollStr += `{{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.attribute}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute}+${rollObj.attrMod}[${getTranslationByKey('modification-abbr')}]]]}} {{secretroll=[[${rollObj.secretRoll}]]}}` ;
+   rollObj.rollStr += `{{roll1=[[1d20cs<1cf>20]]}} {{roll2=[[1d20cs<${rollObj.attribute}cf>20]]}} {{rolld3=[[1D3]]}} {{target=[[${rollObj.attribute} + ${rollObj.attrMod} [${getTranslationByKey('modification-abbr')}] ${rollObj.attrFvModStr} ]]}} {{secretroll=[[${rollObj.secretRoll}]]}}` ;
 
    const difficulty = getContestTargets(rollObj.attribute);
    k.log(`Contest targets: ${JSON.stringify(difficulty)},`)
@@ -307,6 +342,20 @@ const getContestTargets = function(ge,vs) {
    return ret; 
 }
 
+const getContestOutcome = function(roll,fv) {
+   const diff = parseInt(fv) - parseInt(roll);
+   k.log(`>>>> Contest roll ${fv} vs roll ${roll}`);
+   var out = 0 
+   if ( roll == 20 ) { out = 0; }
+   else if ( roll > fv + 9 ) { out = 0; }
+   else if ( 10 + diff <= 0 ) { out = 0; }
+   else {
+      out = 10 + diff; 
+   }
+   k.log(`>>>> Contest roll result ${out}`);
+   return out; 
+} 
+
 const rollAttributeContest = function ({trigger,attributes,sections,casc}) {
    //k.log(`Roll trigger: ${JSON.stringify(trigger)}`);
    const rollObj = {};
@@ -318,6 +367,9 @@ const rollAttributeContest = function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
    rollObj.attribute = attributes[attr];
+   
+   rollObj.attrFvModStr = attributes[attr+'_fv_mod'] != '' ? ` ${attributes[attr+'_fv_mod']} [${getTranslationByKey('overencumbered')}]` : '';
+   k.log(`Attribute modifier: ${rollObj.attrFvModStr}`);
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
