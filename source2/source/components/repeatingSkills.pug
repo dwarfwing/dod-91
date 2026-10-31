@@ -30,6 +30,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
             else 
                +checkbox({name:'type',value:'b',class:'type-b-selected hidden'})
             +checkbox({name:'type',value:'asecret',class:'type-asecret-selected hidden'})
+            +number({name:'encumb_mod',value:'',class:'encumb-mod-variable hidden'})
             +collapse
             if desc 
                +describe
@@ -49,6 +50,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                      +span({name: 'fv', class:'label-input-input'})
                   span.input-span.input-2
                      +input({name:'mod',type:'number'}).input-span.input-2
+                     +span({name:'encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                   if ( exp == undefined || exp != false )
                      span.input-span.input-3.erf
                         +span({name:'erf'}).input-span.input-3
@@ -114,6 +116,7 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
                         +input({type: 'number', name: 'fv', class:'label-input-input', trigger: { triggeredFuncs: ['setSkillB']}})
                   span.input-span.input-2
                      +input({type: 'number', name: 'mod', class:'label-input-input'})
+                     +span({name:'encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                   if ( exp == undefined || exp != false )
                      span.input-span.input-3.erf
                         +input({type: 'number', name: 'erf', class:'label-input-input'})

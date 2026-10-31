@@ -34,6 +34,7 @@ mixin martialarts
                      +span({name: attr+'_fv', class:'label-input-input'}).input-0
                      span.input-span.input-1
                         +input({name:attr+'_mod',type:'number'}).input-span
+                        +span({name:attr+'_encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                      +span({name:attr+'_erf'}).input-span.input-2
                      +checkbox({name:attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})
                      +checkbox({name:attr+'_improve_perfect',value:1,class:'improve-mark improve-mark-perfect'})   
@@ -54,6 +55,7 @@ mixin martialarts
                         +input({type: 'number', name: attr+'_fv', class:'label-input-input'})
                      span.input-span.input-3
                         +input({type: 'number', name: attr+'_mod', class:'label-input-input'})
+                        +span({name:attr+'_encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                      span.input-span.input-4.erf
                         +input({type: 'number', name: attr+'_erf', class:'label-input-input'})
                      +checkbox({name:attr+'_improve',value:1,class:'improve-mark improve-mark-normal'})

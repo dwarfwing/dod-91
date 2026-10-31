@@ -54,13 +54,57 @@ const calcAllEncumbrance = function({trigger,attributes,sections,casc}) {
    attributes['encumbrance_mod'] = mod; 
    attributes['encumbrance_multi'] = multi; 
 
-   attributes['smi_fv_mod'] = mod != "0" ? parseInt(mod) : '';
+   attributes['smi_encumb_mod'] = mod != "0" ? parseInt(mod) : '';
+   setSkillsEncumbranceMod({attributes,sections});
 
    attributes.set(); 
 
    calcMovement({attributes});
 }
 k.registerFuncs({calcAllEncumbrance},{type:['opener']});
+
+const setSkillsEncumbranceMod = function({attributes,sections}) {
+   //k.log(`++++ Sections for encumbrance: ${JSON.stringify(sections)}`);
+   ['professionskills','secondaryskills','weaponskills','combatskills','weapontechniques'].forEach( sect => {
+      sections[`repeating_${sect}`].forEach( skill => {
+         const row = `repeating_${sect}_${skill}`;
+         //k.log(`Skill ${skill} ${attributes[`${row}_name`]} with attr ${attributes[`${row}_attr`]} gets mod ${attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '0'}`)
+         attributes[`${row}_encumb_mod`] = attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '';
+      });   
+      /* sections.repeating_professionskills.forEach( skill => {
+         const row = `repeating_professionskills_${skill}`;
+         //k.log(`Skill ${skill} ${attributes[`${row}_name`]} with attr ${attributes[`${row}_attr`]} gets mod ${attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '0'}`)
+         attributes[`${row}_encumb_mod`] = attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '';
+      });   
+      sections.repeating_secondaryskills.forEach( skill => {
+         const row = `repeating_secondaryskills_${skill}`;
+         attributes[`${row}_encumb_mod`] = attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '';
+      });  
+      sections.repeating_weaponskills.forEach( skill => {
+         const row = `repeating_weaponskills_${skill}`;
+         attributes[`${row}_encumb_mod`] = attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '';
+      }); 
+      sections.repeating_combatskills.forEach( skill => {
+         const row = `repeating_combatskills_${skill}`;
+         attributes[`${row}_encumb_mod`] = attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '';
+      });
+      sections.repeating_weapontechniques.forEach( skill => {
+         const row = `repeating_weapontechniques_${skill}`;
+         attributes[`${row}_encumb_mod`] = attributes[`${row}_attr`] == 'smi' ? attributes['smi_encumb_mod'] : '';
+      }); */
+   });
+   sections.repeating_weapons.forEach( id => {
+      const row = `repeating_weapons_${id}`,
+            skillRow = attributes[`${row}_skill`];
+      k.log(`Weapons ${row} with skill ${skillRow} and encumb ${attributes[`${skillRow}_encumb_mod`]}`);
+      attributes[`${row}_encumb_mod`] = skillRow && skillRow != undefined ? attributes[`${skillRow}_encumb_mod`] : '';
+   });
+   ['1','2','3'].forEach( id => {
+      attributes[`martialart${id}_encumb_mod`] = attributes['smi_encumb_mod'];
+   }); 
+   attributes.set(); 
+}
+k.registerFuncs({setSkillsEncumbranceMod},{type:['opener']});
 
 const calcEncumbranceMax = function ({trigger,attributes,sections,casc}) {
    //k.log(`Encumbrance max trigger: ${JSON.stringify(trigger)}`);

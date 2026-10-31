@@ -167,59 +167,91 @@
       line-height: 0.5rem; 
       top: 0.25rem; 
    }
-   :is(div[class*=section-skill], div.section-magicspells) .skill-row  input[type=checkbox].describe {
-      width: 0.5rem;
-      line-height: 1rem;
-      max-width: 0.5rem;
-      text-align: left;
-      /* padding-top: 0.125rem; */
-      height: 0.5rem;
-      display: flex;
-      justify-content: center;
-      text-indent: 0.25rem;
-      top: 1.25rem;
-      margin: 0;
-      //-
-      position: absolute;
-      z-index: 1000;
-      left: 0rem;
-      top: 1.25rem; 
-      appearance: none; 
-      border: 0;
-      opacity: var(--collapseBaseOpacity);
-      cursor: pointer;
-      &:before {
-         content: 'arrow_drop_up';
-         font-family: 'Material Symbols Outlined';
+   :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row,.gear-row) {
+      &:hover input[type=checkbox].describe {
+         opacity: var(--collapseHoverOpacity);
       }
-      &:checked {
-         //opacity: var(--collapseHoverOpacity);
-         ~ :is(.collapsed,.expanded) {
-            height: auto; 
-            span.description, textarea {
-               display: flex;
-               text-indent: 0;
-               padding-left: 1.25rem;
-               padding-right: 0.75rem;
-               text-align: justify; 
-               //font-size: 95%; 
-               width: 100%;
-               justify-content: flex-start; 
-               min-height: 1lh; 
-               border-top: 1px dashed var(--border-color);
-               line-height: 1.5rem;
-               letter-spacing: unset;
-               text-transform: none;  
+      input[type=checkbox].describe {
+         width: 0.5rem;
+         line-height: 1rem;
+         max-width: 0.5rem;
+         text-align: left;
+         /* padding-top: 0.125rem; */
+         height: 0.5rem;
+         display: flex;
+         justify-content: center;
+         text-indent: 0.25rem;
+         top: 1.25rem;
+         margin: 0;
+         //-
+         position: absolute;
+         z-index: 1000;
+         left: 0rem;
+         top: 1.25rem; 
+         appearance: none; 
+         border: 0;
+         opacity: var(--collapseBaseOpacity);
+         cursor: pointer;
+         &:before {
+            content: 'arrow_drop_up';
+            font-family: 'Material Symbols Outlined';
+         }
+         &:has(.gear-row &):hover {
+            opacity: var(----collapseHoverOpacity);
+         }
+         &:checked {
+            //opacity: var(--collapseHoverOpacity);
+            ~ :is(.collapsed,.expanded) {
+               height: auto; 
+               span.description, textarea {
+                  display: flex;
+                  text-indent: 0;
+                  padding-left: 1.25rem;
+                  padding-right: 0.75rem;
+                  text-align: justify; 
+                  //font-size: 95%; 
+                  width: 100%;
+                  justify-content: flex-start; 
+                  min-height: 1lh; 
+                  border-top: 1px dashed var(--border-color);
+                  line-height: 1.5rem;
+                  letter-spacing: unset;
+                  text-transform: none;  
+               }
+            }
+         }
+         &:not(:checked) {                
+            &:before {
+               content: 'arrow_drop_down';
+               font-family: 'Material Symbols Outlined';
+            } 
+            ~ :is(.collapsed,.expanded) .description {
+               display: none;
             }
          }
       }
-      &:not(:checked) {                
-         &:before {
-            content: 'arrow_drop_down';
-            font-family: 'Material Symbols Outlined';
-         } 
-         ~ :is(.collapsed,.expanded) .description {
-            display: none;
+      &.gear-row input[type=checkbox].describe {
+         top: 0.75rem; 
+         left: 1.5rem; 
+      }
+   }
+   :is(.attribute-row,.skill-row,.box-weapons .repcontainer) {      
+      span.input-span {
+         position: relative; 
+         .label-input-super {
+            position: absolute; 
+            right: 0; 
+            top: 0; 
+            height: 1rem; 
+            font-size: 80%;
+            z-index: 7000; 
+            line-height: 0.75rem; 
+            height: 0; 
+         }
+      }
+      &[data-groupname='repeating_weapons'] {
+         span.input-span .label-input-super {
+            right: -30%; 
          }
       }
    }

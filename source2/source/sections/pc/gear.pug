@@ -1,34 +1,37 @@
-mixin gear(name='Utrustning',attr='gear',i18n) 
+mixin gear(name='Utrustning',attr='gear',i18n,describe) 
    .section-gear(class='section-gear__'+attr)
       if attr == 'gear'
          +input({name:attr+'_encumbrance',type:'number',class:'hidden',trigger:{affects:['encumbrance']}})
       else 
          +input({name:attr+'_encumbrance',type:'number',class:'hidden'})
       - transl = i18n ? i18n : attr; 
-      +box({headerObj:{name:name,attr:attr,'data-i18n':transl},fields:[{name:'antal',attr:'amount'},{name:'vikt',attr:'weight'}],classes:'coverall'})
+      +box({headerObj:{name:name,attr:attr,'data-i18n':transl},fields:[{name:'antal',attr:'amount'},{name:'vikt',attr:'weight'}],classes:''})
          +fieldset({name:attr})
-            //-+collapse
-            //-.collapsed
-               .label-input.input-count-2.checkboxed
-                  //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
-                  +checkbox({name:'equipped',value:1,checked:true,title:'Utrustning buren på kroppen, annars förvarad annorstädes.','data-i18n-title':'equipped-gear-desc'})
-                  label.select-input 
-                     +span({name:'name'})
-                  //- label.text-input
-                     +text({name:'name',class:'text-input'})
-                  +span({name:'amount',type:'number'}).input-span.input-0
-                  +span({name:'weight',type:'number'}).input-span.input-last
-            .expanded
-               .label-input.input-count-2.checkboxed 
-                  //-label.text-input 
-                     +text({name:'name'}).caps-input
-                  +checkbox({name:'equipped',value:1,checked:true,trigger:{triggeredFuncs:[attr+'Encumbrance']}})
-                  label.text-input                     
-                     +input({type: 'text', name: 'name', placeholder:'Namn',class:'label-input-text'})
-                  span.input-span.input-0
-                     +input({type: 'number', name: 'amount', value: 1, class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
-                  span.input-span.input-last
-                     +input({type: 'number', name: 'weight', value: 1, step: 'any', class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+            .gear-row
+               //-+collapse
+               +describe
+               //-.collapsed
+                  .label-input.input-count-2.checkboxed
+                     //- labelObj: {class: 'label-input-label',type:'roller',name: skill.name, attr: skill.attr },
+                     +checkbox({name:'equipped',value:1,checked:true,title:'Utrustning buren på kroppen, annars förvarad annorstädes.','data-i18n-title':'equipped-gear-desc'})
+                     label.select-input 
+                        +span({name:'name'})
+                     //- label.text-input
+                        +text({name:'name',class:'text-input'})
+                     +span({name:'amount',type:'number'}).input-span.input-0
+                     +span({name:'weight',type:'number'}).input-span.input-last
+               .expanded
+                  .label-input.input-count-2.checkboxed 
+                     //-label.text-input 
+                        +text({name:'name'}).caps-input
+                     +checkbox({name:'equipped',value:1,checked:true,trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+                     label.text-input                     
+                        +input({type: 'text', name: 'name', placeholder:'Namn',class:'label-input-text'})
+                     span.input-span.input-0
+                        +input({type: 'number', name: 'amount', value: 1, class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+                     span.input-span.input-last
+                        +input({type: 'number', name: 'weight', value: 1, step: 'any', class:'label-input-input',trigger:{triggeredFuncs:[attr+'Encumbrance']}})
+                     +textarea({name:'description',placeholder:'Beskrivning...','data-i18n-placeholder':'description'})(class='description')
    .hidden-gear.for-upgrades.hidden 
       each id in [11,12,13,21,22,23,31,32,33,41,42,43,51,52,53,61,62,63,71,72,73]
          +text({name:'utrustning_'+id+'_text'})

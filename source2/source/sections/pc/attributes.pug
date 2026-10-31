@@ -3,7 +3,7 @@ mixin attributes
       +collapse(name='attr_attributes_collapse') 
       +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'},classes:'attributes-box'})
          each attribute in spine.attributes
-            +input({type:'number',name:attribute.attr+'_fv_mod',value:'',class:'hidden'})
+            +input({type:'number',name:attribute.attr+'_encumb_mod',value:'',class:'hidden'})
             div(class='column-'+attribute.attr).label-input.input-count-2.attribute-row
                //-label(data-i18n=attribute.attr).label-input-label.label-input__text= attribute.name 
                +action({
@@ -16,7 +16,7 @@ mixin attributes
                +span({name: attribute.attr+'_fv', min: 0, class:'collapsed label-input-input label-input-span input-'+attribute.attr+''})
                span.input-span.input-span-mod(class='input-span-'+attribute.attr+'-mod')
                   +input({type: 'number', name: attribute.attr+'_mod', min: 0, class:'label-input-input input-'+attribute.attr+'-mod'})
-                  +span({name:attribute.attr+'_fv_mod',class:'label-input-modifier label-input-super input-fv-mod-'+attribute.attr,title:'Överbelastad','data-i18n-title':'overencumbered'})
+                  +span({name:attribute.attr+'_encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod-'+attribute.attr,title:'Överbelastad','data-i18n-title':'overencumbered'})
                +input({type: 'number', name: attribute.attr+'_bc', min: 0, class:'hidden label-input-input input-'+attribute.attr+'',hidden:true})
       +box({classes:'size-attributes headless'})
          div(class='column-length').label-input.input-count-1.attribute-row

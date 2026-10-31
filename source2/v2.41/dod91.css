@@ -1577,7 +1577,10 @@ body .ui-dialog .tab-content .charsheet div.section-weapons .repitem input[type=
   line-height: 0.5rem;
   top: 0.25rem;
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row):hover input[type=checkbox].describe {
+  opacity: var(--collapseHoverOpacity);
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe {
   width: 0.5rem;
   line-height: 1rem;
   max-width: 0.5rem;
@@ -1598,14 +1601,17 @@ body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.secti
   opacity: var(--collapseBaseOpacity);
   cursor: pointer;
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:before {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:before {
   content: "arrow_drop_up";
   font-family: "Material Symbols Outlined";
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:has(.gear-row body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe):hover {
+  opacity: var(----collapseHoverOpacity);
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) {
   height: auto;
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) span.description, body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) textarea {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) span.description, body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:checked ~ :is(.collapsed, .expanded) textarea {
   display: flex;
   text-indent: 0;
   padding-left: 1.25rem;
@@ -1619,12 +1625,32 @@ body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.secti
   letter-spacing: unset;
   text-transform: none;
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:not(:checked):before {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:not(:checked):before {
   content: "arrow_drop_down";
   font-family: "Material Symbols Outlined";
 }
-body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells) .skill-row input[type=checkbox].describe:not(:checked) ~ :is(.collapsed, .expanded) .description {
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row) input[type=checkbox].describe:not(:checked) ~ :is(.collapsed, .expanded) .description {
   display: none;
+}
+body .ui-dialog .tab-content .charsheet :is(div[class*=section-skill], div.section-magicspells, .section-gear) :is(.skill-row, .gear-row).gear-row input[type=checkbox].describe {
+  top: 0.75rem;
+  left: 1.5rem;
+}
+body .ui-dialog .tab-content .charsheet :is(.attribute-row, .skill-row, .box-weapons .repcontainer) span.input-span {
+  position: relative;
+}
+body .ui-dialog .tab-content .charsheet :is(.attribute-row, .skill-row, .box-weapons .repcontainer) span.input-span .label-input-super {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 1rem;
+  font-size: 80%;
+  z-index: 7000;
+  line-height: 0.75rem;
+  height: 0;
+}
+body .ui-dialog .tab-content .charsheet :is(.attribute-row, .skill-row, .box-weapons .repcontainer)[data-groupname=repeating_weapons] span.input-span .label-input-super {
+  right: -30%;
 }
 body .ui-dialog .tab-content .charsheet .fill-left input[type=radio], body .ui-dialog .tab-content .charsheet .fill-left input[type=checkbox] {
   aspect-ratio: 1/1;
@@ -2948,6 +2974,9 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem .itemcontrol a
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem .label-input {
   height: 2.125rem;
+}
+body .ui-dialog .tab-content .charsheet .section-weapons .repitem .label-input span.input-span.mod {
+  border-right: 1px solid var(--border-color);
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapse {
   left: 2rem;

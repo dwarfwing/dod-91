@@ -38,12 +38,12 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    }
 
    // Overencumberance modifier
-   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+   if ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
       k.log(`Weapon skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
    }
-   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
-                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
-   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+   const encumbranceModStr = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_encumb_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_encumb_mod : 0; 
 
    k.log(`Damage bonus ${attributes[`${row}_damagebonus`]} == ${attributes[`${row}_damagebonus`] == '1'} with ${attributes['sb']}`);
    rollObj.damageBonus = attributes[`${row}_damagebonus`] == 1 ? true : false; 
@@ -96,12 +96,12 @@ const rollTrainedSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
       // Overencumberance modifier
-   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+   if ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
       k.log(`Trained skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
    }
-   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
-                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
-   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+   const encumbranceModStr = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_encumb_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_encumb_mod : 0; 
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    k.log(`${rollObj.name} skill type ${attributes[`${rollObj.skillAttr}_type`]}`);
@@ -140,12 +140,12 @@ const rollRepeatingSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
    // Overencumberance modifier
-   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+   if ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
       k.log(`Repeating skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
    }
-   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
-                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
-   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+   const encumbranceModStr = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_encumb_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_encumb_mod : 0; 
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
@@ -220,12 +220,12 @@ const rollSkill = function ({trigger,attributes,sections,casc}) {
    rollObj.target = rollObj.rollSkill + rollObj.rollSkillMod;
 
    // Overencumberance modifier
-   if ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
+   if ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
       k.log(`Skill ${rollObj.skillAttr} is based on SMI and there is a negative SMI modifier`);
    }
-   const encumbranceModStr = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
-                              ` ${attributes.smi_fv_mod} [${getTranslationByKey('overencumbered')}]` : '';
-   rollObj.skillAttrMod = ( attributes.smi_fv_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_fv_mod : 0; 
+   const encumbranceModStr = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ?
+                              ` ${attributes.smi_encumb_mod} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) ? attributes.smi_encumb_mod : 0; 
 
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;
    rollObj.secretRoll = attributes[`${rollObj.skillAttr}_type`] == 'asecret' ? 1 : rollObj.secretRoll; 
@@ -249,9 +249,9 @@ const rollAttribute = function ({trigger,attributes,sections,casc}) {
    rollObj.name = getTranslationByKey(attr.toLowerCase())||attr.charAt(0).toUpperCase() + attr.slice(1);
    //k.log(`Skill attribute is `+attr);
    //k.log(`Skill level is `+`${attributes[attr]}`);
-   rollObj.attribute = attributes[attr+'_fv'];
-   rollObj.attrFvModStr = attributes[attr+'_fv_mod'] != '' ? ` ${attributes[attr+'_fv_mod']} [${getTranslationByKey('overencumbered')}]` : '';
-   rollObj.skillAttrMod = attributes[attr+'_fv_mod'] != '' ? attributes[attr+'_fv_mod'] : 0; 
+   rollObj.rollSkill = rollObj.attribute = attributes[attr+'_fv'];
+   rollObj.attrFvModStr = attributes[attr+'_encumb_mod'] != '' ? ` ${attributes[attr+'_encumb_mod']} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.skillAttrMod = attributes[attr+'_encumb_mod'] != '' ? attributes[attr+'_encumb_mod'] : 0; 
    k.log(`Attribute modifier: ${rollObj.attrFvModStr}`);
    rollObj.attrMod = attributes[attr+'_mod']||0;
 
@@ -368,7 +368,7 @@ const rollAttributeContest = function ({trigger,attributes,sections,casc}) {
    //k.log(`Skill level is `+`${attributes[attr]}`);
    rollObj.attribute = attributes[attr];
    
-   rollObj.attrFvModStr = attributes[attr+'_fv_mod'] != '' ? ` ${attributes[attr+'_fv_mod']} [${getTranslationByKey('overencumbered')}]` : '';
+   rollObj.attrFvModStr = attributes[attr+'_encumb_mod'] != '' ? ` ${attributes[attr+'_encumb_mod']} [${getTranslationByKey('overencumbered')}]` : '';
    k.log(`Attribute modifier: ${rollObj.attrFvModStr}`);
    
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0;

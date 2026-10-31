@@ -8,6 +8,7 @@ mixin weapons
             })
             +collapse
             +text({name:'skill_name',class:'hidden',value:'-- Välj --'})
+            +number({name:'encumb_mod',value:'',class:'hidden'})
             +checkbox({name:'skill_manual_toggle',value:1,class:'hidden skill-manual-toggle'})
             .collapsed
                .label-input 
@@ -19,9 +20,13 @@ mixin weapons
                            +checkbox({name:field.attr,value:1,class:field.class,checked:true})
                      else if field.type == 'select' && field.attr == 'skill'
                         +span({name:'skill_name',class:'skill-name-select'})
+                     else if field.attr == 'weapon_mod'
+                        span.input-span.mod
+                           +input({name:field.attr,type:field.type,class:field.class})
+                           +span({name:'encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                      else if field.roller
                         +action({name:field.rollaction,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
-                              +span({name:field.attr})
+                           +span({name:field.attr})
                      else if field.modifiable != undefined && field.modifiable 
                         +input({name:field.attr,type:field.type,class:field.class})
                      else 
@@ -38,6 +43,10 @@ mixin weapons
                         +select({name:'skill',trigger:{triggeredFuncs:['setWeaponSkills']}}).weapon-skill-select
                            +option({'data-i18n':'select-choice',selected:'selected',disabled:'disabled',hidden:'hidden'}) 
                               | --- Välj ---
+                     else if field.attr == 'weapon_mod'
+                        span.input-span.mod
+                           +input({name:field.attr,type:field.type,class:field.class}) 
+                           +span({name:'encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                      else 
                         if field.trigger && trigger != 'rollDamage' && trigger != 'rollWeaponAttack'
                            +input({name:field.attr,type:field.type,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
@@ -119,6 +128,9 @@ mixin weapons
          }
          .label-input {
             height: 2.125rem;
+            span.input-span.mod {
+               border-right: 1px solid var(--border-color);
+            }
          }
          .collapse {
             left: 2rem; 
