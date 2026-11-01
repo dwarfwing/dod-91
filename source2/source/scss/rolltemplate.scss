@@ -159,8 +159,8 @@
                      span {
                         background-color: unset; 
                         border: unset; 
-                        &::before { content: '('; }
-                        &::after { content: ')'; }
+                        //&::before { content: '('; }
+                        //&::after { content: ')'; }
                      }
                   }
                }

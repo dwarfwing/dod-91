@@ -247,11 +247,18 @@
             z-index: 7000; 
             line-height: 0.75rem; 
             height: 0; 
+            &.left {
+               right: unset;
+               left: 0; 
+            }
          }
       }
       &[data-groupname='repeating_weapons'] {
          span.input-span .label-input-super {
             right: -30%; 
+            &.left {
+               left: -30%;
+            }
          }
       }
    }

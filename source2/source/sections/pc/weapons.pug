@@ -23,6 +23,7 @@ mixin weapons
                      else if field.attr == 'weapon_mod'
                         span.input-span.mod
                            +input({name:field.attr,type:field.type,class:field.class})
+                           +span({name:'dmg_mod',class:'label-input-modifier label-input-super left input-dmg-mod',title:'Skademod.','data-i18n-title':'damage-modifier-abbr'})
                            +span({name:'encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                      else if field.roller
                         +action({name:field.rollaction,class:field.class,trigger:{triggeredFuncs:[field.trigger]}})
@@ -46,6 +47,7 @@ mixin weapons
                      else if field.attr == 'weapon_mod'
                         span.input-span.mod
                            +input({name:field.attr,type:field.type,class:field.class}) 
+                           +span({name:'dmg_mod',class:'label-input-modifier label-input-super left input-dmg-mod',title:'Skademod.','data-i18n-title':'damage-modifier-abbr'})
                            +span({name:'encumb_mod',class:'label-input-modifier label-input-super input-encumb-mod',title:'Överbelastad','data-i18n-title':'overencumbered'})
                      else 
                         if field.trigger && trigger != 'rollDamage' && trigger != 'rollWeaponAttack'

@@ -3,7 +3,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    let char_id = '';
    const computeObj = {};
    computeObj.perfectRoll = 0; 
-   computeObj.name = rollObj.name; 
+   computeObj.name = rollObj.name;
+   k.log(`???? Roll Object name : ${rollObj.name}`);
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0; 
    //const dmgBonusStr = rollObj.damageBonus && rollObj.damageBonus != '' ? `+${rollObj.damageBonus}[${getTranslationByKey('damagebonus')}]` : '';
    //k.log(`Damage bonus in Execute Roll: ${rollObj.damageBonus} and string: ${rollObj.damageBonusStr}`);   
@@ -173,7 +174,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    computeObj.hitareaRoll = k.escape(computeObj.hitareaRoll);
 
    computeObj.hitareadetails = 0; 
-   if ( rollObj.hitAreaDie && rollObj.hitAreaDie == '6' && !rollObj.vehicleHitarea ) {
+   /* if ( rollObj.hitAreaDie && rollObj.hitAreaDie == '6' && !rollObj.vehicleHitarea ) {
       //k.log(`Hit area is ${JSON.stringify(roll.results.hitarearoll.result)}`);
       computeObj.hitareadetails = 1; 
       switch (roll.results.hitarearoll.result) {
@@ -202,14 +203,40 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
          case 11 : { computeObj.hitarea = getTranslationByKey('left-leg'); break; }
          case 12 : { computeObj.hitarea = getTranslationByKey('left-leg'); break; }
       }
+   } */
+   if ( rollObj.hitAreaDie && rollObj.hitAreaDie == '20' && !rollObj.vehicleHitarea ) {
+      //k.log(`Hit area is ${JSON.stringify(roll.results.hitarearoll.result)}`);
+      computeObj.hitareadetails = 1; 
+      switch (roll.results.hitarearoll.result) {
+         case 1 : { computeObj.hitarea = "Vänster ben"; break; }
+         case 2 : { computeObj.hitarea = "Vänster ben"; break; }
+         case 3 : { computeObj.hitarea = "Närstrid: Höger ben, Avstånd: Vänster ben"; break; }
+         case 4 : { computeObj.hitarea = "Höger ben"; break; }
+         case 5 : { computeObj.hitarea = "Närstrid: Mage, Avstånd: Höger ben"; break; }
+         case 6 : { computeObj.hitarea = "Närstrid: Mage, Avstånd: Höger ben"; break; }
+         case 7 : { computeObj.hitarea = "Mage"; break; }
+         case 8 : { computeObj.hitarea = "Mage"; break; }
+         case 9 : { computeObj.hitarea = "Närstrid: Vänster arm, Avstånd: Mage"; break; }
+         case 10 : { computeObj.hitarea = "Vänster arm"; break; }
+         case 11 : { computeObj.hitarea = "Vänster arm"; break; }
+         case 12 : { computeObj.hitarea = "Höger arm"; break; }
+         case 13 : { computeObj.hitarea = "Höger arm"; break; }
+         case 14 : { computeObj.hitarea = "Närstrid: Höger arm, Avstånd: Bröstkorg"; break; }
+         case 15 : { computeObj.hitarea = "Bröstkorg"; break; }
+         case 16 : { computeObj.hitarea = "Bröstkorg"; break; }
+         case 17 : { computeObj.hitarea = "Närstrid: Huvud, Avstånd: Bröstkorg"; break; }
+         case 18 : { computeObj.hitarea = "Närstrid: Huvud, Avstånd: Bröstkorg"; break; }
+         case 19 : { computeObj.hitarea = "Huvud"; break; }
+         case 20 : { computeObj.hitarea = "Huvud"; break; }
+      }
    }
-   if ( rollObj.vehicleHitarea ) {
+   /* if ( rollObj.vehicleHitarea ) {
    // k.log(`Vehicle hit area ${roll?.results?.hitarearoll?.result}`);
       //k.log(`Vehicle hit area sections ${JSON.stringify(sections.repeating_vehiclehitareas)}`);
       const area = roll?.results?.hitarearoll?.result;
       computeObj.hitareadetails = 1;
       computeObj.hitarea = area != undefined ? attributes[`hitarea_${area}`] : '';
-   }
+   } */
    //await attributes.set();
 
    

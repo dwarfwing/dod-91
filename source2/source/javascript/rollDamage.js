@@ -3,7 +3,8 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
    rollObj = {};
    if (trigger.originalRollId) {  
       rollObj.damageRoll = k.unescape(trigger.originalRollId);
-      console.log(`Recorded damage data: ${JSON.stringify(rollObj.damageRoll)}`);     
+      console.log(`Recorded damage data: ${JSON.stringify(rollObj.damageRoll)}`); 
+      rollObj.name = rollObj.damageRoll.match(/{{roll-name=(\w*)}}/)[1];    
    } else {
       const [section,rowID,base] = k.parseTriggerName(trigger.name);
       const row = section ?

@@ -30,6 +30,7 @@
   "d20": "T20",
   "damage": "Skada",
   "damage-bous-abbr": "SB",
+  "damage-modifier-abbr": "Skademod.",
   "description": "Beskrivning...",
   "durability-abbr": "BV",
   "effect": "effekt",
