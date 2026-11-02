@@ -29,7 +29,7 @@ mixin config-tab
             label: 'Visa Stridskonster i Strid-tabben',
             spanObj:{'data-i18n':'show-martial-arts'},
             divObj:{class:''},
-            inputObj:{name:'show martial arts',value:1}
+            inputObj:{name:'show martial arts',value:1,trigger:{triggeredFuncs:['weaponSkillSelect']}}
             })
             +option({value:0,})
                |0

@@ -16,6 +16,10 @@ const weaponSkillSelect = function({trigger,attributes,sections,casc}){
     },[{label:'Slagsmål',value:'prim_slagsmal'}]);
     // REMoved teh init array [spine.weap
     // ontypes] since only weapon skills can be used
+  for( i = 1; i <= parseInt(attributes.show_martial_arts); i++ ) {
+    const row = `martialart${i}`;
+    optionsArray.push({value: row,label: attributes[`${row}_name`],})
+  }
   optionsArray.push({label:'Manuellt',value:'custom'});
   k.log(`Weapon skill update array done: ${JSON.stringify(optionsArray)}`);
   populateListOptions({elemSelector:'.weapon-skill-select',optionsArray});
@@ -27,7 +31,7 @@ const weaponSkillSelect = function({trigger,attributes,sections,casc}){
       attributes[`${row}_skill`] = optionsArray.some(obj => obj.value === attributes[`${row}_skill`]) ?
         attributes[`${row}_skill`] :
         'custom';
-    });
+    });  
   attributes.set(); 
   setWeaponSkills({trigger,attributes,sections,casc});
 };
