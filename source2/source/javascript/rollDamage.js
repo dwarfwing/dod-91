@@ -4,7 +4,10 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
    if (trigger.originalRollId) {  
       rollObj.damageRoll = k.unescape(trigger.originalRollId);
       console.log(`Recorded damage data: ${JSON.stringify(rollObj.damageRoll)}`); 
-      rollObj.name = rollObj.damageRoll.match(/{{roll-name=(\w*)}}/)[1];    
+      console.log(`Captured damage roll match was ${JSON.stringify(rollObj.damageRoll.match(/(?:\{\{roll-name=)([A-Za-zåäöÅÄÖ0-9+,_\-\\" ]*)(?:\}\})/u))}`);
+      rollObj.name = rollObj.damageRoll.match(/(?:\{\{roll-name=)([A-Za-zåäöÅÄÖ0-9+,_\-\\" ]*)(?:\}\})/u) != null ?
+         rollObj.damageRoll.replaceAll(/\\"/g,'"').match(/(?:\{\{roll-name=)([A-Za-zåäöÅÄÖ0-9+,_\-\\" ]*)(?:\}\})/u)[1] : getTranslationByKey('skada');        
+      console.log(`Captured damage roll name: ${rollObj.name}`);  
    } else {
       const [section,rowID,base] = k.parseTriggerName(trigger.name);
       if ( trigger.listener.startsWith('change:') ) {
@@ -59,7 +62,9 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
          rollObj.painBonus = /[Tt]/g.test(bonus) ? bonus.replaceAll(/[Tt]/g,'D') : bonus;
          //rollObj.painBonus = rollObj.painBonus.test(/Tt/g) ? rollObj.painBonus.replace(/[Tt]/g,'D') : rollObj.painBonus;
       } */
+      
       rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
+      rollObj.painDice = rollObj.painDice == '' ? '0' : rollObj.painDice; 
 
       //const dmgBonusStr = rollObj.damageBonus ? `+${rollObj.damageBonusStr}[${getTranslationByKey('damagebonus')}]` : '';
 
@@ -74,6 +79,7 @@ const rollDamage = async function ({trigger,attributes,sections,casc}) {
       rollObj.rollStr += ` {{damage=[[${rollObj.damageDice}[${getTranslationByKey('damage')}]${rollObj.damageBonusStr}]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}}`;
       rollObj.rollStr += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
       rollObj.rollStr += ` {{secretroll=[[${rollObj.secretRoll}]]}} {{target-area=[[1D20]]}} {{hitareas=true}} {{hitareaRoll=[[0]]}}`;
+      rollObj.rollStr += ` {{perfect=[[0]]}}`;
     
    }
 

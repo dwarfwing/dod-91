@@ -20,22 +20,32 @@ rolltemplate.sheet-rolltemplate-dod91
                   span {{target}}
             +templateConditionalDisplay('damage')
                +rollTotal({values:'computed::calcdamage 0'})
-                  .sheet-roll-damage
-                     label(data-i18n='damage') Skada
-                     span {{damage}}
+                  +rollTotal({values:'perfect 0'})
+                     .sheet-roll-damage
+                        label(data-i18n='damage') Skada
+                        span {{damage}}
+                  +rollTotal({values:'perfect 1'})
+                     .sheet-roll-damage
+                        label(data-i18n='damage-perfect') Perfekt skada
+                        span {{damageperfect}}
                +rollTotal({values:'computed::calcdamage 1'})
                   .sheet-roll-damage
                      label(data-i18n='damage') Skada
                      span {{computed::calcdamage}} ({{damage}}) 
-            //-+templateConditionalDisplay('pain')
-            +rollTotal({values:'computed::calcpain 0'})
-               .sheet-roll-damage.sheet-roll-pain
-                  label(data-i18n='pain') Smärta
-                  span {{pain}}
-            +rollTotal({values:'computed::calcpain 1'})
-               .sheet-roll-damage.sheet-roll-pain
-                  label(data-i18n='pain') Smärta
-                  span {{computed::calcpain}} ({{pain}}) 
+            +templateConditionalDisplay('pain')
+               +rollTotal({values:'computed::calcpain 0'})
+                  +rollTotal({values:'perfect 0'})
+                     .sheet-roll-damage.sheet-roll-pain
+                        label(data-i18n='pain') Smärta
+                        span {{pain}}
+                  +rollTotal({values:'perfect 1'})
+                     .sheet-roll-damage.sheet-roll-pain
+                        label(data-i18n='pain-perfect') Perfekt smärta
+                        span {{painperfect}}
+               +rollTotal({values:'computed::calcpain 1'})
+                  .sheet-roll-damage.sheet-roll-pain
+                     label(data-i18n='pain') Smärta
+                     span {{computed::calcpain}} ({{pain}}) 
             //-+templateConditionalDisplay('hitarea')
                +templateConditionalDisplay('damage')
                   .sheet-roll-damage.sheet-roll-hitarea

@@ -30,12 +30,20 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
       attributes[`${row}_damage`] :
       attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_damage`];
    rollObj.damageDice = rollObj.damageDice.toString().replaceAll(/[Tt]/g,'D');
-   if ( attributes['use_sp'] == 1) {
+   rollObj.damageDicePerf = rollObj.damageDice.toString().replaceAll(/(\d+)(D)(\d+)/g,'$1*$3');
+   if ( attributes['use_sp'] == 1 && ( attributes[`${row}_pain`] != undefined || attributes[`${row}_pain`] != '' ) ) {
+      console.log(`------- Calculating pain dice: ${attributes[`${row}_pain`]}`);
       rollObj.painDice = section ?
          attributes[`${row}_pain`] :
          attributes[`${base.replace(/-/g,'_').replace(/_action/,'').toLowerCase()}_pain`];
       rollObj.painDice = rollObj.painDice.toString().replaceAll(/[Tt]/g,'D');
+      rollObj.painDicePerf = rollObj.painDice.toString().replaceAll(/(\d+)(D)(\d+)/g,'$1*$3');
+   } else { 
+      console.log(`------- No pain dice: ${attributes[`${row}_pain`]}`);
+      rollObj.painDice = 0; 
    }
+   console.log(`------- damage dice: ${rollObj.damageDice}, pain dice : ${rollObj.painDice}`);
+   console.log(`------- Perfect damage: ${rollObj.damageDicePerf}, perfect pain : ${rollObj.painDicePerf}`);
 
    // Overencumberance modifier
    if ( attributes.smi_encumb_mod != '' && attributes[`${rollObj.skillAttr}_attr`] == 'smi' ) {
@@ -48,6 +56,7 @@ const rollWeaponAttack = function ({trigger,attributes,sections,casc}) {
    k.log(`Damage bonus ${attributes[`${row}_damagebonus`]} == ${attributes[`${row}_damagebonus`] == '1'} with ${attributes['sb']}`);
    rollObj.damageBonus = attributes[`${row}_damagebonus`] == 1 ? true : false; 
    rollObj.damageBonusStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].toString().replaceAll(/[Tt]/g,'D')} [${getTranslationByKey('damagebonus')}]`; 
+   rollObj.damageBonusPerfStr = !rollObj.damageBonus ? '' : `+ ${attributes['sb'].toString().replaceAll(/[Tt]/g,'D').replaceAll(/(\d+)(D)(\d+)/g,'$1*$3')} [${getTranslationByKey('damagebonus')}]`; 
    /* if (attributes[`${row}_damagebonus`] == '1') {
       const damageBonus = attributes[`sb`],
             damageBonusMod = attributes[`sb_mod`],

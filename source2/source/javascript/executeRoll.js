@@ -2,7 +2,7 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    //k.log(`Executing roll object: ${JSON.stringify(rollObj)}`);
    let char_id = '';
    const computeObj = {};
-   computeObj.perfectRoll = 0; 
+   rollObj.perfect = 0; 
    computeObj.name = rollObj.name;
    k.log(`???? Roll Object name : ${rollObj.name}`);
    rollObj.secretRoll = attributes.whisper == '/sr' ? 1 : 0; 
@@ -33,8 +33,10 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       }
       if (rollObj.damageDice && !rollObj.damageButton ) {      
          rollObj.rollStr += ` {{damage=[[${rollObj.damageDice} [${getTranslationByKey('damage')}] ${rollObj.damageBonusStr}]]}} {{target-area=[[1D6]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}}`;
+         rollObj.rollStr += `  {{damageperfect=[[${rollObj.damageDicePerf} [${getTranslationByKey('damage-perfect')}] ${rollObj.damageBonusPerfStr}]]}}`
          if (rollObj.painDice && !rollObj.damageButton ) {      
-            rollObj.rollStr += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
+            rollObj.rollStr += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}] ${rollObj.damageBonusStr}]]}} {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
+            rollObj.rollStr += ` {{painperfect=[[${rollObj.painDicePerf}[${getTranslationByKey('pain-perfect')}] ${rollObj.damageBonusPerfStr}]]}}`
          }
       } 
       else if (rollObj.damageRoll) {
@@ -50,17 +52,22 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
       } */
       if (rollObj.hitareas) { 
          rollObj.rollStr += ' {{hitareas=true}}';
-      }
-
-   }   
-
+      }      
+   } else if ( rollObj.rollStr && !rollObj.name ) {
+      console.log(`------ Roll String name match was ${JSON.stringify(rollObj.rollStr.match(/(?:\{\{roll-name=)([A-Za-zåäöÅÄÖ0-9+,_\-\\" ]*)(?:\}\})/u))}`);
+      rollObj.name = rollObj.rollStr.match(/(?:\{\{roll-name=)([A-Za-zåäöÅÄÖ0-9+,_\-\\" ]*)(?:\}\})/u) != null ?
+         rollObj.rollStr.match(/(?:\{\{roll-name=)([A-Za-zåäöÅÄÖ0-9+,_\-\\" ]*)(?:\}\})/u)[1] : '';        
+      console.log(`------ Captured roll name: ${rollObj.name}`);
+   } 
+   
+   //rollObj.rollStr += ` {{perfect=[[0]]}} {{flounder=[[0]]}}`; 
 
    if ( attributes.roll_contest == 1 ) {
       rollObj.contestRoll = true; 
       //rollObj.contestResult = rollObj.contestResult == -1 ? 'fail' : ( rollObj.contestResult == 0 ? '' :  )
-      rollObj.contestStr = ` {{contest=[[1]]}} {{contestresult=[[0]]}}`
+      rollObj.rollStr += ` {{contest=[[1]]}} {{contestresult=[[0]]}}`
    }
-   rollObj.rollStr = rollObj.rollStr + rollObj.contestStr; 
+   //rollObj.rollStr = rollObj.rollStr + rollObj.contestStr||''; 
 
    k.log(`RollObject pre-roll: ${JSON.stringify(rollObj)}`)
    k.log(`Executing roll string: ${rollObj.rollStr}`);
@@ -80,7 +87,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    computeObj.contestresult = getContestOutcome(rollObj.result,rollObj.rollSkill+(rollObj.skillAttrMod||0)+(rollObj.rollSkillMod||0));
    
    // Success, Perfect, Flounder, Diff and Improvement
-   var perfectStr = '', success = 0, perfect = 0, flounder = 0;
+   var success = 0, flounder = 0;
+   rollObj.perfect = 0;
    if ( rollObj.result ) {
       rollObj.diff = rollObj.target - rollObj.result;
       k.log(` --- Rolled ${rollObj.result} and ${rollObj.result2} for skill {${rollObj.skillAttr}} with CL ${rollObj.target}. D3 rolled ${roll.results.rolld3.result}`); 
@@ -91,33 +99,31 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
          else if ( rollObj.target < 1 || rollObj.rollSKill == 0 && rollObj.result == 1 && rollObj.result2 == 1 ) { success = 1; k.log(`Success by rolling 2x 1 and FV is 0 and target <= 0!`); }
          
          if ( rollObj.target < 1 ) {
-            if ( rollObj.result == 20 ) { flounder = 1; success = 0, perfect = 0; k.log(`Floundered roll!`); }          
+            if ( rollObj.result == 20 ) { flounder = 1; success = 0, rollObj.perfect = 0; k.log(`Floundered roll!`); }          
          }
          else if ( rollObj.target >= 1 && rollObj.target < 20 ) {
-            if ( rollObj.result == 1 && rollObj.result2 <= rollObj.rollSkill ) { perfect = 1; k.log(`Perfect roll (rolled 1 and ${rollObj.result2}!`); }
-            if ( rollObj.result == 20 && rollObj.result2 > rollObj.rollSkill ) { flounder = 1; success = 0, perfect = 0; k.log(`Floundered roll!`); }
+            if ( rollObj.result == 1 && rollObj.result2 <= rollObj.rollSkill ) { perfect = 1; rollObj.perfect = 1; k.log(`Perfect roll (rolled 1 and ${rollObj.result2}!`); }
+            if ( rollObj.result == 20 && rollObj.result2 > rollObj.rollSkill ) { flounder = 1; success = 0, rollObj.perfect = 0; computeObj.flounder = 1; k.log(`Floundered roll!`); }
 
          } else if ( rollObj.target >= 20 ) {
-            if ( rollObj.result == 1 || ( rollObj.result == 2 && rollObj.result2 <= rollObj.rollSkill ) ) { perfect = 1; k.log(`Perfect roll!`); }
-            if ( rollObj.result == 20 && rollObj.result2 == 20 ) { flounder = 1; success = 0, perfect = 0; k.log(`Floundered roll!`); }
+            if ( rollObj.result == 1 || ( rollObj.result == 2 && rollObj.result2 <= rollObj.rollSkill ) ) { rollObj.perfect = 1; computeObj.perfect = 1; k.log(`Perfect roll!`); }
+            if ( rollObj.result == 20 && rollObj.result2 == 20 ) { flounder = 1; success = 0, rollObj.perfect = 0; computeObj.flounder = 1; k.log(`Floundered roll!`); }
          }
          
-         k.log(`Roll success ${!!success}, roll perfect ${!!perfect}, floundered ${!!flounder}`);
-         //perfectStr = perfect && !rollObj.abilitySkillRoll ? `+1D6[${getTranslationByKey('perfect-roll')}]` : '';
-         computeObj.perfectRoll = perfect ? 1 : 0; 
+         k.log(`Roll success ${!!success}, roll perfect ${!!rollObj.perfect}, floundered ${!!flounder}`);
 
          if ( rollObj.gainExp) {
             const impr = attributes[`${rollObj.skillAttr}_improve`],
                   impr_perf = attributes[`${rollObj.skillAttr}_improve_perfect`],   
                   erf = attributes[`${rollObj.skillAttr}_erf`];
             k.log(`Improved = ${impr} (${impr != '1'}), improved perfect = ${impr_perf} (${impr_perf != '1'})`);
-            if ( success && !perfect && impr != '1' && rollObj.gainExp ) {
+            if ( success && !rollObj.perfect && impr != '1' && rollObj.gainExp ) {
                k.log(`Normal success and erf increase by 1`);
                //k.log(`${rollObj.skillAttr}_improve`);
                attributes[`${rollObj.skillAttr}_improve`] = 1; 
                attributes[`${rollObj.skillAttr}_erf`] = erf + 1; 
 
-            } else if ( success && perfect && impr_perf != '1' && rollObj.gainExp ) {
+            } else if ( success && rollObj.perfect && impr_perf != '1' && rollObj.gainExp ) {
                k.log(`Perfect roll and erf increase by ${1 + roll.results.rolld3.result}`);
                attributes[`${rollObj.skillAttr}_improve_perfect`] = 1; 
                attributes[`${rollObj.skillAttr}_erf`] = erf + 1 + roll.results.rolld3.result;
@@ -125,11 +131,13 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
          }
          
       }
+   } else if ( rollObj.rollStr ) {
+      rollObj.perfect = rollObj.rollStr.toString().match(/{{perfect=\[\[1\]\]}}/) ? 1 : 0; 
    }
 
    if ( rollObj.spellLevel ) {
       var reduce = parseInt(rollObj.spellLevel)
-      if ( perfect == 1 && reduce != 1 ) {
+      if ( rollObj.perfect == 1 && reduce != 1 ) {
          reduce = Math.floor(reduce / 2);
       } else if ( !success ) {
          reduce = 1; 
@@ -138,29 +146,44 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
    }
    attributes.set();
     
-   if ( rollObj.damageRoll || ( rollObj.damageDice && !rollObj.damageButton ) ) { 
-      computeObj.calcdamage = roll.results.damage.result < 0 ? 1 : 0;     
-      computeObj.damageTotal = computeObj.calcdamage == 0 ? roll?.results?.damage?.result : 0;
+   if ( rollObj.damageRoll || ( rollObj.damageDice && !rollObj.damageButton ) ) {
+      console.log(`PerfectRoll = ${rollObj.perfect} and normal damage = ${roll?.results?.damage?.result}, perfect = ${roll?.results?.damageperfect?.result}`);
+      if( rollObj.perfect == 1) {
+         computeObj.calcDamage = 0;
+         computeObj.damageTotal = roll?.results?.damageperfect?.result
+      } else {
+         computeObj.calcDamage = roll.results.damage.result < 0 ? 1 : 0;     
+         computeObj.damageTotal = computeObj.calcDamage == 0 ? roll?.results?.damage?.result : 0;
+      }
       console.log(`Damage total: ${computeObj.damageTotal}`);
    }
    k.log(`Roll object before adding pain: ${JSON.stringify(rollObj)}`);
-   if ( rollObj.damageRoll || ( rollObj.painDice && !rollObj.damageButton) ) { 
-      k.log(`Pain result: ${roll.results.pain.result}`)
-      computeObj.calcpain = roll.results.pain.result < 0 ? 1 : 0;     
-      computeObj.painTotal = computeObj.calcpain == 0 ? roll?.results?.pain?.result : 0;
-      console.log(`Pain total: ${computeObj.painTotal}, calcpain = ${computeObj.calcpain}, painTotal = ${computeObj.painTotal}`);
+   var calcPainStr = '';
+   if ( rollObj.damageRoll && roll?.results?.pain?.result || ( rollObj.painDice && !rollObj.damageButton) ) { 
+      k.log(`Pain result: ${roll?.results?.pain?.result}`);
+      if( rollObj.perfect == 1 ) {
+         computeObj.calcPain = 0;
+         computeObj.painTotal = roll?.results?.painperfect?.result
+      } else {
+         computeObj.calcPain = roll.results.pain.result < 0 ? 1 : 0;     
+         computeObj.painTotal = computeObj.calcPain == 0 ? roll?.results?.pain?.result : 0;
+      }
+      k.log(`Pain total: ${computeObj.painTotal}, calcpain = ${computeObj.calcPain}`);
+      calcPainStr = ` {{pain=${computeObj.painTotal}}} {{painperfect=${computeObj.painTotal}}} {{calcpain=[[${computeObj.calcPain}]]}}`;
    }
 
    if ( rollObj.damageButton ) {
       
       computeObj.damageRoll = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
 
-      computeObj.damageRoll += ` {{target-area=[[1D6]]}} {{hitareas=true}} {{hitareaRoll=[[0]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}}`;
+      computeObj.damageRoll += ` {{target-area=[[1D6]]}} {{hitareas=true}} {{hitareaRoll=[[0]]}} {{calcdamage=[[0]]}} {{damageTotal=[[0]]}} {{calcpain=[[0]]}} {{painTotal=[[0]]}} {{perfect=[[${rollObj.perfect}]]}}`;
       //k.log(`REsult ${roll.results.roll1.result} with ttarget ${rollObj.target} is perfect ${roll.results.roll1.result < (Math.floor(rollObj.target / 10)||0)}`)
       
-      computeObj.damageRoll += ` {{damage=[[${rollObj.damageDice} [${getTranslationByKey('damage')}] ${rollObj.damageBonusStr}${perfectStr}]]}} {{totals=[0]}}`;
+      computeObj.damageRoll += ` {{damage=[[${rollObj.damageDice} [${getTranslationByKey('damage')}] ${rollObj.damageBonusStr}]]}} {{totals=[0]}}`;
+      computeObj.damageRoll += ` {{damageperfect=[[${rollObj.damageDicePerf} [${getTranslationByKey('damage')}] ${rollObj.damageBonusPerfStr}]]}}`;
       if ( rollObj.painDice && attributes[`use_sp`] == 1 ){
-         computeObj.damageRoll += ` {{pain=[[${rollObj.painDice}[${getTranslationByKey('pain')}]${rollObj.damageBonusStr}${perfectStr}]]}}`;
+         computeObj.damageRoll += ` {{pain=[[${rollObj.painDice} [${getTranslationByKey('pain')}]${rollObj.damageBonusStr}]]}}`;
+         computeObj.damageRoll += ` {{painperfect=[[${rollObj.painDicePerf} [${getTranslationByKey('pain')}]${rollObj.damageBonusPerfStr}]]}}`;
       }
       k.log(`Damage compute Obj pre-escape: ${JSON.stringify(computeObj)}`);
       computeObj.damageRoll = k.escape(computeObj.damageRoll);
@@ -168,8 +191,8 @@ const executeRoll = async function ({rollObj,attributes,sections}) {
 
    //computeObj.hitareaRoll = `&{template:dod91} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{roll-name=^{hitarea}}}`;
    computeObj.hitareaRoll = rollObj.secretRoll ? attributes['templatestartsecret'] + ` {{roll-name=${rollObj.name}}}` : attributes['templatestart'] + ` {{roll-name=${rollObj.name}}}`;
-   computeObj.hitareaRoll += ` {{hitarea=[[0]]}} {{hitareadetails=[[0]]}}`;
-   computeObj.hitareaRoll += ` {{damage=${computeObj.damageTotal}}} {{calcdamage=[[${computeObj.calcdamage}]]}} {{pain=${computeObj.painTotal}}} {{calcpain=[[${computeObj.calcpain}]]}}`; 
+   computeObj.hitareaRoll += ` {{hitarea=[[0]]}} {{hitareadetails=[[0]]}} {{perfect=[[${rollObj.perfect}]]}}`;
+   computeObj.hitareaRoll += ` {{damage=${computeObj.damageTotal}}} {{damageperfect=${computeObj.damageTotal}}} {{calcdamage=[[${computeObj.calcDamage}]]}} ${calcPainStr}`; 
    k.log(`Hit area roll string: ${computeObj.hitareaRoll}`);
    computeObj.hitareaRoll = k.escape(computeObj.hitareaRoll);
 

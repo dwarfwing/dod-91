@@ -124,17 +124,17 @@ const setMartialartsCost = function({trigger,attributes,sections,casc}) {
 }
 k.registerFuncs({setMartialartsCost},{type:['opener']});
 
-const rollImprovements = async function({trigger,attributes,sections,casc}) {
+/* const rollImprovements = async function({trigger,attributes,sections,casc}) {
    //k.log(`Skill improvement trigger: ${JSON.stringify(trigger)}`);
    //k.log(`Skill improvement trigger: ${JSON.stringify(sections)}`);
-   const skills = ['acrobatics','bows','first_aid','rifles','perception','throwing','bartering','melee','pistols','sneak_hide']
+   const skills = ['acrobatics','bows','first_aid','rifles','perception','throwing','bartering','melee','pistols','sneak_hide'];
    const naturalSkills = sections.repeating_naturalskills.map( (id) => `repeating_naturalskills_${id}` ) || [];
    const trainedSkills = sections.repeating_trainedskills.map( (id) => `repeating_trainedskills_${id}`) || [];
    const abilitySkills = sections.repeating_abilities.map( (id) => `repeating_abilities_${id}`) || [];
    
    //k.log(`Skills: ${JSON.stringify(skills)}`);
    //k.log(`Natural Skills: ${JSON.stringify(naturalSkills)}`);
-   k.log(`Trained Skills: ${JSON.stringify(trainedSkills)}`);
+   //k.log(`Trained Skills: ${JSON.stringify(trainedSkills)}`);
    //k.log(`Ability Skills: ${JSON.stringify(abilitySkills)}`);
    
    const repeatingSkillIds = [...naturalSkills, ...abilitySkills];
@@ -167,7 +167,6 @@ const rollImprovements = async function({trigger,attributes,sections,casc}) {
          }
       }; 
    }
-   /**/
    // TO FIX
    for(i = 0; i < repeatingSkillIds.length; i++ ) {      
       for(n = 0; n < improv.length; n++) {
@@ -180,9 +179,7 @@ const rollImprovements = async function({trigger,attributes,sections,casc}) {
             await rollImprovement({attributes,skillAttr,skillName,improvAttr})
          }
       }; 
-   }
-   /**/
-   
+   }   
 }
 k.registerFuncs({rollImprovements});
 
@@ -223,4 +220,4 @@ const rollImprovement = async function({attributes,skillAttr,skillName,improvAtt
    finishRoll(roll.rollId,computeObj);
    attributes.set();
 }
-
+ */

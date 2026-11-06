@@ -1,4 +1,4 @@
-mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,headedit,listTrigger})
+mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,headedit,listTrigger,headless})
    - 
       i18n = transl ? transl : attr; 
       fields = fields ? fields : 
@@ -15,11 +15,12 @@ mixin repeatingSkills({name,attr,transl,fields,cost,impr,exp,b,altcosts,desc,hea
       desc = desc ? desc : false; 
       headedit = headedit ? headedit : false; 
       fieldset = listTrigger && listTrigger != undefined ? 'customControlFieldset' : 'fieldset';
+      headless = headless && headless == true ? ' headless' : '';
       fieldsetObj = { name: attr, addClass: fieldset }
       if ( fieldset == 'customControlFieldset' ) {
          fieldsetObj.trigger = {triggeredFuncs:listTrigger,addFuncs:[`${attr}Add`]};
       }
-   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,headEdit:headedit,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass})
+   +box({headerObj:{name:name,attr:attr,'data-i18n':i18n},fields:fields,headEdit:headedit,classes:'box-skills box-skills-'+attr+hideImprovementClass+skillTypeB+hideExperienceClass+headless})
       +#{`${fieldset}`}(fieldsetObj)
          .skill-row.collapse-container(class=hideImprovementClass+skillTypeB+hideExperienceClass)
             if cost != undefined && cost > 0

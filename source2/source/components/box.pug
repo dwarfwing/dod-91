@@ -45,6 +45,7 @@ mixin box({headerObj={},fields=[],classes="",headEdit=false})
       background-color:  var(--bg-color2);
       &.topless, &.no-top-border { border-top: 0; }
       &.bottomless { border-bottom: 0; }
+      &.headless .box-header { display: none; }
       .box-header {
          width: 100%;
          border-bottom: var(--border-size) solid var(--border-color);

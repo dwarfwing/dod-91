@@ -15,7 +15,6 @@
   "bank": "bank",
   "barformaga": "bärförmåga",
   "barformaga-modifier": "Bärförmåga modifikation",
-  "basic-skills": "primära färdigheter",
   "berf": "Bonus Erf.",
   "beskrivning": "beskrivning",
   "bskill-level": "B",
@@ -31,6 +30,7 @@
   "damage": "Skada",
   "damage-bous-abbr": "SB",
   "damage-modifier-abbr": "Skademod.",
+  "damage-perfect": "Perfekt skada",
   "description": "Beskrivning...",
   "durability-abbr": "BV",
   "effect": "effekt",
@@ -103,10 +103,12 @@
   "notes": "notes",
   "overencumbered": "Överbelastad",
   "pain": "Smärta",
+  "pain-perfect": "Perfekt smärta",
   "painpoints-abbr": "SP",
   "pc-caps": "Rollperson",
   "penetration-abbr": "PV",
   "primary-skill": "Primärfärdighet",
+  "primary-skills": "primaryskills",
   "profession-skill": "Yrkesfärdighet",
   "profession-skills": "yrkesfärdigheter",
   "psy": "psyke",
@@ -319,5 +321,6 @@
   "skill-mod": "Modifikation",
   "damagebonus": "Skadebonus",
   "manual": "Manuell",
-  "contests-secret": "Slå alltid motståndsslag hemligt"
+  "contests-secret": "Slå alltid motståndsslag hemligt",
+  "skada": "Skada"
 }

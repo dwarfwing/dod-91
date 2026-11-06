@@ -22,7 +22,7 @@ mixin recovery-tab
          +box({headerObj:{name:'Skador och Tillstånd',attr:'afflictions','data-i18n':'injuries-conditions'}})
             +fieldset({name:'afflictions',})
                .affliction-row.collapse-container 
-                  //-+collapse 
+                  +collapse 
                   .expanded 
                      //-+input-label({
                         label:'namn',
@@ -41,9 +41,9 @@ mixin recovery-tab
                         divObj: {class:''},
                         inputObj: {name: 'healingtime', type: 'text'}
                         })
-                  //-.collapsed
+                  .collapsed
                      +span({name:'name',class:'header'})
-                     +span({name:'description'})
+                     //-+span({name:'description'})
                      .effect
                         span Effekt: 
                         +span({name:'effect'})
@@ -53,12 +53,17 @@ mixin recovery-tab
 
 +scss.
    .tab-recovery {
+      --text-transform: none; 
       display: grid;
       grid-template-columns: 50% 50%; 
       p { text-transform: none; }
       .box {
          height: 100%; 
          align-content: flex-start;
+      }
+      .collapse {
+         right: 0.5rem;
+         z-index: 10000;
       }
       .box-content {
          background-color: var(--bg-color2);
@@ -70,7 +75,21 @@ mixin recovery-tab
       }
       .affliction-row {
          border-bottom: 1px solid var(--border-color);
-         background-color: var(--bg-color3);
+         background-color: var(--bg-color2);
+         .expanded { 
+            background-color: var(--bg-color3); 
+            .header {
+               background-color: var(--bg-color2);
+            }
+         }
+         .collapsed {
+            div {
+               padding-inline: 1rem; 
+            }
+            .header {               
+               backdrop-filter: brightness(0.75);
+            }
+         }
          .expanded, .collapsed {
             padding: 0; 
             //span[name=attr_name], label:first-of-type { background-color: var(--background-color); }
@@ -82,7 +101,7 @@ mixin recovery-tab
             .header {
                text-align: center; 
                justify-content: center; 
-               background-color: var(--bg-color2);
+               //background-color: var(--bg-color2);
             }
             .input-label {
                span {

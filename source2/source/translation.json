@@ -168,5 +168,8 @@
    "multiple-armor-rows": "Visa alla 3 rader för rustningar",
    "overencumbered": "Överbelastad",
    "contests-secret": "Slå alltid motståndsslag hemligt",
-   "sticky-header": "Sticky header"
+   "sticky-header": "Sticky header",
+   "skada": "Skada",
+   "damage-perfect": "Perfekt skada",
+   "pain-perfect": "Perfekt smärta"
 }

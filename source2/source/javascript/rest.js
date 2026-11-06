@@ -2,6 +2,7 @@ const resetExperience = async function({trigger,attributes,sections,casc}) {
 
    const primSkills = Array.from(spine.primaryskills, (x) => x.attr);
 
+   const primarySkills = Array.from(sections['repeating_primaryskills'], (x) => `repeating_primaryskills_${x}`);
    const profSkills = Array.from(sections['repeating_professionskills'], (x) => `repeating_professionskills_${x}`);
    const secSkills = Array.from(sections['repeating_secondaryskills'], (x) => `repeating_secondaryskills_${x}`);
    const weaponSkills = Array.from(sections['repeating_weaponskills'], (x) => `repeating_weaponskills_${x}`);
@@ -11,7 +12,7 @@ const resetExperience = async function({trigger,attributes,sections,casc}) {
    const magicSkills = Array.from(sections['repeating_magicskills'], (x) => `repeating_magicskills_${x}`);
    const magicSpells = Array.from(sections['repeating_spells'], (x) => `repeating_spells_${x}`);
 
-   const allArray = [...primSkills,...profSkills,...secSkills,...weaponSkills,...combatSkills,...weaponTechniques,...martialArts,...magicSkills,...magicSpells];
+   const allArray = [...primSkills,...primarySkills,...profSkills,...secSkills,...weaponSkills,...combatSkills,...weaponTechniques,...martialArts,...magicSkills,...magicSpells];
    //k.log(`All skills to be rested: ${JSON.stringify(allArray)}`);
 
    allArray.forEach( skill => {
@@ -39,6 +40,7 @@ const useExperience = async function({trigger,attributes,sections,casc}) {
 
    const primSkills = Array.from(spine.primaryskills, (x) => x.attr);
 
+   const primarySkills = Array.from(sections['repeating_primaryskills'], (x) => `repeating_primaryskills_${x}`);
    const profSkills = Array.from(sections['repeating_professionskills'], (x) => `repeating_professionskills_${x}`);
    const secSkills = Array.from(sections['repeating_secondaryskills'], (x) => `repeating_secondaryskills_${x}`);
    const weaponSkills = Array.from(sections['repeating_weaponskills'], (x) => `repeating_weaponskills_${x}`);
@@ -49,7 +51,7 @@ const useExperience = async function({trigger,attributes,sections,casc}) {
    const magicSchools = Array.from(sections['repeating_magicschools'], (x) => `repeating_magicschools_${x}`);
    const magicSpells = Array.from(sections['repeating_spells'], (x) => `repeating_spells_${x}`);
 
-   const allArray = [...primSkills,...profSkills,...secSkills,...weaponSkills,...combatSkills,...weaponTechniques,...martialArts,...magicSkills,...magicSchools,...magicSpells];
+   const allArray = [...primSkills,...primarySkills,...profSkills,...secSkills,...weaponSkills,...combatSkills,...weaponTechniques,...martialArts,...magicSkills,...magicSchools,...magicSpells];
 
    allArray.forEach( skill => {
       attributes[`${skill}_improve`] = 0; 

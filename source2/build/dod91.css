@@ -2018,6 +2018,9 @@ body .ui-dialog .tab-content .charsheet .box.topless, body .ui-dialog .tab-conte
 body .ui-dialog .tab-content .charsheet .box.bottomless {
   border-bottom: 0;
 }
+body .ui-dialog .tab-content .charsheet .box.headless .box-header {
+  display: none;
+}
 body .ui-dialog .tab-content .charsheet .box .box-header {
   width: 100%;
   border-bottom: var(--border-size) solid var(--border-color);
@@ -2623,6 +2626,9 @@ body .ui-dialog .tab-content .charsheet .section-info .points .fill-left input.c
 }
 body .ui-dialog .tab-content .charsheet .section-info .points .fill-left input.cap:checked + label ~ :is(input, label) {
   display: none;
+}
+body .ui-dialog .tab-content .charsheet .section-skills__primary .box-primaryskills {
+  border-top: 0;
 }
 body .ui-dialog .tab-content .charsheet .section-skill .label-input.input-count-2 {
   grid-template-columns: 1fr 0 3rem 3rem;
@@ -3751,6 +3757,10 @@ body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcont
   text-align: center;
   align-self: center;
 }
+body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer .repitem .collapsed .ability-details span[name=attr_effect] {
+  font-size: 90%;
+  line-height: 1.25rem;
+}
 body .ui-dialog .tab-content .charsheet .section-abilities .box-ability .repcontainer .repitem .collapsed .ability-details input.skill-mod {
   margin: 0;
   padding: 0;
@@ -4064,6 +4074,7 @@ body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__stash {
   grid-area: stash;
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery {
+  --text-transform: none;
   display: grid;
   grid-template-columns: 50% 50%;
 }
@@ -4073,6 +4084,10 @@ body .ui-dialog .tab-content .charsheet .tab-recovery p {
 body .ui-dialog .tab-content .charsheet .tab-recovery .box {
   height: 100%;
   align-content: flex-start;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .collapse {
+  right: 0.5rem;
+  z-index: 10000;
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery .box-content {
   background-color: var(--bg-color2);
@@ -4084,7 +4099,19 @@ body .ui-dialog .tab-content .charsheet .tab-recovery .box-content button {
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row {
   border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color2);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded {
   background-color: var(--bg-color3);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded .header {
+  background-color: var(--bg-color2);
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed div {
+  padding-inline: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed .header {
+  backdrop-filter: brightness(0.75);
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed {
   padding: 0;
@@ -4097,7 +4124,6 @@ body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded 
 body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded .header, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed .header {
   text-align: center;
   justify-content: center;
-  background-color: var(--bg-color2);
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .expanded .input-label span:after, body .ui-dialog .tab-content .charsheet .tab-recovery .affliction-row .collapsed .input-label span:after {
   content: ": ";
