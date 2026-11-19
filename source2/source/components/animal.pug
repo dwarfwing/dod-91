@@ -1,6 +1,6 @@
-mixin animal(name='djur',attr='animal')
-   //- name = name == undefined ? 'djur' : name; 
-   //- attr = attr == undefined ? 'animal' : attr; 
+mixin animal({name,attr})
+   - name = name == undefined ? 'djur' : name; 
+   - attr = attr == undefined ? 'animal' : attr; 
    .section-animal(class='section-'+attr)
       .section-attributes 
          +box({headerObj:{name:'grundegenskap',attr:'attributes','data-i18n':'attributes'}})
@@ -77,7 +77,10 @@ mixin animal(name='djur',attr='animal')
                noCLear: true,
                capAttr: name+'_smartpoang_max'
             })
-      +gear('Utrustning',attr,i18n='gear-'+attr) 
+      .main-section-gear
+         +gear({name:'Utrustning',attr:attr,i18n:'gear-'+attr}) 
+         //-+gear({name:'Riddjur',attr:'animal',i18n:'mount'}) 
+         //-+gear({name:'Djur',attr:'djur',i18n:'animal'}) 
       .section-weapons.section-animal-attacks 
          //- Modify weapons mixin to be more declarative ? 
          -   let attackfields = spine.attackfields
@@ -113,7 +116,7 @@ mixin animal(name='djur',attr='animal')
                            "gear gear abilities";
       border: var(--border-size) solid var(--border-color);
       .section-attributes { grid-area: ge; }
-      .section-gear { grid-area: gear; }
+      .main-section-gear { grid-area: gear; }
       .section-weapons.section-animal-attacks { 
          grid-area: attacks;
          .box {

@@ -92,7 +92,7 @@ main#main
           +gear-tab
         +tab({name:'animal',container:'div',button:{content:'Djur',class:'tab-button',title:'Riddjur, eller Familiar om man har ett sånt. ','data-i18n-title':'animal-title'}})
           .tab-animal
-            +animal('djur','animal')
+            +animal({name:'djur',attr:'animal'})
         +tab({name:'recovery',container:'div',button:{content:'Vila & Skador',class:'tab-button',title:'Skador och andra tillstånd, samt sömn och vila.','data-i18n-title':'recovery-title'}})
           +recovery-tab
         +tab({name:'notes',container:'div',button:{content:'Noteringar',class:'tab-button',title:'notes','data-i18n-title':'notes'}})

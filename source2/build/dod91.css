@@ -2330,7 +2330,7 @@ body .ui-dialog .tab-content .charsheet .section-animal {
 body .ui-dialog .tab-content .charsheet .section-animal .section-attributes {
   grid-area: ge;
 }
-body .ui-dialog .tab-content .charsheet .section-animal .section-gear {
+body .ui-dialog .tab-content .charsheet .section-animal .main-section-gear {
   grid-area: gear;
 }
 body .ui-dialog .tab-content .charsheet .section-animal .section-weapons.section-animal-attacks {
@@ -2359,6 +2359,91 @@ body .ui-dialog .tab-content .charsheet .section-animal .section-info {
 body .ui-dialog .tab-content .charsheet .section-animal .section-info .box-info .label-input {
   width: 50%;
   box-sizing: border-box;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box .box-header {
+  height: 2.2rem;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box .box-header h1 {
+  display: flex;
+  justify-content: center;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box .box-header h1:after {
+  font-family: "Material Symbols Outlined";
+  margin-left: 0.25rem;
+  font-size: 110%;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box-gear .box-header h1:after {
+  content: "backpack";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box-storage .box-header h1:after {
+  content: "warehouse";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box-animal .box-header h1:after {
+  content: "chess_knight";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .box-herbsndrugs .box-header h1:after {
+  content: "eco";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded {
+  position: relative;
+  background-color: transparent;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
+  text-transform: capitalize;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded:hover .move-buttons {
+  display: flex;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons {
+  display: none;
+  position: absolute;
+  width: 6rem;
+  right: 6.5rem;
+  top: -0.375rem;
+  justify-content: flex-end;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button:before {
+  position: absolute;
+  inset: 0;
+  top: -0.5rem;
+  font-family: "Material Symbols Outlined";
+  font-size: 100%;
+  height: 1.25rem;
+  align-self: self-start;
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-storage:before {
+  content: "dresser";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-storage:before {
+  content: "home_storage";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-storage:before {
+  content: "warehouse";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-animal:before {
+  content: "chess_knight";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-gear:before {
+  content: "hiking";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-gear:before {
+  content: "backpack";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button.move-to-herbsndrugs:before {
+  content: "eco";
+}
+body .ui-dialog .tab-content .charsheet .section-gear .expanded .move-buttons button {
+  /*&:after {
+     position: absolute; 
+     inset: 0; 
+     font-family: 'Material Symbols Outlined';
+     content: 'swap_horiz';
+  }*/
 }
 body .ui-dialog .tab-content .charsheet .section-topframe {
   width: 100%;
@@ -2528,6 +2613,12 @@ body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-init
 }
 body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-initiative span.input-span input {
   margin-top: 0.25rem;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-encumbrance {
+  grid-template-columns: calc(100% - 6rem) 4rem 2rem;
+}
+body .ui-dialog .tab-content .charsheet .section-info .box-tertiary .column-encumbrance input {
+  text-align: center;
 }
 body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character_name span, body .ui-dialog .tab-content .charsheet .section-info .label-input.text-field.column-character-name span {
   height: var(--line-height);
@@ -3447,24 +3538,6 @@ body .ui-dialog .tab-content .charsheet .section-hitareas-content .box.section-h
   font-size: 90%;
   padding-top: 0;
 }
-body .ui-dialog .tab-content .charsheet .section-gear .expanded {
-  background-color: transparent;
-}
-body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
-  text-transform: capitalize;
-}
-body .ui-dialog .tab-content .charsheet .section-gear .expanded {
-  background-color: transparent;
-}
-body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
-  text-transform: capitalize;
-}
-body .ui-dialog .tab-content .charsheet .section-gear .expanded {
-  background-color: transparent;
-}
-body .ui-dialog .tab-content .charsheet .section-gear .expanded input {
-  text-transform: capitalize;
-}
 body .ui-dialog .tab-content .charsheet .section-magicspells .box.box-spells {
   padding-bottom: var(--line-height);
 }
@@ -4059,19 +4132,30 @@ body .ui-dialog .tab-content .charsheet .tab-magic {
 body .ui-dialog .tab-content .charsheet .tab-gear {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "gear stash col3" "gear stash col3";
 }
-body .ui-dialog .tab-content .charsheet .tab-gear .section-encumbrance {
-  grid-area: encumb;
+body .ui-dialog .tab-content .charsheet .tab-gear .animal-show:not(:checked) ~ .column3 .section-gear__animal {
+  display: none;
 }
-body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__gear {
-  grid-area: gear;
+body .ui-dialog .tab-content .charsheet .tab-gear .animal-show:not(:checked) ~ :is(.section-gear, .column2, .column3) .move-buttons .move-to-animal {
+  display: none;
 }
-body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__col3 {
-  grid-area: col3;
+body .ui-dialog .tab-content .charsheet .tab-gear .herbs-drugs-hide:checked ~ :is(.column2, .column3) .section-gear__herbsndrugs {
+  display: none;
 }
-body .ui-dialog .tab-content .charsheet .tab-gear .section-gear__stash {
-  grid-area: stash;
+body .ui-dialog .tab-content .charsheet .tab-gear .herbs-drugs-middle:checked ~ .column3 .section-gear__herbsndrugs {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .herbs-drugs-right:checked ~ .column2 .section-gear__herbsndrugs {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .animal-gear-hide:checked ~ :is(.column2, .column3) .section-gear__animal {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .animal-gear-middle:checked ~ .column3 .section-gear__animal {
+  display: none;
+}
+body .ui-dialog .tab-content .charsheet .tab-gear .animal-gear-right:checked ~ .column2 .section-gear__animal {
+  display: none;
 }
 body .ui-dialog .tab-content .charsheet .tab-recovery {
   --text-transform: none;
@@ -4164,37 +4248,6 @@ body .ui-dialog .tab-content .charsheet .section-config .box .input-label span {
 body .ui-dialog .tab-content .charsheet .section-config .box .input-label input[type=checkbox] {
   margin-right: 1rem;
 }
-body .ui-dialog .tab-content .charsheet .section-config .box .input-label {
-  /*input[type=radio] {
-     border: 1px solid var(--checkboxBorderColor);
-     cursor: pointer;
-     -webkit-appearance: none;
-     appearance: none;
-     width: var(--checkboxWidth);
-     min-width: var(--checkboxWidth);
-     height: var(--checkboxHeight);
-     min-height: var(--checkboxHeight);
-     display: grid;
-     grid-template-columns: 1fr;
-     grid-template-areas: "content";
-     width: 1.175rem;
-     aspect-ratio: 1 / 1;
-     border: 1px solid black;
-     border-radius: 40%;
-     margin-right: 1rem;
-     &:checked:before {
-        content: var(--checkContent);
-        grid-area: content;
-        font-weight: var(--checkWeight);
-        place-self: start center;
-        color: var(--checkColor);
-        font-size: var(--checkSize);
-        line-height: var(--checkLineHeight);
-        height: 1.175rem;
-        aspect-ratio: 1 / 1;
-     }
-  }*/
-}
 body .ui-dialog .tab-content .charsheet .section-config .box .input-label input[type=number] {
   height: 100%;
   border-left: 1px solid var(--border-color);
@@ -4216,6 +4269,9 @@ body .ui-dialog .tab-content .charsheet .section-config .box .input-label select
 }
 body .ui-dialog .tab-content .charsheet .section-config .box .input-label select option {
   text-align: center;
+}
+body .ui-dialog .tab-content .charsheet .section-config .box .input-label select.select-text {
+  width: 8rem;
 }
 body .ui-dialog .tab-content .charsheet .section-config .box .input-label.header-label {
   text-indent: 0.5rem;

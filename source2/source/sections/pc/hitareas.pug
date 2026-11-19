@@ -50,25 +50,25 @@ mixin hitareas
                            inputObj: {name:area.armor,type:'text'}
                            }) 
                         label.input-label.label-input.text-field.armor 
-                           +checkbox({name:area.armor+id+'_equipped',class:'equipped',value:1,label:roman,checked:true,trigger:{triggeredFuncs:['calcAllEncumbrance']}})
+                           +checkbox({name:area.armor+id+'_equipped',class:'equipped',value:1,label:roman,checked:true,trigger:{triggeredFuncs:['setAllEncumbrance']}})
                            +span({'data-i18n':'Rustning'}) Rustning
                            +input({name:area.armor+id,type:'text',class:'input-label__input'})
                         +input-label({
                            label: 'Vikt',
                            divObj: {class:'label-input text-field weight'},
-                           inputObj: {name:area.armorweight+id,type:'number',trigger:{triggeredFuncs:['calcAllEncumbrance']}}
+                           inputObj: {name:area.armorweight+id,type:'number',trigger:{triggeredFuncs:['setAllEncumbrance']}}
                            }) 
                         +input-label({
                            label: 'KP',
                            divObj: {class:'label-input text-field abs-kp'},
                            spanObj:{title:'KP Absorption'},
-                           inputObj: {name:area.abs+id,type:'number',trigger:{triggeredFuncs:['calcAllEncumbrance']}}
+                           inputObj: {name:area.abs+id,type:'number',trigger:{triggeredFuncs:['setAllEncumbrance']}}
                            }) 
                         +input-label({
                            label: 'SP',
                            divObj: {class:'label-input text-field abs-sp sp-display'},
                            spanObj:{title:'SP Absorption'},
-                           inputObj: {name:area.spabs+id,type:'number',trigger:{triggeredFuncs:['calcAllEncumbrance']}}
+                           inputObj: {name:area.spabs+id,type:'number',trigger:{triggeredFuncs:['setAllEncumbrance']}}
                            }) 
                .points
                   .hitarea-kp 

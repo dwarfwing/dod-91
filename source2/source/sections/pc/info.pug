@@ -36,6 +36,7 @@ mixin info
             ],
          })
          each info in spine.tertiary
+            //- trigger = info.calculation ? {calculation:info.calculation} : {}; 
             - var inpObj = {name: info.attr, type: info.type, class:'label-input-input input-'+info.attr,'data-i18n-title':'current-value',title:'Nuvarande värdet'};
             - if (info.name == 'belastning') { inpObj.step = "any"; }
             - var inputObjs = [inpObj]; 
@@ -204,6 +205,12 @@ mixin info
                input {
                   margin-top: 0.25rem; 
                }
+            }
+         }
+         .column-encumbrance {
+            grid-template-columns: calc(100% - 6rem) 4rem 2rem;
+            input {
+               text-align: center; 
             }
          }
       }

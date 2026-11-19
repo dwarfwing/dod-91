@@ -58,6 +58,31 @@ mixin config-tab
             divObj:{class:'indented'},
             inputObj:{name:'house_magic_costs',type:'radio',value:2}
             })
+         label(data+i18n="gear-display").input-label.header-label Utrustningslistor 
+         +select-label({
+            label: 'Visning av ustrustningslista för Droger och Örter',
+            spanObj:{'data-i18n':'show-herbs-drugs'},
+            divObj:{class:'indented'},
+            inputObj:{name:'show herbs drugs',value:1,class:'select-text'}
+            })
+            +option({value:0,selected:''})
+               |Inte alls
+            +option({value:1})
+               |Mittkolumn
+            +option({value:2})
+               |Höger kolumn
+         +select-label({
+            label: 'Visning av ustrustningslista för Riddjur',
+            spanObj:{'data-i18n':'show-animal-gear'},
+            divObj:{class:'indented'},
+            inputObj:{name:'show animal gear',value:1,class:'select-text'}
+            })
+            +option({value:0,selected:''})
+               |Inte alls
+            +option({value:1})
+               |Mittkolumn
+            +option({value:2})
+               |Höger kolumn
       +box({headerObj:{name:'Karaktär',attr:'character settings','data-i18n':'character-settings'},classes:'coverall'})
          +input-label({
             label: 'Kropppoäng modifikation',
@@ -113,35 +138,6 @@ mixin config-tab
             input[type=checkbox] {
                margin-right: 1rem;
             }
-            /*input[type=radio] {
-               border: 1px solid var(--checkboxBorderColor);
-               cursor: pointer;
-               -webkit-appearance: none;
-               appearance: none;
-               width: var(--checkboxWidth);
-               min-width: var(--checkboxWidth);
-               height: var(--checkboxHeight);
-               min-height: var(--checkboxHeight);
-               display: grid;
-               grid-template-columns: 1fr;
-               grid-template-areas: "content";
-               width: 1.175rem;
-               aspect-ratio: 1 / 1;
-               border: 1px solid black;
-               border-radius: 40%;
-               margin-right: 1rem;
-               &:checked:before {
-                  content: var(--checkContent);
-                  grid-area: content;
-                  font-weight: var(--checkWeight);
-                  place-self: start center;
-                  color: var(--checkColor);
-                  font-size: var(--checkSize);
-                  line-height: var(--checkLineHeight);
-                  height: 1.175rem;
-                  aspect-ratio: 1 / 1;
-               }
-            }*/
             input[type=number] {
                height: 100%; 
                border-left: 1px solid var(--border-color);
@@ -162,6 +158,9 @@ mixin config-tab
                text-align: center; 
                option {
                   text-align: center;                    
+               }
+               &.select-text {
+                  width: 8rem;   
                }
             }
             &.header-label {
