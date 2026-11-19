@@ -3121,7 +3121,6 @@ body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=che
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox].weapon-equipped:not(:checked) ~ button:before,
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem input[type=checkbox].weapon-equipped:not(:checked) ~ span button:before {
   content: "";
-  width: 1.675rem;
 }
 body .ui-dialog .tab-content .charsheet .section-weapons .repitem .collapsed input[type=checkbox]:not(:first-of-type) {
   pointer-events: none;

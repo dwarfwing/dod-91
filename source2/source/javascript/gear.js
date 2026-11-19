@@ -63,6 +63,11 @@ const setAllEncumbrance = async function({trigger,attributes,sections,casc}) {
       //k.log(`Gear ${attributes[`${row}_name`]} x ${attributes[`${row}_amount`]} weight is ${attributes[`${row}_weight`]} and equipped ${attributes[`${row}_equipped`]} for total of ${parseInt(attributes[`${row}_equipped`]||0) * parseInt(attributes[`${row}_amount`]) * parseFloat(attributes[`${row}_weight`])}`);
       gearTot += parseInt(attributes[`${row}_equipped`]||0) * parseInt(attributes[`${row}_amount`]) * parseFloat(attributes[`${row}_weight`])
    });
+   sections.repeating_herbsndrugs.forEach( (id) => {
+      const row = `repeating_herbsndrugs_${id}`;
+      //k.log(`Gear ${attributes[`${row}_name`]} x ${attributes[`${row}_amount`]} weight is ${attributes[`${row}_weight`]} and equipped ${attributes[`${row}_equipped`]} for total of ${parseInt(attributes[`${row}_equipped`]||0) * parseInt(attributes[`${row}_amount`]) * parseFloat(attributes[`${row}_weight`])}`);
+      gearTot += parseInt(attributes[`${row}_equipped`]||0) * parseInt(attributes[`${row}_amount`]) * parseFloat(attributes[`${row}_weight`])
+   });
    k.log(`Gear weight: ${gearTot}`); 
 
    const enc = attributes['encumbrance'] = parseFloat(armorTot + weaponTot + gearTot); 
