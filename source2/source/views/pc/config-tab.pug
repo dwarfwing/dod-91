@@ -60,6 +60,18 @@ mixin config-tab
             })
          label(data+i18n="gear-display").input-label.header-label Utrustningslistor 
          +select-label({
+            label: 'Visning av ustrustning i Förvar',
+            spanObj:{'data-i18n':'show-gear-storage'},
+            divObj:{class:'indented'},
+            inputObj:{name:'show gear storage',value:1,class:'select-text'}
+            })
+            +option({value:0})
+               |Inte alls
+            +option({value:1,selected:''})
+               |Mittkolumn
+            +option({value:2})
+               |Höger kolumn
+         +select-label({
             label: 'Visning av ustrustningslista för Droger och Örter',
             spanObj:{'data-i18n':'show-herbs-drugs'},
             divObj:{class:'indented'},
@@ -72,7 +84,7 @@ mixin config-tab
             +option({value:2})
                |Höger kolumn
          +select-label({
-            label: 'Visning av ustrustningslista för Riddjur',
+            label: 'Visning av ustrustning på Riddjur',
             spanObj:{'data-i18n':'show-animal-gear'},
             divObj:{class:'indented'},
             inputObj:{name:'show animal gear',value:1,class:'select-text'}

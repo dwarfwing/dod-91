@@ -7,6 +7,9 @@ mixin gear-tab
       +checkbox({name:'show animal gear',value:0,class:'animal-gear-hide hidden'}) 
       +checkbox({name:'show animal gear',value:1,class:'animal-gear-middle hidden'}) 
       +checkbox({name:'show animal gear',value:2,class:'animal-gear-right hidden'}) 
+      +checkbox({name:'show gear storage',value:0,class:'storage-gear-hide hidden'}) 
+      +checkbox({name:'show gear storage',value:1,class:'storage-gear-middle hidden'}) 
+      +checkbox({name:'show gear storage',value:2,class:'storage-gear-right hidden'}) 
       //-+encumbrance 
       +gear({name:'Utrustning',attr:'gear',move:['Storage','Animal','Herbsndrugs']})
       .column2.section-gear__col2
@@ -15,6 +18,7 @@ mixin gear-tab
          +gear({name:'Riddjur',attr:'animal',move:['Gear','Storage','Herbsndrugs']}) 
       .column3.section-gear__col3
          +money
+         +gear({name:'Förvar',attr:'storage',move:['Gear','Animal','Herbsndrugs']})
          +gear({name:'Riddjur',attr:'animal',move:['Gear','Storage','Herbsndrugs']}) 
          +gear({name:'Droger, örter, etc',attr:'herbsndrugs',move:['Gear','Storage','Animal']}) 
 +scss.
@@ -37,4 +41,7 @@ mixin gear-tab
       .animal-gear-hide:checked ~ :is(.column2,.column3) .section-gear__animal { display: none; }
       .animal-gear-middle:checked ~ .column3 .section-gear__animal { display: none; }
       .animal-gear-right:checked ~ .column2 .section-gear__animal { display: none; }
+      .storage-gear-hide:checked ~ :is(.column2,.column3) .section-gear__storage { display: none; }
+      .storage-gear-middle:checked ~ .column3 .section-gear__storage { display: none; }
+      .storage-gear-right:checked ~ .column2 .section-gear__storage { display: none; }
    }
